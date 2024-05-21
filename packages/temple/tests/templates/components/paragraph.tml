@@ -1,0 +1,10 @@
+<link rel="import" href="./redirect.tml" />
+<script>
+  import { props } from '@blanquera/temple';
+  const { classname, children } = props();
+  console.log(props())
+</script>
+<p>
+  {children}
+  <redirect class={classname} href="/">Link</redirect>
+</p>

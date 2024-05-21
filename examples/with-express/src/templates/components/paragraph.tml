@@ -1,0 +1,5 @@
+<script>
+  import { props } from '@blanquera/temple';
+  const { classname, children } = props();
+</script>
+<p class=classname>{children}</p>

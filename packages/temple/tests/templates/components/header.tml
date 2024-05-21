@@ -1,0 +1,9 @@
+<style>
+  :host { font-size: 21px; }
+</style>
+<script>
+  import { props } from '@blanquera/temple';
+  const { className, children } = props();
+  console.log(props())
+</script>
+<h1 class=className>{children}</h1>

@@ -1,0 +1,18 @@
+<script>
+  import { props, signal } from '@blanquera/temple';
+  const { start } = props();
+  const count = signal<number>(start);
+  console.log('count', count, count.value);
+  const up = () => {
+    console.log('up', count.value);
+    count.value++
+  };
+</script>
+
+<if true={count.value > 0}>
+  <div>
+    Reactive Counter: <strong>{count.value}</strong>
+  </div>
+</if>
+
+<button click=up>Add</button>

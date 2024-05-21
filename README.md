@@ -1,2 +1,2 @@
 # temple
-Reactive template engine
+Reactive web component template engine

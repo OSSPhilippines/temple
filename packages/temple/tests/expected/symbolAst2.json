@@ -1,0 +1,440 @@
+[
+  {
+    "type": "<>",
+    "start": 0,
+    "end": 8,
+    "value": "<script>",
+    "children": [
+      {
+        "type": "#text",
+        "start": 1,
+        "end": 7,
+        "value": "script"
+      }
+    ]
+  },
+  {
+    "type": "#text",
+    "start": 8,
+    "end": 18,
+    "value": "\n  import "
+  },
+  {
+    "type": "{}",
+    "start": 18,
+    "end": 35,
+    "value": "{ props, signal }",
+    "children": [
+      {
+        "type": "#text",
+        "start": 19,
+        "end": 34,
+        "value": " props, signal "
+      }
+    ]
+  },
+  {
+    "type": "#text",
+    "start": 35,
+    "end": 41,
+    "value": " from "
+  },
+  {
+    "type": "''",
+    "start": 41,
+    "end": 60,
+    "value": "'@blanquera/temple'",
+    "children": [
+      {
+        "type": "#text",
+        "start": 42,
+        "end": 59,
+        "value": "@blanquera/temple"
+      }
+    ]
+  },
+  {
+    "type": "#text",
+    "start": 60,
+    "end": 70,
+    "value": ";\n  const "
+  },
+  {
+    "type": "{}",
+    "start": 70,
+    "end": 79,
+    "value": "{ start }",
+    "children": [
+      {
+        "type": "#text",
+        "start": 71,
+        "end": 78,
+        "value": " start "
+      }
+    ]
+  },
+  {
+    "type": "#text",
+    "start": 79,
+    "end": 87,
+    "value": " = props"
+  },
+  {
+    "type": "()",
+    "start": 87,
+    "end": 89,
+    "value": "()",
+    "children": [
+      {
+        "type": "#text",
+        "start": 88,
+        "end": 88,
+        "value": ""
+      }
+    ]
+  },
+  {
+    "type": "#text",
+    "start": 89,
+    "end": 113,
+    "value": ";\n  const count = signal"
+  },
+  {
+    "type": "<>",
+    "start": 113,
+    "end": 121,
+    "value": "<number>",
+    "children": [
+      {
+        "type": "#text",
+        "start": 114,
+        "end": 120,
+        "value": "number"
+      }
+    ]
+  },
+  {
+    "type": "()",
+    "start": 121,
+    "end": 128,
+    "value": "(start)",
+    "children": [
+      {
+        "type": "#text",
+        "start": 122,
+        "end": 127,
+        "value": "start"
+      }
+    ]
+  },
+  {
+    "type": "#text",
+    "start": 128,
+    "end": 143,
+    "value": ";\n  console.log"
+  },
+  {
+    "type": "()",
+    "start": 143,
+    "end": 172,
+    "value": "('count', count, count.value)",
+    "children": [
+      {
+        "type": "''",
+        "start": 144,
+        "end": 151,
+        "value": "'count'",
+        "children": [
+          {
+            "type": "#text",
+            "start": 145,
+            "end": 150,
+            "value": "count"
+          }
+        ]
+      },
+      {
+        "type": "#text",
+        "start": 151,
+        "end": 171,
+        "value": ", count, count.value"
+      }
+    ]
+  },
+  {
+    "type": "#text",
+    "start": 172,
+    "end": 187,
+    "value": ";\n  const up = "
+  },
+  {
+    "type": "()",
+    "start": 187,
+    "end": 189,
+    "value": "()",
+    "children": [
+      {
+        "type": "#text",
+        "start": 188,
+        "end": 188,
+        "value": ""
+      }
+    ]
+  },
+  {
+    "type": "#text",
+    "start": 189,
+    "end": 193,
+    "value": " => "
+  },
+  {
+    "type": "{}",
+    "start": 193,
+    "end": 252,
+    "value": "{\n    console.log('up', count.value);\n    count.value++\n  }",
+    "children": [
+      {
+        "type": "#text",
+        "start": 194,
+        "end": 210,
+        "value": "\n    console.log"
+      },
+      {
+        "type": "()",
+        "start": 210,
+        "end": 229,
+        "value": "('up', count.value)",
+        "children": [
+          {
+            "type": "''",
+            "start": 211,
+            "end": 215,
+            "value": "'up'",
+            "children": [
+              {
+                "type": "#text",
+                "start": 212,
+                "end": 214,
+                "value": "up"
+              }
+            ]
+          },
+          {
+            "type": "#text",
+            "start": 215,
+            "end": 228,
+            "value": ", count.value"
+          }
+        ]
+      },
+      {
+        "type": "#text",
+        "start": 229,
+        "end": 251,
+        "value": ";\n    count.value++\n  "
+      }
+    ]
+  },
+  {
+    "type": "#text",
+    "start": 252,
+    "end": 254,
+    "value": ";\n"
+  },
+  {
+    "type": "<>",
+    "start": 254,
+    "end": 263,
+    "value": "</script>",
+    "children": [
+      {
+        "type": "#text",
+        "start": 255,
+        "end": 262,
+        "value": "/script"
+      }
+    ]
+  },
+  {
+    "type": "#text",
+    "start": 263,
+    "end": 265,
+    "value": "\n\n"
+  },
+  {
+    "type": "<>",
+    "start": 265,
+    "end": 292,
+    "value": "<if true={count.value > 0}>",
+    "children": [
+      {
+        "type": "#text",
+        "start": 266,
+        "end": 274,
+        "value": "if true="
+      },
+      {
+        "type": "{}",
+        "start": 274,
+        "end": 291,
+        "value": "{count.value > 0}",
+        "children": [
+          {
+            "type": "#text",
+            "start": 275,
+            "end": 290,
+            "value": "count.value > 0"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "#text",
+    "start": 292,
+    "end": 295,
+    "value": "\n  "
+  },
+  {
+    "type": "<>",
+    "start": 295,
+    "end": 300,
+    "value": "<div>",
+    "children": [
+      {
+        "type": "#text",
+        "start": 296,
+        "end": 299,
+        "value": "div"
+      }
+    ]
+  },
+  {
+    "type": "#text",
+    "start": 300,
+    "end": 323,
+    "value": "\n    Reactive Counter: "
+  },
+  {
+    "type": "<>",
+    "start": 323,
+    "end": 331,
+    "value": "<strong>",
+    "children": [
+      {
+        "type": "#text",
+        "start": 324,
+        "end": 330,
+        "value": "strong"
+      }
+    ]
+  },
+  {
+    "type": "{}",
+    "start": 331,
+    "end": 344,
+    "value": "{count.value}",
+    "children": [
+      {
+        "type": "#text",
+        "start": 332,
+        "end": 343,
+        "value": "count.value"
+      }
+    ]
+  },
+  {
+    "type": "<>",
+    "start": 344,
+    "end": 353,
+    "value": "</strong>",
+    "children": [
+      {
+        "type": "#text",
+        "start": 345,
+        "end": 352,
+        "value": "/strong"
+      }
+    ]
+  },
+  {
+    "type": "#text",
+    "start": 353,
+    "end": 356,
+    "value": "\n  "
+  },
+  {
+    "type": "<>",
+    "start": 356,
+    "end": 362,
+    "value": "</div>",
+    "children": [
+      {
+        "type": "#text",
+        "start": 357,
+        "end": 361,
+        "value": "/div"
+      }
+    ]
+  },
+  {
+    "type": "#text",
+    "start": 362,
+    "end": 363,
+    "value": "\n"
+  },
+  {
+    "type": "<>",
+    "start": 363,
+    "end": 368,
+    "value": "</if>",
+    "children": [
+      {
+        "type": "#text",
+        "start": 364,
+        "end": 367,
+        "value": "/if"
+      }
+    ]
+  },
+  {
+    "type": "#text",
+    "start": 368,
+    "end": 370,
+    "value": "\n\n"
+  },
+  {
+    "type": "<>",
+    "start": 370,
+    "end": 387,
+    "value": "<button click=up>",
+    "children": [
+      {
+        "type": "#text",
+        "start": 371,
+        "end": 386,
+        "value": "button click=up"
+      }
+    ]
+  },
+  {
+    "type": "#text",
+    "start": 387,
+    "end": 390,
+    "value": "Add"
+  },
+  {
+    "type": "<>",
+    "start": 390,
+    "end": 399,
+    "value": "</button>",
+    "children": [
+      {
+        "type": "#text",
+        "start": 391,
+        "end": 398,
+        "value": "/button"
+      }
+    ]
+  }
+]

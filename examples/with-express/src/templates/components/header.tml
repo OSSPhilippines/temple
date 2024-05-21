@@ -1,0 +1,12 @@
+<style>
+  :host h1 { 
+    font-size: 21px; 
+    font-weight: semibold;
+    text-transform: uppercase;
+  }
+</style>
+<script>
+  import { props } from '@blanquera/temple';
+  const { className, children } = props();
+</script>
+<h1 class=className>{children}</h1>
