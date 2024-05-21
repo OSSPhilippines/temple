@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import TempleParser from '../src/server/parser/TempleParser';
+import TempleParser from '../src/server/TempleParser';
 
 describe('Temple Parser', () => {
   it('Should parse Temple Page', () => {

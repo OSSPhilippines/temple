@@ -6,7 +6,7 @@
   }
 </style>
 <script>
-  import { props } from '@blanquera/temple';
+  import { props } from '@ossph/temple';
   const { className, children } = props();
 </script>
 <h1 class=className>{children}</h1>

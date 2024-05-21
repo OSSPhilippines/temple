@@ -2,7 +2,7 @@
   :host { font-size: 21px; }
 </style>
 <script>
-  import { props } from '@blanquera/temple';
+  import { props } from '@ossph/temple';
   const { className, children } = props();
   console.log(props())
 </script>

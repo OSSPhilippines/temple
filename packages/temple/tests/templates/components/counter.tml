@@ -1,5 +1,5 @@
 <script>
-  import { props, signal } from '@blanquera/temple';
+  import { props, signal } from '@ossph/temple';
   const { start } = props();
   const count = signal<number>(start);
   console.log('count', count, count.value);

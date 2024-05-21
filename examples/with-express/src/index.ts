@@ -1,5 +1,5 @@
 import express from 'express';
-import { temple } from '@blanquera/temple/server';
+import { temple } from '@ossph/temple/server';
 
 const app = express();
 const template = temple({

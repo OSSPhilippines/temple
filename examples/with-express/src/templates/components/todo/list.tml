@@ -33,7 +33,7 @@
   }
 </style>
 <script>
-  import { props } from '@blanquera/temple';
+  import { props } from '@ossph/temple';
   //import props
   const { list } = props<{ list: string[] }>();
 </script>

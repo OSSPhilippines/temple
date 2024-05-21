@@ -2,12 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import DocumentCompiler from '../src/server/compiler/DocumentCompiler';
+import TempleCompiler from '../src/server/TempleCompiler';
 
 describe('Temple Compiler', () => {
   it('Should compile Temple Document', async () => {
     const expected = fs.readFileSync(path.join(__dirname, 'expected/page.html'), 'utf8');
-    const compiler = new DocumentCompiler({
+    const compiler = new TempleCompiler({
       buildPath: './.temple',
       cwd: __dirname,
       useCache: false

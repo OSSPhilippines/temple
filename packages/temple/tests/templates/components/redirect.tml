@@ -2,7 +2,7 @@
   :host { font-size: 30px; }
 </style>
 <script>
-  import { props } from '@blanquera/temple';
+  import { props } from '@ossph/temple';
   const { href, classname, children } = props();
   const attributes = { title: 'Click me' };
 </script>

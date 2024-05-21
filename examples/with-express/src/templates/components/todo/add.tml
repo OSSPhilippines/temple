@@ -17,7 +17,7 @@
   }
 </style>
 <script>
-  import { props } from '@blanquera/temple';
+  import { props } from '@ossph/temple';
   //define props
   type TodoProps = {
     list: string[];

@@ -16,7 +16,7 @@
   }
 </style>
 <script>
-  import { props, signal } from '@blanquera/temple';
+  import { props, signal } from '@ossph/temple';
   //define props
   type TodoProps = {
     start: number;

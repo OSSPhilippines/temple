@@ -218,9 +218,9 @@ export default class TempleCompiler {
     });
     //create a new source file
     const source = project.createSourceFile('page.ts');
-    //import '@blanquera/temple/dist/client/TempleHelpers'
+    //import '@ossph/temple/dist/client/TempleHelpers'
     source.addImportDeclaration({
-      moduleSpecifier: '@blanquera/temple/dist/client/TempleHelpers'
+      moduleSpecifier: '@ossph/temple/dist/client/TempleHelpers'
     });
     components.forEach(component => {
       //import './components/Counter'

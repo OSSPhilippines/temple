@@ -2,7 +2,7 @@ import fs from 'fs';
 import { describe, it } from 'mocha';
 import { expect, use } from 'chai';
 import deepEqualInAnyOrder from 'deep-equal-in-any-order';
-import SymbolParser from '../src/server/parser/SymbolParser';
+import SymbolParser from '../src/server/SymbolParser';
 
 import symbolAst1 from './expected/symbolAst1.json';
 import symbolAst2 from './expected/symbolAst2.json';

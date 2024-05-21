@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const TempleComponent_1 = __importDefault(require("@blanquera/temple/dist/TempleComponent"));
+const TempleComponent_1 = __importDefault(require("@ossph/temple/dist/TempleComponent"));
 class paragraph extends TempleComponent_1.default {
     style() {
         return ``;

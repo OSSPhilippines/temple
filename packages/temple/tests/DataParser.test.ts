@@ -2,14 +2,14 @@ import type {
   LiteralToken, 
   ObjectToken, 
   ArrayToken
-} from '../src/server/parser/types';
+} from '../src/server/types';
 
 import { describe, it } from 'mocha';
 import { expect, use } from 'chai';
 import deepEqualInAnyOrder from 'deep-equal-in-any-order';
-import Lexer from '../src/server/parser/GenericLexer';
-import DataParser from '../src/server/parser/DataParser';
-import definitions, { data } from '../src/server/parser/definitions';
+import Lexer from '../src/server/GenericLexer';
+import DataParser from '../src/server/DataParser';
+import definitions, { data } from '../src/server/definitions';
 
 use(deepEqualInAnyOrder);
 

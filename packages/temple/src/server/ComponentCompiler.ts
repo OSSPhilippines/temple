@@ -170,14 +170,14 @@ export default class ComponentCompiler {
     });
     //create a new source file
     const source = project.createSourceFile(`${classname}.ts`);
-    //import TempleElement from '@blanquera/temple/dist/client/TempleElement'
+    //import TempleElement from '@ossph/temple/dist/client/TempleElement'
     source.addImportDeclaration({
-      moduleSpecifier: '@blanquera/temple/dist/client/TempleElement',
+      moduleSpecifier: '@ossph/temple/dist/client/TempleElement',
       defaultImport: 'TempleElement'
     });
-    //import TempleComponent from '@blanquera/temple/dist/client/TempleComponent'
+    //import TempleComponent from '@ossph/temple/dist/client/TempleComponent'
     source.addImportDeclaration({
-      moduleSpecifier: '@blanquera/temple/dist/client/TempleComponent',
+      moduleSpecifier: '@ossph/temple/dist/client/TempleComponent',
       defaultImport: 'TempleComponent'
     });
     components.forEach(component => {

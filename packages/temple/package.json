@@ -1,5 +1,5 @@
 {
-  "name": "@blanquera/temple",
+  "name": "@ossph/temple",
   "version": "0.0.1",
   "description": "Simple Reactive Template Engine",
   "license": "MIT",
