@@ -1,3 +1,3 @@
 module.exports = {
-  ...require('./dist/index')
+  ...require('./dist/client')
 }

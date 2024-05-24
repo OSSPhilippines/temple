@@ -12,8 +12,12 @@
     "sourceMap": false,
     "strict": true,
     "target": "es6",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "plugins": [
+      { "name": "typescript-plugin-css-modules" },
+      { "name": "@ossph/temple-typescript" }
+    ]
   },
-  "include": [ "src/**/*.ts", "src/**/*.tml" ],
-  "exclude": [ "dist", "docs", "node_modules", "tests" ]
+  "include": [ "src/**/*.ts" ],
+  "exclude": [ "dist", "node_modules", "tests" ]
 }

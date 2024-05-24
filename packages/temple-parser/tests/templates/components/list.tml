@@ -1,0 +1,10 @@
+<script>
+  const list = [ 'a', 'b', 'c' ];
+</script>
+<if true={list.length > 0}>
+  <ul>
+    <each value=item from=list>
+      <li>{item}</li>
+    </each>
+  </ul>
+</if>

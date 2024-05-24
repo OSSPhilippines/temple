@@ -1,0 +1,17 @@
+{
+  "name": "@ossph/temple-client",
+  "version": "0.0.1",
+  "description": "Simple Reactive Template Engine",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "nyc cross-env DATABASE_URL=test ts-mocha tests/*.test.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "20.11.16",
+    "ts-node": "10.9.2",
+    "typescript": "5.3.3"
+  }
+}

@@ -1,9 +1,9 @@
 import express from 'express';
-import { temple } from '@ossph/temple/server';
+import { document } from '@ossph/temple/server';
 
 const app = express();
-const template = temple({
-  buildPath: '../.temple',
+const template = document({
+  buildFolder: '../.temple',
   cwd: __dirname,
   useCache: false
 });

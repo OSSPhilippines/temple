@@ -1,15 +1,16 @@
 {
-  "name": "@ossph/temple",
+  "name": "@ossph/temple-parser",
   "version": "0.0.1",
-  "description": "Simple Reactive Template Engine",
+  "description": "Template markup language parser",
   "license": "MIT",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "nyc cross-env DATABASE_URL=test ts-mocha tests/*.test.ts"
+    "test": "nyc ts-mocha tests/*.test.ts"
   },
   "dependencies": {
-    "@ossph/temple-compiler": "0.0.1"
+    "@blanquera/types": "1.0.1",
+    "typescript": "5.3.3"
   },
   "devDependencies": {
     "@types/chai": "4.3.5",

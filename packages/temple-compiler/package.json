@@ -1,15 +1,22 @@
 {
-  "name": "@ossph/temple",
+  "name": "@ossph/temple-compiler",
   "version": "0.0.1",
   "description": "Simple Reactive Template Engine",
   "license": "MIT",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "nyc cross-env DATABASE_URL=test ts-mocha tests/*.test.ts"
+    "test": "nyc ts-mocha tests/*.test.ts"
   },
   "dependencies": {
-    "@ossph/temple-compiler": "0.0.1"
+    "@lit-labs/ssr-dom-shim": "1.2.0",
+    "@ossph/temple-client": "0.0.1",
+    "@ossph/temple-parser": "0.0.1",
+    "esbuild": "0.21.3",
+    "fast-glob": "3.3.2",
+    "typescript": "5.3.3",
+    "ts-morph": "22.0.0",
+    "webpack": "5.91.0"
   },
   "devDependencies": {
     "@types/chai": "4.3.5",
@@ -22,6 +29,7 @@
     "mocha": "10.2.0",
     "nyc": "15.1.0",
     "ts-mocha": "10.0.0",
-    "ts-node": "10.9.2"
+    "ts-node": "10.9.2",
+    "typescript-plugin-css-modules": "5.1.0"
   }
 }
