@@ -135,6 +135,41 @@ const results = render({...props...});
 </ul>
 ```
 
+**Document Markup**
+
+```html
+<!-- page.html -->
+<link rel="import" href="./components/header.tml" />
+<link rel="import" href="./components/paragraph.tml" />
+<link rel="import" href="./components/todo.tml" />
+<style>
+  body { 
+    background-color: #DA532C; 
+    color: #EFEFEF; 
+  }
+  img { width: 100px; height: 100px; }
+  .title { text-align: center; }
+  .logo { text-align: center; }
+  .description { text-align: center; }
+  .list { text-align: center; }
+</style>
+<html>
+  <head>
+    <title>Temple</title>
+    <link rel="favicon" href="/favicon.ico" />
+    <link rel="shortcut icon" type="image/png" href="/favicon.png" />
+  </head>
+  <body class="light">
+    <header class="title">{title}</header>
+    <div class="logo">
+      <img src="/temple-logo.png" alt="Logo" />
+    </div>
+    <paragraph classname="description">{description}</paragraph>
+    <todo list=list start=start />
+  </body>
+</html>
+```
+
 ## Why Temple?
 
 Current frontend solutions for the most part, come in the form of a 
