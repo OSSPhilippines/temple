@@ -1,0 +1,19 @@
+{
+  "name": "with-hapi",
+  "version": "1.0.0",
+  "description": "A simple boilerplate for building web components with Temple",
+  "private": true,
+  "scripts": {
+    "dev": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "@hapi/hapi": "21.3.9",
+    "@hapi/inert": "7.1.0",
+    "@ossph/temple": "0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.12.7",
+    "ts-node": "10.9.2",
+    "typescript": "5.4.5"
+  }
+}
