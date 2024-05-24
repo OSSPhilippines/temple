@@ -175,11 +175,10 @@ const results = render({...props...});
 Current frontend solutions for the most part, come in the form of a 
 "frontend framework" and are "all encompassing", requiring more import 
 into the frontend framework and give little export out to support server 
-first solutions.  
-
-Temple is a modern HTML markup language and a server first template 
-engine with a built-in parser/compiler that generates web components 
-and support reactivity. The focus of Temple are the following.
+first solutions. Temple is a modern HTML markup language and a server 
+first template engine with a built-in parser/compiler that generates 
+web components and support reactivity. The focus of Temple are the 
+following.
 
 | Features         | De-Features   |
 |------------------|---------------|
