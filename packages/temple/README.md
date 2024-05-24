@@ -39,7 +39,7 @@ const results = render({...props...});
 ```html
 <!-- page.html -->
 <script>
-	const name = 'world';
+  const name = 'world';
 </script>
 <h1>Hello {name}!</h1>
 ```
@@ -49,16 +49,16 @@ const results = render({...props...});
 ```html
 <!-- page.html -->
 <style>
-	:host {
-		color: purple;
-	}
+  :host {
+    color: purple;
+  }
   :host h1 {
-		font-family: 'Comic Sans MS', cursive;
-		font-size: 2em;
-	}
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 2em;
+  }
 </style>
 <script>
-	const name = 'world';
+  const name = 'world';
 </script>
 <h1>Hello {name}!</h1>
 ```
@@ -70,7 +70,7 @@ const results = render({...props...});
 <script>
   import { props } from '@ossph/temple';
   type PageProps = { name: string };
-	const { name } = props<PageProps>();
+  const { name } = props<PageProps>();
 </script>
 <h1>Hello {name}</h1>
 ```
@@ -81,7 +81,7 @@ const results = render({...props...});
 <!-- page.html -->
 <script>
   import { signal } from '@ossph/temple';
-	const name = signal<string>('world');
+  const name = signal<string>('world');
   name.value += '!';
 </script>
 <h1>Hello {name.value}</h1>
@@ -103,7 +103,7 @@ const results = render({...props...});
 <script>
   import { props } from '@ossph/temple';
   type PageProps = { name: string, children: string };
-	const { name, children } = props<PageProps>();
+  const { name, children } = props<PageProps>();
 </script>
 <h1>{children} {name}</h1>
 ```
