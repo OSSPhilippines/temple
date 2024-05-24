@@ -71,10 +71,12 @@ export default class TempleDocument {
 
     //somehow bind the props to the document...
     for (const key in this._properties) {
-      document = document.replace(
-        new RegExp('\\${' + key + '}', 'g'),
-        this._properties[key]
-      );
+      if (typeof this._properties[key] !== 'object') {
+        document = document.replace(
+          new RegExp('\\${' + key + '}', 'g'),
+          JSON.stringify(this._properties[key])
+        );
+      }
     }
     return document;
   }

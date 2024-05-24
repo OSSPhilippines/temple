@@ -17,6 +17,7 @@
     "dev:express": "yarn --cwd examples/with-express dev",
     "dev:fastify": "yarn --cwd examples/with-fastify dev",
     "dev:koa": "yarn --cwd examples/with-koa dev",
+    "dev:nest": "yarn --cwd examples/with-nest start:dev",
     "dev:webpack": "yarn --cwd examples/with-webpack dev"
   },
   "devDependencies": {

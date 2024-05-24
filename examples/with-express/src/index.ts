@@ -2,15 +2,32 @@ import express from 'express';
 import { document } from '@ossph/temple/server';
 
 const app = express();
+//general options for temple
 const template = document({
   buildFolder: '../.temple',
   cwd: __dirname,
   useCache: false
 });
+//let's use express' template engine feature
+app.engine(
+  'tml',
+  async (
+    filePath: string,
+    options: Record<string, any>,
+    callback: (err: Error | null, results: string | undefined) => void,
+  ) => {
+    const render = await template(filePath);
+    const results = render(options);
+    callback(null, results);
+  },
+);
+//set the view engine to temple
+app.set('views', './templates');
+app.set('view engine', 'tml');
 
 app.get('/', async (req, res) => {
-  const render = await template('./templates/page.tml');
-  const results = render({
+  //now use the temple template engine
+  res.render('page', {
     title: 'Temple',
     description: 'Edit this file to change the content of the page.',
     start: 0,
@@ -23,9 +40,8 @@ app.get('/', async (req, res) => {
       'Fork the respository',
       'Contribute to the project'
     ]
-  });
+  })
   res.type('text/html');
-  res.send(results);
 });
 
 //open public folder

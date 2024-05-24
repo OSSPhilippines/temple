@@ -2,6 +2,7 @@
   "name": "with-express",
   "version": "1.0.0",
   "description": "A simple boilerplate for building web components with Temple",
+  "private": true,
   "scripts": {
     "dev": "ts-node src/index.ts"
   },

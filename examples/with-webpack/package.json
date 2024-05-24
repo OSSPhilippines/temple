@@ -2,6 +2,7 @@
   "name": "with-webpack",
   "version": "1.0.0",
   "description": "Temple example for client side rendering with webpack",
+  "private": true,
   "scripts": {
     "dev": "webpack-dev-server --mode development",
     "build": "webpack"
