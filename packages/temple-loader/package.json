@@ -1,8 +1,12 @@
 {
   "name": "@ossph/temple-loader",
   "version": "0.0.1",
-  "description": "Temple Markup Transpiler",
-  "license": "MIT",
+  "description": "Webpack support for the Temple markup language.",
+  "license": "Apache-2.0",
+  "author": "Chris <chris@incept.asia>",
+  "homepage": "https://github.com/OSSPhilippines/temple",
+  "bugs": "https://github.com/OSSPhilippines/temple/issues",
+  "repository": "OSSPhilippines/temple",
   "main": "dist/index.js",
   "files": [
     "dist"

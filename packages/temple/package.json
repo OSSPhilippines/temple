@@ -1,8 +1,18 @@
 {
   "name": "@ossph/temple",
   "version": "0.0.1",
-  "description": "Simple Reactive Template Engine",
-  "license": "MIT",
+  "description": "The reactive web component template engine.",
+  "license": "Apache-2.0",
+  "author": "Chris <chris@incept.asia>",
+  "homepage": "https://github.com/OSSPhilippines/temple",
+  "bugs": "https://github.com/OSSPhilippines/temple/issues",
+  "repository": "OSSPhilippines/temple",
+  "keywords": [
+    "UI",
+    "framework",
+    "templates",
+    "templating"
+  ],
   "main": "index.js",
   "scripts": {
     "build": "tsc",

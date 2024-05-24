@@ -1,8 +1,12 @@
 {
   "name": "@ossph/temple-client",
   "version": "0.0.1",
-  "description": "Simple Reactive Template Engine",
-  "license": "MIT",
+  "description": "Browser library that Temple scripts can use to manage data in different ways.",
+  "license": "Apache-2.0",
+  "author": "Chris <chris@incept.asia>",
+  "homepage": "https://github.com/OSSPhilippines/temple",
+  "bugs": "https://github.com/OSSPhilippines/temple/issues",
+  "repository": "OSSPhilippines/temple",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
