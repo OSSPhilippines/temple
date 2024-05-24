@@ -15,6 +15,7 @@
     "test:parser": "yarn --cwd packages/temple-parser test",
     "test:compiler": "yarn --cwd packages/temple-compiler test",
     "dev:express": "yarn --cwd examples/with-express dev",
+    "dev:fastify": "yarn --cwd examples/with-fastify dev",
     "dev:webpack": "yarn --cwd examples/with-webpack dev"
   },
   "devDependencies": {
