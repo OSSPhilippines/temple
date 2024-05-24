@@ -134,3 +134,30 @@ const results = render({...props...});
   </each>
 </ul>
 ```
+
+## Why Temple?
+
+Current frontend solutions for the most part, come in the form of a 
+"frontend framework" and are "all encompassing", requiring more import 
+into the frontend framework and give little export out to support server 
+first solutions.  
+
+Temple is a modern HTML markup language and a server first template 
+engine with a built-in parser/compiler that generates web components 
+and support reactivity. The focus of Temple are the following.
+
+| Features         | De-Features   |
+|------------------|---------------|
+| Template Engine  | No Hydration  |
+| Web Components   | No Hooks      |
+| Server First     | No Memo       |
+| Reactive Signals | No Brandcuffs |
+
+Temple works with most server frameworks including:
+
+ - [Express](https://github.com/OSSPhilippines/temple/tree/main/examples/with-express)
+ - [Fastify](https://github.com/OSSPhilippines/temple/tree/main/examples/with-fastify)
+ - [Hapi](https://github.com/OSSPhilippines/temple/tree/main/examples/with-hapi)
+ - [Koa](https://github.com/OSSPhilippines/temple/tree/main/examples/with-koa)
+ - [NestJS](https://github.com/OSSPhilippines/temple/tree/main/examples/with-nest)
+ - [Webpack](https://github.com/OSSPhilippines/temple/tree/main/examples/with-webpack)
