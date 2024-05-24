@@ -8,6 +8,14 @@
   "bugs": "https://github.com/OSSPhilippines/temple/issues",
   "repository": "OSSPhilippines/temple",
   "main": "index.js",
+  "files": [
+    "dist",
+    "index.d.ts",
+    "index.js",
+    "LICENSE",
+    "README.md",
+    "tsconfig.json"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "nyc ts-mocha tests/*.test.ts"

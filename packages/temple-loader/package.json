@@ -9,7 +9,12 @@
   "repository": "OSSPhilippines/temple",
   "main": "dist/index.js",
   "files": [
-    "dist"
+    "dist",
+    "index.d.ts",
+    "index.js",
+    "LICENSE",
+    "README.md",
+    "tsconfig.json"
   ],
   "scripts": {
     "build": "tsc"
