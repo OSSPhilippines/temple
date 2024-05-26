@@ -27,7 +27,9 @@ const results = render({...props...});
 | fs          | File system where temple files located |
 | cwd         | The current working directory          |
 | brand       | The web component prefix               |
-| useCache    | Turn on file caching                   |
+| cache       | Turn on file caching                   |
+| minify      | Turn on minification                   |
+| bundle      | Turn on file bundling                  |
 | buildFolder | If cache, where to put cached files    |
 | tsconfig    | Location of your tsconfig.json file    |
 
