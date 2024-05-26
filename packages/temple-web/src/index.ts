@@ -3,7 +3,11 @@ import path from 'path';
 import express from 'express';
 import temple from '@ossph/temple/server';
 
-const engine = temple({ cwd: __dirname });
+const engine = temple({ 
+  cwd: __dirname,
+  register: false,
+  minify: false
+});
 
 //setup an HTTP server
 const app = express();
@@ -15,10 +19,9 @@ app.engine(
     options: Record<string, any>,
     callback: (err: Error | null, results: string | undefined) => void,
   ) => {
+    const { settings, _locals, cache, ...props } = options;
     const render = await engine.load(filePath);
-    callback(null, render({
-      title: 'Temple'
-    }));
+    callback(null, render(props));
   },
 );
 //set the view engine to temple

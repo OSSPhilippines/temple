@@ -34,7 +34,7 @@ export default class TempleBuilder {
    * Sets the compiler
    */
   constructor(compiler: DocumentCompiler, options: BuilderOptions = {}) {
-    const { cache = false, minify = true, bundle = true } = options;
+    const { cache = false, minify = false, bundle = true } = options;
     this._compiler = compiler;
     this._cache = cache;
     this._minify = minify;

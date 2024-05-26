@@ -1,6 +1,6 @@
 {
   "name": "@ossph/temple-loader",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Webpack support for the Temple markup language.",
   "license": "Apache-2.0",
   "author": "Chris <chris@incept.asia>",
@@ -20,7 +20,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@ossph/temple-compiler": "0.0.2",
+    "@ossph/temple-compiler": "0.0.3",
     "loader-utils": "3.2.1",
     "schema-utils": "4.2.0"
   },

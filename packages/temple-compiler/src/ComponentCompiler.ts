@@ -263,6 +263,7 @@ export default class ComponentCompiler implements Compiler {
     this._brand = options.brand || 'temple';
     //determine the build folder
     this._buildFolder = options.buildFolder || './.temple';
+    //by default, we register the custom elements
     this._register = options.register !== false;
     //determine the tsconfig file
     this._tsconfig = FileLoader.absolute(
