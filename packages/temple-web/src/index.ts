@@ -50,11 +50,7 @@ app.get('**', (req, res) => {
     return res.render(`${route}/index`, props);
   }
 
-  const content = fs.readFileSync(path.join(__dirname, 'test.html'), 'utf-8');
-  res.type('text/html');
-  res.send(content);
-
-  //res.status(404).send('Not Found');
+  res.status(404).send('Not Found');
 });
 
 app.listen(3000, () => {
