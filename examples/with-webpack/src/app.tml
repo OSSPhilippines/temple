@@ -18,6 +18,7 @@
   .list { text-align: center; }
 </style>
 <script>
+  import { globals } from '@ossph/temple';
   const title = 'Temple';
   const description = 'Edit this file to change the content of the page.';
   const list = [
@@ -35,5 +36,7 @@
 <div class="logo">
   <img src="/temple-logo.png" alt="Logo" />
 </div>
-<paragraph classname="description">{description}</paragraph>
-<todo list=list start=start />
+<paragraph classname="description">
+  {description}
+</paragraph>
+<todo {list} {start} />

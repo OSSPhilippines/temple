@@ -1,18 +1,27 @@
 import type { PluginBuild } from 'esbuild';
 import type { SourceFile } from 'ts-morph';
 import type { TempleComponent } from '@ossph/temple-client';
+import type { BuilderOptions } from './types';
 import * as vm from 'vm';
 import fs from 'fs';
 import path from 'path';
 import esbuild from 'esbuild';
 import FileLoader from './FileLoader';
 import DocumentCompiler from './DocumentCompiler';
-import { window, document, customElements, HTMLElement } from './TempleBrowser';
+import { 
+  window, 
+  document, 
+  customElements, 
+  TextNode, 
+  HTMLElement 
+} from './TempleBrowser';
 
 export default class TempleBuilder {
   //the compiler instance
   protected _compiler: DocumentCompiler;
   protected _cache: boolean;
+  protected _minify: boolean;
+  protected _bundle: boolean;
 
   /**
    * Gets the compiler instance
@@ -24,9 +33,12 @@ export default class TempleBuilder {
   /**
    * Sets the compiler
    */
-  constructor(compiler: DocumentCompiler, cache = false) {
+  constructor(compiler: DocumentCompiler, options: BuilderOptions = {}) {
+    const { cache = false, minify = true, bundle = true } = options;
     this._compiler = compiler;
     this._cache = cache;
+    this._minify = minify;
+    this._bundle = bundle;
   }
 
   /**
@@ -38,8 +50,8 @@ export default class TempleBuilder {
     // Bundle with esbuild
     const results = await esbuild.build({
       entryPoints: [ entry ],
-      bundle: true,
-      minify: false,
+      bundle: this._bundle,
+      minify: this._minify,
       //Immediately Invoked Function Expression format 
       //for browser compatibility
       format: 'iife', 
@@ -91,6 +103,7 @@ export default class TempleBuilder {
     //get the context
     const context = vm.createContext({ exports: {} });
     //inject missing dependencies
+    context.Node = TextNode;
     context.HTMLElement = HTMLElement;
     context.customElements = customElements;
     context.document = document;

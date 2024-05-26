@@ -3,6 +3,7 @@ import TempleEmitter from './TempleEmitter';
 import TempleException from './TempleException';
 import TempleComponent from './TempleComponent';
 import props from './props';
+import children from './children';
 import signal, { SignalRegistry } from './signal';
 import { 
   globals,
@@ -14,6 +15,7 @@ import './helpers';
 
 export {
   props,
+  children,
   signal,
   globals,
   bindings,

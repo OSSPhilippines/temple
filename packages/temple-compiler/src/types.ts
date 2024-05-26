@@ -144,3 +144,10 @@ export type ImportChunk = {
 //this is a map of all the components used
 //to check if we already generated it
 export type ComponentRegistry = Record<string, Compiler>;
+
+//for the builder
+export type BuilderOptions = {
+  cache?: boolean,
+  minify?: boolean,
+  bundle?: boolean
+};

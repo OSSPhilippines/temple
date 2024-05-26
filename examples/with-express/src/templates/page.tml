@@ -12,23 +12,21 @@
   .description { text-align: center; }
   .list { text-align: center; }
 </style>
-<script>
-  //this is only ran on the server
-  import { globals } from '@ossph/temple';
-  const { title, description } = Object.fromEntries(globals);
-</script>
 <html>
   <head>
-    <title>{title}</title>
+    <title>{props.title}</title>
     <link rel="favicon" href="/favicon.ico" />
     <link rel="shortcut icon" type="image/png" href="/favicon.png" />
   </head>
   <body class="light">
-    <header class="title">{title}</header>
+    <header class="title">
+      {props.title} 
+      <em>TODO</em>
+    </header>
     <div class="logo">
       <img src="/temple-logo.png" alt="Logo" />
     </div>
-    <paragraph classname="description">{description}</paragraph>
-    <todo list="global:list" start="global:start" />
+    <paragraph classname="description">{props.description}</paragraph>
+    <todo list={props.list} start={props.start} />
   </body>
 </html>

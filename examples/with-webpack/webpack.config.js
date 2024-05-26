@@ -14,7 +14,10 @@ module.exports = {
     rules: [
       {
         test: /\.tml$/,
-        use: '@ossph/temple-loader',
+        use: {
+          loader: '@ossph/temple-loader',
+          options: { minify: false }
+        },
         exclude: /node_modules/,
       },
       {
@@ -34,7 +37,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Temple',
-      template: "src/index.html",
+      template: "index.html",
     })
   ]
 };

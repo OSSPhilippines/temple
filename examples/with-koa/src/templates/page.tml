@@ -14,16 +14,19 @@
 </style>
 <html>
   <head>
-    <title>Temple</title>
+    <title>{props.title}</title>
     <link rel="favicon" href="/favicon.ico" />
     <link rel="shortcut icon" type="image/png" href="/favicon.png" />
   </head>
   <body class="light">
-    <header class="title">{title}</header>
+    <header class="title">
+      {props.title} 
+      <em>TODO</em>
+    </header>
     <div class="logo">
       <img src="/temple-logo.png" alt="Logo" />
     </div>
-    <paragraph classname="description">{description}</paragraph>
-    <todo list=list start=start />
+    <paragraph classname="description">{props.description}</paragraph>
+    <todo list={props.list} start={props.start} />
   </body>
 </html>

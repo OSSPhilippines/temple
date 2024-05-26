@@ -193,21 +193,6 @@ export default class TempleElement {
   }
 
   /**
-   * Returns a serialized version of the attributes
-   */
-  public serialize(attributes?: any) {
-    if (!attributes) {
-      attributes = this._attributes;
-    }
-    return JSON.stringify(attributes, (name, value) => {
-      if (typeof value === 'function') {
-        return value.toString();
-      }
-      return value;
-    });
-  }
-
-  /**
    * Sets the attribute value
    */
   public setAttribute(key: string, value: any, silent = false) {

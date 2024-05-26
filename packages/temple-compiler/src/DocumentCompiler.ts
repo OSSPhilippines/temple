@@ -36,7 +36,7 @@ export default class DocumentCompiler extends ComponentCompiler {
             fs: this._fs,
             cwd: this._cwd,
             brand: this._brand,
-            register: true,
+            register: this._register === false,
             buildFolder: this._buildFolder,
             tsconfig: this._tsconfig
           },
@@ -163,6 +163,12 @@ export default class DocumentCompiler extends ComponentCompiler {
    * Generates code
    */
   protected _generate() {
+    //if we are suppose to register this to customElements
+    //it means we want to treat this as any other web component
+    if (this._register) {
+      return super._generate();
+    }
+
     const components = this.components;
     //make a new project
     const project = new Project({
@@ -258,7 +264,9 @@ export default class DocumentCompiler extends ComponentCompiler {
     component.addMethod({
       name: 'template',
       statements: `
-        ${this.scripts.join('\n')}
+        ${this.scripts.length > 0 
+          ? this.scripts.join('\n')
+          : (`const props = globals.data;`)}
         bindings.data = ${
           this._bindings(this.ast.markup, components)
         };
@@ -304,7 +312,7 @@ export default class DocumentCompiler extends ComponentCompiler {
         //NOTE: in document there is no shadow dom
         //so there's no need to case for it...
     
-        //used to prevent the compiler from 
+        //used to prevent the browser from 
         //misinterpretting these tags
         const tags = {
           head: 'head',

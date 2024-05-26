@@ -84,12 +84,6 @@ export default abstract class TempleComponent extends HTMLElement {
    * Sets the component properties
    */
   public set props(props: Hash) {
-    //if the serialized props is the same as the current serialized props
-    if (this.element.serialize(props) === this.element.serialize()) {
-      //dont set
-      return;
-    }
-
     //clone the props
     const properties = Object.assign({}, props);
     //loop through the props
@@ -217,11 +211,11 @@ export default abstract class TempleComponent extends HTMLElement {
    */
   public wait() {
     if (document.readyState !== 'loading') {
-      this.update();
+      this._update();
     } else {
       const mutationObserver = new MutationObserver(() => {
         if (document.readyState !== 'loading') {
-          this.update();
+          this._update();
           mutationObserver.disconnect();
         }
       });
@@ -232,7 +226,7 @@ export default abstract class TempleComponent extends HTMLElement {
   /**
    * Sets the initial properties and children
    */
-  protected update() { 
+  protected _update() { 
     //get the attributes natively set using `<input value="foo" />`
     const attributes: Hash = Object.fromEntries(
       Array.from(this.attributes).map(
@@ -248,11 +242,34 @@ export default abstract class TempleComponent extends HTMLElement {
     if (typeof this._children === 'undefined') {
       this._children = Array.from(this.childNodes || []);
     }
+    //if no children in the attributes
+    if (!attributes.children) {
+      attributes.children = this._children;
+    }
     //settings props will try to trigger a render
     this.props = { ...this.props, ...attributes};
     //only render if not initiated
     if (!this._initiated) {
       this.render();
     }
+  }
+
+  /**
+   * Converts a value to a node list
+   * used to be inserted into the component
+   * child list in template()
+   */
+  protected _toNodeList(value: any) {
+    if (value instanceof Node) {
+      return [ value ];
+    }
+
+    if (Array.isArray(value)) {
+      if (value.every(item => item instanceof Node)) {
+        return value;
+      }
+    }
+
+    return [ document.createTextNode(String(value)) ];
   }
 }

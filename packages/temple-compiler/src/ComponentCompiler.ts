@@ -397,9 +397,6 @@ export default class ComponentCompiler implements Compiler {
         } else if (child.name === 'each') {
           //syntax <each value=item key=i from=list>...</each>
           return this._templateIterator(child, components);
-        } else if (child.name === 'children') {
-          //syntax <children />
-          return '...(this.originalChildren || [])';
         }
         //syntax <div title="Some Title">...</div>
         expression += this._templateElement(expression, child, components);
@@ -411,7 +408,7 @@ export default class ComponentCompiler implements Compiler {
           expression += `document.createTextNode(String(${child.value}))`;
         }
       } else if (child.type === 'ProgramExpression') {
-        expression += `document.createTextNode(String(${child.source}))`;
+        expression += `...this._toNodeList(${child.source})`;
       }
       return expression;
     }).join(", \n") + "\n]";

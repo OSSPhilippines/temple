@@ -7,9 +7,9 @@
 </style>
 <script>
   import { props } from '@ossph/temple';
-  const { className } = props();
+  const { className, children } = props();
 </script>
 <h1 class=className>
-  <children />
+  {children}
   <u>Start</u>
 </h1>

@@ -1,17 +1,13 @@
 import path from 'path';
 import Hapi from '@hapi/hapi';
 import inert from '@hapi/inert';
-import { document } from '@ossph/temple/server';
+import temple from '@ossph/temple/server';
 
 const init = async () => {
 
   const cwd = path.dirname(__dirname);
 
-  const template = document({
-    buildFolder: './.temple',
-    cwd: cwd,
-    useCache: false
-  });
+  const engine = temple({ cwd: __dirname });
 
   const server = Hapi.server({
     port: 3000,
@@ -30,7 +26,7 @@ const init = async () => {
     method: 'GET',
     path: '/',
     handler: async () => {
-      const render = await template('./templates/page.tml');
+      const render = await engine.load('./templates/page.tml');
       return render({
         title: 'Temple',
         description: 'Edit this file to change the content of the page.',

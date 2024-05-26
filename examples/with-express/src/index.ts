@@ -1,14 +1,10 @@
 import path from 'path';
 import express from 'express';
-import { loader } from '@ossph/temple/server';
+import temple from '@ossph/temple/server';
 
 const app = express();
 //general options for temple
-const load = loader({
-  buildFolder: '../.temple',
-  cwd: __dirname,
-  useCache: false
-});
+const engine = temple({ cwd: __dirname });
 //let's use express' template engine feature
 app.engine(
   'tml',
@@ -18,8 +14,8 @@ app.engine(
     callback: (err: Error | null, results: string | undefined) => void,
   ) => {
     const { settings, _locals, cache, ...props } = options;
-    const { document } = await load(filePath);
-    callback(null, document(props));
+    const render = await engine.load(filePath);
+    callback(null, render(props));
   },
 );
 //set the view engine to temple
