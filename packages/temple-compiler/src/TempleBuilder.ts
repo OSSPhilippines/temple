@@ -51,7 +51,10 @@ export default class TempleBuilder {
     const results = await esbuild.build({
       entryPoints: [ entry ],
       bundle: this._bundle,
-      minify: this._minify,
+      //This breaks, </head> found when minified.
+      //minifyWhitespace: this._minify,
+      minifyIdentifiers: this._minify,
+      minifySyntax: this._minify,
       //Immediately Invoked Function Expression format 
       //for browser compatibility
       format: 'iife', 
@@ -97,7 +100,6 @@ export default class TempleBuilder {
   public async load() {
     //get source code
     const source = await this.source();
-    //    console.log('source', source);
     //create a new vm enviroment with the source code
     const script = new vm.Script(source);
     //get the context

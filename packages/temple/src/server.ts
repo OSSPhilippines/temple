@@ -25,9 +25,8 @@ export type TempleOptions = CompilerOptions & BuilderOptions;
 export default function temple(options: TempleOptions = {}) {
   const { 
     cache = false, 
-    minify = false, 
+    minify = true, 
     bundle = true, 
-    register = false,
     ...compilerOptions 
   } = options;
   const builderOptions = { cache, minify, bundle };

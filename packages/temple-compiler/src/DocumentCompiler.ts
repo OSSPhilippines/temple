@@ -1,5 +1,5 @@
 import type { MarkupChildToken } from '@ossph/temple-parser';
-import type { Compiler } from './types';
+import type { Compiler, CompilerOptions } from './types';
 
 import path from 'path';
 import ts from 'typescript';
@@ -55,6 +55,15 @@ export default class DocumentCompiler extends ComponentCompiler {
    */
   public get registry() {
     return Object.values(this._registry);
+  }
+
+  /**
+   * Sets the source code to compile
+   */
+  public constructor(sourceFile: string, options: CompilerOptions) {
+    super(sourceFile, options);
+    //by default, we dont register the custom elements
+    this._register = options.register === true;
   }
 
   /**
@@ -352,6 +361,14 @@ export default class DocumentCompiler extends ComponentCompiler {
             \`<\${tags.script}>\${script}</\${tags.script}></\${tags.head}>\`
           );
         }
+        //prettify document
+        document = document.replace(
+          \`</\${tags.head}>\`, 
+          \`<\${tags.script}>Array.from(
+            document.head.getElementsByTagName('\${tags.script}')
+          ).forEach(s => s.remove());
+          </\${tags.script}></\${tags.head}>\`
+        );
         //return the full html
         return \`<!DOCTYPE html>\${document}\`;
       `)
