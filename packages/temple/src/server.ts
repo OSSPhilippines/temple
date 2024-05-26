@@ -3,7 +3,7 @@ import type { CompilerOptions } from '@ossph/temple-compiler';
 export type * from '@ossph/temple-parser';
 export type * from '@ossph/temple-compiler';
 
-import { TempleCompiler, TempleBuilder } from '@ossph/temple-compiler';
+import { DocumentCompiler, TempleBuilder } from '@ossph/temple-compiler';
 
 export * from '@ossph/temple-parser';
 export * from '@ossph/temple-compiler';
@@ -12,28 +12,47 @@ export type BuilderOptions = CompilerOptions & {
   useCache?: boolean;
 };
 
-function engine(options: BuilderOptions = {}) {
-  const { useCache, ...compilerOptions } = options;
-  return (sourceFile: string) => {
-    //make a new compiler
-    const compiler = new TempleCompiler(sourceFile, compilerOptions);
-    //make a new builder
-    const builder = new TempleBuilder(compiler, useCache);
-    //return the engine
-    return builder.engine();
-  };
-}
+/**
+ * Returns a server version of TempleComponent 
+ * and a default render function
+ * 
+ * For Interface:
+ * - temple(..options...).load(file).TempleComponent
+ * - temple(..options...).load(file).render(props)
+ * - temple(..options...).source(file)
+ */
+export default function temple(options: BuilderOptions = {}) {
+  return {
+    async load(sourceFile: string) {
+      //make a new compiler
+      const compiler = new DocumentCompiler(sourceFile, {
+        ...options,
+        registerChildren: false
+      });
 
-function document(options: BuilderOptions = {}) {
-  const { useCache, ...compilerOptions } = options;
-  return (sourceFile: string) => {
-    //make a new compiler
-    const compiler = new TempleCompiler(sourceFile, compilerOptions);
-    //make a new builder
-    const builder = new TempleBuilder(compiler, useCache);
-    //return the engine
-    return builder.document();
-  };
-}
+      //make a new builder
+      const builder = new TempleBuilder(
+        compiler, 
+        options.useCache || false
+      );
 
-export { engine, document };
+      const source = await builder.load();
+
+      return (props: Record<string, any>) => {
+        return source.render(props);
+      };
+    },
+    source(sourceFile: string) {
+      //make a new compiler
+      const compiler = new DocumentCompiler(sourceFile, options);
+
+      //make a new builder
+      const builder = new TempleBuilder(
+        compiler, 
+        options.useCache || false
+      );
+
+      return builder.source();
+    }
+  };
+};

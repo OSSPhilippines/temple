@@ -12,18 +12,37 @@
   .description { text-align: center; }
   .list { text-align: center; }
 </style>
+<script>
+  //this is only called on server side
+  import { globals } from '@ossph/temple';
+  const title = 'Temple';
+  const description = 'Edit this file to change the content of the page.';
+  const start = 0;
+  const list = [
+    'Edit this file',
+    'Restyle this page',
+    'Create your own component',
+    'Star the Temple Repo',
+    'Write a blog post about Temple',
+    'Fork the respository',
+    'Contribute to the project'
+  ];
+</script>
 <html>
   <head>
-    <title>Temple</title>
+    <title>{title}</title>
     <link rel="favicon" href="/favicon.ico" />
     <link rel="shortcut icon" type="image/png" href="/favicon.png" />
   </head>
   <body class="light">
-    <header class="title">{title}</header>
+    <header class="title">
+      {title} 
+      <em>TODO</em>
+    </header>
     <div class="logo">
       <img src="/temple-logo.png" alt="Logo" />
     </div>
     <paragraph classname="description">{description}</paragraph>
-    <todo list=list start=start />
+    <todo {list} {start} />
   </body>
 </html>

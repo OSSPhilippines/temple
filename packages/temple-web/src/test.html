@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+  <script>
+    let total = 0;
+    class App extends HTMLElement {
+      constructor() {
+        super();
+        this._id = ++total;
+      }
+      connectedCallback() {
+        console.log(this._id, 'show?', this.getAttribute('show'));
+        const dom = new MutationObserver(mutations => {
+          if (document.readyState !== 'loading') {
+            console.log('DOM', this._id, 'ready state', document.readyState)
+            console.log('DOM', this._id, this.innerHTML)
+            console.log('DOM', this._id, this.childNodes)
+            dom.disconnect();
+            this.innerHTML = 'no mas' + this._id
+          }
+        });
+        dom.observe(document.body, { childList: true });
+      }
+    }
+    customElements.define('app-root', App);
+  </script>
+</head>
+<body>
+  <app-root show="true">somethings</app-root>
+  <app-root show="false"></app-root>
+</body>
+</html>

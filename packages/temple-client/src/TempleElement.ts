@@ -30,7 +30,7 @@ export default class TempleElement {
     const element = document.createElement(name);
     //set attributes
     for (const [ key, value ] of Object.entries(attributes)) {
-      if (typeof value === 'string' && key !== 'children') {
+      if (typeof value === 'string') {
         element.setAttribute(key, value);
       }
     }
@@ -92,7 +92,7 @@ export default class TempleElement {
     component.constructor.component = definition.component;
     //set attributes
     for (const [ key, value ] of Object.entries(attributes)) {
-      if (typeof value === 'string' && key !== 'children') {
+      if (typeof value === 'string') {
         component.setAttribute(key, value);
       }
     }
@@ -223,7 +223,7 @@ export default class TempleElement {
     }
     //set the new value
     this._attributes[key] = value;
-    if (typeof value === 'string' && key !== 'children') {
+    if (typeof value === 'string') {
       this._element.setAttribute(key, value);
     }
     if (!silent) {

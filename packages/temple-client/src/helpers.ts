@@ -102,7 +102,18 @@ bindAttribute('if', element => {
   'toggle'
 ].forEach(event => bindAttribute(event, element => {
   const callback = element.getAttribute(event);
-  if (typeof callback === 'function') {
+  if (typeof callback === 'function' 
+    //The following cases are for the error:
+    //TypeError: element.element.addEventListener is not a function
+    //which is from the server side rendering. TempleBrowser is a small 
+    //shim to make SSR work but cannot handle these kind of event 
+    //listeners without making the shim substantially larger.
+    //The alternative approach is to just case for it here.
+    //(the server shim doesnt do anything with the event listeners)
+    && element.element
+    && element.element.addEventListener
+    && typeof element.element.addEventListener === 'function'
+  ) {
     element.element.addEventListener(event, callback);
   }
 }));

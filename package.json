@@ -12,6 +12,7 @@
     "build:client": "yarn --cwd packages/temple-client build",
     "build:loader": "yarn --cwd packages/temple-loader build",
     "build:typescript": "yarn --cwd packages/temple-typescript build",
+    "build:web": "yarn --cwd packages/temple-web build",
     "test:parser": "yarn --cwd packages/temple-parser test",
     "test:compiler": "yarn --cwd packages/temple-compiler test",
     "dev:express": "yarn --cwd examples/with-express dev",
@@ -20,7 +21,8 @@
     "dev:nest": "yarn --cwd examples/with-nest start:dev",
     "dev:restify": "yarn --cwd examples/with-restify dev",
     "dev:hapi": "yarn --cwd examples/with-hapi dev",
-    "dev:webpack": "yarn --cwd examples/with-webpack dev"
+    "dev:webpack": "yarn --cwd examples/with-webpack dev",
+    "dev:web": "yarn --cwd packages/temple-web dev"
   },
   "devDependencies": {
     "npm-run-all": "4.1.5"

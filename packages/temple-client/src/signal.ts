@@ -1,11 +1,15 @@
 import TempleComponent from './TempleComponent';
 import Exception from './TempleException';
 
+//types
 export type Observer = {
   observed: number,
   values: { raw: any }[]
 };
 
+/**
+ * Signal registry
+ */
 export class SignalRegistry {
   //map of components and their observer
   protected static observers: Map<TempleComponent, Observer> = new Map();
@@ -65,24 +69,38 @@ export class SignalRegistry {
   }
 }
 
-export default function signal<T = any>(value: T) {
-  //if no current component
-  if (!TempleComponent.current) {
+/**
+ * Simple state management for Temple components
+ * ie. const message = signal<string>('Hello World');
+ *     message.value = 'New World'; //will cause re-render
+ *     console.log(message.value); //New World
+ */
+export default function signal<T = any>(
+  value: T,
+  component: TempleComponent|null = null
+) {
+  //if no component
+  if (!component) {
+    //try getting the current component
+    component = TempleComponent.current;
+  } 
+  //if still no current component
+  if (!component) {
     throw Exception.for(
-      'Signals can only be called within a Temple component'
+      'Signals can only be created within a Temple component'
     );
   }
   //if component is not initiated
-  if (!TempleComponent.current.initiated) {
+  if (!component.initiated) {
     //then add value to observer
-    return SignalRegistry.observe(TempleComponent.current, value);
+    return SignalRegistry.observe(component, value);
   }
   //The reason why signal() maybe called after the component
   //has initiated is because the signal() call was part of
   //the render() method. In this case, we need to get the
   //observer and return the value based on how many times
   //it was observed...
-  const observer = SignalRegistry.observer(TempleComponent.current);
+  const observer = SignalRegistry.observer(component);
   //it shouldn't be possible to not have an observer
   //for a component that has initiated, but we should
   //still case for it...

@@ -1,20 +1,16 @@
 //types
 import {
-  ComponentToken,
   IdentifierToken,
-  ImportToken, 
   MarkupToken,
   MarkupChildToken, 
   PropertyToken, 
-  ScriptToken,
-  StyleToken,
+  ScriptToken
 } from '@ossph/temple-parser';
 import type { 
   AST,
-  GeneratedChunks,
+  Compiler,
   CompilerOptions,
-  ComponentRegistry,
-  ComponentChunks
+  ComponentRegistry
 } from './types';
 //file systems
 import fs from 'fs';
@@ -33,39 +29,30 @@ import Exception from './CompilerException';
  * 
  * Provides various methods to compile Temple source code to be used
  * as a template engine or a static site generator.
- * 
- * - use body() to get the compiled body markup (usually for engine)
- * - use head() to get the compiled head markup (usually for engine)
- * - use markup() to get the generated HTML markup (all of it) 
- *   (usually for engine)
- * - use sourceCode() to get a pointer to compile the source code file
- *   (usually for static site generator)
- * - use manifest() to get a pointer to compile just the components  
- *   imports file (usually for engine)
  */
-export default class TempleCompiler {
+export default class ComponentCompiler implements Compiler {
   //the absolute source file location
   protected _absolute: string;
+  //cached AST
+  protected _ast: AST|null = null;
   //prefix brand
   protected _brand: string;
+  //build folder
+  protected _buildFolder: string;
   //current working directory
   //we need this to locate and compile imported components
   protected _cwd: string;
   //file system to use
   protected _fs: typeof fs;
+  //whether to register the custom elements
+  protected _register: boolean;
   //the compiled components cache
-  protected _registry: ComponentRegistry = {};
+  protected _registry: ComponentRegistry;
   //the source file location
   protected _sourceFile: string;
-  //cached AST
-  protected _ast: AST|null = null;
-  //build folder
-  protected _buildFolder: string;
   //tsconfig file
   protected _tsconfig: string|undefined;
-  //register children
-  protected _registerChildren: boolean;
-
+  
   /**
    * Returns abstract syntax tree
    */
@@ -97,13 +84,6 @@ export default class TempleCompiler {
   }
 
   /**
-   * Returns the compiled body markup
-   */
-  public get body() {
-    return this._body(this.ast.markup);
-  }
-
-  /**
    * Gets the brand prefix
    */
   public get brand() {
@@ -132,11 +112,40 @@ export default class TempleCompiler {
    * imported by the main source file
    */
   public get components() {
-    return this._components(
-      this._absolute, 
-      this.ast.components,
-      this._registerChildren ? 0 : 1
-    );
+    return this.ast.components.map(token => {
+      //find the absolute file path relative to this file
+      const inputSourceFile = FileLoader.route(
+        this._absolute,
+        token.source.value
+      );
+      //now find the relative path to the cwd
+      const relativeSourceFile = path.relative(this._cwd, inputSourceFile);
+      // This will also be used as the key name because it's the best 
+      // way to make sure the component is unique because it's possible 
+      // for components to have the same name it's also possible for 
+      // components to have the tag name (although rare)
+
+      //if the component is not compiled yet
+      if (!this._registry[inputSourceFile]) {
+        //make a new compiler
+        this._registry[inputSourceFile] = new ComponentCompiler(
+          `./${relativeSourceFile}`,
+          {
+            fs: this._fs,
+            cwd: this._cwd,
+            brand: this._brand,
+            register: false,
+            buildFolder: this._buildFolder,
+            tsconfig: this._tsconfig
+          },
+          this._registry
+        );
+        //call components to render
+        this._registry[inputSourceFile].components;
+      }
+      //return the compiled component
+      return this._registry[inputSourceFile];
+    });
   }
 
   /**
@@ -161,13 +170,6 @@ export default class TempleCompiler {
   }
 
   /**
-   * Returns the compiled head markup
-   */
-  public get head() {
-    return this._head(this.ast.markup);
-  }
-
-  /**
    * Returns the unique id of the source file
    */
   public get id() {
@@ -178,36 +180,27 @@ export default class TempleCompiler {
    * Returns the tml imports information
    */
   public get imports() {
-    return this._imports(this.ast.imports);
-  }
-
-  /**
-   * Returns a compiled source code for just imports
-   * (normally for engine)
-   */
-  public get manifest() {
-    return this._manifest(this.components);
-  }
-
-  /**
-   * Returns the proper HTML markup (normally for engine)
-   */
-  public get markup() {
-    return this._markup(this.ast.markup);
-  }
-
-  /**
-   * Gets the compiled components
-   */
-  public get registry() {
-    return Object.values(this._registry);
+    return this.ast.imports.map(token => ({
+      id: serialize(token.source.value),
+      typeOnly: token.typeOnly,
+      names: token.names?.map(name => name.value),
+      default: token.default?.value,
+      source: token.source.value
+    }));
   }
 
   /**
    * Returns the compiled scripts
    */
   public get scripts() {
-    return this._scripts(this.ast.scripts);
+    return this.ast.scripts.map(script => script.source);
+  }
+
+  /**
+   * Returns true if the component is registered
+   */
+  public get register() {
+    return this._register;
   }
 
   /**
@@ -221,28 +214,14 @@ export default class TempleCompiler {
    * Returns the compiled source code
    */
   public get sourceCode() {
-    return this._generate({
-      name: {
-        tag: this.tagname,
-        component: this.classname
-      },
-      path: {
-        source: this._sourceFile,
-        absolute: this._absolute
-      },
-      components: this.components,
-      imports: this.imports,
-      scripts: this.scripts,
-      styles: this.styles,
-      template: this.template
-    }, true);
+    return this._generate();
   }
 
   /**
    * Returns the compiled styles
    */
   public get styles() {
-    return this._styles(this.ast.styles);
+    return this.ast.styles.map(style => style.source);
   }
 
   /**
@@ -269,7 +248,11 @@ export default class TempleCompiler {
   /**
    * Sets the source code to compile
    */
-  public constructor(sourceFile: string, options: CompilerOptions) {
+  public constructor(
+    sourceFile: string, 
+    options: CompilerOptions,
+    registry: ComponentRegistry = {}
+  ) {
     //set the source file
     this._sourceFile = sourceFile;
     //set the file system
@@ -280,8 +263,7 @@ export default class TempleCompiler {
     this._brand = options.brand || 'x';
     //determine the build folder
     this._buildFolder = options.buildFolder || './.temple';
-    //register children (default true)
-    this._registerChildren = options.registerChildren !== false;
+    this._register = options.register !== false;
     //determine the tsconfig file
     this._tsconfig = FileLoader.absolute(
       options.tsconfig || path.resolve(__dirname, '../tsconfig.json'), 
@@ -292,145 +274,14 @@ export default class TempleCompiler {
     if (!this._fs.existsSync(this._absolute)) {
       throw Exception.for('File not found: %s', this._absolute);
     }
-  }
-
-  /**
-   * Generates dependency chunks
-   */
-  public dependency(sourceFile: string, cwd: string, level = 0) {
-    const absoluteSourceFile = FileLoader.absolute(sourceFile, cwd);
-    if (!this._fs.existsSync(absoluteSourceFile)) {
-      throw Exception.for('File not found: %s', absoluteSourceFile);
-    }
-    //determine class name
-    const basename = path.basename(sourceFile, path.extname(sourceFile));
-    //determine slug
-    const tagname = slugify(basename);
-    //determine camel (capitalized)
-    const classname = camelize(basename);  
-    //load the source code
-    const sourceCode = this._fs.readFileSync(absoluteSourceFile, 'utf-8');
-    //parse the source code
-    const ast = TempleParser.parse(sourceCode);
-    const components = this._components(
-      absoluteSourceFile, 
-      ast.components, 
-      level + 1
-    );
-    const imports = this._imports(ast.imports);
-    const scripts = this._scripts(ast.scripts);
-    const styles = this._styles(ast.styles);
-    const template = this._template(ast.markup, components);
-    //generate a build id
-    const id = serialize(path.relative(this._cwd, sourceFile));
-    //generate the code
-    const source = this._generate({
-      name: {
-        tag: tagname,
-        component: classname
-      },
-      path: {
-        source: this._sourceFile,
-        absolute: this._absolute
-      },
-      components,
-      imports,
-      scripts,
-      styles,
-      template
-    }, level === 0);
-
-    return {
-      id,
-      name: {
-        tag: tagname,
-        component: classname
-      },
-      path: {
-        source: sourceFile,
-        absolute: absoluteSourceFile
-      },
-      source
-    };
-  }
-
-  /**
-   * Generates the body markup
-   */
-  protected _body(markup: MarkupToken[]) {
-    if (markup.length === 0
-      || markup[0].type !== 'MarkupExpression' 
-      || markup[0].name !== 'html'
-    ) {
-      return ''
-    }
-
-    const html = markup[0];
-    if (!html.children || html.children.length === 0) {
-      return '';
-    }
-
-    let body: MarkupToken|null = null;
-    html.children.forEach(child => {
-      if (child.type === 'MarkupExpression' && child.name === 'body') {
-        body = child;
-      }
-    });
-
-    if (body === null) {
-      return '';
-    }
-
-    return this._markup((body as MarkupToken).children || []);
-  }
-
-  /**
-   * Returns the compiled components
-   */
-  protected _components(
-    sourceFile: string, 
-    components: ComponentToken[],
-    level = 0
-  ) {
-    return components.map(token => {
-      //find the absolute file path relative to this file
-      const inputSourceFile = FileLoader.route(
-        sourceFile,
-        token.source.value
-      );
-
-      // This will also be used as the key name because it's the best 
-      // way to make sure the component is unique because it's possible 
-      // for components to have the same name it's also possible for 
-      // components to have the tag name (although rare)
-
-      //if the component is not compiled yet
-      if (!this._registry[inputSourceFile]) {
-        //compile it
-        this._registry[inputSourceFile] = this.dependency(
-          token.source.value, 
-          path.dirname(sourceFile),
-          level
-        );
-      }
-      //return the compiled component
-      return this._registry[inputSourceFile];
-    });
+    //set registry
+    this._registry = registry;
   }
 
   /**
    * Generates code
    */
-  protected _generate(chunks: GeneratedChunks, register = false) {
-    const { 
-      name,
-      path: componentsPath,
-      components, 
-      imports, 
-      scripts, 
-      styles, 
-      template 
-    } = chunks;
+  protected _generate() {
     //make a new project
     const project = new Project({
       tsConfigFilePath: this.tsconfig,
@@ -454,8 +305,8 @@ export default class TempleCompiler {
     });
     //get path without extension
     //ex. /path/to/Counter.tml -> /path/to/Counter
-    const extname = path.extname(componentsPath.absolute);
-    const filePath = componentsPath.absolute.slice(0, -extname.length);
+    const extname = path.extname(this._absolute);
+    const filePath = this._absolute.slice(0, -extname.length);
     //create a new source file
     const source = project.createSourceFile(`${filePath}.ts`);
     //import { TempleElement, TempleComponent } from '@ossph/temple-client'
@@ -464,17 +315,17 @@ export default class TempleCompiler {
       namedImports: [ 'TempleElement', 'TempleComponent' ]
     });
     //import Counter from './Counter'
-    components.forEach(component => {
+    this.components.forEach(component => {
       //now import
       source.addImportDeclaration({
-        moduleSpecifier: `./${component.name.component}_${component.id}`,
+        moduleSpecifier: `./${component.classname}_${component.id}`,
         //we make sure there's no collisions
         //this is also matched when generating the component tree
-        defaultImport: `${component.name.component}_${component.id}`
+        defaultImport: `${component.classname}_${component.id}`
       });
     });
     //import others from <script>
-    imports.forEach(imported => {
+    this.imports.forEach(imported => {
       if (imported.default && imported.names) {
         source.addImportDeclaration({
           isTypeOnly: imported.typeOnly,
@@ -498,7 +349,7 @@ export default class TempleCompiler {
     });
     //export default class FoobarComponent extends TempleComponent
     const component = source.addClass({
-      name: name.component,
+      name: this.classname,
       extends: 'TempleComponent',
       isDefaultExport: true,
     });
@@ -506,24 +357,24 @@ export default class TempleCompiler {
     component.addProperty({
       name: 'component',
       isStatic: true,
-      initializer: `[ '${name.tag}', '${name.component}' ] as [ string, string ]`
+      initializer: `[ '${this.tagname}', '${this.classname}' ] as [ string, string ]`
     });
     //public style()
     component.addMethod({
       name: 'styles',
       returnType: 'string',
-      statements: `return \`${styles.join('\n').trim()}\`;`
+      statements: `return \`${this.styles.join('\n').trim()}\`;`
     });
     //public template()
     component.addMethod({
       name: 'template',
-      statements: `${scripts.join('\n')}\nreturn () => ${template.trim()};`
+      statements: `${this.scripts.join('\n')}\nreturn () => ${this.template.trim()};`
     });
 
-    if (register) {
+    if (this._register) {
       //customElements.define('foo-bar', 'FoobarComponent');
       source.addStatements(
-        `customElements.define('${this._brand}-${name.tag}', ${name.component});`
+        `customElements.define('${this._brand}-${this.tagname}', ${this.classname});`
       );
     }
 
@@ -531,123 +382,11 @@ export default class TempleCompiler {
   }
 
   /**
-   * Generates the head markup
-   */
-  protected _head(markup: MarkupToken[]) {
-    if (markup.length === 0
-      || markup[0].type !== 'MarkupExpression' 
-      || markup[0].name !== 'html'
-    ) {
-      return ''
-    }
-
-    const html = markup[0];
-    if (!html.children || html.children.length === 0) {
-      return '';
-    }
-
-    let head: MarkupToken|null = null;
-    html.children.forEach(child => {
-      if (child.type === 'MarkupExpression' && child.name === 'head') {
-        head = child;
-      }
-    });
-
-    if (head === null) {
-      return '';
-    }
-
-    return this._markup((head as MarkupToken).children || []);
-  }
-
-  /**
-   * Returns the compiled imports
-   */
-  protected _imports(imports: ImportToken[]) {
-    return imports.map(token => ({
-      id: serialize(token.source.value),
-      typeOnly: token.typeOnly,
-      names: token.names?.map(name => name.value),
-      default: token.default?.value,
-      source: token.source.value
-    }));
-  }
-
-  /**
-   * Returns a compiled source code for just imports
-   * (normally for engine)
-   */
-  protected _manifest(components: ComponentChunks[]) {
-    //make a new project
-    const project = new Project({
-      tsConfigFilePath: this.tsconfig,
-      skipAddingFilesFromTsConfig: true,
-      compilerOptions: {
-        outDir: this.buildFolder,
-        // Generates corresponding '.d.ts' file.
-        declaration: true, 
-        // Generates a sourcemap for each corresponding '.d.ts' file.
-        declarationMap: true, 
-        // Generates corresponding '.map' file.
-        sourceMap: true, 
-        // Set the target JavaScript version
-        target: ts.ScriptTarget.ESNext,  
-        // Set the module system
-        module: ts.ModuleKind.CommonJS
-      },
-      manipulationSettings: {
-        indentationText: IndentationText.TwoSpaces
-      }
-    });
-    //create a new source file
-    const source = project.createSourceFile('manifest.ts');
-    components.forEach(component => {
-      //import './components/Counter_abc123'
-      source.addImportDeclaration({
-        moduleSpecifier: `./components/${component.name.component}_${component.id}`
-      });
-    });
-
-    return source;
-  }
-
-  /**
-   * Generates the markup
-   */
-  protected _markup(markup: MarkupChildToken[]) {
-    return markup.map(child => {
-      let expression = '';
-      if (child.type === 'MarkupExpression') { 
-        expression += this._markupTag(child);
-      } else if (child.type === 'Literal') {
-        expression += child.value;
-      } else if (child.type === 'ProgramExpression') {
-        expression += `\${${child.source}}`;
-      }
-      return expression;
-    }).join('');
-  }
-
-  /**
-   * Returns the compiled scripts
-   */
-  protected _scripts(scripts: ScriptToken[]) {
-    return scripts.map(script => script.source);
-  }
-
-  /**
-   * Returns the compiled styles
-   */
-  protected _styles(styles: StyleToken[]) {
-    return styles.map(style => style.source);
-  }
-
-  /**
    * Transforms markup to JS for the template() function
    */
   protected _template(
     markup: MarkupChildToken[], 
-    components: ComponentChunks[]
+    components: Compiler[]
   ) {
     return "[\n" + markup.map(child => {
       let expression = '';
@@ -658,6 +397,9 @@ export default class TempleCompiler {
         } else if (child.name === 'each') {
           //syntax <each value=item key=i from=list>...</each>
           return this._templateIterator(child, components);
+        } else if (child.name === 'children') {
+          //syntax <children />
+          return '...(this.originalChildren || [])';
         }
         //syntax <div title="Some Title">...</div>
         expression += this._templateElement(expression, child, components);
@@ -681,53 +423,7 @@ export default class TempleCompiler {
   private _isComponent(token: MarkupToken) {
     return Object
       .values(this._registry)
-      .find(component => component.name.tag === token.name);
-  }
-
-  /**
-   * Generates the markup for an attribute
-   */
-  private _markupAttribute(property: PropertyToken) {
-    if (property.value.type === 'Literal') {
-      if (typeof property.value.value === 'string') {
-        return `${property.key.name}="${property.value.value}"`;
-      }
-      //null, true, false, number
-      return `${property.key.name}="data:${
-        property.value.value
-      }"`;
-    } else if (property.value.type === 'Identifier') {
-      return `${property.key.name}="prop:${
-        property.value.name
-      }"`;
-    } else if (property.value.type === 'ProgramExpression') {
-      return `${property.key.name}=\${${property.value.source}}`;
-    }
-    return false;
-  }
-
-  /**
-   * Generates the markup for a tag
-   */
-  private _markupTag(token: MarkupToken) {
-    const tagName = this._tagName(token); 
-    let expression = `<${tagName}`;
-    if (token.attributes && token.attributes.properties.length > 0) {
-      expression += ' ' + token.attributes.properties
-        .map(this._markupAttribute)
-        .filter(Boolean)
-        .join(' ');
-    }
-    if (token.kind === 'inline' && !this._isComponent(token)) {
-      expression += ' />';
-    } else {
-      expression += '>';
-      if (token.children) {
-        expression += this._markup(token.children);
-      }
-      expression += `</${tagName}>`;
-    }
-    return expression;
+      .find(component => component.tagname === token.name);
   }
 
   /**
@@ -744,7 +440,7 @@ export default class TempleCompiler {
    */
   private _templateConditional(
     token: MarkupToken, 
-    components: ComponentChunks[]
+    components: Compiler[]
   ) {
     let expression = '';
     //syntax <if true={count > 1}>...</if>
@@ -797,15 +493,15 @@ export default class TempleCompiler {
   private _templateElement(
     expression: string, 
     token: MarkupToken,
-    components: ComponentChunks[]
+    components: Compiler[]
   ) {
     //check to see if the token refers to a component imported by this file
     const instance = components.find(
-      component => component.name.tag === token.name
+      component => component.tagname === token.name
     );
     //if the token refers to a component imported by this file
     if (instance) {
-      const componentName = `${instance.name.component}_${instance.id}`;
+      const componentName = `${instance.classname}_${instance.id}`;
       expression += `TempleElement.localize(${componentName}, {`;
     } else {
       const tagName = this._tagName(token); 
@@ -864,7 +560,7 @@ export default class TempleCompiler {
   /**
    * Generates the markup for an iterator (each)
    */
-  private _templateIterator(token: MarkupToken, components: ComponentChunks[]) {
+  private _templateIterator(token: MarkupToken, components: Compiler[]) {
     let expression = '';
     //syntax <each value=item key=i from=list>...</each>
     if (!token.attributes 

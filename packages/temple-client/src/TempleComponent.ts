@@ -1,16 +1,15 @@
 import TempleElement from './TempleElement';
 import TempleEmitter from './TempleEmitter';
+import { globals, bindings  } from './globals';
 
-//The server will pass data to the browser using a <script> in the head.
-//This data will be stored in a global variable window.__SERVER_PROPS__.
-declare global { 
-  interface Window {__SERVER_PROPS__: Record<string, any> }
-}
-const ServerProps = window.__SERVER_PROPS__;
+//common type
+export type Hash = Record<string, any>;
 
 export default abstract class TempleComponent extends HTMLElement {
   //current component
   protected static _current: TempleComponent|null = null;
+  //total number of components created
+  protected static _total = 0;
   //name of the component
   public static component: [ string, string ];
 
@@ -21,6 +20,9 @@ export default abstract class TempleComponent extends HTMLElement {
     return TempleComponent._current;
   }
 
+  //the id of the component
+  //NOTE: the id is undefined on the server
+  protected _id: number;
   //whether the component has initiated
   //this is a flag used by signals to check
   //the number of signals that exists
@@ -30,7 +32,7 @@ export default abstract class TempleComponent extends HTMLElement {
   //(wo initializing the variables again)
   protected _template: (() => (Element|false)[])|null = null;
   //the initial children
-  protected _children: string|undefined = undefined;
+  protected _children: ChildNode[]|undefined = undefined;
 
   /**
    * Returns the component styles
@@ -41,6 +43,21 @@ export default abstract class TempleComponent extends HTMLElement {
    * Returns the component template
    */
   public abstract template(): () => (Element|false)[];
+
+  /**
+   * Returns the component's names
+   */
+  public get component() {
+    return (this.constructor as typeof TempleComponent).component;
+  }
+
+  /**
+   * Returns the original component's children
+   * before the component was initiated
+   */
+  public get originalChildren() {
+    return this._children;
+  }
 
   /**
    * Returns the component's element registry
@@ -66,7 +83,7 @@ export default abstract class TempleComponent extends HTMLElement {
   /**
    * Sets the component properties
    */
-  public set props(props: Record<string, any>) {
+  public set props(props: Hash) {
     //if the serialized props is the same as the current serialized props
     if (this.element.serialize(props) === this.element.serialize()) {
       //dont set
@@ -90,10 +107,10 @@ export default abstract class TempleComponent extends HTMLElement {
             decoded = null;
           }
           properties[name] = decoded;
-        } else if (value.startsWith('prop:')) {
-          const key = value.substring(5);
-          if (typeof ServerProps[key] !== 'undefined') {
-            properties[name] = ServerProps[key];
+        } else if (value.startsWith('global:')) {
+          const key = value.substring(7);
+          if (globals.has(key)) {
+            properties[name] = globals.get(key);
           }
         }
       }
@@ -109,6 +126,7 @@ export default abstract class TempleComponent extends HTMLElement {
   public constructor() {
     super();
     TempleElement.register(this);
+    this._id = ++TempleComponent._total;
   }
 
   /**
@@ -191,19 +209,19 @@ export default abstract class TempleComponent extends HTMLElement {
     this._initiated = true;
     //emit the render event
     TempleEmitter.emit('render', this);
-    return this.innerHTML;
+    return this.shadowRoot ? this.shadowRoot.innerHTML :this.innerHTML;
   }
 
   /**
    * Waits for the document to be first ready
    */
   public wait() {
-    if (this.ready()) {
-      this.update(this.innerHTML);
+    if (document.readyState !== 'loading') {
+      this.update();
     } else {
       const mutationObserver = new MutationObserver(() => {
-        if (this.ready()) {
-          this.update(this.innerHTML);
+        if (document.readyState !== 'loading') {
+          this.update();
           mutationObserver.disconnect();
         }
       });
@@ -212,51 +230,28 @@ export default abstract class TempleComponent extends HTMLElement {
   }
 
   /**
-   * Returns true when the document is ready
-   */
-  protected ready() {
-    // check if the parser has already passed the end tag of the component
-    // in which case this element, or one of its parents, should have a nextSibling
-    // if not (no whitespace at all between tags and no nextElementSiblings either)
-    // resort to DOMContentLoaded or load having triggered
-    const parents: ParentNode[] = [];
-    // collect the parentNodes
-    let el: ParentNode = this;
-    while (el.parentNode) {
-      el = el.parentNode;
-      parents.push(el);
-    }
-
-    return [ this, ...parents ].some(element => element.nextSibling) 
-      || document.readyState !== 'loading';
-  }
-
-  /**
    * Sets the initial properties and children
    */
-  protected update(children: string) { 
-    const entries = Object.fromEntries(
+  protected update() { 
+    //get the attributes natively set using `<input value="foo" />`
+    const attributes: Hash = Object.fromEntries(
       Array.from(this.attributes).map(
         attribute => [ attribute.nodeName, attribute.nodeValue ]
       )
     );
-    //NOTE: Can't find a way to set the this._children if children 
-    //comes up undefined. For example on ready, the children is 
-    //undefined. then on ready again it's something. The initial state 
-    //of children is undefined, but it will set this._children to the 
-    //second value.Need to check this won't be an issue, but if it is, 
-    //the problem is here.
+    //look for non-string values in the bindings
+    const data = bindings.data[String(this._id)];
+    if (typeof data === 'object') {
+      Object.assign(attributes, data);
+    }
+    //if children are not set
     if (typeof this._children === 'undefined') {
-      this._children = children;
+      this._children = Array.from(this.childNodes || []);
     }
     //settings props will try to trigger a render
-    this.props = { 
-      ...this.props, 
-      ...entries, 
-      children: this._children
-    };
+    this.props = { ...this.props, ...attributes};
     //only render if not initiated
-    if (!this.initiated) {
+    if (!this._initiated) {
       this.render();
     }
   }

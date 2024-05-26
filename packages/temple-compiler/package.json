@@ -21,11 +21,11 @@
     "test": "nyc ts-mocha tests/*.test.ts"
   },
   "dependencies": {
-    "@lit-labs/ssr-dom-shim": "1.2.0",
     "@ossph/temple-client": "0.0.1",
     "@ossph/temple-parser": "0.0.1",
     "esbuild": "0.21.3",
     "fast-glob": "3.3.2",
+    "linkedom": "0.18.0",
     "typescript": "5.3.3",
     "ts-morph": "22.0.0",
     "webpack": "5.91.0"

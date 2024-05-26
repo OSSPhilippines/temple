@@ -1,7 +1,7 @@
 import type { CompilerOptions } from '@ossph/temple-compiler';
 import { urlToRequest } from 'loader-utils';
 //import { validate } from 'schema-utils';
-import { TempleBuilder, TempleCompiler } from '@ossph/temple-compiler';
+import { TempleBuilder, DocumentCompiler } from '@ossph/temple-compiler';
 
 type Loader = {
   async: () => (error: Error|null, results: string) => void,
@@ -18,15 +18,15 @@ const templeLoader: LoaderFunction = function () {
   const inputPath = urlToRequest(self.resourcePath).replace('.//', '/');
   // Apply some transformations to the source...
   //make a new compiler
-  const compiler = new TempleCompiler(inputPath, {
+  const compiler = new DocumentCompiler(inputPath, {
     ...options,
     registerChildren: false
   });
   //make a new builder
   const builder = new TempleBuilder(compiler, false);
   //return the engine
-  builder.app().then(source => {
-    callback(null, source);
+  builder.load().then(source => {
+    callback(null, source.render());
   });
 };
 
