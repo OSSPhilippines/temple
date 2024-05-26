@@ -242,6 +242,8 @@ export default class DocumentCompiler extends ComponentCompiler {
         });
       }
     });
+    //TempleElement.brand = 'temple';
+    source.addStatements(`TempleElement.brand = '${this._brand}';`);
     //export default class FoobarComponent extends TempleComponent
     const component = source.addClass({
       name: this.classname,

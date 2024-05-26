@@ -15,8 +15,17 @@ export type RegistryIterator<T = any> = (
  * A registry of all TempleElement instances to add better attribute handling
  */
 export default class TempleElement {
+  //prefix brand
+  protected static _brand = 'temple';
   //A registry of all TempleElement instances
-  protected static registry = new Map<Element, TempleElement>();
+  protected static _registry = new Map<Element, TempleElement>();
+
+  /**
+   * Sets the brand prefix
+   */
+  public static set brand(value: string) {
+    this._brand = value;
+  }
 
   /**
    * Creates a new TempleElement instance
@@ -45,7 +54,7 @@ export default class TempleElement {
    */
   public static filter(callback: RegistryIterator<boolean>) {
     const elements: TempleElement[] = [];
-    this.registry.forEach((temple, html) => {
+    this._registry.forEach((temple, html) => {
       if (callback(temple, html)) {
         elements.push(temple);
       }
@@ -57,7 +66,7 @@ export default class TempleElement {
    * Returns the TempleElement instance for the given element
    */
   public static get(element: Element) {
-    return this.registry.get(element) || null;
+    return this._registry.get(element) || null;
   }
 
   /**
@@ -76,14 +85,14 @@ export default class TempleElement {
     //inside of another component without having to register it.
 
     //get the tagname for the component
-    const tagname = definition.component[0];
+    const tagname = `${this._brand}-${definition.component[0]}`;
     // Create a template for the inner component
     const template = document.createElement('template');
-    template.innerHTML = `<x-${tagname}></x-${tagname}>`;
+    template.innerHTML = `<${tagname}></${tagname}>`;
     // Create a document fragment and append the inner component instance
     const fragment = template.content;
     //get the shallow component shell
-    const component = fragment.querySelector(`x-${tagname}`) as TempleComponent;
+    const component = fragment.querySelector(`${tagname}`) as TempleComponent;
     //copy the prototype
     Object.setPrototypeOf(component, definition.prototype);
     //set the constructor
@@ -113,7 +122,7 @@ export default class TempleElement {
    */
   public static map<T = any>(callback: RegistryIterator<T>) {
     const elements: T[] = [];
-    this.registry.forEach((temple, html) => {
+    this._registry.forEach((temple, html) => {
       elements.push(callback(temple, html));
     });
     return elements;
@@ -123,7 +132,7 @@ export default class TempleElement {
    * Registers a new TempleElement instance
    */
   public static register(element: Element, attributes?: Record<string, any>) {
-    if (this.registry.has(element)) {
+    if (this._registry.has(element)) {
       return this.get(element) as TempleElement;
     }
     return new TempleElement(element, attributes || {});
@@ -155,7 +164,7 @@ export default class TempleElement {
     this._element = element;
     this._attributes = attributes;
     //add to registry
-    TempleElement.registry.set(this._element, this);
+    TempleElement._registry.set(this._element, this);
   }
 
   /**

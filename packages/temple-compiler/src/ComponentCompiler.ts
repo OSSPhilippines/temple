@@ -260,7 +260,7 @@ export default class ComponentCompiler implements Compiler {
     //set the current working directory
     this._cwd = options.cwd || process.cwd();
     //set the prefix brand
-    this._brand = options.brand || 'x';
+    this._brand = options.brand || 'temple';
     //determine the build folder
     this._buildFolder = options.buildFolder || './.temple';
     this._register = options.register !== false;
@@ -347,6 +347,8 @@ export default class ComponentCompiler implements Compiler {
         });
       }
     });
+    //TempleElement.brand = 'temple';
+    source.addStatements(`TempleElement.brand = '${this._brand}';`);
     //export default class FoobarComponent extends TempleComponent
     const component = source.addClass({
       name: this.classname,
