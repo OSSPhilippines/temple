@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<style>
+  :host {
+    display: block;
+    left: 0;
+    height: 60px;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  header {
+    align-items: center;
+    background-color: #232323;
+    display: flex;
+    padding: 0 20px;
+  }
+  img {
+    height: 26px;
+    margin-right: 10px;
+  }
+  h3 {
+    flex-grow: 1;
+    font-weight: semibold;
+    text-transform: uppercase;
+  }
+  nav {
+    align-items: center;
+    display: flex;
+  }
+  a, a:link a:hover, a:active, a:visited {
+    color: #EFEFEF;
+    text-decoration: none;
+  }
+  .github {
+    color: #EFEFEF;
+    font-size: 27px;
+    margin-left: 10px;
+  }
+  .npm {
+    background-color: #CB3837;
+    border-radius: 20px;
+    color: #424242;
+    font-size: 16px;
+    margin-left: 5px;
+    padding: 5px;
+    text-align: center;
+  }
+  .discord {
+    background-color: #7289DA;
+    border-radius: 20px;
+    color: #EFEFEF;
+    font-size: 16px;
+    margin-left: 5px;
+    padding: 5px;
+    text-align: center;
+  }
+</style>
+<script>
+  //this is only called on server side
+  import { props } from '@ossph/temple';
+  const { children } = props();
+</script>
+<header>{children}</header>

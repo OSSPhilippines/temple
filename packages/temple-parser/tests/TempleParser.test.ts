@@ -12,6 +12,17 @@ describe('Temple Parser', () => {
     expect(actual.components.length).to.equal(4);
     expect(actual.scripts.length).to.equal(0);
     expect(actual.styles.length).to.equal(1);
-    expect(actual.markup.length).to.equal(1);
+    expect(actual.markup.length).to.equal(2);
+  });
+
+  it('Should parse link (inline) to style (block) issue', () => {
+    const actual = TempleParser.parse(
+      fs.readFileSync(__dirname + '/templates/components/panel-header.tml', 'utf8')
+    );
+    //console.log(JSON.stringify(actual, null, 2));
+    expect(actual.components.length).to.equal(0);
+    expect(actual.scripts.length).to.equal(1);
+    expect(actual.styles.length).to.equal(1);
+    expect(actual.markup.length).to.equal(3);
   });
 });

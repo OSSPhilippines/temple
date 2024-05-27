@@ -206,12 +206,13 @@ export default class DocumentCompiler extends ComponentCompiler {
     const filePath = this._absolute.slice(0, -extname.length);
     //create a new source file
     const source = project.createSourceFile(`${filePath}.ts`);
-    //import { TempleElement, TempleComponent } from '@ossph/temple-client'
+    //import { TempleElement, TempleComponent, ... } from '@ossph/temple-client'
     source.addImportDeclaration({
       moduleSpecifier: '@ossph/temple-client',
       namedImports: [ 
         'TempleElement', 
-        'TempleComponent', 
+        'TempleComponent',
+        'TempleException', 
         'globals', 
         'bindings',
         'globalNamespace',
@@ -312,14 +313,7 @@ export default class DocumentCompiler extends ComponentCompiler {
         //reset the current component before validating
         TempleComponent._current = null;
         this._initiated = true;
-        //check if the root element is an <html> tag
-        if (children.length !== 1 
-          || children[0].nodeName.toLowerCase() !== 'html'
-        ) {
-          throw TempleException.for('Document must have an <html> tag.');
-        }
         
-        //we are good to go...
         //NOTE: in document there is no shadow dom
         //so there's no need to case for it...
     
@@ -335,7 +329,14 @@ export default class DocumentCompiler extends ComponentCompiler {
         this.textContent = '';
         children.forEach(child => this.appendChild(child));
         //this is the <html> tag
-        let document = this.innerHTML;
+        let document = this.innerHTML.trim();
+        //check if the root element is an <html> tag
+        if (!document.toLowerCase().startsWith('<html')) {
+          throw TempleException.for('Document must start with an <html> tag.');
+        }
+
+        //we are good to go
+
         //if there are styles
         if (styles.length > 0) {
           //add styles to the head

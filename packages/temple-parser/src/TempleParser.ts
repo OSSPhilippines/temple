@@ -11,7 +11,8 @@ import type {
   MarkupChildToken,
   UnknownMarkupToken,
   SymbolComplete as Symbol,
-  LiteralToken
+  LiteralToken,
+  Token
 } from './types';
 
 import ts from 'typescript';
@@ -45,6 +46,8 @@ export default class TempleParser {
   protected _stack: UnknownMarkupToken[] = [];
   //the markup tokens
   protected _markup: MarkupToken[] = [];
+  //the historical tokens
+  protected _history: Token[] = [];
   //the script imports
   protected _imports: ImportToken[] = [];
   //the import components
@@ -187,11 +190,9 @@ export default class TempleParser {
       //add the offset to the start and end
       name.start += offset;
       name.end += offset;
-      this._dataParser.optional('whitespace');
       //<div class=
       const hasValue = this._dataParser.optional('=');
       if (hasValue) {
-        this._dataParser.optional('whitespace');
         //<div class="value"
         const value = this._dataParser.expect<DataToken>([ ...anyData, 'InlineScript' ]);
         //add the offset to the start and end
@@ -347,6 +348,8 @@ export default class TempleParser {
       };
       //add scripts to the scripts
       this._scripts.push(script);
+      //also add it to history
+      this._history.push(script);
       //we are no longer parsing a resource
       this._resource = false;
       return;
@@ -358,14 +361,18 @@ export default class TempleParser {
           .for('Mismatched closing tag %s', name)
           .withPosition(symbol.start, symbol.end);
       }
-      //add the style to the styles
-      this._styles.push({
+      //create a style token
+      const styles: StyleToken = {
         type: 'StyleExpression',
         start: open.start,
         end: symbol.end,
         attributes: open.attributes,
         source: this._symbolParser.substring(open.end, symbol.start)
-      });
+      };
+      //add the style to the styles
+      this._styles.push(styles);
+      //also add it to history
+      this._history.push(styles);
       //we are no longer parsing a resource
       this._resource = false;
       return;
@@ -432,10 +439,10 @@ export default class TempleParser {
       return;
     }
     //We have no parent
-    //if we have any markup tokens
-    if (this._markup.length > 0) {
-      //find the gap between the last markup token and the open tag
-      const last = this._markup[this._markup.length - 1];
+    //if we have any tokens before this
+    if (this._history.length > 0) {
+      //find the gap between the last token and the open tag
+      const last = this._history[this._history.length - 1];
       if (last.end < open.start) {
         //and add it as a text node
         this._text(this._markup, last.end, open.start);
@@ -443,6 +450,8 @@ export default class TempleParser {
     } 
     //finally, add the token to the markup
     this._markup.push(token);
+    //also add it to history
+    this._history.push(token);
   }
 
   /**
@@ -450,9 +459,9 @@ export default class TempleParser {
    */
   protected _mode(symbol: Symbol) {
     const value = this._substring(symbol.start, symbol.end);
-    return value.endsWith('/>') 
-      ? 'self' : value.startsWith('</') 
-      ? 'close' : 'open'
+    return value.endsWith('/>') ? 'self' 
+      : value.startsWith('</') ? 'close' 
+      : 'open'
   }
 
   /**
@@ -516,8 +525,8 @@ export default class TempleParser {
         const config = DataParser.object(attributes);
         //if this is an import tag and there's an href
         if (config.rel === 'import' && config.href) {
-          //add the import to the imports
-          this._components.push({
+          //create a component token
+          const component: ComponentToken = {
             type: 'ComponentDeclaration',
             start: symbol.start,
             end: symbol.end,
@@ -528,7 +537,11 @@ export default class TempleParser {
               value: config.href,
               raw: `'${config.href}'`
             }
-          });
+          };
+          //add the import to the imports
+          this._components.push(component);
+          //also add it to history
+          this._history.push(component)
           return;
         }
       }
@@ -583,6 +596,8 @@ export default class TempleParser {
     }
     //finally, add the markup to the markup
     this._markup.push(markup);
+    //also add it to history
+    this._history.push(markup);
   }
 
   /**
