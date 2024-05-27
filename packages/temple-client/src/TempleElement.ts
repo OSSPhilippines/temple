@@ -85,7 +85,9 @@ export default class TempleElement {
     //inside of another component without having to register it.
 
     //get the tagname for the component
-    const tagname = `${this._brand}-${definition.component[0]}`;
+    const tagname = this._brand.length > 0 
+      ? `${this._brand}-${definition.component[0]}`
+      : definition.component[0];
     // Create a template for the inner component
     const template = document.createElement('template');
     template.innerHTML = `<${tagname}></${tagname}>`;

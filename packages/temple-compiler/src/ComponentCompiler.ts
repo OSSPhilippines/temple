@@ -260,7 +260,9 @@ export default class ComponentCompiler implements Compiler {
     //set the current working directory
     this._cwd = options.cwd || process.cwd();
     //set the prefix brand
-    this._brand = options.brand || 'temple';
+    this._brand = typeof options.brand === 'string'
+      ? options.brand
+      : 'temple';
     //determine the build folder
     this._buildFolder = options.buildFolder || './.temple';
     //by default, we register the custom elements
@@ -383,11 +385,17 @@ export default class ComponentCompiler implements Compiler {
         return () => ${this.template.trim()};`
     });
 
-    if (this._register) {
+    if (this._register && this._brand.length > 0) {
       //customElements.define('foo-bar', 'FoobarComponent');
-      source.addStatements(
-        `customElements.define('${this._brand}-${this.tagname}', ${this.classname});`
-      );
+      if (this._brand.length > 0) {
+        source.addStatements(
+          `customElements.define('${this._brand}-${this.tagname}', ${this.classname});`
+        );
+      } else {
+        source.addStatements(
+          `customElements.define('${this.tagname}', ${this.classname});`
+        );
+      }
     }
 
     return source;
@@ -439,7 +447,7 @@ export default class ComponentCompiler implements Compiler {
    * Determines the tag name
    */
   private _tagName(token: MarkupToken) {
-    return this._isComponent(token)
+    return this._isComponent(token) && this._brand.length > 0
       ? `${this._brand}-${token.name}`
       : token.name; 
   }
