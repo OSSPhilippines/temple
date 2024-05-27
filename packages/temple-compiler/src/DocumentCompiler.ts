@@ -213,10 +213,11 @@ export default class DocumentCompiler extends ComponentCompiler {
         'TempleElement', 
         'TempleComponent',
         'TempleException', 
-        'globals', 
-        'bindings',
-        'globalNamespace',
-        'bindingNamespace'
+        //set like this to prevent collisions
+        'globals as __GLOBALS__', 
+        'bindings as __BINDINGS__',
+        'globalNamespace as __GLOBALS_NAMESPACE__',
+        'bindingNamespace as __BINDINGS_NAMESPACE__'
       ]
     });
     //import Counter from './Counter'
@@ -278,8 +279,8 @@ export default class DocumentCompiler extends ComponentCompiler {
       statements: `
         ${this.scripts.length > 0 
           ? this.scripts.join('\n')
-          : (`const props = globals.data;`)}
-        bindings.data = ${
+          : (`const props = __GLOBALS__.data;`)}
+          __BINDINGS__.data = ${
           this._bindings(this.ast.markup, components)
         };
         return () => ${this.template.trim()};
@@ -297,7 +298,7 @@ export default class DocumentCompiler extends ComponentCompiler {
       statements: (`
         //if there are props
         if (props) {
-          globals.data = props;
+          __GLOBALS__.data = props;
         }
         //set the current component
         TempleComponent._current = this;
@@ -348,11 +349,11 @@ export default class DocumentCompiler extends ComponentCompiler {
         //add props and bindings to the head
         document = document.replace(
           \`</\${tags.head}>\`, 
-          \`<\${tags.script}>window.\${globalNamespace}=\${JSON.stringify(
-            globals.data
+          \`<\${tags.script}>window.\${__GLOBALS_NAMESPACE__}=\${JSON.stringify(
+            __GLOBALS__.data
           )};
-          window.\${bindingNamespace}=\${JSON.stringify(
-            bindings.data
+          window.\${__BINDINGS_NAMESPACE__}=\${JSON.stringify(
+            __BINDINGS__.data
           )};</\${tags.script}></\${tags.head}>\`
         );
         if (script && script.length > 0) {

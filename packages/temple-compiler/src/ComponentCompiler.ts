@@ -313,7 +313,12 @@ export default class ComponentCompiler implements Compiler {
     //import { TempleElement, TempleComponent } from '@ossph/temple-client'
     source.addImportDeclaration({
       moduleSpecifier: '@ossph/temple-client',
-      namedImports: [ 'TempleElement', 'TempleComponent' ]
+      namedImports: [ 
+        'TempleElement', 
+        'TempleComponent',
+        //if no script, add props (to be used below)
+        ...this.scripts.length === 0 ? [ 'props as __PROPS__' ]: []
+      ]
     });
     //import Counter from './Counter'
     this.components.forEach(component => {
@@ -371,7 +376,11 @@ export default class ComponentCompiler implements Compiler {
     //public template()
     component.addMethod({
       name: 'template',
-      statements: `${this.scripts.join('\n')}\nreturn () => ${this.template.trim()};`
+      statements: `${this.scripts.length > 0 
+        ? this.scripts.join('\n')
+        //allow scriptless components to use props
+        : (`const props = __PROPS__();`)}
+        return () => ${this.template.trim()};`
     });
 
     if (this._register) {

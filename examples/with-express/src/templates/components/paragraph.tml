@@ -1,5 +1,1 @@
-<script>
-  import { props } from '@ossph/temple';
-  const { classname, children } = props();
-</script>
-<p class=classname>{children}</p>
+<p class={props.classname}>{props.children}</p>
