@@ -1,0 +1,141 @@
+<link rel="stylesheet" type="text/css" href="/temple/styles/theme.css" />
+<style>
+  .btn, .btn:link, .btn:hover, .btn:active .btn:visited {
+    border: 0;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+  }
+  .btn-xs {
+    padding: 2px 4px;
+  }
+  .btn-sm {
+    padding: 4px 8px;
+  }
+  .btn-md {
+    padding: 6px 12px;
+  }
+  .btn-lg {
+    padding: 8px 16px;
+  }
+  .btn-xl {
+    padding: 10px 20px;
+  }
+  .btn-2xl {
+    padding: 12px 24px;
+  }
+  .btn-3xl {
+    padding: 14px 28px;
+  }
+  .btn-4xl {
+    padding: 16px 32px;
+  }
+  .btn-5xl {
+    padding: 18px 36px;
+  }
+</style>
+<script>
+  //this is only called on server side
+  import { props } from '@ossph/temple';
+  // Separate component related props from field attributes
+  const { 
+    block,       full,     color,
+    xs,          sm,       md,
+    lg,          xl,       xl2, 
+    xl3,         xl4,      xl5, 
+    curved,      rounded,  pill,
+    info,        warning,  success, 
+    error,       muted,    outline, 
+    transparent, solid,    style,
+    classname,   children, href,
+    ...attributes 
+  } = props();
+
+  const defaults = {
+    classes: [ 'btn' ],
+    styles: ''
+  }
+
+  if (block) {
+    defaults.classes.push('block');
+  }
+  if (full) {
+    defaults.classes.push('full');
+  }
+
+  //determine size
+  const size = xs ? 'xs' 
+    : sm ? 'sm' 
+    : md ? 'md' 
+    : lg ? 'lg' 
+    : xl ? 'xl' 
+    : xl2 ? '2xl' 
+    : xl3 ? '3xl' 
+    : xl4 ? '4xl' 
+    : xl5 ? '5xl' 
+    : 'md';
+  defaults.classes.push(`btn-${size}`);
+
+  const layout = outline 
+    ? 'outline' 
+    : transparent
+    ? 'transparent'
+    : solid 
+    ? 'solid'
+    : 'solid';
+
+  if (curved) {
+    defaults.classes.push('curved');
+  } else if (rounded) {
+    defaults.classes.push('rounded');
+  } else if (pill) {
+    defaults.classes.push('pill');
+  }
+
+  if (layout === 'outline' || layout === 'transparent') {
+    defaults.classes.push('solid', 'thin');
+    if (layout === 'outline') {
+      defaults.classes.push('bg-white');
+    }
+    if (color) {
+      defaults.styles += `border-color: ${color};`;
+      defaults.styles += `color: ${color};`;
+    } else if (info) {
+      defaults.classes.push('bd-info', 'tx-info');
+    } else if (warning) {
+      defaults.classes.push('bd-warning', 'tx-warning');
+    } else if (success) {
+      defaults.classes.push('bd-success', 'tx-success');
+    } else if (error) {
+      defaults.classes.push('bd-error', 'tx-error');
+    } else if (muted) {
+      defaults.classes.push('bd-muted', 'tx-muted');
+    }
+  } else {
+    defaults.classes.push('tx-white');
+    if (color) {
+      defaults.styles += `background-color: ${color};`;
+    } else if (info) {
+      defaults.classes.push('bg-info');
+    } else if (warning) {
+      defaults.classes.push('bg-warning');
+    } else if (success) {
+      defaults.classes.push('bg-success');
+    } else if (error) {
+      defaults.classes.push('bg-error');
+    } else if (muted) {
+      defaults.classes.push('bg-muted');
+    }
+  } 
+
+  const map = {
+    classes: [ ...defaults.classes, classname].join(' '),
+    styles: { ...defaults.styles, ...style }
+  };
+</script>
+<if true={!!href}>
+  <a class={map.classes} style={map.style} href={href} {...attributes}>{children}</a>
+</if>
+<if true={!href}>
+  <button class={map.classes} style={map.style} {...attributes}>{children}</button>
+</if>

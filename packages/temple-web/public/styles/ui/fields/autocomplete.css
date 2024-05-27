@@ -1,8 +1,8 @@
-.temple-field-autocomplete {
+.field-autocomplete {
   position: relative;
 }
 
-.temple-field-autocomplete-dropdown {
+.field-autocomplete-dropdown {
   background-color: var(--white);
   border-color: var(--black);
   border-style: solid;
@@ -13,12 +13,12 @@
   width: 100%;
 }
 
-.temple-field-autocomplete-options {
+.field-autocomplete-options {
   max-height: 256px;
   overflow: auto;
 }
 
-.temple-field-autocomplete-option {
+.field-autocomplete-option {
   align-items: center;
   border-color: #AAAAAA;
   border-style: solid;

@@ -1,7 +1,7 @@
-.temple-control-label {
+.control-label {
   display: block;
 }
 
-.temple-control-error {
+.control-error {
   color: var(--error);
 }

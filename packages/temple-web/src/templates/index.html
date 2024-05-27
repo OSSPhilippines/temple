@@ -1,15 +1,26 @@
-<link rel="import" href="./components/panel/panel.html" />
-<link rel="import" href="./components/panel/panel-header.html" />
-<link rel="import" href="./components/panel/panel-main.html" />
+<link rel="import" href="./components/panel-head.html" />
+<link rel="import" href="./components/panel-main.html" />
+<link rel="import" href="./components/tui-button.html" />
+<link rel="import" href="./components/code-editor.html" />
 <style>
-  @import url(/temple/styles/theme.css);
-
-  html, body {
-    font-family: Arial, sans-serif;
-    height: 100%;
-    margin: 0;
-    padding: 0;
+  .section-hero {
+    background-color: var(--bg-first);
+    padding: 40px 0;
+    text-align: center;
     width: 100%;
+  }
+  .section-hero img {
+    height: 100px;
+  }
+  .section-hero h1 {
+    font-size: 40px;
+  }
+  .section-hero p {
+    font-size: 30px;
+  }
+  .section-sample p {
+    padding: 20px;
+    text-align: center;
   }
 </style>
 <script>
@@ -36,31 +47,44 @@
     <meta name="twitter:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
     <link rel="favicon" href="https://ossphilippines.github.io/temple/favicon.ico" />
     <link rel="shortcut icon" type="image/png" href="https://ossphilippines.github.io/temple/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="/temple/styles/theme.css" />
+    <script src="https://unpkg.com/ace-builds/src-min-noconflict/ace.js"></script>
   </head>
-  <body class="orange-dark">
-    <panel>
-      <panel-header>
-        <img src="/temple/temple-logo.png" alt="Temple Logo" />
-        <h3>Temple</h3>
-      </panel-header>
-      <panel-main>
-        <section class="section-hero">
-          <img src="/temple/temple-logo.png" alt="Temple Logo" />
-        </section>
-        <section class="section-sample">
-          Sample
-        </section>
-        <section class="section-bullets">
-          Bullets
-        </section>
-        <section class="section-interactive">
-          Interactive
-        </section>
-        <section class="section-action">
-          Actions
-        </section>
-        <footer></footer>
-      </panel-main>
-    </panel>
+  <body class="dark panel panel-head">
+    <panel-head class="head panel-head"></panel-head>
+    <panel-main class="panel-main">
+      <section class="section-hero">
+        <img src="/temple/temple-icon.png" alt="Temple Logo" />
+        <h1>Temple</h1>
+        <p>The reactive web component template engine.</p>
+        <tui-button info xl rounded style="margin-right:10px;" href="/temple/docs/get-started">
+          Get Started
+        </tui-button>
+        <tui-button warning xl rounded href="/temple/docs">
+          Read the Docs
+        </tui-button>
+      </section>
+      <section class="section-sample">
+        <p>
+          Temple is a modern HTML markup language and a server first 
+          template engine with a built-in parser/compiler that 
+          generates web components and support reactivity.
+        </p>
+        <code-editor>
+          console.log('hi')
+        </code-editor>
+      </section>
+      <section class="section-bullets">
+        Bullets
+      </section>
+      <section class="section-interactive">
+        Interactive
+      </section>
+      <section class="section-action">
+        Actions
+      </section>
+      <footer class="foot"></footer>
+    </panel-main>
   </body>
 </html>

@@ -1,4 +1,4 @@
-.temple-modal {
+.modal {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.8);
   bottom: 0;
@@ -12,28 +12,28 @@
   z-index: 10000 ;
 }
 
-.temple-modal-fixed {
+.modal-fixed {
   position: fixed;
 }
 
-.temple-modal-absolute {
+.modal-absolute {
   position: absolute;
 }
 
-.temple-modal-overlay {
+.modal-overlay {
   overflow: hidden;
   max-width: 32rem;
   margin: auto;
   position: relative;
 }
 
-.temple-modal-head {
+.modal-head {
   align-items: center;
   display: flex;
   padding: 10px;
 }
 
-.temple-modal-title {
+.modal-title {
   flex-grow: 1;
   font-weight: bold;
 }

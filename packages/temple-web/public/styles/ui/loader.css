@@ -3,7 +3,7 @@
   100% { transform: rotate(360deg); }
 }
 
-.temple-loader {
+.loader {
   align-items: middle;
   animation: templespin 1s linear infinite;
   border-radius: 50%;

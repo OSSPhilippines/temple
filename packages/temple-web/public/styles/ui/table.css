@@ -1,53 +1,53 @@
-.temple-tbl {
+.tbl {
   border-collapse: collapse;
   display: table;
   width: 100%;
 }
 
-.temple-tbl-scroll {
+.tbl-scroll {
   overflow: auto;
   flex-grow: 1;
   height: 100%;
   width: 100%;
 }
 
-.temple-tbl-nowrap {
+.tbl-nowrap {
   white-space: nowrap;
 }
 
-.temple-tbl-z0 {
+.tbl-z0 {
   z-index: 0;
 }
-.temple-tbl-z1 {
+.tbl-z1 {
   z-index: 1;
 }
-.temple-tbl-z2 {
+.tbl-z2 {
   z-index: 2;
 }
-.temple-tbl-z3 {
+.tbl-z3 {
   z-index: 3;
 }
-.temple-tbl-z4 {
+.tbl-z4 {
   z-index: 4;
 }
 
-.temple-tbl-sticky {
+.tbl-sticky {
   position: sticky;
 }
-.temple-tbl-sticky-b {
+.tbl-sticky-b {
   bottom: 0;
 }
-.temple-tbl-sticky-l {
+.tbl-sticky-l {
   left: 0;
 }
-.temple-tbl-sticky-t {
+.tbl-sticky-t {
   top: 0;
 }
-.temple-tbl-sticky-r {
+.tbl-sticky-r {
   right: 0;
 }
 
-.temple-tbl-col {
+.tbl-col {
   border-color: black;
   border-style: solid;
   border-top-width: 1px;
@@ -57,7 +57,7 @@
   padding-top: 16px;
 }
 
-.temple-tbl-foot {
+.tbl-foot {
   border-color: black;
   border-style: solid;
   border-top-width: 1px;
@@ -67,14 +67,14 @@
   padding-top: 16px;
 }
 
-.temple-tbl-row {
+.tbl-row {
   padding-bottom: 16px;
   padding-left: 12px;
   padding-right: 12px;
   padding-top: 16px;
 }
 
-.temple-tbl-head {
+.tbl-head {
   border-color: black;
   border-style: solid;
   border-top-width: 1px;

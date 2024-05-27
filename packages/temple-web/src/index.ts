@@ -3,7 +3,11 @@ import path from 'path';
 import express from 'express';
 import temple from '@ossph/temple/server';
 
-const engine = temple({ cwd: __dirname });
+const engine = temple({ 
+  cwd: __dirname, 
+  minify: false,
+  brand: '' 
+});
 
 //setup an HTTP server
 const app = express();

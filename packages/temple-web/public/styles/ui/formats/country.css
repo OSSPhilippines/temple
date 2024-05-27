@@ -1,9 +1,9 @@
-.temple-format-country {
+.format-country {
   align-items: center; 
   display: flex
 }
 
-.temple-format-country-flag {
+.format-country-flag {
   display: inline-block; 
   margin-right: 4px; 
 }

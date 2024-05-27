@@ -1,4 +1,4 @@
-.temple-field-taglist {
+.field-taglist {
   background-color: var(--white);
   border-color: var(--black);
   border-style: solid;
@@ -12,7 +12,7 @@
   width: 100%;
 }
 
-.temple-field-taglist-tag {
+.field-taglist-tag {
   align-items: center;
   border-radius: 5px;
   color: var(--white);
@@ -25,7 +25,7 @@
   white-space: nowrap;
 }
 
-.temple-field-taglist-remove {
+.field-taglist-remove {
   background-color: unset;
   border: none;
   color: var(--white);
@@ -37,7 +37,7 @@
   padding-top: 2px;
 }
 
-.temple-field-taglist-input {
+.field-taglist-input {
   border: none;
   outline: none;
   padding-bottom: 8px;

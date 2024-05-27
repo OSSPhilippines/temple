@@ -1,8 +1,8 @@
-.temple-field-select {
+.field-select {
   position: relative;
 }
 
-.temple-field-select-control {
+.field-select-control {
   align-items: center;
   background-color: white;
   border-color: var(--black);
@@ -19,11 +19,11 @@
   width: 100%;
 }
 
-.temple-field-select-placeholder {
+.field-select-placeholder {
   color: #666666;
 }
 
-.temple-field-select-dropdown {
+.field-select-dropdown {
   background-color: var(--white);
   border-color: var(--black);
   border-style: solid;
@@ -36,7 +36,7 @@
   width: 100%;
 }
 
-.temple-field-select-search {
+.field-select-search {
   padding-bottom: 4px;
   padding-left: 4px;
   padding-right: 4px;
@@ -44,11 +44,11 @@
   position: relative;
 }
 
-.temple-field-select-search-control {
+.field-select-search-control {
   padding-right: 32px;
 }
 
-.temple-field-select-search-icon {
+.field-select-search-icon {
   background-color: var(--white);
   color: var(--black);
   padding: 4px;
@@ -57,12 +57,12 @@
   top: 9px;
 }
 
-.temple-field-select-options {
+.field-select-options {
   max-height: 256px;
   overflow: auto;
 }
 
-.temple-field-select-option {
+.field-select-option {
   align-items: center;
   border-color: #AAAAAA;
   border-style: solid;
@@ -78,7 +78,7 @@
   padding-top: 8px;
 }
 
-.temple-field-select-label { 
+.field-select-label { 
   display: inline-block; 
   margin-left: 4px; 
 }

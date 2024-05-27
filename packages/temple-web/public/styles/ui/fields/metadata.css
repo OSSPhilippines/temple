@@ -1,9 +1,9 @@
-.temple-field-metadata-row {
+.field-metadata-row {
   display: flex;
   margin-bottom: 4px;
 }
 
-.temple-field-metadata-remove {
+.field-metadata-remove {
   align-items: center;
   display: flex;
   justify-content: center;
@@ -13,7 +13,7 @@
   padding-top: 2px;
 }
 
-.temple-field-metadata-name {
+.field-metadata-name {
   border-color: var(--black);
   border-style: solid;
   border-width: 1px;
@@ -27,7 +27,7 @@
   width: 100%;
 }
 
-.temple-field-metadata-value {
+.field-metadata-value {
   border-color: var(--black);
   border-style: solid;
   border-width: 1px;

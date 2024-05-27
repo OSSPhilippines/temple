@@ -1,30 +1,31 @@
-.temple-btn {
+.btn {
   text-align: center;
+  border: 0;
 }
-.temple-btn-xs {
+.btn-xs {
   padding: 2px 4px;
 }
-.temple-btn-sm {
+.btn-sm {
   padding: 4px 8px;
 }
-.temple-btn-md {
+.btn-md {
   padding: 6px 12px;
 }
-.temple-btn-lg {
+.btn-lg {
   padding: 8px 16px;
 }
-.temple-btn-xl {
+.btn-xl {
   padding: 10px 20px;
 }
-.temple-btn-2xl {
+.btn-2xl {
   padding: 12px 24px;
 }
-.temple-btn-3xl {
+.btn-3xl {
   padding: 14px 28px;
 }
-.temple-btn-4xl {
+.btn-4xl {
   padding: 16px 32px;
 }
-.temple-btn-5xl {
+.btn-5xl {
   padding: 18px 36px;
 }

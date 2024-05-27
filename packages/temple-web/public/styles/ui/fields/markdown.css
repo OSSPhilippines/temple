@@ -1,8 +1,8 @@
-.temple-field-markdown-nav {
+.field-markdown-nav {
   font-size: 18px;
   text-align: right;
 }
-.temple-field-markdown-preview {
+.field-markdown-preview {
   background-color: var(--white);
   border-color: var(--black);
   border-style: solid;

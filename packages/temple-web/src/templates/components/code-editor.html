@@ -1,0 +1,11 @@
+<script>
+  import { props } from '@ossph/temple';
+  const { children } = props();
+  const pre = this.querySelector('pre');
+  if (window.ace) {
+    const editor = window.ace.edit(pre);
+    editor.setTheme('ace/theme/gruvbox');
+    editor.session.setMode('ace/mode/javascript');
+  }
+</script>
+<pre>{children}</pre>

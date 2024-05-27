@@ -1,0 +1,267 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css");
+
+@import url('./ui/alert.css');
+@import url('./ui/badge.css');
+@import url('./ui/button.css');
+@import url('./ui/control.css');
+@import url('./ui/fieldset.css');
+@import url('./ui/loader.css');
+@import url('./ui/modal.css');
+@import url('./ui/table.css');
+
+@import url('./ui/formats/color.css');
+@import url('./ui/formats/country.css');
+@import url('./ui/formats/imagelist.css');
+@import url('./ui/formats/list.css');
+@import url('./ui/formats/taglist.css');
+
+@import url('./ui/fields/autocomplete.css');
+@import url('./ui/fields/date.css');
+@import url('./ui/fields/datetime.css');
+@import url('./ui/fields/file.css');
+@import url('./ui/fields/filelist.css');
+@import url('./ui/fields/image.css');
+@import url('./ui/fields/imagelist.css');
+@import url('./ui/fields/input.css');
+@import url('./ui/fields/markdown.css');
+@import url('./ui/fields/metadata.css');
+@import url('./ui/fields/option.css');
+@import url('./ui/fields/password.css');
+@import url('./ui/fields/select.css');
+@import url('./ui/fields/switch.css');
+@import url('./ui/fields/taglist.css');
+@import url('./ui/fields/textarea.css');
+@import url('./ui/fields/textlist.css');
+@import url('./ui/fields/time.css');
+
+/* Themes
+------------------------------*/
+.green-light {
+  --bg-zero: #EBF3E1;
+  --bg-first: #D0EDAA;
+  --bg-second: #AECf83;
+  --bg-third: #84AA52;
+  --bg-fourth: #528909;
+  --bg-inverse: #909090;
+  --bg-info: #D1ECF1;
+  --bg-error: #F8D7DA;
+  --bg-warning: #FFF3CD;
+  --bg-success: #D4EDDA;
+  --fg-zero: #000000;
+  --fg-default: #373D49;
+  --fg-inverse: #929AAD;
+  --fg-primary: #3a4d21;
+  --fg-secondary: #6EBA00;
+  --fg-info: #1474FC;
+  --fg-error: #DC3545;
+  --fg-warning: #FFC107;
+  --fg-success: #28A745;
+  --fg-muted: #999999;
+}
+
+.green-dark {
+  --bg-zero: #0C1D03;
+  --bg-first: #153206;
+  --bg-second: #1C4309;
+  --bg-third: #2B650E;
+  --bg-fourth: #528909;
+  --bg-inverse: #909090;
+  --bg-info: #D1ECF1;
+  --bg-error: #F8D7DA;
+  --bg-warning: #FFF3CD;
+  --bg-success: #D4EDDA;
+  --fg-zero: #FFFFFF;
+  --fg-default: #DDDDDD;
+  --fg-inverse: #373D49;
+  --fg-primary: #6EBA00;
+  --fg-secondary: #3a4d21;
+  --fg-info: #1474FC;
+  --fg-error: #EC2727;
+  --fg-warning: #FFC107;
+  --fg-success: #28A745;
+  --fg-muted: #AAAAAA;
+}
+
+.blue-light {
+  --bg-zero: #e1edf3;
+  --bg-first: #aadbed;
+  --bg-second: #83b3cf;
+  --bg-third: #5290aa;
+  --bg-fourth: #095289;
+  --bg-inverse: #909090;
+  --bg-info: #D1ECF1;
+  --bg-error: #F8D7DA;
+  --bg-warning: #FFF3CD;
+  --bg-success: #D4EDDA;
+  --fg-zero: #000000;
+  --fg-default: #373D49;
+  --fg-inverse: #929AAD;
+  --fg-primary: #21394d;
+  --fg-secondary: #0069ba;
+  --fg-info: #1474FC;
+  --fg-error: #DC3545;
+  --fg-warning: #FFC107;
+  --fg-success: #28A745;
+  --fg-muted: #999999;
+}
+
+.blue-dark {
+  --bg-zero: #03131d;
+  --bg-first: #062032;
+  --bg-second: #092c43;
+  --bg-third: #0e4165;
+  --bg-fourth: #095289;
+  --bg-inverse: #909090;
+  --bg-info: #D1ECF1;
+  --bg-error: #F8D7DA;
+  --bg-warning: #FFF3CD;
+  --bg-success: #D4EDDA;
+  --fg-zero: #FFFFFF;
+  --fg-default: #DDDDDD;
+  --fg-inverse: #373D49;
+  --fg-primary: #0069ba;
+  --fg-secondary: #21394d;
+  --fg-info: #1474FC;
+  --fg-error: #EC2727;
+  --fg-warning: #FFC107;
+  --fg-success: #28A745;
+  --fg-muted: #AAAAAA;
+}
+
+.red-light {
+  --bg-zero: #f3e1e9;
+  --bg-first: #edaacb;
+  --bg-second: #cf83a7;
+  --bg-third: #aa5275;
+  --bg-fourth: #890934;
+  --bg-inverse: #909090;
+  --bg-info: #D1ECF1;
+  --bg-error: #F8D7DA;
+  --bg-warning: #FFF3CD;
+  --bg-success: #D4EDDA;
+  --fg-zero: #000000;
+  --fg-default: #373D49;
+  --fg-inverse: #929AAD;
+  --fg-primary: #4d2136;
+  --fg-secondary: #ba004d;
+  --fg-info: #1474FC;
+  --fg-error: #DC3545;
+  --fg-warning: #FFC107;
+  --fg-success: #28A745;
+  --fg-muted: #999999;
+}
+
+.red-dark {
+  --bg-zero: #1d030d;
+  --bg-first: #32061b;
+  --bg-second: #43091d;
+  --bg-third: #650e31;
+  --bg-fourth: #890934;
+  --bg-inverse: #909090;
+  --bg-info: #D1ECF1;
+  --bg-error: #F8D7DA;
+  --bg-warning: #FFF3CD;
+  --bg-success: #D4EDDA;
+  --fg-zero: #FFFFFF;
+  --fg-default: #DDDDDD;
+  --fg-inverse: #373D49;
+  --fg-primary: #ba004d;
+  --fg-secondary: #4d2136;
+  --fg-info: #1474FC;
+  --fg-error: #EC2727;
+  --fg-warning: #FFC107;
+  --fg-success: #28A745;
+  --fg-muted: #AAAAAA;
+}
+
+.purple-light {
+  --bg-zero: #ece1f3;
+  --bg-first: #d2aaed;
+  --bg-second: #b183cf;
+  --bg-third: #8d52aa;
+  --bg-fourth: #710989;
+  --bg-inverse: #909090;
+  --bg-info: #D1ECF1;
+  --bg-error: #F8D7DA;
+  --bg-warning: #FFF3CD;
+  --bg-success: #D4EDDA;
+  --fg-zero: #000000;
+  --fg-default: #373D49;
+  --fg-inverse: #929AAD;
+  --fg-primary: #3c214d;
+  --fg-secondary: #7300ba;
+  --fg-info: #1474FC;
+  --fg-error: #DC3545;
+  --fg-warning: #FFC107;
+  --fg-success: #28A745;
+  --fg-muted: #999999;
+}
+
+.purple-dark {
+  --bg-zero: #15031d;
+  --bg-first: #220632;
+  --bg-second: #2b0943;
+  --bg-third: #4c0e65;
+  --bg-fourth: #710989;
+  --bg-inverse: #909090;
+  --bg-info: #D1ECF1;
+  --bg-error: #F8D7DA;
+  --bg-warning: #FFF3CD;
+  --bg-success: #D4EDDA;
+  --fg-zero: #FFFFFF;
+  --fg-default: #DDDDDD;
+  --fg-inverse: #373D49;
+  --fg-primary: #7000ba;
+  --fg-secondary: #3c214d;
+  --fg-info: #1474FC;
+  --fg-error: #EC2727;
+  --fg-warning: #FFC107;
+  --fg-success: #28A745;
+  --fg-muted: #AAAAAA;
+}
+
+.orange-light {
+  --bg-zero: #f3eae1;
+  --bg-first: #edccaa;
+  --bg-second: #cfa783;
+  --bg-third: #aa7d52;
+  --bg-fourth: #893c09;
+  --bg-inverse: #909090;
+  --bg-info: #D1ECF1;
+  --bg-error: #F8D7DA;
+  --bg-warning: #FFF3CD;
+  --bg-success: #D4EDDA;
+  --fg-zero: #000000;
+  --fg-default: #373D49;
+  --fg-inverse: #929AAD;
+  --fg-primary: #4d3421;
+  --fg-secondary: #ba5400;
+  --fg-info: #1474FC;
+  --fg-error: #DC3545;
+  --fg-warning: #FFC107;
+  --fg-success: #28A745;
+  --fg-muted: #999999;
+}
+
+.orange-dark {
+  --bg-zero: #1d1003;
+  --bg-first: #321a06;
+  --bg-second: #432509;
+  --bg-third: #65380e;
+  --bg-fourth: #893c09;
+  --bg-inverse: #909090;
+  --bg-info: #D1ECF1;
+  --bg-error: #F8D7DA;
+  --bg-warning: #FFF3CD;
+  --bg-success: #D4EDDA;
+  --fg-zero: #FFFFFF;
+  --fg-default: #DDDDDD;
+  --fg-inverse: #373D49;
+  --fg-primary: #ba5400;
+  --fg-secondary: #4d3421;
+  --fg-info: #1474FC;
+  --fg-error: #EC2727;
+  --fg-warning: #FFC107;
+  --fg-success: #28A745;
+  --fg-muted: #AAAAAA;
+}

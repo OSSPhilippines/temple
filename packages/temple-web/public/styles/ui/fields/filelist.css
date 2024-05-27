@@ -1,4 +1,4 @@
-.temple-field-filelist-control {
+.field-filelist-control {
   border-color: var(--black);
   border-style: solid;
   border-width: 1px;
@@ -10,7 +10,7 @@
   width: 100%;
 }
 
-.temple-field-filelist-file {
+.field-filelist-file {
   align-items: center;
   border-color: gray;
   border-style: solid;
@@ -26,14 +26,14 @@
   width: 100%;
 }
  
-.temple-field-filelist-link {
+.field-filelist-link {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.temple-field-filelist-remove {
+.field-filelist-remove {
   color: var(--error);
   cursor: pointer;
   font-size: 20px;
