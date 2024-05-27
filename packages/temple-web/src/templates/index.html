@@ -1,48 +1,66 @@
-<link rel="import" href="./components/header.tml" />
-<link rel="import" href="./components/paragraph.tml" />
-<link rel="import" href="./components/todo.tml" />
+<link rel="import" href="./components/panel/panel.html" />
+<link rel="import" href="./components/panel/panel-header.html" />
+<link rel="import" href="./components/panel/panel-main.html" />
 <style>
-  body { 
-    background-color: #DA532C; 
-    color: #EFEFEF; 
+  @import url(/temple/styles/theme.css);
+
+  html, body {
+    font-family: Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
   }
-  img { width: 100px; height: 100px; }
-  .title { text-align: center; }
-  .logo { text-align: center; }
-  .description { text-align: center; }
-  .list { text-align: center; }
 </style>
 <script>
   //this is only called on server side
   import { globals } from '@ossph/temple';
-  const title = 'Temple';
-  const description = 'Edit this file to change the content of the page.';
-  const start = 0;
-  const list = [
-    'Edit this file',
-    'Restyle this page',
-    'Create your own component',
-    'Star the Temple Repo',
-    'Write a blog post about Temple',
-    'Fork the respository',
-    'Contribute to the project'
-  ];
+  const title = 'Temple - The reactive web component template engine.';
+  const description = 'Temple is a template engine hat generates web components and support reactivity.';
 </script>
 <html>
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
-    <link rel="favicon" href="/favicon.ico" />
-    <link rel="shortcut icon" type="image/png" href="/favicon.png" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
+    <meta property="og:url" content="https://ossphilippines.github.io/temple/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@OSSPhilippines" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
+    <link rel="favicon" href="https://ossphilippines.github.io/temple/favicon.ico" />
+    <link rel="shortcut icon" type="image/png" href="https://ossphilippines.github.io/temple/favicon.png" />
   </head>
-  <body class="light">
-    <header class="title">
-      {title} 
-      <em>TODO</em>
-    </header>
-    <div class="logo">
-      <img src="/temple-logo.png" alt="Logo" />
-    </div>
-    <paragraph classname="description">{description}</paragraph>
-    <todo {list} {start} />
+  <body class="orange-dark">
+    <panel>
+      <panel-header>
+        <img src="/temple/temple-logo.png" alt="Temple Logo" />
+        <h3>Temple</h3>
+      </panel-header>
+      <panel-main>
+        <section class="section-hero">
+          <img src="/temple/temple-logo.png" alt="Temple Logo" />
+        </section>
+        <section class="section-sample">
+          Sample
+        </section>
+        <section class="section-bullets">
+          Bullets
+        </section>
+        <section class="section-interactive">
+          Interactive
+        </section>
+        <section class="section-action">
+          Actions
+        </section>
+        <footer></footer>
+      </panel-main>
+    </panel>
   </body>
 </html>

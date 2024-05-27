@@ -1,8 +1,0 @@
-<script>
-  import { props } from '@ossph/temple';
-  const { classname, children } = props();
-</script>
-<p class=classname>
-  {children}
-  in <strong>Light mode</strong>
-</p>

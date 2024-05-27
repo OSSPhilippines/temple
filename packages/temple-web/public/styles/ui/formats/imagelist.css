@@ -1,0 +1,5 @@
+.temple-format-imagelist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}

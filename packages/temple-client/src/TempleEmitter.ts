@@ -14,15 +14,11 @@ export class TempleEmitter<Args extends any[]> extends EventEmitter<Args> {
     if (event === 'ready') {
       const next = callback as unknown as Function;
       // see if DOM is already available
-      if (document.readyState === 'complete' 
-        || document.readyState === 'interactive'
-      ) {
+      if (document.readyState !== 'loading') {
         // call on next available tick
         setTimeout(next, 1);
-      } else {
-        document.addEventListener('DOMContentLoaded', () => next());
+        return this;
       }
-      return this;
     }
 
     return super.on(event, callback, priority);
@@ -30,5 +26,11 @@ export class TempleEmitter<Args extends any[]> extends EventEmitter<Args> {
 }
 
 const emitter = new TempleEmitter();
+
+document.onreadystatechange = () => {
+  if (document.readyState !== 'loading') {
+    emitter.emit('ready');
+  }
+};
 
 export default emitter;

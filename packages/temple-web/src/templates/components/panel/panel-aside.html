@@ -1,0 +1,25 @@
+<style>
+  :host {
+    bottom: 0;
+    display: block;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 220px;
+  }
+  :host aside {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+    width: 100%;
+  }
+</style>
+<script>
+  //this is only called on server side
+  import { props } from '@ossph/temple';
+  const { children } = props();
+</script>
+<aside>{children}</aside>

@@ -1,0 +1,132 @@
+.temple-field-option {
+  font-family: Arial, Helvetica, sans-serif;
+  height: 18px;
+  position: relative;
+}
+.temple-field-option-control {
+  cursor: pointer;
+  height: 18px;
+  opacity: 0;
+  position: absolute;
+  width: 18px;
+  z-index: 12;
+}
+
+.temple-field-option-control:checked, 
+.temple-field-option-control:focus {
+  outline: none !important;
+}
+
+.temple-field-option-label {
+  display: inline-block;
+  font-weight: normal;
+  line-height: 20px;
+  margin: 0;
+  min-height: 18px;
+  min-width: 18px;
+  position: relative;
+  z-index: 11;
+}
+
+.temple-field-option-label::before {
+  border-width: 1px;
+  border-style: solid;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  content: "\a0";
+  display: inline-block;
+  font-size: 11px;
+  font-weight: normal;
+  height: 17px;
+  min-width: 17px;
+  margin-right: 5px;
+  position: relative;
+  text-align: center;
+  top: -2px;
+  vertical-align: middle;
+}
+
+.temple-field-option-control:checked + .temple-field-option-label::before {
+  display: inline-block;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 
+              inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), 
+              inset 15px 10px -12px rgba(255, 255, 255, 0.1);
+  font-weight: 900;
+}
+
+.temple-field-option-control:active + .temple-field-option-label::before, 
+.temple-field-option-control:checked:active+span::before {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.temple-field-option-control:disabled + .temple-field-option-label::before,
+.temple-field-option-control[disabled] + .temple-field-option-label::before,
+.temple-field-option-disabled .temple-field-option-control + .temple-field-option-label::before {
+  background-color: #DDDDDD !important;
+  border-color: #CCCCCC !important;
+  box-shadow: none !important;
+  color: #BBBBBB;
+}
+
+.temple-field-option-rounded .temple-field-option-label::before {
+  border-radius: 100%;
+}
+.temple-field-option-circle .temple-field-option-control:checked + .temple-field-option-label::before {
+  content: "\25CF";
+  font-size: 24px;
+  line-height: 13.5px;
+}
+.temple-field-option-square .temple-field-option-control:checked + .temple-field-option-label::before {
+  content: "\25A0";
+  font-size: 20px;
+  line-height: 13.5px;
+}
+.temple-field-option-check .temple-field-option-control:checked + .temple-field-option-label::before {
+  content: "\2713";
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.temple-field-option-default .temple-field-option-label::before {
+  background-color: #FAFAFA;
+  border-color: #C8C8C8;
+  color: #32A3CE;
+  text-shadow: 0 0 1px #32A3CE;
+}
+.temple-field-option-default .temple-field-option-control:checked + .temple-field-option-label::before {
+  background-color: #F5F8FC;
+  border-color: #ADB8C0;
+}
+.temple-field-option-default .temple-field-option-control:hover + .temple-field-option-label::before, 
+.temple-field-option-default .temple-field-option-label:hover::before {
+  border-color: #FF893C;
+}
+
+.temple-field-option-blue .temple-field-option-label::before {
+  background-color: #FAFAFA;
+  border-color: #C8C8C8;
+  color: #32A3CE;
+  text-shadow: 0 0 1px #32A3CE;
+}
+.temple-field-option-blue .temple-field-option-control:checked + .temple-field-option-label::before {
+  background-color: #F5F8FC;
+  border-color: #32A3CE;
+}
+.temple-field-option-blue .temple-field-option-control:hover + .temple-field-option-label::before, 
+.temple-field-option-blue .temple-field-option-label:hover::before {
+  border-color: #32A3CE;
+}
+
+.temple-field-option-orange .temple-field-option-label::before {
+  background-color: #FAFAFA;
+  border-color: #C8C8C8;
+  color: #FF893C;
+  text-shadow: 0 0 1px #FF893C;
+}
+.temple-field-option-orange .temple-field-option-control:checked + .temple-field-option-label::before {
+  background-color: #F5F8FC;
+  border-color: #FF893C;
+}
+.temple-field-option-orange .temple-field-option-control:hover + .temple-field-option-label::before, 
+.temple-field-option-orange .temple-field-option-label:hover::before {
+  border-color: #FF893C;
+}

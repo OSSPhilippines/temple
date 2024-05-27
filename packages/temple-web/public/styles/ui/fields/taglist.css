@@ -1,0 +1,49 @@
+.temple-field-taglist {
+  background-color: var(--white);
+  border-color: var(--black);
+  border-style: solid;
+  border-width: 1px;
+  box-sizing: border-box;
+  color: var(--black);
+  display: flex;
+  max-width: 100%;
+  overflow: scroll;
+  padding-left: 4px;
+  width: 100%;
+}
+
+.temple-field-taglist-tag {
+  align-items: center;
+  border-radius: 5px;
+  color: var(--white);
+  display: flex;
+  margin-bottom: 2px;
+  margin-right: 4px;
+  margin-top: 2px;
+  padding-left: 8px;
+  padding-right: 5px;
+  white-space: nowrap;
+}
+
+.temple-field-taglist-remove {
+  background-color: unset;
+  border: none;
+  color: var(--white);
+  cursor: pointer;
+  display: flex;
+  padding-bottom: 2px;
+  padding-left: 6px;
+  padding-right: 4px;
+  padding-top: 2px;
+}
+
+.temple-field-taglist-input {
+  border: none;
+  outline: none;
+  padding-bottom: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 8px;
+  min-width: 50%;
+  width: 100%;
+}

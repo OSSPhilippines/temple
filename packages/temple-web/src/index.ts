@@ -25,12 +25,12 @@ app.set('views', path.join(__dirname, 'templates'));
 app.set('view engine', 'html');
 
 //open public folder
-app.use(express.static('public'));
+app.use('/temple', express.static('public'));
 
-app.get('**', (req, res) => {
+app.get('/temple/**', (req, res) => {
   const props = { title: 'Temple Documentation' };
   // ex. app
-  const route = req.path.substring(1);
+  const route = req.path.substring(8);
   //if route is empty, go to index
   if (route.length === 0) {
     res.type('text/html');

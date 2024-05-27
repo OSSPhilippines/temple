@@ -1,0 +1,32 @@
+.temple-field-autocomplete {
+  position: relative;
+}
+
+.temple-field-autocomplete-dropdown {
+  background-color: var(--white);
+  border-color: var(--black);
+  border-style: solid;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  position: absolute;
+  width: 100%;
+}
+
+.temple-field-autocomplete-options {
+  max-height: 256px;
+  overflow: auto;
+}
+
+.temple-field-autocomplete-option {
+  align-items: center;
+  border-color: #AAAAAA;
+  border-style: solid;
+  border-top-width: 1px;
+  cursor: pointer;
+  display: flex;
+  padding-bottom: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 8px;
+}

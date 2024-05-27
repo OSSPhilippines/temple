@@ -1,0 +1,19 @@
+<style>
+  :host {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+  :host section {
+    height: 100%;
+    position: relative;
+    width: 100%;
+  }
+</style>
+<script>
+  //this is only called on server side
+  import { props } from '@ossph/temple';
+  const { children } = props();
+</script>
+<section>{children}</section>

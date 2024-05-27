@@ -1,0 +1,12 @@
+.temple-format-color {
+  align-items: center; 
+  display: flex;
+}
+
+.temple-format-color-box {
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  display: inline-block; 
+  margin-right: 4px;
+}

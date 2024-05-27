@@ -1,0 +1,16 @@
+.temple-field-markdown-nav {
+  font-size: 18px;
+  text-align: right;
+}
+.temple-field-markdown-preview {
+  background-color: var(--white);
+  border-color: var(--black);
+  border-style: solid;
+  border-width: 1px;
+  color: var(--black);
+  padding-bottom: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 8px;
+  width: 100%;
+}

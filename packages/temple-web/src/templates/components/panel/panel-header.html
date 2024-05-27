@@ -1,0 +1,32 @@
+<style>
+  :host {
+    display: block;
+    left: 0;
+    height: 60px;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  :host header {
+    align-items: center;
+    display: flex;
+    padding: 5px 20px;
+  }
+  :host img {
+    height: 50px;
+    margin-right: 10px;
+    width: 50px;
+  }
+  :host h3 {
+    flex-grow: 1;
+    font-weight: semibold;
+    text-transform: uppercase;
+  }
+</style>
+<script>
+  //this is only called on server side
+  import { props } from '@ossph/temple';
+  const { children } = props();
+</script>
+<header>{children}</header>

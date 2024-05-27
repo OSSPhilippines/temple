@@ -1,5 +1,5 @@
 import TempleElement from './TempleElement';
-import TempleEmitter from './TempleEmitter';
+import emitter from './TempleEmitter';
 import { globals, bindings  } from './globals';
 
 //common type
@@ -202,7 +202,7 @@ export default abstract class TempleComponent extends HTMLElement {
     TempleComponent._current = null;
     this._initiated = true;
     //emit the render event
-    TempleEmitter.emit('render', this);
+    emitter.emit('render', this);
     return this.shadowRoot ? this.shadowRoot.innerHTML :this.innerHTML;
   }
 
@@ -213,13 +213,11 @@ export default abstract class TempleComponent extends HTMLElement {
     if (document.readyState !== 'loading') {
       this._update();
     } else {
-      const mutationObserver = new MutationObserver(() => {
-        if (document.readyState !== 'loading') {
-          this._update();
-          mutationObserver.disconnect();
-        }
-      });
-      mutationObserver.observe(document.body, { childList: true });
+      const next = () => {
+        this._update();
+        emitter.unbind('ready', next);
+      }
+      emitter.on('ready', next);
     }
   }
 
