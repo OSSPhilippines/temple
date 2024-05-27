@@ -355,8 +355,6 @@ export default class ComponentCompiler implements Compiler {
         });
       }
     });
-    //TempleElement.brand = 'temple';
-    source.addStatements(`TempleElement.brand = '${this._brand}';`);
     //export default class FoobarComponent extends TempleComponent
     const component = source.addClass({
       name: this.classname,
@@ -385,7 +383,7 @@ export default class ComponentCompiler implements Compiler {
         return () => ${this.template.trim()};`
     });
 
-    if (this._register && this._brand.length > 0) {
+    if (this._register) {
       //customElements.define('foo-bar', 'FoobarComponent');
       if (this._brand.length > 0) {
         source.addStatements(
