@@ -16,6 +16,8 @@ import {
   HTMLElement 
 } from './TempleBrowser';
 
+const noop = () => {};
+
 export default class TempleBuilder {
   //the compiler instance
   protected _compiler: DocumentCompiler;
@@ -110,7 +112,10 @@ export default class TempleBuilder {
     context.customElements = customElements;
     context.document = document;
     context.window = window;
-    context.setTimeout = setTimeout;
+    context.setTimeout = noop;
+    context.clearTimeout = noop;
+    context.setInterval = noop;
+    context.clearInterval = noop;
     context.console = console;
     //now run the script
     script.runInContext(context);
