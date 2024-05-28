@@ -261,197 +261,12 @@ export default class TempleParser {
     }
     //if we are currently parsing a script tag
     if (type === 'ProgramExpression') {
-      //if the open tag is not a script tag
-      if (open.type !== 'ProgramExpression') {
-        throw Exception
-          .for('Mismatched closing tag %s', name)
-          .withPosition(symbol.start, symbol.end);
-      }
-      //parse the script 
-      const source = this._substring(open.end, symbol.start);
-      // Parse the source code into an AST
-      const sourceFile = ts.createSourceFile(
-        // Arbitrary file name
-        'tmp.ts', 
-        source,
-        // ECMAScript target
-        ts.ScriptTarget.ESNext, 
-        false // Set parent pointers
-      );
-      let offsetStart = 0;
-      sourceFile.statements.forEach(statement => {
-        //get import clause
-        if (!ts.isImportDeclaration(statement)) {
-          return;
-        }
-        const clause = statement.importClause as ts.ImportClause;
-        //get export default clause
-        const name: LiteralToken|undefined = clause?.name ? {
-          type: 'Literal',
-          start: symbol.start + clause.name.getStart(sourceFile),
-          end: symbol.start + clause.name.getEnd(),
-          value: clause.name.getText(sourceFile),
-          raw: `'${clause.name.getText(sourceFile)}'`
-        }: undefined
-        //get the from clause
-        const sourceText = statement.moduleSpecifier.getText(sourceFile);
-        const source: LiteralToken = {
-          type: 'Literal',
-          start: symbol.start + statement.moduleSpecifier.getStart(sourceFile) + 1,
-          end: symbol.start + statement.moduleSpecifier.getEnd() - 1,
-          value: sourceText.substring(1, sourceText.length - 1),
-          raw: `'${sourceText.substring(1, sourceText.length - 1)}'`
-        };
-        //get name bindings
-        const names: LiteralToken[] = [];
-        //loop through the named bindings
-        clause?.namedBindings?.forEachChild(node => {
-          //get the name of the import
-          const name = node.getText(sourceFile);
-          //add the name to the names
-          names.push({
-            type: 'Literal',
-            start: symbol.end + node.getStart(sourceFile),
-            end: symbol.end + node.getEnd(),
-            value: name,
-            raw: `'${name}'`
-          });
-        });
-        //create the import token
-        const token: ImportToken = {
-          type: 'ImportDeclaration',
-          start: symbol.end + statement.getStart(sourceFile),
-          end: symbol.end + statement.getEnd(),
-          typeOnly: statement.importClause?.isTypeOnly === true,
-          source
-        };
-        //if we have a default name
-        if (name) {
-          token.default = name;
-        }
-        //if we have names
-        if (names.length > 0) {
-          token.names = names;
-        }
-        //add the import to the imports
-        this._imports.push(token);
-        //update the offset
-        offsetStart = statement.getEnd();
-      });
-      //create the script token
-      const script: ScriptToken = {
-        type: 'ProgramExpression',
-        start: open.end,
-        end: symbol.start,
-        attributes: open.attributes,
-        source: this._substring(open.end + offsetStart, symbol.start).trim()
-      };
-      //add scripts to the scripts
-      this._scripts.push(script);
-      //also add it to history
-      this._history.push(script);
-      //we are no longer parsing a resource
-      this._resource = false;
-      return;
+      return this._closeScript(symbol, open, name);
     //if we are currently parsing a style tag
     } else if (type === 'StyleExpression') {
-      //if the open tag is not a style tag
-      if (open.type !== 'StyleExpression') {
-        throw Exception
-          .for('Mismatched closing tag %s', name)
-          .withPosition(symbol.start, symbol.end);
-      }
-      //create a style token
-      const styles: StyleToken = {
-        type: 'StyleExpression',
-        start: open.start,
-        end: symbol.end,
-        attributes: open.attributes,
-        source: this._symbolParser.substring(open.end, symbol.start)
-      };
-      //add the style to the styles
-      this._styles.push(styles);
-      //also add it to history
-      this._history.push(styles);
-      //we are no longer parsing a resource
-      this._resource = false;
-      return;
+      return this._closeStyle(symbol, open, name);
     }
-    //This is a normal HTML tag....
-    //if the open tag is not the same as the close tag
-    if (open.name !== name) {
-      throw Exception
-        .for('Mismatched closing tag %s', name)
-        .withPosition(symbol.start, symbol.end);
-    }
-    //create the markup token
-    const token: MarkupToken = {
-      type: 'MarkupExpression',
-      name: name,
-      kind: 'block',
-      start: open.start,
-      end: symbol.end,
-      attributes: open.attributes,
-      children: open.children
-    }
-
-    //if the tag has children
-    if (token.children && token.children.length > 0) {
-      //find the gap between the last child end and the close tag start
-      const last = token.children[token.children.length - 1];
-      if (last.end < symbol.start) {
-        //add it as a text node
-        this._text(token.children, last.end, symbol.start);
-      }
-    //the tag has no children
-    } else {
-      //find the gap between the open tag end and the close tag start
-      if (open.end < symbol.start) {
-        //add it as a text node
-        token.children = [];
-        this._text(token.children, open.end, symbol.start);
-      }
-    }
-
-    //if we have a parent
-    if (this._stack.length > 0) {
-      //get the parent
-      const parent = this._stack[this._stack.length - 1];
-      //if the parent has no children
-      if (!parent.children || parent.children.length === 0) {
-        //find the gap between the parent and the open tag
-        parent.children = [];
-        if (parent.end < open.start) {
-          //and add it as a text node
-          this._text(parent.children, parent.end, open.start);
-        }
-      //if the parent has children
-      } else if (parent.children.length > 0) {
-        //find the gap between the last child and the open tag
-        const last = parent.children[parent.children.length - 1];
-        if (last.end < open.start) {
-          //and add it as a text node
-          this._text(parent.children, last.end, open.start);
-        }
-      }
-      //finally, add the token to the parent's children
-      parent.children.push(token);
-      return;
-    }
-    //We have no parent
-    //if we have any tokens before this
-    if (this._history.length > 0) {
-      //find the gap between the last token and the open tag
-      const last = this._history[this._history.length - 1];
-      if (last.end < open.start) {
-        //and add it as a text node
-        this._text(this._markup, last.end, open.start);
-      }
-    } 
-    //finally, add the token to the markup
-    this._markup.push(token);
-    //also add it to history
-    this._history.push(token);
+    return this._closeMarkup(symbol, open, name);
   }
 
   /**
@@ -665,5 +480,239 @@ export default class TempleParser {
       : name === 'style' ? 'StyleExpression' 
       : name === 'link' ? 'ImportDeclaration'
       : 'MarkupExpression';
+  }
+
+  /**
+   * Removes the given tag from the stack and adds it to the markup
+   */
+  private _closeMarkup(
+    symbol: Symbol, 
+    open: UnknownMarkupToken, 
+    name: string,
+    withChildren = true
+  ) {
+    //This is a normal HTML tag....
+    //if the open tag is not the same as the close tag
+    if (open.name !== name) {
+      throw Exception
+        .for('Mismatched closing tag %s', name)
+        .withPosition(symbol.start, symbol.end);
+    }
+    //create the markup token
+    const token: MarkupToken = {
+      type: 'MarkupExpression',
+      name: name,
+      kind: 'block',
+      start: open.start,
+      end: symbol.end,
+      attributes: open.attributes
+    }
+
+    if (withChildren) {
+      token.children = open.children;
+    }
+
+    //if the tag has children
+    if (token.children && token.children.length > 0) {
+      //find the gap between the last child end and the close tag start
+      const last = token.children[token.children.length - 1];
+      if (last.end < symbol.start) {
+        //add it as a text node
+        this._text(token.children, last.end, symbol.start);
+      }
+    //the tag has no children
+    } else {
+      //find the gap between the open tag end and the close tag start
+      if (open.end < symbol.start) {
+        //add it as a text node
+        token.children = [];
+        this._text(token.children, open.end, symbol.start);
+      }
+    }
+
+    //if we have a parent
+    if (this._stack.length > 0) {
+      //get the parent
+      const parent = this._stack[this._stack.length - 1];
+      //if the parent has no children
+      if (!parent.children || parent.children.length === 0) {
+        //find the gap between the parent and the open tag
+        parent.children = [];
+        if (parent.end < open.start) {
+          //and add it as a text node
+          this._text(parent.children, parent.end, open.start);
+        }
+      //if the parent has children
+      } else if (parent.children.length > 0) {
+        //find the gap between the last child and the open tag
+        const last = parent.children[parent.children.length - 1];
+        if (last.end < open.start) {
+          //and add it as a text node
+          this._text(parent.children, last.end, open.start);
+        }
+      }
+      //finally, add the token to the parent's children
+      parent.children.push(token);
+      return;
+    }
+    //We have no parent
+    //if we have any tokens before this
+    if (this._history.length > 0) {
+      //find the gap between the last token and the open tag
+      const last = this._history[this._history.length - 1];
+      if (last.end < open.start) {
+        //and add it as a text node
+        this._text(this._markup, last.end, open.start);
+      }
+    } 
+    //finally, add the token to the markup
+    this._markup.push(token);
+    //also add it to history
+    this._history.push(token);
+  }
+
+  /**
+   * Removes the given script from the stack and adds it to the markup
+   */
+  private _closeScript(
+    symbol: Symbol, 
+    open: UnknownMarkupToken, 
+    name: string
+  ) {
+    //if the open tag is not a script tag
+    if (open.type !== 'ProgramExpression') {
+      throw Exception
+        .for('Mismatched closing tag %s', name)
+        .withPosition(symbol.start, symbol.end);
+    }
+    //check for src attribute
+    const src = open.attributes?.properties.find(
+      property => property.key.name === 'src'
+    );
+    if (src) {
+      //we are no longer parsing a resource
+      this._resource = false;
+      //ProgramExpression doesn't have a name
+      //we need to set this so the markup wont fail
+      open.name = 'script';
+      //create the markup token
+      this._closeMarkup(symbol, open, name, false);
+      return;
+    }
+    //parse the script 
+    const source = this._substring(open.end, symbol.start);
+    // Parse the source code into an AST
+    const sourceFile = ts.createSourceFile(
+      // Arbitrary file name
+      'tmp.ts', 
+      source,
+      // ECMAScript target
+      ts.ScriptTarget.ESNext, 
+      false // Set parent pointers
+    );
+    let offsetStart = 0;
+    sourceFile.statements.forEach(statement => {
+      //get import clause
+      if (!ts.isImportDeclaration(statement)) {
+        return;
+      }
+      const clause = statement.importClause as ts.ImportClause;
+      //get export default clause
+      const name: LiteralToken|undefined = clause?.name ? {
+        type: 'Literal',
+        start: symbol.start + clause.name.getStart(sourceFile),
+        end: symbol.start + clause.name.getEnd(),
+        value: clause.name.getText(sourceFile),
+        raw: `'${clause.name.getText(sourceFile)}'`
+      }: undefined
+      //get the from clause
+      const sourceText = statement.moduleSpecifier.getText(sourceFile);
+      const source: LiteralToken = {
+        type: 'Literal',
+        start: symbol.start + statement.moduleSpecifier.getStart(sourceFile) + 1,
+        end: symbol.start + statement.moduleSpecifier.getEnd() - 1,
+        value: sourceText.substring(1, sourceText.length - 1),
+        raw: `'${sourceText.substring(1, sourceText.length - 1)}'`
+      };
+      //get name bindings
+      const names: LiteralToken[] = [];
+      //loop through the named bindings
+      clause?.namedBindings?.forEachChild(node => {
+        //get the name of the import
+        const name = node.getText(sourceFile);
+        //add the name to the names
+        names.push({
+          type: 'Literal',
+          start: symbol.end + node.getStart(sourceFile),
+          end: symbol.end + node.getEnd(),
+          value: name,
+          raw: `'${name}'`
+        });
+      });
+      //create the import token
+      const token: ImportToken = {
+        type: 'ImportDeclaration',
+        start: symbol.end + statement.getStart(sourceFile),
+        end: symbol.end + statement.getEnd(),
+        typeOnly: statement.importClause?.isTypeOnly === true,
+        source
+      };
+      //if we have a default name
+      if (name) {
+        token.default = name;
+      }
+      //if we have names
+      if (names.length > 0) {
+        token.names = names;
+      }
+      //add the import to the imports
+      this._imports.push(token);
+      //update the offset
+      offsetStart = statement.getEnd();
+    });
+    //create the script token
+    const script: ScriptToken = {
+      type: 'ProgramExpression',
+      start: open.end,
+      end: symbol.start,
+      attributes: open.attributes,
+      source: this._substring(open.end + offsetStart, symbol.start).trim()
+    };
+    //add scripts to the scripts
+    this._scripts.push(script);
+    //also add it to history
+    this._history.push(script);
+    //we are no longer parsing a resource
+    this._resource = false;
+  }
+
+  /**
+   * Removes the given style from the stack and adds it to the markup
+   */
+  private _closeStyle(
+    symbol: Symbol, 
+    open: UnknownMarkupToken, 
+    name: string
+  ) {
+    //if the open tag is not a style tag
+    if (open.type !== 'StyleExpression') {
+      throw Exception
+        .for('Mismatched closing tag %s', name)
+        .withPosition(symbol.start, symbol.end);
+    }
+    //create a style token
+    const styles: StyleToken = {
+      type: 'StyleExpression',
+      start: open.start,
+      end: symbol.end,
+      attributes: open.attributes,
+      source: this._symbolParser.substring(open.end, symbol.start)
+    };
+    //add the style to the styles
+    this._styles.push(styles);
+    //also add it to history
+    this._history.push(styles);
+    //we are no longer parsing a resource
+    this._resource = false;
   }
 }
