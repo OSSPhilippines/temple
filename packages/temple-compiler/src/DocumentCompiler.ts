@@ -349,7 +349,7 @@ export default class DocumentCompiler extends ComponentCompiler {
         //add props and bindings to the head
         document = document.replace(
           \`</\${tags.head}>\`, 
-          \`<\${tags.script}>window.\${__GLOBALS_NAMESPACE__}=\${JSON.stringify(
+          \`<\${tags.script} class="templejs">window.\${__GLOBALS_NAMESPACE__}=\${JSON.stringify(
             __GLOBALS__.data
           )};
           window.\${__BINDINGS_NAMESPACE__}=\${JSON.stringify(
@@ -360,15 +360,15 @@ export default class DocumentCompiler extends ComponentCompiler {
           //add script to the head
           document = document.replace(
             \`</\${tags.head}>\`, 
-            \`<\${tags.script}>\${script}</\${tags.script}></\${tags.head}>\`
+            \`<\${tags.script} class="templejs">\${script}</\${tags.script}></\${tags.head}>\`
           );
         }
         //prettify document
         document = document.replace(
           \`</\${tags.head}>\`, 
-          \`<\${tags.script}>Array.from(
+          \`<\${tags.script} class="templejs">Array.from(
             document.head.getElementsByTagName('\${tags.script}')
-          ).forEach(s => s.remove());
+          ).filter(s => s.classList.contains('templejs')).forEach(s => s.remove());
           </\${tags.script}></\${tags.head}>\`
         );
         //return the full html
