@@ -420,10 +420,10 @@ export default class ComponentCompiler implements Compiler {
         expression += this._templateElement(expression, child, components);
       } else if (child.type === 'Literal') {
         if (typeof child.value === 'string') {
-          expression += `document.createTextNode(\`${child.value}\`)`;
+          expression += `TempleElement.createText(\`${child.value}\`)`;
         //null, true, false, number 
         } else {
-          expression += `document.createTextNode(String(${child.value}))`;
+          expression += `TempleElement.createText(String(${child.value}))`;
         }
       } else if (child.type === 'ProgramExpression') {
         expression += `...this._toNodeList(${child.source})`;
@@ -517,10 +517,10 @@ export default class ComponentCompiler implements Compiler {
     //if the token refers to a component imported by this file
     if (instance) {
       const componentName = `${instance.classname}_${instance.id}`;
-      expression += `TempleElement.localize(${componentName}, {`;
+      expression += `TempleElement.createComponent(${componentName}, {`;
     } else {
       const tagName = this._tagName(token); 
-      expression += `TempleElement.create('${tagName}', {`;
+      expression += `TempleElement.createElement('${tagName}', {`;
     }
     
     if (token.attributes && token.attributes.properties.length > 0) {
