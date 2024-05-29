@@ -7,7 +7,7 @@
     "dev": "ts-node src/index.ts"
   },
   "dependencies": {
-    "@ossph/temple": "0.0.7",
+    "@ossph/temple": "0.0.8",
     "express": "4.19.2"
   },
   "devDependencies": {

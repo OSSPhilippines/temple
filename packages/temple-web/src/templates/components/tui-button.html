@@ -143,8 +143,12 @@
   };
 </script>
 <if true={!!href}>
-  <a class={map.classes} style={map.style} href={href} {...attributes}>{children}</a>
+  <a class={map.classes} style={map.style} href={href} {...attributes}>
+    {children}
+  </a>
 </if>
 <if true={!href}>
-  <button class={map.classes} style={map.style} {...attributes}>{children}</button>
+  <button class={map.classes} style={map.style} {...attributes}>
+    {children}
+  </button>
 </if>

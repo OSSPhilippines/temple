@@ -1,11 +1,28 @@
-<script>
-  import { props } from '@ossph/temple';
-  const { children } = props();
-  const code = this.querySelector('code');
-  if (window.ace) {
-    const editor = window.ace.edit(code);
-    editor.setTheme('ace/theme/chrome');
-    editor.session.setMode('ace/mode/html');
+<style>
+  :host {
+    border: 1px solid var(--bg-fourth);
+    display: block;
+    height: 300px;
+    position: relative;
   }
+  pre {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    right: 0;
+  }
+</style>
+<script>
+  import { props, signal } from '@ossph/temple';
+  const start = e => {
+    if (window.ace) {
+      const editor = window.ace.edit(e.detail);
+      editor.setTheme('ace/theme/monokai');
+      editor.session.setMode('ace/mode/javascript');
+    }
+  };
 </script>
-<pre><code>{children}</code></pre>
+<pre render=start>
+  console.log('Hello, World!');
+</pre>

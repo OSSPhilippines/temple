@@ -8,8 +8,8 @@
     "build": "webpack"
   },
   "dependencies": {
-    "@ossph/temple": "0.0.7",
-    "@ossph/temple-loader": "0.0.7"
+    "@ossph/temple": "0.0.8",
+    "@ossph/temple-loader": "0.0.8"
   },
   "devDependencies": {
     "@types/node": "20.12.7",

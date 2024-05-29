@@ -5,6 +5,7 @@ import temple from '@ossph/temple/server';
 
 const engine = temple({ 
   cwd: __dirname, 
+  minify: false,
   build: '../.temple',
   brand: '' 
 });
