@@ -1,6 +1,6 @@
 {
   "name": "@ossph/temple-parser",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Parses the Temple markup language to an abstract syntac tree (AST).",
   "license": "Apache-2.0",
   "author": "Chris <chris@incept.asia>",

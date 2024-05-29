@@ -8,6 +8,14 @@ export type Observer = {
   values: { raw: any }[]
 };
 
+export type Property<T = any> = {
+  raw: T,
+  getter(callback: () => any): Property,
+  setter(callback: (value: any) => any): Property,
+  value: T
+
+};
+
 /**
  * Signal registry
  */
@@ -18,22 +26,36 @@ export class SignalRegistry {
   /**
    * Observe a value
    */
-  public static observe(component: TempleComponent, value: any) {
+  public static observe<T = any>(component: TempleComponent, value: T) {
+    const methods = {
+      getter: () => property.raw as T,
+      setter: (value: T) => value
+    };
     //make a new payload
-    const property = { raw: value };
+    const property = { 
+      raw: value,
+      getter(callback: () => T) {
+        methods.getter = callback;
+        return property;
+      },
+      setter(callback: (value: any) => T) {
+        methods.setter = callback;
+        return property;
+      }
+    };
     //define the access to the value
     Object.defineProperty(property, 'value', {
       get() {
-        return property.raw;
+        return methods.getter();
       },
-      set(value) {
-        const rerender = SignalRegistry.serialize(value) 
+      set(value: any) {
+        const formatted = methods.setter(value);
+        const rerender = SignalRegistry.serialize(formatted) 
           !== SignalRegistry.serialize(property.raw);
         property.raw = value;
         if (rerender) {
           component.render();
         }
-        
       }
     });
     //get the component's values
@@ -66,7 +88,6 @@ export class SignalRegistry {
    */
   protected static serialize(value: any) {
     return JSON.stringify(value);
-  
   }
 }
 
@@ -93,7 +114,7 @@ export default function signal<T = any>(
   //if component is not initiated
   if (!component.initiated) {
     //then add value to observer
-    return SignalRegistry.observe(component, value);
+    return SignalRegistry.observe<T>(component, value);
   }
   //The reason why signal() maybe called after the component
   //has initiated is because the signal() call was part of
@@ -110,7 +131,8 @@ export default function signal<T = any>(
   //get the property...
   //we are relying on JS single threaded nature to figure out 
   //what value to return based on how many times it was observed...
-  return observer.values[
+  const values = observer.values as Property<T>[];
+  return values[
     observer.observed++ % observer.values.length
   ];
 }
