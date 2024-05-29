@@ -8,6 +8,8 @@ import esbuild from 'esbuild';
 import FileLoader from './FileLoader';
 import DocumentCompiler from './DocumentCompiler';
 
+type Format = 'iife'|'cjs'|'esm';
+
 export default class DocumentBuilder {
   //the compiler instance
   protected _compiler: DocumentCompiler;
@@ -26,7 +28,7 @@ export default class DocumentBuilder {
    * Sets the compiler
    */
   constructor(compiler: DocumentCompiler, options: CompilerOptions = {}) {
-    const { cache = false, minify = false, bundle = true } = options;
+    const { cache = false, minify = true, bundle = true } = options;
     this._compiler = compiler;
     this._cache = cache;
     this._minify = minify;
@@ -38,13 +40,12 @@ export default class DocumentBuilder {
    * For the .d.ts file it's:
    * `export default TempleComponent/HTMLElement`
    */
-  public async build(entry: string, format: 'iife'|'cjs' = 'iife') {
+  public async build(entry: string, format: Format = 'iife') {
     // Bundle with esbuild
     const results = await esbuild.build({
       entryPoints: [ entry ],
       bundle: this._bundle,
-      //This breaks, </head> found when minified.
-      //minifyWhitespace: this._minify,
+      minifyWhitespace: this._minify,
       minifyIdentifiers: this._minify,
       minifySyntax: this._minify,
       //Immediately Invoked Function Expression format 
@@ -100,10 +101,8 @@ export default class DocumentBuilder {
     context.module = module;
     //now run the server script
     script.runInContext(context);
-    //get the class name we are expecting
-    const classname = `${this._compiler.classname}_${this._compiler.id}`;
     //get the Document
-    const Document = context[classname] as {
+    const Document = context.TempleBundle.default as {
       new(): TempleDocument
     };
     //return the source code, TempleComponent and a nice
@@ -126,36 +125,38 @@ export default class DocumentBuilder {
   public async source() {
     const build = this._compiler.build;
     return {
-      server: await this._cached(`${build}/server.ts`, 'cjs'),
-      client: await this._cached(`${build}/client.ts`, 'iife')
+      server: await this._cached(`${build}/server`, 'iife'),
+      client: await this._cached(`${build}/client`, 'iife')
     };
   }
 
   /**
    * Tries to read from cache, if not found, compile
    */
-  protected async _cached(file: string, format: 'iife'|'cjs' = 'iife') {
+  protected async _cached(file: string, format: Format = 'iife') {
+    const filejs = file + '.js';
     //if cache enabled
     if (this._cache) {
       //if cache exists and is a file
-      if (fs.existsSync(file) && fs.lstatSync(file).isFile()) {
+      if (fs.existsSync(filejs) && fs.lstatSync(filejs).isFile()) {
         //read the cache file
-        return fs.readFileSync(file, 'utf-8');
+        return fs.readFileSync(filejs, 'utf-8');
       }
     }
-    const source = await this.build(file, format);
+    const filets = file + '.ts';
+    const source = await this.build(filets, format);
     //if cache enabled
     if (this._cache) {
       //if cache does not exist
-      if (!fs.existsSync(file)) {
-        const dirname = path.dirname(file);
+      if (!fs.existsSync(filejs)) {
+        const dirname = path.dirname(filejs);
         //if the directory does not exist
         if (!fs.existsSync(dirname)) {
           //create the directory
           fs.mkdirSync(dirname, { recursive: true });
         }
         //write the cache file
-        fs.writeFileSync(file, source);
+        fs.writeFileSync(filejs, source);
       }
     }
     return source;
