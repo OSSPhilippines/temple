@@ -2,30 +2,71 @@ import type TempleComponent from './TempleComponent';
 import TempleElement from './TempleDocument';
 import TempleEmitter from './TempleEmitter';
 
-export type AttributeBinder = (element: TempleElement) => void;
+//how binders should look like
+type AttributeBinder = (element: TempleElement) => void;
 
-export function bindAttribute(name: string, bind: AttributeBinder) {
-  TempleEmitter.on('ready', () => {
-    TempleElement.filter(temple => temple.hasAttribute(name)).forEach(bind);
-  });
-  TempleEmitter.on('render', (element: TempleComponent) => {
-    //get shadow root
-    const shadowRoot = element.shadowRoot;
-    //if shadow root exists
-    if (shadowRoot) {
-      Array.from(shadowRoot.querySelectorAll('*')).forEach(element => {
-        const node = TempleElement.get(element);
-        if (node && node.hasAttribute(name)) bind(node);
-      });
-    } else {
-      Array.from(element.querySelectorAll('*')).forEach(element => {
-        const node = TempleElement.get(element);
-        if (node && node.hasAttribute(name)) bind(node);
-      });
+//returns all child elements with the attribute name
+const match = (element: Element|ShadowRoot, attribute: string) => {
+  //get all child elements
+  return Array.from(element.querySelectorAll('*')).filter(
+    //filter by elements has the attribute
+    (element: Element) => {
+      //get the node
+      const node = TempleElement.get(element);
+      //return if the node has the attribute
+      return node && node.hasAttribute(attribute);
     }
-  })
+  //map the elements to TempleElement (this is what to return)
+  ).map(element => TempleElement.get(element)) as TempleElement[];
+};
+
+//bind an attribute to a binder
+function bindAttribute(name: string, bind: AttributeBinder) {
+  TempleEmitter.on('mounted', (element: TempleComponent) => {
+    //this is called for every listener, 
+    //there will be a lot of listeners...
+    match(element.shadowRoot || element, name).forEach(bind);
+  });
 }
 
+//unbind an attribute to a binder
+function unbindAttribute(name: string, bind: AttributeBinder) {
+  TempleEmitter.on('unmounted', (element: TempleComponent) => {
+    //this is called for every listener, 
+    //there will be a lot of listeners...
+    match(element.shadowRoot || element, name).forEach(bind);
+  });
+}
+
+//ex. <div mounted=callback>Hello World</div>
+bindAttribute('mounted', element => {
+  const callback = element.getAttribute('mounted');
+  if (typeof callback === 'function' ) {
+    const event = new CustomEvent('mounted', { 
+      detail: {
+        node: element,
+        target: element.element
+      }
+    });
+    callback(event);
+  }
+});
+
+//ex. <div unmounted=callback>Hello World</div>
+unbindAttribute('unmounted', element => {
+  const callback = element.getAttribute('unmounted');
+  if (typeof callback === 'function' ) {
+    const event = new CustomEvent('unmounted', { 
+      detail: {
+        node: element,
+        target: element.element
+      }
+    });
+    callback(event);
+  }
+});
+
+//ex. <div if={count > 0}>Hello World</div>
 bindAttribute('if', element => {
   const condition = element.getAttribute('if');
   if (condition === false || condition === 'false') {
@@ -102,18 +143,7 @@ bindAttribute('if', element => {
   'toggle'
 ].forEach(event => bindAttribute(event, element => {
   const callback = element.getAttribute(event);
-  if (typeof callback === 'function' 
-    //The following cases are for the error:
-    //TypeError: element.element.addEventListener is not a function
-    //which is from the server side rendering. TempleBrowser is a small 
-    //shim to make SSR work but cannot handle these kind of event 
-    //listeners without making the shim substantially larger.
-    //The alternative approach is to just case for it here.
-    //(the server shim doesnt do anything with the event listeners)
-    && element.element
-    && element.element.addEventListener
-    && typeof element.element.addEventListener === 'function'
-  ) {
+  if (typeof callback === 'function' ) {
     element.element.addEventListener(event, callback);
   }
 }));
