@@ -122,7 +122,7 @@ export default class DocumentCompiler extends ComponentCompiler {
     markup: MarkupChildToken[], 
     components: Compiler[],
     level = 0,
-    total = 0
+    total = { current: 0 }
   ) {
     const attributes = markup.map(token => {
       let expression = '';
@@ -157,7 +157,7 @@ export default class DocumentCompiler extends ComponentCompiler {
         }
         return expression;
       }
-      const id = ++total;
+      const id = ++total.current;
       if (token.attributes && token.attributes.properties.length > 0) {
         expression += `'${id}': {`;
         expression += ' ' + token.attributes.properties.map(property => {

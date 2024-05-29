@@ -12,7 +12,7 @@ export default abstract class TempleComponent extends HTMLElement {
 
   //the id of the component
   //NOTE: the id is undefined on the server
-  protected _id: number;
+  protected _id = 0;
   //whether the component has initiated
   //this is a flag used by signals to check
   //the number of signals that exists
@@ -37,8 +37,15 @@ export default abstract class TempleComponent extends HTMLElement {
   /**
    * Returns the component's names
    */
-  public get component() {
-    return (this.constructor as typeof TempleComponent).component;
+  public get metadata() {
+    const [ tagname, classname ] = (
+      this.constructor as typeof TempleComponent
+    ).component;
+    return {
+      id: this._id,
+      tagname,
+      classname
+    };
   }
 
   /**
@@ -110,8 +117,7 @@ export default abstract class TempleComponent extends HTMLElement {
    */
   public constructor() {
     super();
-    TempleDocument.register(this);
-    this._id = ++TempleComponent._total;
+    this.init();
   }
 
   /**
@@ -150,9 +156,37 @@ export default abstract class TempleComponent extends HTMLElement {
   }
 
   /**
+   * Returns the parent component (if any)
+   */
+  public getParentComponent() {
+    let parent = this.parentElement;
+    while (parent) {
+      if (parent instanceof TempleComponent) {
+        return parent;
+      }
+      parent = parent.parentElement;
+    }
+    return null;
+  }
+
+  public init(attributes: Hash = {}) {
+    if (!this._id) {
+      TempleDocument.register(this, attributes);
+      this._id = ++TempleComponent._total;
+    }
+  }
+
+  /**
    * Renders the component
    */
   public render() {
+    //get the parent component
+    const parent = this.getParentComponent();
+    //if parent is not initiated, wait for it
+    //(this is the hydration logic)
+    if (parent && !parent.initiated) {
+      return;
+    }
     //set the current component
     __APP_DATA__.current = this;
     //get the styles
@@ -161,6 +195,10 @@ export default abstract class TempleComponent extends HTMLElement {
     if (!this._template) {
       //this will only initialize the variables once
       this._template = this.template();
+    //there's a template, so it means it was mounted
+    } else {
+      //emit the unmounted event
+      emitter.emit('unmounted', this);
     }
     //get the children build w/o re-initializing the variables
     const children = this._template().filter(Boolean) as Element[];
@@ -192,8 +230,8 @@ export default abstract class TempleComponent extends HTMLElement {
     //reset the current component
     delete __APP_DATA__.current;
     this._initiated = true;
-    //emit the render event
-    emitter.emit('render', this);
+    //emit the mounted event
+    emitter.emit('mounted', this);
     return this.shadowRoot ? this.shadowRoot.innerHTML :this.innerHTML;
   }
 

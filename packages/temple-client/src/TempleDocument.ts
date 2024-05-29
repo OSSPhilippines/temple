@@ -62,11 +62,11 @@ export default class TempleDocument {
     //normally an instantiated component would self register,
     //but since we manually instantiated it to produce web component
     //encapsulation, we need to manually register this component as well
-    const element = this.register(component, attributes);
+    component.init(attributes);
     //wait for the component to be ready, 
     //then set props, children and render
     component.wait();
-    return element;
+    return component.element;
   }
 
   /**
