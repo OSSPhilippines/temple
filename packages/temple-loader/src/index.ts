@@ -22,8 +22,9 @@ const templeLoader: LoaderFunction = function () {
   engine
     .source(inputPath)
     .then((code: { client: string, server: string }) => {
-      callback(null, code.client);
-    });
+      callback(null, code.server);
+    })
+    .catch(console.log);
 };
 
 export default templeLoader;

@@ -87,9 +87,9 @@ export default class DocumentCompiler extends ComponentCompiler {
     //create a new source file
     const source = project.createSourceFile('manifest.ts');
     components.forEach(component => {
-      //import './components/Counter_abc123'
+      //import './Counter_abc123'
       source.addImportDeclaration({
-        moduleSpecifier: `./components/${component.classname}_${component.id}`
+        moduleSpecifier: `./${component.classname}_${component.id}`
       });
     });
 

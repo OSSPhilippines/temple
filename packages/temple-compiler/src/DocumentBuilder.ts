@@ -180,8 +180,8 @@ export default class DocumentBuilder {
     this._compiler.registry.forEach(component => {
       const id = component.id;
       const name = component.classname;
-      //the component file in [build]/components/[name]_[id]
-      const path = `${build}/components/${name}_${id}.ts`;
+      //the component file in [build]/[name]_[id]
+      const path = `${build}/${name}_${id}.ts`;
       files[path] = this._readFile(path, component.sourceCode, cache);
     });
 
