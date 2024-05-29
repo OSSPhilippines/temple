@@ -19,9 +19,11 @@ const templeLoader: LoaderFunction = function () {
   // Apply some transformations to the source...
   //make a new compiler
   const engine = temple({ ...options, register: true });
-  engine.source(inputPath).then(code => {
-    callback(null, code);
-  });
+  engine
+    .source(inputPath)
+    .then((code: { client: string, server: string }) => {
+      callback(null, code.client);
+    });
 };
 
 export default templeLoader;

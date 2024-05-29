@@ -1,24 +1,14 @@
 import type { PluginBuild } from 'esbuild';
 import type { SourceFile } from 'ts-morph';
-import type { TempleComponent } from '@ossph/temple-client';
-import type { BuilderOptions } from './types';
+import type { CompilerOptions, TempleDocument } from './types';
 import * as vm from 'vm';
 import fs from 'fs';
 import path from 'path';
 import esbuild from 'esbuild';
 import FileLoader from './FileLoader';
 import DocumentCompiler from './DocumentCompiler';
-import { 
-  window, 
-  document, 
-  customElements, 
-  TextNode, 
-  HTMLElement 
-} from './TempleBrowser';
 
-const noop = () => {};
-
-export default class TempleBuilder {
+export default class DocumentBuilder {
   //the compiler instance
   protected _compiler: DocumentCompiler;
   protected _cache: boolean;
@@ -35,7 +25,7 @@ export default class TempleBuilder {
   /**
    * Sets the compiler
    */
-  constructor(compiler: DocumentCompiler, options: BuilderOptions = {}) {
+  constructor(compiler: DocumentCompiler, options: CompilerOptions = {}) {
     const { cache = false, minify = false, bundle = true } = options;
     this._compiler = compiler;
     this._cache = cache;
@@ -48,7 +38,7 @@ export default class TempleBuilder {
    * For the .d.ts file it's:
    * `export default TempleComponent/HTMLElement`
    */
-  public async build(entry: string) {
+  public async build(entry: string, format: 'iife'|'cjs' = 'iife') {
     // Bundle with esbuild
     const results = await esbuild.build({
       entryPoints: [ entry ],
@@ -59,7 +49,7 @@ export default class TempleBuilder {
       minifySyntax: this._minify,
       //Immediately Invoked Function Expression format 
       //for browser compatibility
-      format: 'iife', 
+      format: format, 
       globalName: 'TempleBundle',
       plugins: [ 
         this._virtual(),
@@ -100,47 +90,30 @@ export default class TempleBuilder {
    * - temple(..options...).load(file).render(props)
    */
   public async load() {
-    //get source code
     const source = await this.source();
     //create a new vm enviroment with the source code
-    const script = new vm.Script(source);
+    const script = new vm.Script(source.server);
     //get the context
     const context = vm.createContext({ exports: {} });
     //inject missing dependencies
-    context.Node = TextNode;
-    context.HTMLElement = HTMLElement;
-    context.customElements = customElements;
-    context.document = document;
-    context.window = window;
-    context.setTimeout = noop;
-    context.clearTimeout = noop;
-    context.setInterval = noop;
-    context.clearInterval = noop;
     context.console = console;
-    //now run the script
+    context.module = module;
+    //now run the server script
     script.runInContext(context);
-    //get the TempleComponent class
-    //NOTE: the name TempleBundle is defined in 
-    //the esbuild globalName option
-    const Component = context.TempleBundle.default as { 
-      component: [ string, string ],
-      new(): TempleComponent 
+    //get the class name we are expecting
+    const classname = `${this._compiler.classname}_${this._compiler.id}`;
+    //get the Document
+    const Document = context[classname] as {
+      new(): TempleDocument
     };
-    //!!! TempleComponent class is now on the server !!!
-    //return the source code, TempleComponent and a nide
+    //return the source code, TempleComponent and a nice
     // render(props) function
     return {
-      source,
-      TempleComponent: context.TempleBundle.default as { 
-        component: [ string, string ],
-        new(): TempleComponent 
-      },
+      source: source,
+      TempleDocument: Document,
       render: (props?: Record<string, any>) => {
-        const component = new Component();
-        //@ts-ignore the render function generated 
-        //by the document compiler does have these
-        //arguments...
-        return component.render(source, props);
+        const document = new Document();
+        return document.render(source.client, props);
       }
     };
   }
@@ -151,32 +124,38 @@ export default class TempleBuilder {
    * - temple(..options...).source(file)
    */
   public async source() {
-    const id = this._compiler.id;
-    const name = this._compiler.classname;
-    const build = this._compiler.buildFolder;
-    const cache = `${build}/${name}_${id}.ts`;
+    const build = this._compiler.build;
+    return {
+      server: await this._cached(`${build}/server.ts`, 'cjs'),
+      client: await this._cached(`${build}/client.ts`, 'iife')
+    };
+  }
+
+  /**
+   * Tries to read from cache, if not found, compile
+   */
+  protected async _cached(file: string, format: 'iife'|'cjs' = 'iife') {
     //if cache enabled
     if (this._cache) {
       //if cache exists and is a file
-      if (fs.existsSync(cache) && fs.lstatSync(cache).isFile()) {
+      if (fs.existsSync(file) && fs.lstatSync(file).isFile()) {
         //read the cache file
-        return fs.readFileSync(cache, 'utf-8');
+        return fs.readFileSync(file, 'utf-8');
       }
     }
-    //Get the source code now
-    const source = await this.build(cache);
+    const source = await this.build(file, format);
     //if cache enabled
     if (this._cache) {
       //if cache does not exist
-      if (!fs.existsSync(cache)) {
-        const dirname = path.dirname(cache);
+      if (!fs.existsSync(file)) {
+        const dirname = path.dirname(file);
         //if the directory does not exist
         if (!fs.existsSync(dirname)) {
           //create the directory
           fs.mkdirSync(dirname, { recursive: true });
         }
         //write the cache file
-        fs.writeFileSync(cache, source);
+        fs.writeFileSync(file, source);
       }
     }
     return source;
@@ -189,18 +168,19 @@ export default class TempleBuilder {
     //map of filename to ts code
     const files: Record<string, () => string> = {};
     const cache: Record<string, string> = {};
-    const id = this._compiler.id;
-    const name = this._compiler.classname;
-    const build = this._compiler.buildFolder;
-    //the main component file in [build]/components/[name]_[id]
-    const main = `${build}/${name}_${id}.ts`;
-    files[main] = this._readFile(main, this._compiler.sourceCode, cache);
+    const build = this._compiler.build;
+    //the client file in [build]/client.ts
+    const client = `${build}/client.ts`;
+    files[client] = this._readFile(client, this._compiler.manifest, cache);
+    //the server file in [build]/server.ts
+    const server = `${build}/server.ts`;
+    files[server] = this._readFile(server, this._compiler.sourceCode, cache);
     //loop through all components
     this._compiler.registry.forEach(component => {
       const id = component.id;
       const name = component.classname;
       //the component file in [build]/components/[name]_[id]
-      const path = `${build}/${name}_${id}.ts`;
+      const path = `${build}/components/${name}_${id}.ts`;
       files[path] = this._readFile(path, component.sourceCode, cache);
     });
 

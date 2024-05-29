@@ -39,15 +39,16 @@
   import { props } from '@ossph/temple';
   // Separate component related props from field attributes
   const { 
-    block,       full,     color,
-    xs,          sm,       md,
-    lg,          xl,       xl2, 
-    xl3,         xl4,      xl5, 
-    curved,      rounded,  pill,
-    info,        warning,  success, 
-    error,       muted,    outline, 
-    transparent, solid,    style,
-    classname,   children, href,
+    block,     full,    color,
+    xs,        sm,      md,
+    lg,        xl,      xl2, 
+    xl3,       xl4,     xl5, 
+    curved,    rounded, pill,
+    info,      warning, success, 
+    error,     muted,   primary, 
+    secondary, outline, transparent, 
+    solid,     style,   classname,   
+    children,  href,
     ...attributes 
   } = props();
 
@@ -110,6 +111,10 @@
       defaults.classes.push('bd-error', 'tx-error');
     } else if (muted) {
       defaults.classes.push('bd-muted', 'tx-muted');
+    } else if (primary) {
+      defaults.classes.push('bd-primary', 'tx-primary');
+    } else if (secondary) {
+      defaults.classes.push('bd-secondary', 'tx-secondary');
     }
   } else {
     defaults.classes.push('tx-white');
@@ -125,6 +130,10 @@
       defaults.classes.push('bg-error');
     } else if (muted) {
       defaults.classes.push('bg-muted');
+    } else if (primary) {
+      defaults.classes.push('bg-primary');
+    } else if (secondary) {
+      defaults.classes.push('bg-secondary');
     }
   } 
 

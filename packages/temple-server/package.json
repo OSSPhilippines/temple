@@ -1,7 +1,7 @@
 {
-  "name": "@ossph/temple-client",
+  "name": "@ossph/temple-server",
   "version": "0.0.6",
-  "description": "Browser library that Temple scripts can use to manage data in different ways.",
+  "description": "Server library that Temple server uses to manage data in different ways.",
   "license": "Apache-2.0",
   "author": "Chris <chris@incept.asia>",
   "homepage": "https://github.com/OSSPhilippines/temple",

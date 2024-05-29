@@ -1,5 +1,5 @@
 import type TempleComponent from './TempleComponent';
-import TempleElement from './TempleElement';
+import TempleElement from './TempleDocument';
 import TempleEmitter from './TempleEmitter';
 
 export type AttributeBinder = (element: TempleElement) => void;

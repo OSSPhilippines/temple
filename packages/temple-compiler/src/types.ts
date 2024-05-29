@@ -1,5 +1,6 @@
 import type fs from 'fs';
 import type { SourceFile } from 'ts-morph';
+import type { Node } from '@ossph/temple-server'
 import type {
   ImportToken,
   ComponentToken,
@@ -32,7 +33,7 @@ export interface Compiler {
   /**
    * Returns the absolute path of the build folder
    */
-  get buildFolder(): string;
+  get build(): string;
 
   /**
    * Returns the class name (based on the basename)
@@ -126,9 +127,11 @@ export type CompilerOptions = {
   cwd?: string,
   brand?: string,
   register?: boolean,
-  buildFolder?: string,
+  build?: string,
   tsconfig?: string,
-  registerChildren?: boolean
+  cache?: boolean,
+  minify?: boolean,
+  bundle?: boolean
 };
 
 //this was parsed by the ts compiler
@@ -145,9 +148,9 @@ export type ImportChunk = {
 //to check if we already generated it
 export type ComponentRegistry = Record<string, Compiler>;
 
-//for the builder
-export type BuilderOptions = {
-  cache?: boolean,
-  minify?: boolean,
-  bundle?: boolean
-};
+export interface TempleDocument {
+  props: Record<string, any>,
+  style(): string,
+  template(): (Node|false)[],
+  render(scripts?: string, props?: Record<string, any>): string
+}

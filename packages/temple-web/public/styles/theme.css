@@ -34,8 +34,8 @@
   --fg-zero: #000000;
   --fg-default: #242424;
   --fg-inverse: #CFCFCF;
-  --fg-primary: #DA532C;
-  --fg-secondary: #E49F1A;
+  --fg-primary: #E49F1A;
+  --fg-secondary: #DA532C;
 }
 
 .dark {
@@ -48,8 +48,8 @@
   --fg-zero: #FFFFFF;
   --fg-default: #CFCFCF;
   --fg-inverse: #222222;
-  --fg-primary: #DA532C;
-  --fg-secondary: #E49F1A;
+  --fg-primary: #E49F1A;
+  --fg-secondary: #DA532C;
 }
 
 /* Generic
@@ -112,6 +112,12 @@
 .tx-muted {
   color: var(--muted) !important;
 }
+.tx-primary {
+  color: var(--fg-primary) !important;
+}
+.tx-secondary {
+  color: var(--fg-secondary) !important;
+}
 
 /* Borders
 ---------------------------------*/
@@ -163,6 +169,12 @@
 .bd-muted {
   border-color: var(--muted) !important;
 }
+.bd-primary {
+  border-color: var(--fg-primary) !important;
+}
+.bd-secondary {
+  border-color: var(--fg-secondary) !important;
+}
 
 /* Backgrounds
 ---------------------------------*/
@@ -186,6 +198,12 @@
 }
 .bg-muted {
   background-color: var(--muted) !important;
+}
+.bg-primary {
+  background-color: var(--fg-primary) !important;
+}
+.bg-secondary {
+  background-color: var(--fg-secondary) !important;
 }
 
 /* Reset

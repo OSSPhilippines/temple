@@ -1,5 +1,6 @@
-import TempleComponent from './TempleComponent';
+import type TempleComponent from './TempleComponent';
 import Exception from './TempleException';
+import data from './data';
 
 //types
 export type Observer = {
@@ -79,11 +80,10 @@ export default function signal<T = any>(
   value: T,
   component: TempleComponent|null = null
 ) {
-  //if no component
   if (!component) {
-    //try getting the current component
-    component = TempleComponent.current;
-  } 
+    //try getting the current component from global
+    component = data.current || null;
+  }
   //if still no current component
   if (!component) {
     throw Exception.for(

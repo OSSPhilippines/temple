@@ -38,7 +38,7 @@ export default class ComponentCompiler implements Compiler {
   //prefix brand
   protected _brand: string;
   //build folder
-  protected _buildFolder: string;
+  protected _build: string;
   //current working directory
   //we need this to locate and compile imported components
   protected _cwd: string;
@@ -93,9 +93,9 @@ export default class ComponentCompiler implements Compiler {
   /**
    * Returns the absolute path of the build folder
    */
-  public get buildFolder() {
+  public get build() {
     return path.join(
-      FileLoader.absolute(this._buildFolder, this._cwd),
+      FileLoader.absolute(this._build, this._cwd),
       this.id
     );
   }
@@ -135,7 +135,7 @@ export default class ComponentCompiler implements Compiler {
             cwd: this._cwd,
             brand: this._brand,
             register: false,
-            buildFolder: this._buildFolder,
+            build: this._build,
             tsconfig: this._tsconfig
           },
           this._registry
@@ -264,7 +264,7 @@ export default class ComponentCompiler implements Compiler {
       ? options.brand
       : 'temple';
     //determine the build folder
-    this._buildFolder = options.buildFolder || './.temple';
+    this._build = options.build || './.temple';
     //by default, we register the custom elements
     this._register = options.register !== false;
     //determine the tsconfig file
@@ -290,7 +290,7 @@ export default class ComponentCompiler implements Compiler {
       tsConfigFilePath: this.tsconfig,
       skipAddingFilesFromTsConfig: true,
       compilerOptions: {
-        outDir: this.buildFolder,
+        outDir: this.build,
         // Generates corresponding '.d.ts' file.
         declaration: true, 
         // Generates a sourcemap for each corresponding '.d.ts' file.
@@ -312,15 +312,10 @@ export default class ComponentCompiler implements Compiler {
     const filePath = this._absolute.slice(0, -extname.length);
     //create a new source file
     const source = project.createSourceFile(`${filePath}.ts`);
-    //import { TempleElement, TempleComponent } from '@ossph/temple-client'
+    //import { TempleDocument, TempleComponent } from '@ossph/temple-client';
     source.addImportDeclaration({
       moduleSpecifier: '@ossph/temple-client',
-      namedImports: [ 
-        'TempleElement', 
-        'TempleComponent',
-        //if no script, add props (to be used below)
-        ...this.scripts.length === 0 ? [ 'props as __PROPS__' ]: []
-      ]
+      namedImports: [ 'TempleDocument', 'TempleComponent' ]
     });
     //import Counter from './Counter'
     this.components.forEach(component => {
@@ -379,7 +374,7 @@ export default class ComponentCompiler implements Compiler {
       statements: `${this.scripts.length > 0 
         ? this.scripts.join('\n')
         //allow scriptless components to use props
-        : (`const props = __PROPS__();`)}
+        : (`const props = this.props;`)}
         return () => ${this.template.trim()};`
     });
 
@@ -420,10 +415,10 @@ export default class ComponentCompiler implements Compiler {
         expression += this._templateElement(expression, child, components);
       } else if (child.type === 'Literal') {
         if (typeof child.value === 'string') {
-          expression += `TempleElement.createText(\`${child.value}\`)`;
+          expression += `TempleDocument.createText(\`${child.value}\`)`;
         //null, true, false, number 
         } else {
-          expression += `TempleElement.createText(String(${child.value}))`;
+          expression += `TempleDocument.createText(String(${child.value}))`;
         }
       } else if (child.type === 'ProgramExpression') {
         expression += `...this._toNodeList(${child.source})`;
@@ -517,10 +512,10 @@ export default class ComponentCompiler implements Compiler {
     //if the token refers to a component imported by this file
     if (instance) {
       const componentName = `${instance.classname}_${instance.id}`;
-      expression += `TempleElement.createComponent(${componentName}, {`;
+      expression += `TempleDocument.createComponent(${componentName}, {`;
     } else {
       const tagName = this._tagName(token); 
-      expression += `TempleElement.createElement('${tagName}', {`;
+      expression += `TempleDocument.createElement('${tagName}', {`;
     }
     
     if (token.attributes && token.attributes.properties.length > 0) {

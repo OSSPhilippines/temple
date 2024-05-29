@@ -1,4 +1,5 @@
-import TempleComponent from './TempleComponent';
+import type TempleComponent from './TempleComponent';
+import data from './data';
 
 /**
  * Get the current props of the component 
@@ -7,11 +8,15 @@ import TempleComponent from './TempleComponent';
  */
 export default function props<
   T = Record<string, any>
->(component?: TempleComponent) {
+>(component: TempleComponent|null = null) {
+  //if no component
+  if (!component) {
+    //try getting the current component from global
+    component = data.current || null;
+  }
+
   if (component) {
     return component.props as T;
-  } else if (TempleComponent.current) {
-    return TempleComponent.current.props as T;
   }
   return {};
 }

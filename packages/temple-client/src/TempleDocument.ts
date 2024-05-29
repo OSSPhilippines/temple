@@ -1,24 +1,16 @@
+import type { TempleComponentClass, RegistryIterator } from './types';
 import type TempleComponent from './TempleComponent';
 import TempleEmitter from './TempleEmitter';
 
-export type TempleComponentClass = {
-  component: [ string, string ],
-  new (): TempleComponent
-};
-
-export type RegistryIterator<T = any> = (
-  temple: TempleElement,
-  element: Element
-) => T;
-
 /**
- * A registry of all TempleElement instances to add better attribute handling
+ * A registry of all TempleDocument instances 
+ * to add better attribute handling
  */
-export default class TempleElement {
+export default class TempleDocument {
   //prefix brand
   protected static _brand = 'temple';
-  //A registry of all TempleElement instances
-  protected static _registry = new Map<Element, TempleElement>();
+  //A registry of all TempleDocument instances
+  protected static _registry = new Map<Element, TempleDocument>();
 
   /**
    * Sets the brand prefix
@@ -28,51 +20,9 @@ export default class TempleElement {
   }
 
   /**
-   * Creates a new TempleElement instance
-   */
-  public static create(
-    name: string, 
-    attributes: Record<string, any>, 
-    children: Element[] = []
-  ) {
-    //create html element
-    const element = document.createElement(name);
-    //set attributes
-    for (const [ key, value ] of Object.entries(attributes)) {
-      if (typeof value === 'string') {
-        element.setAttribute(key, value);
-      }
-    }
-    //append children
-    children.forEach(child => element.appendChild(child));
-    //we need to manually register the element
-    return this.register(element, attributes);
-  }
-
-  /**
-   * Like array filter for registry
-   */
-  public static filter(callback: RegistryIterator<boolean>) {
-    const elements: TempleElement[] = [];
-    this._registry.forEach((temple, html) => {
-      if (callback(temple, html)) {
-        elements.push(temple);
-      }
-    });
-    return elements;
-  }
-
-  /**
-   * Returns the TempleElement instance for the given element
-   */
-  public static get(element: Element) {
-    return this._registry.get(element) || null;
-  }
-
-  /**
    * Localizes a TempleComponent instance
    */
-  public static localize(
+  public static createComponent(
     definition: TempleComponentClass, 
     attributes: Record<string, any>, 
     children: Element[] = []
@@ -120,6 +70,55 @@ export default class TempleElement {
   }
 
   /**
+   * Creates a new TempleDocument instance
+   */
+  public static createElement(
+    name: string, 
+    attributes: Record<string, any>, 
+    children: Element[] = []
+  ) {
+    //create html element
+    const element = document.createElement(name);
+    //set attributes
+    for (const [ key, value ] of Object.entries(attributes)) {
+      if (typeof value === 'string') {
+        element.setAttribute(key, value);
+      }
+    }
+    //append children
+    children.forEach(child => element.appendChild(child));
+    //we need to manually register the element
+    return this.register(element, attributes);
+  }
+
+  /**
+   * Creates a TextNode and returns it
+   */
+  public static createText(value: string) {
+    return document.createTextNode(value);
+  }
+
+  /**
+   * Like array filter for registry
+   */
+  public static filter(callback: RegistryIterator<boolean>) {
+    const elements: TempleDocument[] = [];
+    this._registry.forEach((temple, html) => {
+      if (callback(temple, html)) {
+        elements.push(temple);
+      }
+    });
+    return elements;
+  }
+
+  /**
+   * Returns the TempleDocument instance for the given element
+   */
+  public static get(element: Element) {
+    return this._registry.get(element) || null;
+  }
+
+  /**
    * Like array map for registry
    */
   public static map<T = any>(callback: RegistryIterator<T>) {
@@ -131,13 +130,13 @@ export default class TempleElement {
   }
 
   /**
-   * Registers a new TempleElement instance
+   * Registers a new TempleDocument instance
    */
   public static register(element: Element, attributes?: Record<string, any>) {
     if (this._registry.has(element)) {
-      return this.get(element) as TempleElement;
+      return this.get(element) as TempleDocument;
     }
-    return new TempleElement(element, attributes || {});
+    return new TempleDocument(element, attributes || {});
   }
 
   //the html element
@@ -166,7 +165,7 @@ export default class TempleElement {
     this._element = element;
     this._attributes = attributes;
     //add to registry
-    TempleElement._registry.set(this._element, this);
+    TempleDocument._registry.set(this._element, this);
   }
 
   /**
