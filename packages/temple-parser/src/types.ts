@@ -106,7 +106,7 @@ export type ComponentToken = {
   type: 'ComponentDeclaration',
   start: number,
   end: number,
-  attributes?: ObjectToken,
+  attributes: ObjectToken,
   source: LiteralToken
 };
 

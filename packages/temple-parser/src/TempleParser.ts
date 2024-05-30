@@ -345,6 +345,7 @@ export default class TempleParser {
             type: 'ComponentDeclaration',
             start: symbol.start,
             end: symbol.end,
+            attributes: attributes,
             source: {
               type: 'Literal',
               start: attributes.start,
