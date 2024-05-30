@@ -30,6 +30,18 @@ export default class DocumentCompiler extends ComponentCompiler {
       // for components to have the same name it's also possible for 
       // components to have the tag name (although rare)
 
+      //determine type from the attributes
+      let type: 'component'|'template' = 'component';
+      const property = token.attributes.properties.find(
+        property => property.key.name === 'type'
+      );
+      if (property 
+        && property.value.type === 'Literal'
+        && property.value.value === 'template'
+      ) {
+        type = 'template';
+      }
+
       //if the component is not compiled yet
       if (!this._registry[inputSourceFile]) {
         //make a new compiler
@@ -39,9 +51,10 @@ export default class DocumentCompiler extends ComponentCompiler {
             fs: this._fs,
             cwd: this._cwd,
             brand: this._brand,
-            register: this._register === false,
+            register: type === 'component' && this._register === false,
             build: this._build,
-            tsconfig: this._tsconfig
+            tsconfig: this._tsconfig,
+            type: type
           },
           this._registry
         );
@@ -104,6 +117,8 @@ export default class DocumentCompiler extends ComponentCompiler {
    */
   public constructor(sourceFile: string, options: CompilerOptions) {
     super(sourceFile, options);
+    //set the type
+    this._type = options.type || 'document';
     //by default, we dont register the custom elements
     this._register = options.register === true;
   }
@@ -137,12 +152,13 @@ export default class DocumentCompiler extends ComponentCompiler {
         }
         return expression;
       }
-      //check to see if the token refers to a component imported by this file
+      //check to see if the token refers to
+      //a component imported by this file
       const child = components.find(
         component => component.tagname === token.name
       );
       //we only hydrate components
-      if (!child) {
+      if (!child || child.type === 'template') {
         if (token.children) {
           expression += this._bindings(
             token.children, 
@@ -433,14 +449,46 @@ export default class DocumentCompiler extends ComponentCompiler {
     token: MarkupToken,
     components: Compiler[]
   ) {
-    //check to see if the token refers to a component imported by this file
-    const instance = components.find(
+    //check to see if the token refers to a 
+    //component directly imported by this file
+    const component = components.find(
       component => component.tagname === token.name
     );
     //if the token refers to a component imported by this file
-    if (instance) {
+    if (component) {
+      if (component.type === 'template') {
+        //templates take no children and scope is 
+        //the same as the parent scope. template
+        //tags are simply replaced with its children
+        //syntax <x-head />
+        //NOTE: if you want scoped templates, 
+        // that's the same as a light component
+        return expression + `...${this._markup(
+          component.ast.markup, 
+          components
+        )}`;
+      }
+      //business as usual
       expression += `TempleDocument.createComponent('${token.name}', {`;
     } else {
+      //check to see if the token refers to a 
+      //template in the registry
+      const template = Object.values(this._registry).find(
+        component => component.tagname === token.name 
+          && component.type === 'template'
+      );
+      if (template) {
+        //templates take no children and scope is 
+        //the same as the parent scope. template
+        //tags are simply replaced with its children
+        //syntax <x-head />
+        //NOTE: if you want scoped templates, 
+        // that's the same as a light component
+        return expression + `...${this._markup(
+          template.ast.markup, 
+          components
+        )}`;
+      }
       expression += `TempleDocument.createElement('${token.name}', {`;
     }
     

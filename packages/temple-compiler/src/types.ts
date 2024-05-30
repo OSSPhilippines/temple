@@ -110,6 +110,11 @@ export interface Compiler {
    * Returns the location of the tsconfig file
    */
   get tsconfig(): string|undefined;
+
+  /**
+   * Returns the location of the tsconfig file
+   */
+  get type(): 'document'|'component'|'template';
 }
 
 //this is what is returned by the Temple parser
@@ -131,7 +136,8 @@ export type CompilerOptions = {
   tsconfig?: string,
   cache?: boolean,
   minify?: boolean,
-  bundle?: boolean
+  bundle?: boolean,
+  type?: 'document'|'component'|'template'
 };
 
 //this was parsed by the ts compiler
