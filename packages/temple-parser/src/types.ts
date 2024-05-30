@@ -124,6 +124,7 @@ export type ScriptToken = {
   type: 'ProgramExpression',
   start: number,
   end: number,
+  inline: boolean,
   attributes?: ObjectToken,
   imports?: ImportToken[],
   source: string,
@@ -161,4 +162,4 @@ export type UnknownMarkupToken = {
   raw?: string
 }
 
-export type MarkupChildToken = MarkupToken|LiteralToken|ScriptToken;
+export type MarkupChildToken = MarkupToken|LiteralToken|ScriptToken|StyleToken;

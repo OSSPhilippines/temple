@@ -427,49 +427,48 @@ export default class TempleParser {
    * Adds a text node to the given children
    */
   protected _text(children: MarkupChildToken[], start: number, end: number) {
-    //find the symbols in the text
-    const symbols = this._symbolParser.find({ min: start, max: end });
-    //if there are symbols in the text
-    if (symbols.length > 0) {
-      //loop through the symbols
-      for (const symbol of symbols) {
-        //if the symbol is a text node
-        if (symbol.type === '#text') {
-          //push literal token
-          children.push({
-            type: 'Literal',
-            start: symbol.start,
-            end: symbol.end,
-            value: symbol.value,
-            raw: `'${symbol.value?.replace(/'/g, "\\'")}'`
-          });
-        //if the symbol is a script node
-        } else if (symbol.type === '{}') {
-          //push program expression token
-          children.push({
-            type: 'ProgramExpression',
-            start: symbol.start + 1,
-            end: symbol.end - 1,
-            source: this._substring(
-              symbol.start + 1, 
-              symbol.end - 1
-            )
-          });
-        }
+    let last = start;
+    //find the programs in the text
+    const programs = this._symbolParser
+      .find({ min: start, max: end })
+      .filter(symbol => symbol.type === '{}');
+    //loop through the {} symbols
+    for (const program of programs) {
+      //if there is text before the program
+      if (last < program.start) {
+        //push a literal token
+        children.push({
+          type: 'Literal',
+          start: last,
+          end: program.start,
+          value: this._substring(last, program.start),
+          raw: `'${this._substring(last, program.start).replace(/'/g, "\\'")}'`
+        });
       }
-      //do nothing else
-      return;
+      //push program expression token
+      children.push({
+        type: 'ProgramExpression',
+        start: program.start + 1,
+        end: program.end - 1,
+        inline: true,
+        source: this._substring(
+          program.start + 1, 
+          program.end - 1
+        )
+      });
+      last = program.end;
     }
-    //get the text value
-    const value = this._substring(start, end);
-    //there are no symbols in the text
-    children.push({
-      type: 'Literal',
-      start: start,
-      end: end,
-      value: value,
-      raw: `'${value.replace(/'/g, "\\'")}'`
-    });
+    //if there is text before the last child
+    if (last < end) {
+      //push a literal token
+      children.push({
+        type: 'Literal',
+        start: last,
+        end: end,
+        value: this._substring(last, end),
+        raw: `'${this._substring(last, end).replace(/'/g, "\\'")}'`
+      });
+    }
   }
 
   /**
@@ -547,9 +546,23 @@ export default class TempleParser {
       } else if (parent.children.length > 0) {
         //find the gap between the last child and the open tag
         const last = parent.children[parent.children.length - 1];
-        if (last.end < open.start) {
+        //get the end index
+        let end = last.end;
+        //if the last type is a script
+        if (last.type === 'ProgramExpression') {
+          //type update
+          const script = last as ScriptToken;
+          //} is not included
+          //</script> is not included
+          end += script.inline ? 1: 9;
+        //if the last type is a style
+        } else if (last.type === 'StyleExpression') {
+          //</style> is not included
+          end += 8;
+        }
+        if (end < open.start) {
           //and add it as a text node
-          this._text(parent.children, last.end, open.start);
+          this._text(parent.children, end, open.start);
         }
       }
       //finally, add the token to the parent's children
@@ -561,9 +574,23 @@ export default class TempleParser {
     if (this._history.length > 0) {
       //find the gap between the last token and the open tag
       const last = this._history[this._history.length - 1];
-      if (last.end < open.start) {
+      //get the end index
+      let end = last.end;
+      //if the last type is a script
+      if (last.type === 'ProgramExpression') {
+        //type update
+        const script = last as ScriptToken;
+        //} is not included
+        //</script> is not included
+        end += script.inline ? 1: 9;
+      //if the last type is a style
+      } else if (last.type === 'StyleExpression') {
+        //</style> is not included
+        end += 8;
+      }
+      if (end < open.start) {
         //and add it as a text node
-        this._text(this._markup, last.end, open.start);
+        this._text(this._markup, end, open.start);
       }
     } 
     //finally, add the token to the markup
@@ -676,6 +703,7 @@ export default class TempleParser {
       type: 'ProgramExpression',
       start: open.end,
       end: symbol.start,
+      inline: false,
       attributes: open.attributes,
       source: this._substring(open.end + offsetStart, symbol.start).trim()
     };
