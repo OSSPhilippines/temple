@@ -117,46 +117,9 @@ export default class ComponentCompiler implements Compiler {
    * imported by the main source file
    */
   public get components() {
-    return this.ast.components.map(token => {
-      //find the absolute file path relative to this file
-      const inputSourceFile = FileLoader.route(
-        this._absolute,
-        token.source.value
-      );
-      //now find the relative path to the cwd
-      const relativeSourceFile = path.relative(this._cwd, inputSourceFile);
-      // This will also be used as the key name because it's the best 
-      // way to make sure the component is unique because it's possible 
-      // for components to have the same name it's also possible for 
-      // components to have the tag name (although rare)
-
-      const name = this._getComponentName(token, inputSourceFile);
-      const type = this._getComponentType(token);
-      const id = serialize(relativeSourceFile + name);
-
-      //if the component is not compiled yet
-      if (!this._registry[id]) {
-        //make a new compiler
-        this._registry[id] = new ComponentCompiler(
-          `./${relativeSourceFile}`,
-          {
-            fs: this._fs,
-            cwd: this._cwd,
-            brand: this._brand,
-            register: false,
-            build: this._build,
-            tsconfig: this._tsconfig,
-            name: name,
-            type: type
-          },
-          this._registry
-        );
-        //call components to render
-        this._registry[id].components;
-      }
-      //return the compiled component
-      return this._registry[id];
-    });
+    return this.ast.components.map(
+      token => this._component(token)
+    );
   }
 
   /**
@@ -206,6 +169,13 @@ export default class ComponentCompiler implements Compiler {
    */
   public get markup() {
     return this._markup(this.ast.markup, this.components);
+  }
+
+  /**
+   * Returns the parent working directory
+   */
+  public get pwd() {
+    return path.dirname(this.absolute);
   }
 
   /**
@@ -302,6 +272,59 @@ export default class ComponentCompiler implements Compiler {
     this._tagname = slugify(options.name || this.basename);
     //set registry
     this._registry = registry;
+  }
+
+  /**
+   * Returns the compiled component directly 
+   * imported by the main source file
+   */
+  protected _component(token: ComponentToken) {
+    //if the source file is prefixed with @/
+    const inputSourceFile = token.source.value.startsWith('@/')
+      //find the absolute file path relative to cwd
+      ? FileLoader.absolute(
+        token.source.value.replace('@/', './'),
+        this.cwd
+      )
+      //find the absolute file path relative to this file 
+      : FileLoader.absolute(
+        token.source.value,
+        this.pwd
+      );
+    
+    //now find the relative path to the cwd
+    const relativeSourceFile = path.relative(this._cwd, inputSourceFile);
+    // This will also be used as the key name because it's the best 
+    // way to make sure the component is unique because it's possible 
+    // for components to have the same name it's also possible for 
+    // components to have the tag name (although rare)
+
+    const name = this._getComponentName(token, inputSourceFile);
+    const type = this._getComponentType(token);
+    const id = serialize(relativeSourceFile + name);
+
+    //if the component is not compiled yet
+    if (!this._registry[id]) {
+      //make a new compiler
+      this._registry[id] = new ComponentCompiler(
+        `./${relativeSourceFile}`,
+        {
+          fs: this._fs,
+          cwd: this._cwd,
+          brand: this._brand,
+          register: false,
+          build: this._build,
+          tsconfig: this._tsconfig,
+          name: name,
+          type: type
+        },
+        this._registry
+      );
+      //call components to render
+      this._registry[id].components;
+    }
+    //return the compiled component
+    return this._registry[id];
   }
 
   /**

@@ -77,6 +77,11 @@ export interface Compiler {
   get markup(): string;
 
   /**
+   * Gets the parent working directory
+   */
+  get pwd(): string;
+
+  /**
    * Returns true if the component is registered
    */
   get register(): boolean;
