@@ -1,6 +1,7 @@
 //types
 import {
   IdentifierToken,
+  ComponentToken,
   MarkupToken,
   MarkupChildToken, 
   PropertyToken, 
@@ -44,6 +45,8 @@ export default class ComponentCompiler implements Compiler {
   protected _cwd: string;
   //file system to use
   protected _fs: typeof fs;
+  //the tag name of the component
+  protected _tagname: string;
   //whether to register the custom elements
   protected _register: boolean;
   //the compiled components cache
@@ -127,22 +130,14 @@ export default class ComponentCompiler implements Compiler {
       // for components to have the same name it's also possible for 
       // components to have the tag name (although rare)
 
-      //determine type from the attributes
-      let type: 'component'|'template' = 'component';
-      const property = token.attributes.properties.find(
-        property => property.key.name === 'type'
-      );
-      if (property 
-        && property.value.type === 'Literal'
-        && property.value.value === 'template'
-      ) {
-        type = 'template';
-      }
+      const name = this._getComponentName(token, inputSourceFile);
+      const type = this._getComponentType(token);
+      const id = serialize(relativeSourceFile + name);
 
       //if the component is not compiled yet
-      if (!this._registry[inputSourceFile]) {
+      if (!this._registry[id]) {
         //make a new compiler
-        this._registry[inputSourceFile] = new ComponentCompiler(
+        this._registry[id] = new ComponentCompiler(
           `./${relativeSourceFile}`,
           {
             fs: this._fs,
@@ -151,15 +146,16 @@ export default class ComponentCompiler implements Compiler {
             register: false,
             build: this._build,
             tsconfig: this._tsconfig,
+            name: name,
             type: type
           },
           this._registry
         );
         //call components to render
-        this._registry[inputSourceFile].components;
+        this._registry[id].components;
       }
       //return the compiled component
-      return this._registry[inputSourceFile];
+      return this._registry[id];
     });
   }
 
@@ -188,7 +184,8 @@ export default class ComponentCompiler implements Compiler {
    * Returns the unique id of the source file
    */
   public get id() {
-    return serialize(path.relative(this._cwd, this._sourceFile));
+    const relative = path.relative(this._cwd, this._sourceFile);
+    return serialize(relative + this.tagname);
   }
 
   /**
@@ -250,7 +247,7 @@ export default class ComponentCompiler implements Compiler {
    * Returns the tag name
    */
   public get tagname() {
-    return slugify(this.basename);
+    return this._tagname;
   }
 
   /**
@@ -301,6 +298,8 @@ export default class ComponentCompiler implements Compiler {
     if (!this._fs.existsSync(this._absolute)) {
       throw Exception.for('File not found: %s', this._absolute);
     }
+    //the component namespace
+    this._tagname = slugify(options.name || this.basename);
     //set registry
     this._registry = registry;
   }
@@ -419,6 +418,78 @@ export default class ComponentCompiler implements Compiler {
   }
 
   /**
+   * Determines the component name
+   */
+  protected _getComponentName(
+    token: ComponentToken, 
+    sourceFile: string
+  ) {
+    //the name is the basename by default
+    let name = path.basename(
+      sourceFile, 
+      path.extname(sourceFile)
+    )
+    //get property attributes
+    const properties = token.attributes.properties;
+    //find name property
+    const property = properties.find(
+      property => property.key.name === 'name'
+    );
+    //if property is found
+    if (property 
+      //and the value type is a literal
+      && property.value.type === 'Literal'
+      //and the value is 'template'
+      && typeof property.value.value === 'string'
+    ) {
+      name = property.value.value;
+    }
+    //return a slugified name
+    return slugify(name);
+  }
+
+  /**
+   * Determines the component type
+   */
+  protected _getComponentType(token: ComponentToken): 'component'|'template' {
+    //get property attributes
+    const properties = token.attributes.properties;
+    //find type property
+    const property = properties.find(
+      property => property.key.name === 'type'
+    );
+    //if property is found
+    if (property 
+      //and the value type is a literal
+      && property.value.type === 'Literal'
+      //and the value is 'template'
+      && property.value.value === 'template'
+    ) {
+      return 'template';
+    }
+    //it's component by default
+    return 'component';
+  }
+
+  /**
+   * Determines the tag name
+   */
+  protected _getTagName(token: MarkupToken) {
+    return this._isComponent(token) && this._brand.length > 0
+      ? `${this._brand}-${token.name}`
+      : token.name; 
+  }
+
+  /**
+   * Determines if the child is a component
+   */
+  protected _isComponent(token: MarkupToken) {
+    return Object
+      .values(this._registry)
+      .find(component => component.tagname === token.name);
+  }
+
+  /**
    * Transforms markup to JS for the template() function
    */
   protected _markup(markup: MarkupChildToken[], components: Compiler[]) {
@@ -446,24 +517,6 @@ export default class ComponentCompiler implements Compiler {
       }
       return expression;
     }).join(", \n") + "\n]";
-  }
-
-  /**
-   * Determines if the child is a component
-   */
-  protected _isComponent(token: MarkupToken) {
-    return Object
-      .values(this._registry)
-      .find(component => component.tagname === token.name);
-  }
-
-  /**
-   * Determines the tag name
-   */
-  protected _tagName(token: MarkupToken) {
-    return this._isComponent(token) && this._brand.length > 0
-      ? `${this._brand}-${token.name}`
-      : token.name; 
   }
 
   /**
@@ -563,7 +616,7 @@ export default class ComponentCompiler implements Compiler {
           components
         )}`;
       }
-      const tagName = this._tagName(token); 
+      const tagName = this._getTagName(token); 
       expression += `TempleDocument.createElement('${tagName}', {`;
     }
     

@@ -7,9 +7,10 @@ import type { Compiler, CompilerOptions } from './types';
 import path from 'path';
 import ts from 'typescript';
 import { Project, IndentationText } from 'ts-morph';
+import { DataParser } from '@ossph/temple-parser';
 import FileLoader from './FileLoader';
 import ComponentCompiler from './ComponentCompiler';
-import { DataParser } from '@ossph/temple-parser';
+import { serialize } from './helpers';
 
 export default class DocumentCompiler extends ComponentCompiler {
   /**
@@ -30,39 +31,33 @@ export default class DocumentCompiler extends ComponentCompiler {
       // for components to have the same name it's also possible for 
       // components to have the tag name (although rare)
 
-      //determine type from the attributes
-      let type: 'component'|'template' = 'component';
-      const property = token.attributes.properties.find(
-        property => property.key.name === 'type'
-      );
-      if (property 
-        && property.value.type === 'Literal'
-        && property.value.value === 'template'
-      ) {
-        type = 'template';
-      }
+      const name = this._getComponentName(token, inputSourceFile);
+      const type = this._getComponentType(token);
+      const id = serialize(relativeSourceFile + name);
+      const register = type === 'component' && this._register === false;
 
       //if the component is not compiled yet
-      if (!this._registry[inputSourceFile]) {
+      if (!this._registry[id]) {
         //make a new compiler
-        this._registry[inputSourceFile] = new ComponentCompiler(
+        this._registry[id] = new ComponentCompiler(
           `./${relativeSourceFile}`,
           {
             fs: this._fs,
             cwd: this._cwd,
             brand: this._brand,
-            register: type === 'component' && this._register === false,
+            register: register,
             build: this._build,
             tsconfig: this._tsconfig,
+            name: name,
             type: type
           },
           this._registry
         );
         //call components to render
-        this._registry[inputSourceFile].components;
+        this._registry[id].components;
       }
       //return the compiled component
-      return this._registry[inputSourceFile];
+      return this._registry[id];
     });
   }
 

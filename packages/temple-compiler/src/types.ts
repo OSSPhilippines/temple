@@ -137,6 +137,7 @@ export type CompilerOptions = {
   cache?: boolean,
   minify?: boolean,
   bundle?: boolean,
+  name?: string,
   type?: 'document'|'component'|'template'
 };
 
