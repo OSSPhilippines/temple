@@ -1,7 +1,4 @@
 import type { 
-  IdentifierToken,
-  PropertyToken,
-  ScriptToken,
   MarkupToken, 
   MarkupChildToken 
 } from '@ossph/temple-parser';
@@ -13,7 +10,6 @@ import { Project, IndentationText } from 'ts-morph';
 import FileLoader from './FileLoader';
 import ComponentCompiler from './ComponentCompiler';
 import { DataParser } from '@ossph/temple-parser';
-import Exception from './CompilerException';
 
 export default class DocumentCompiler extends ComponentCompiler {
   /**
@@ -430,98 +426,9 @@ export default class DocumentCompiler extends ComponentCompiler {
   }
 
   /**
-   * Transforms markup to a parsable DOM tree without 
-   * triggering the component renders (for the server)
-   */
-  protected _markup(
-    markup: MarkupChildToken[], 
-    components: Compiler[]
-  ) {
-    return "[\n" + markup.map(child => {
-      let expression = '';
-      //if new markup
-      if (child.type === 'MarkupExpression') {
-        if (child.name === 'if') {
-          //syntax <if true={count > 1}>...</if>
-          return this._markupConditional(child, components);
-        } else if (child.name === 'each') {
-          //syntax <each value=item key=i from=list>...</each>
-          return this._markupIterator(child, components);
-        }
-        //syntax <div title="Some Title">...</div>
-        expression += this._markupElement(expression, child, components);
-      //if child text
-      } else if (child.type === 'Literal') {
-        if (typeof child.value === 'string') {
-          expression += `TempleDocument.createText(\`${child.value}\`)`;
-        //null, true, false, number 
-        } else {
-          expression += `TempleDocument.createText(String(${child.value}))`;
-        }
-      //if child expression
-      } else if (child.type === 'ProgramExpression') {
-        expression += `...this._toNodeList(${child.source})`;
-      }
-      return expression;
-    }).join(", \n") + "\n]";
-  }
-
-  /**
-   * Generated the markup for a conditional statement
-   */
-  private _markupConditional(
-    token: MarkupToken, 
-    components: Compiler[]
-  ) {
-    let expression = '';
-    //syntax <if true={count > 1}>...</if>
-    if (!token.attributes 
-      || token.attributes.properties.length === 0 
-    ) {
-      throw Exception.for('Invalid if statement');
-    }
-    const truesy = token.attributes.properties.find(
-      property => property.key.name === 'true'
-    );
-    const falsesy = token.attributes.properties.find(
-      property => property.key.name === 'false'
-    );
-    if (!truesy && !falsesy) {
-      throw Exception.for('Invalid if statement');
-    }
-    expression += '...(!';
-    if (truesy) {
-      expression += '!';
-    }
-    const property = (truesy || falsesy) as PropertyToken;
-    if (property.value.type === 'ProgramExpression') {
-      const script = property.value as ScriptToken;
-      expression += `(${script.source}) ? `;
-    } else if (property.value.type === 'Literal') {
-      if (typeof property.value.value === 'string') {
-        expression += `('${property.value.value}') ? `;
-      } else {
-        expression += `(${property.value.value}) ? `;
-      }
-    } else if (property.value.type === 'Identifier') {
-      expression += `(${property.value.name}) ? `;
-    } else {
-      throw Exception.for('Invalid if statement');
-    }
-    
-    if (token.children) {
-      expression += this._markup(token.children, components);
-    } else {
-      expression += '[]';
-    }
-    expression += ' : [])';
-    return expression;
-  }
-
-  /**
    * Generates the markup for a standard element
    */
-  private _markupElement(
+  protected _markupElement(
     expression: string, 
     token: MarkupToken,
     components: Compiler[]
@@ -583,62 +490,6 @@ export default class DocumentCompiler extends ComponentCompiler {
       expression += `)`;
     }
     
-    return expression;
-  }
-
-  /**
-   * Generates the markup for an iterator (each)
-   */
-  private _markupIterator(token: MarkupToken, components: Compiler[]) {
-    let expression = '';
-    //syntax <each value=item key=i from=list>...</each>
-    if (!token.attributes 
-      || token.attributes.properties.length === 0 
-    ) {
-      throw Exception.for('Invalid each statement');
-    }
-    const key = token.attributes.properties.find(
-      property => property.key.name === 'key'
-    );
-    const value = token.attributes.properties.find(
-      property => property.key.name === 'value'
-    );
-    const from = token.attributes.properties.find(
-      property => property.key.name === 'from'
-    );
-    if (!from || (!key && !value)) {
-      throw Exception.for('Invalid each statement');
-    } else if (key && key.value.type !== 'Identifier') {
-      throw Exception.for('Invalid key value in each');
-    } else if (value && value.value.type !== 'Identifier') {
-      throw Exception.for('Invalid value in each');
-    }
-    const keyName = (key?.value as IdentifierToken)?.name || '_';
-    const valueName = (value?.value as IdentifierToken)?.name || '_';
-    expression += `...`;
-    if (from.value.type === 'ProgramExpression') {
-      const script = from.value as ScriptToken;
-      expression += `Object.entries(${script.source})`;
-    } else if (from.value.type === 'ArrayExpression') {
-      expression += `Object.entries(${
-        JSON.stringify(DataParser.array(from.value))
-      })`;
-    } else if (from.value.type === 'ObjectExpression') {
-      expression += `Object.entries(${
-        JSON.stringify(DataParser.object(from.value))
-      })`;
-    } else if (from.value.type === 'Identifier') {
-      expression += `Object.entries(${from.value.name})`;
-    } else {
-      throw Exception.for('Invalid from value in each');
-    }
-    expression += `.map(([${keyName}, ${valueName}]) => `;
-    if (token.children) {
-      expression += this._markup(token.children, components);
-    } else {
-      expression += '[]';
-    }
-    expression += ').flat()';
     return expression;
   }
 }

@@ -190,10 +190,10 @@ export default class ComponentCompiler implements Compiler {
   }
 
   /**
-   * Returns the compiled scripts
+   * Returns the compiled body script to put in template() 
    */
-  public get scripts() {
-    return this.ast.scripts.map(script => script.source);
+  public get markup() {
+    return this._markup(this.ast.markup, this.components);
   }
 
   /**
@@ -201,6 +201,13 @@ export default class ComponentCompiler implements Compiler {
    */
   public get register() {
     return this._register;
+  }
+
+  /**
+   * Returns the compiled scripts
+   */
+  public get scripts() {
+    return this.ast.scripts.map(script => script.source);
   }
 
   /**
@@ -229,13 +236,6 @@ export default class ComponentCompiler implements Compiler {
    */
   public get tagname() {
     return slugify(this.basename);
-  }
-
-  /**
-   * Returns the compiled body script to put in template() 
-   */
-  public get template() {
-    return this._template(this.ast.markup, this.components);
   }
 
   /**
@@ -375,7 +375,7 @@ export default class ComponentCompiler implements Compiler {
         ? this.scripts.join('\n')
         //allow scriptless components to use props
         : (`const props = this.props;`)}
-        return () => ${this.template.trim()};`
+        return () => ${this.markup.trim()};`
     });
 
     if (this._register) {
@@ -397,22 +397,19 @@ export default class ComponentCompiler implements Compiler {
   /**
    * Transforms markup to JS for the template() function
    */
-  protected _template(
-    markup: MarkupChildToken[], 
-    components: Compiler[]
-  ) {
+  protected _markup(markup: MarkupChildToken[], components: Compiler[]) {
     return "[\n" + markup.map(child => {
       let expression = '';
       if (child.type === 'MarkupExpression') {
         if (child.name === 'if') {
           //syntax <if true={count > 1}>...</if>
-          return this._templateConditional(child, components);
+          return this._markupConditional(child, components);
         } else if (child.name === 'each') {
           //syntax <each value=item key=i from=list>...</each>
-          return this._templateIterator(child, components);
+          return this._markupIterator(child, components);
         }
         //syntax <div title="Some Title">...</div>
-        expression += this._templateElement(expression, child, components);
+        expression += this._markupElement(expression, child, components);
       } else if (child.type === 'Literal') {
         if (typeof child.value === 'string') {
           expression += `TempleDocument.createText(\`${child.value}\`)`;
@@ -430,7 +427,7 @@ export default class ComponentCompiler implements Compiler {
   /**
    * Determines if the child is a component
    */
-  private _isComponent(token: MarkupToken) {
+  protected _isComponent(token: MarkupToken) {
     return Object
       .values(this._registry)
       .find(component => component.tagname === token.name);
@@ -439,7 +436,7 @@ export default class ComponentCompiler implements Compiler {
   /**
    * Determines the tag name
    */
-  private _tagName(token: MarkupToken) {
+  protected _tagName(token: MarkupToken) {
     return this._isComponent(token) && this._brand.length > 0
       ? `${this._brand}-${token.name}`
       : token.name; 
@@ -448,10 +445,7 @@ export default class ComponentCompiler implements Compiler {
   /**
    * Generated the markup for a conditional statement
    */
-  private _templateConditional(
-    token: MarkupToken, 
-    components: Compiler[]
-  ) {
+  protected _markupConditional(token: MarkupToken, components: Compiler[]) {
     let expression = '';
     //syntax <if true={count > 1}>...</if>
     if (!token.attributes 
@@ -489,7 +483,7 @@ export default class ComponentCompiler implements Compiler {
     }
     
     if (token.children) {
-      expression += this._template(token.children, components);
+      expression += this._markup(token.children, components);
     } else {
       expression += '[]';
     }
@@ -500,7 +494,7 @@ export default class ComponentCompiler implements Compiler {
   /**
    * Generates the markup for a standard element
    */
-  private _templateElement(
+  protected _markupElement(
     expression: string, 
     token: MarkupToken,
     components: Compiler[]
@@ -559,7 +553,7 @@ export default class ComponentCompiler implements Compiler {
     } else {
       expression += ' }, ';
       if (token.children) {
-        expression += this._template(token.children, components);
+        expression += this._markup(token.children, components);
       }
       expression += `).element`;
     }
@@ -570,7 +564,7 @@ export default class ComponentCompiler implements Compiler {
   /**
    * Generates the markup for an iterator (each)
    */
-  private _templateIterator(token: MarkupToken, components: Compiler[]) {
+  protected _markupIterator(token: MarkupToken, components: Compiler[]) {
     let expression = '';
     //syntax <each value=item key=i from=list>...</each>
     if (!token.attributes 
@@ -615,7 +609,7 @@ export default class ComponentCompiler implements Compiler {
     }
     expression += `.map(([${keyName}, ${valueName}]) => `;
     if (token.children) {
-      expression += this._template(token.children, components);
+      expression += this._markup(token.children, components);
     } else {
       expression += '[]';
     }

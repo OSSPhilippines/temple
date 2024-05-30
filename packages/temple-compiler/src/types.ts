@@ -72,14 +72,19 @@ export interface Compiler {
   get imports(): ImportChunk[];
 
   /**
-   * Returns the compiled scripts
+   * Returns the compiled body script to put in template() 
    */
-  get scripts(): string[]
+  get markup(): string;
 
   /**
    * Returns true if the component is registered
    */
   get register(): boolean;
+
+  /**
+   * Returns the compiled scripts
+   */
+  get scripts(): string[];
 
   /**
    * Gets the source file
@@ -100,11 +105,6 @@ export interface Compiler {
    * Returns the tag name
    */
   get tagname(): string;
-
-  /**
-   * Returns the compiled body script to put in template() 
-   */
-  get template(): string
 
   /**
    * Returns the location of the tsconfig file
