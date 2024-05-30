@@ -26,7 +26,7 @@ app.engine(
   },
 );
 //set the view engine to temple
-app.set('views', path.join(__dirname, 'templates'));
+app.set('views', path.join(__dirname, 'pages'));
 app.set('view engine', 'html');
 
 //open public folder
@@ -42,13 +42,13 @@ app.get('/temple/**', (req, res) => {
     return res.render('index', props);
   }
   //try templates/app.html
-  let template = path.join(__dirname, 'templates', route + '.html');
+  let template = path.join(__dirname, 'pages', route + '.html');
   if (fs.existsSync(template)) {
     res.type('text/html');
     return res.render(route, props);
   }
   //try templates/app/index.html
-  template = path.join(__dirname, 'templates', route, 'index.html');
+  template = path.join(__dirname, 'pages', route, 'index.html');
   if (fs.existsSync(template)) {
     res.type('text/html');
     return res.render(`${route}/index`, props);
