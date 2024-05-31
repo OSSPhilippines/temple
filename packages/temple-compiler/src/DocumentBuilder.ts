@@ -16,6 +16,7 @@ export default class DocumentBuilder {
   protected _cache: boolean;
   protected _minify: boolean;
   protected _bundle: boolean;
+  protected _loader: FileLoader;
 
   /**
    * Gets the compiler instance
@@ -33,6 +34,7 @@ export default class DocumentBuilder {
     this._cache = cache;
     this._minify = minify;
     this._bundle = bundle;
+    this._loader = new FileLoader(options.fs || fs);
   }
 
   /**
@@ -195,12 +197,13 @@ export default class DocumentBuilder {
     const name = 'temple-vfs';
     //map of filename to ts code
     const files = this._filesystem();
+    const loader = this._loader
     return {
       name: name,
       setup(build: PluginBuild) {
         build.onResolve({ filter: /.*/ }, args => {
           const absolute = (
-            FileLoader.route(args.importer, args.path) + '.ts'
+            loader.route(args.importer, args.path) + '.ts'
           ).replace('.ts.ts', '.ts');
           if (absolute in files) {
             return { path: absolute, namespace: name };

@@ -7,9 +7,8 @@ import type { Compiler, CompilerOptions } from './types';
 
 import path from 'path';
 import ts from 'typescript';
-import { Project, IndentationText } from 'ts-morph';
+import { Project, IndentationText, VariableDeclarationKind } from 'ts-morph';
 import { DataParser } from '@ossph/temple-parser';
-import FileLoader from './FileLoader';
 import ComponentCompiler from './ComponentCompiler';
 import { serialize } from './helpers';
 
@@ -46,8 +45,22 @@ export default class DocumentCompiler extends ComponentCompiler {
     components.forEach(component => {
       //import './Counter_abc123'
       source.addImportDeclaration({
-        moduleSpecifier: `./${component.classname}_${component.id}`
+        moduleSpecifier: `./${component.classname}_${component.id}`,
+        defaultImport: `${component.classname}_${component.id}`
       });
+    });
+
+    source.addVariableStatement({
+      declarationKind: VariableDeclarationKind.Const,
+      isExported: true,
+      declarations: [{
+        name: 'components',
+        initializer: `{
+          ${components.map(component => {
+            return `'${component.tagname}': ${component.classname}_${component.id}`;
+          }).join(',\n')}
+        }`
+      }]
     });
 
     return source;
@@ -182,12 +195,12 @@ export default class DocumentCompiler extends ComponentCompiler {
     //if the source file is prefixed with @/
     const inputSourceFile = token.source.value.startsWith('@/')
       //find the absolute file path relative to cwd
-      ? FileLoader.absolute(
+      ? this._loader.absolute(
         token.source.value.replace('@/', './'),
         this.cwd
       )
       //find the absolute file path relative to this file 
-      : FileLoader.absolute(
+      : this._loader.absolute(
         token.source.value,
         this.pwd
       );

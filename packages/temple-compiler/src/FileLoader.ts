@@ -1,4 +1,4 @@
-import fs from 'fs';
+import type fs from 'fs';
 import path from 'path';
 import Exception from './CompilerException';
 
@@ -6,10 +6,19 @@ import Exception from './CompilerException';
  * Loader
  */
 export default class FileLoader {
+  //filesystem to use
+  protected _fs: typeof fs;
+
+  /**
+   * Choose the filesystem to use
+   */
+  constructor(filesystem: typeof fs) {
+    this._fs = filesystem;
+  }
   /**
    * Returns the absolute path to the file
    */
-  public static absolute(pathname: string, cwd?: string) {
+  public absolute(pathname: string, cwd?: string) {
     cwd = cwd || this.cwd();
     if (/^\.{1,2}\//.test(pathname)) {
       pathname = path.resolve(cwd, pathname);
@@ -25,7 +34,7 @@ export default class FileLoader {
   /**
    * Returns the current working directory
    */
-  public static cwd() {
+  public cwd() {
     return process.cwd();
   }
 
@@ -33,12 +42,12 @@ export default class FileLoader {
    * Should locate the node_modules directory 
    * where idea is actually installed
    */
-  public static modules(cwd?: string): string {
+  public modules(cwd?: string): string {
     cwd = cwd || this.cwd();
     if (cwd === '/') {
       throw new Error('Could not find node_modules');
     }
-    if (fs.existsSync(path.resolve(cwd, 'node_modules/@ossph/temple'))) {
+    if (this._fs.existsSync(path.resolve(cwd, 'node_modules/@ossph/temple'))) {
       return path.resolve(cwd, 'node_modules');
     }
     return this.modules(path.dirname(cwd));
@@ -48,7 +57,7 @@ export default class FileLoader {
    * Returns the relative path from the source file to the required file
    * Note: This works better if using absolute paths from Loader.aboslute()
    */
-  public static relative(source: string, require: string, withExtname = false) {
+  public relative(source: string, require: string, withExtname = false) {
     //if dont include extname
     if (!withExtname) {
       //check for extname
@@ -68,10 +77,10 @@ export default class FileLoader {
   /**
    * require() should be monitored separately from the code
    */
-  public static require(file: string) {
+  public require(file: string) {
     //if JSON, safely require it
     if (path.extname(file) === '.json') {
-      const contents = fs.readFileSync(file, 'utf8');
+      const contents = this._fs.readFileSync(file, 'utf8');
       try {
         return JSON.parse(contents) || {};
       } catch(e) {}
@@ -84,7 +93,7 @@ export default class FileLoader {
   /**
    * Resolves the path name to a path that can be required
    */
-  static resolve(pathname?: string, cwd?: string): string {
+  public resolve(pathname?: string, cwd?: string): string {
     cwd = cwd || this.cwd();
     //if no pathname
     if (!pathname) {
@@ -92,7 +101,7 @@ export default class FileLoader {
     //ex. plugin/foo -> node_modules/plugin
     //ex. ./plugin or ../plugin -> [cwd] / plugin 
     } else {
-      pathname = fs.realpathSync(this.absolute(pathname, cwd));
+      pathname = this._fs.realpathSync(this.absolute(pathname, cwd));
     }
 
     //ex. /plugin/foo
@@ -125,16 +134,19 @@ export default class FileLoader {
   /**
    * Returns the absolute path to the file given the source route
    */
-  public static route(sourceFile: string, destination: string) {
+  public route(sourceFile: string, destination: string) {
     const dirname = path.dirname(sourceFile);
     return path.resolve(dirname, destination);
   }
 
-  private static _fileExists(path: string) {
-    if (!fs.existsSync(path)) {
+  /**
+   * Returns true if the file exists
+   */
+  private _fileExists(path: string) {
+    if (!this._fs.existsSync(path)) {
       return false;
     }
-    const stats = fs.lstatSync(path);
+    const stats = this._fs.lstatSync(path);
     return stats && stats.isFile();
   }
 }

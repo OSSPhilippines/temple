@@ -45,6 +45,8 @@ export default class ComponentCompiler implements Compiler {
   protected _cwd: string;
   //file system to use
   protected _fs: typeof fs;
+  //file loader helper
+  protected _loader: FileLoader;
   //the tag name of the component
   protected _tagname: string;
   //whether to register the custom elements
@@ -100,7 +102,7 @@ export default class ComponentCompiler implements Compiler {
    */
   public get build() {
     return path.join(
-      FileLoader.absolute(this._build, this._cwd),
+      this._loader.absolute(this._build, this._cwd),
       this.id
     );
   }
@@ -162,6 +164,10 @@ export default class ComponentCompiler implements Compiler {
       default: token.default?.value,
       source: token.source.value
     }));
+  }
+
+  public get loader() {
+    return this._loader;
   }
 
   /**
@@ -258,13 +264,15 @@ export default class ComponentCompiler implements Compiler {
     this._build = options.build || './.temple';
     //by default, we register the custom elements
     this._register = options.register !== false;
+    //file loader
+    this._loader = new FileLoader(this._fs);
     //determine the tsconfig file
-    this._tsconfig = FileLoader.absolute(
+    this._tsconfig = this._loader.absolute(
       options.tsconfig || path.resolve(__dirname, '../tsconfig.json'), 
       this._cwd
     );
     //generated initializers
-    this._absolute = FileLoader.absolute(this._sourceFile, this._cwd);
+    this._absolute = this._loader.absolute(this._sourceFile, this._cwd);
     if (!this._fs.existsSync(this._absolute)) {
       throw Exception.for('File not found: %s', this._absolute);
     }
@@ -282,12 +290,12 @@ export default class ComponentCompiler implements Compiler {
     //if the source file is prefixed with @/
     const inputSourceFile = token.source.value.startsWith('@/')
       //find the absolute file path relative to cwd
-      ? FileLoader.absolute(
+      ? this._loader.absolute(
         token.source.value.replace('@/', './'),
         this.cwd
       )
       //find the absolute file path relative to this file 
-      : FileLoader.absolute(
+      : this._loader.absolute(
         token.source.value,
         this.pwd
       );
