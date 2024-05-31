@@ -8,7 +8,7 @@ import esbuild from 'esbuild';
 import FileLoader from './FileLoader';
 import DocumentCompiler from './DocumentCompiler';
 
-type Format = 'iife'|'cjs'|'esm';
+type Platform = 'node'|'browser';
 
 export default class DocumentBuilder {
   //the compiler instance
@@ -16,6 +16,7 @@ export default class DocumentBuilder {
   protected _cache: boolean;
   protected _minify: boolean;
   protected _bundle: boolean;
+  protected _fs: typeof fs;
   protected _loader: FileLoader;
 
   /**
@@ -34,7 +35,8 @@ export default class DocumentBuilder {
     this._cache = cache;
     this._minify = minify;
     this._bundle = bundle;
-    this._loader = new FileLoader(options.fs || fs);
+    this._fs = options.fs || fs;
+    this._loader = new FileLoader(this._fs);
   }
 
   /**
@@ -42,7 +44,7 @@ export default class DocumentBuilder {
    * For the .d.ts file it's:
    * `export default TempleComponent/HTMLElement`
    */
-  public async build(entry: string, format: Format = 'iife') {
+  public async build(entry: string, platform: Platform) {
     // Bundle with esbuild
     const results = await esbuild.build({
       entryPoints: [ entry ],
@@ -52,7 +54,7 @@ export default class DocumentBuilder {
       minifySyntax: this._minify,
       //Immediately Invoked Function Expression format 
       //for browser compatibility
-      format: format, 
+      format: 'iife', 
       globalName: 'TempleBundle',
       plugins: [ 
         this._virtual(),
@@ -73,9 +75,7 @@ export default class DocumentBuilder {
           }
         }
       ],
-      //what we are rendering is HTMLElement classes
-      //so need to target the browser
-      platform: 'browser',
+      platform: platform,
       preserveSymlinks: true,
       // Do not write to disk
       write: false
@@ -127,38 +127,38 @@ export default class DocumentBuilder {
   public async source() {
     const build = this._compiler.build;
     return {
-      server: await this._cached(`${build}/server`, 'iife'),
-      client: await this._cached(`${build}/client`, 'iife')
+      server: await this._cached(`${build}/server`, 'node'),
+      client: await this._cached(`${build}/client`, 'browser')
     };
   }
 
   /**
    * Tries to read from cache, if not found, compile
    */
-  protected async _cached(file: string, format: Format = 'iife') {
+  protected async _cached(file: string, platform: Platform) {
     const filejs = file + '.js';
     //if cache enabled
     if (this._cache) {
       //if cache exists and is a file
-      if (fs.existsSync(filejs) && fs.lstatSync(filejs).isFile()) {
+      if (this._fs.existsSync(filejs) && this._fs.lstatSync(filejs).isFile()) {
         //read the cache file
-        return fs.readFileSync(filejs, 'utf-8');
+        return this._fs.readFileSync(filejs, 'utf-8');
       }
     }
     const filets = file + '.ts';
-    const source = await this.build(filets, format);
+    const source = await this.build(filets, platform);
     //if cache enabled
     if (this._cache) {
       //if cache does not exist
-      if (!fs.existsSync(filejs)) {
+      if (!this._fs.existsSync(filejs)) {
         const dirname = path.dirname(filejs);
         //if the directory does not exist
-        if (!fs.existsSync(dirname)) {
+        if (!this._fs.existsSync(dirname)) {
           //create the directory
-          fs.mkdirSync(dirname, { recursive: true });
+          this._fs.mkdirSync(dirname, { recursive: true });
         }
         //write the cache file
-        fs.writeFileSync(filejs, source);
+        this._fs.writeFileSync(filejs, source);
       }
     }
     return source;
@@ -197,24 +197,72 @@ export default class DocumentBuilder {
     const name = 'temple-vfs';
     //map of filename to ts code
     const files = this._filesystem();
-    const loader = this._loader
     return {
       name: name,
-      setup(build: PluginBuild) {
+      setup: (build: PluginBuild) => {
         build.onResolve({ filter: /.*/ }, args => {
-          const absolute = (
-            loader.route(args.importer, args.path) + '.ts'
-          ).replace('.ts.ts', '.ts');
-          if (absolute in files) {
-            return { path: absolute, namespace: name };
+          //catch files in vfs
+          if (args.path in files) {
+            return { path: args.path, namespace: name };
           }
+          //determine the type of file
+          const filetype = args.path.startsWith('/') 
+            ? 'absolute'
+            : args.path.startsWith('.')  
+            ? 'pwd'
+            : args.path.startsWith('@/') 
+            ? 'cwd'
+            : 'module';
+          //deal with absolute
+          if (filetype === 'absolute') {
+            if (this._fs.existsSync(args.path)) {
+              return { path: args.path };
+            }
+            return undefined;
+          //deal with module
+          } else if (filetype === 'module') {
+            const module = require.resolve(args.path, { 
+              paths: [ args.resolveDir ] 
+            });
+            if (this._fs.existsSync(module)) {
+              return { path: module };
+            }
+            return undefined;
+          //if the importer isn't in the vfs
+          } else if (!(args.importer in files)) {
+            //then let someone else handle it
+            return undefined;
+          }
+
+          //filetype can only be pwd or cwd
+
+          const basename = filetype === 'cwd'
+            ? path.resolve(this._compiler.cwd, args.path.substring(2))
+            : path.resolve(path.dirname(args.importer), args.path);
+
+          for (const extname of ['.ts', '.js', '.json']) {
+            const absolute = basename + extname;
+            //catch files in vfs
+            if (absolute in files) {
+              return { path: absolute, namespace: name };
+            }
+            if (this._fs.existsSync(absolute)) {
+              return { path: absolute };
+            }
+          }
+
+          return undefined;
         });
 
         build.onLoad({ filter: /.*/, namespace: name }, args => {
-          return {
-            contents: files[args.path](),
-            loader: 'ts'
-          };
+          if (args.path in files) {
+            return {
+              contents: files[args.path](),
+              loader: 'ts'
+            };
+          }
+
+          return undefined;
         });
       }
     };

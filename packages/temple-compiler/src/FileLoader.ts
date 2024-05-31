@@ -122,7 +122,7 @@ export default class FileLoader {
     if (this._fileExists(file)) {
       return file;
     }
-    //4. Check for index.js
+    //4. Check for [pathname]/index.js
     file = path.resolve(pathname, 'index.js');
     if (this._fileExists(file)) {
       return file;

@@ -215,7 +215,21 @@ export default class DocumentCompiler extends ComponentCompiler {
     const name = this._getComponentName(token, inputSourceFile);
     const type = this._getComponentType(token);
     const id = serialize(relativeSourceFile + name);
-    const register = type === 'component' && this._register === false;
+
+    //Get ready for epic logic...lol.
+    //if this._register is true, this means the 
+    //project is a client side only project
+    //or they are developing a web component
+    //the component register should be false
+    //
+    //if this._register is false, this means the
+    //project is a server side project and want
+    //temple to be a template engine
+    //the component register should be true
+    //
+    //if the component type is a template,
+    //the component register should be false
+    const register = type === 'component' && !this._register;
 
     //if the component is not compiled yet
     if (!this._registry[id]) {
@@ -464,6 +478,11 @@ export default class DocumentCompiler extends ComponentCompiler {
     token: MarkupToken,
     components: Compiler[]
   ) {
+    //if we are suppose to register this to customElements
+    //it means we want to treat this as any other web component
+    if (this._register) {
+      return super._markupElement(expression, token, components);
+    }
     //check to see if the token refers to a 
     //component directly imported by this file
     const component = components.find(

@@ -166,6 +166,9 @@ export default class ComponentCompiler implements Compiler {
     }));
   }
 
+  /**
+   * Returns the file loader
+   */
   public get loader() {
     return this._loader;
   }
@@ -178,7 +181,7 @@ export default class ComponentCompiler implements Compiler {
   }
 
   /**
-   * Returns the parent working directory
+   * Returns the present working directory
    */
   public get pwd() {
     return path.dirname(this.absolute);
@@ -189,6 +192,13 @@ export default class ComponentCompiler implements Compiler {
    */
   public get register() {
     return this._register;
+  }
+
+  /**
+   * Returns the relative path from the cwd
+   */
+  public get relative() {
+    return path.relative(this.cwd, this.absolute);
   }
 
   /**
