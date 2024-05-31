@@ -1,7 +1,8 @@
+<link rel="import" type="template" href="@/templates/html-head.html" />
 <link rel="import" type="template" href="@/templates/panel-head.html" />
 <link rel="import" type="component" href="@/components/panel-main.html" />
 <link rel="import" type="component" href="@/components/tui-button.html" />
-<link rel="import" type="component" href="@/components/code-editor.html" />
+<link rel="import" type="component" href="@/components/code-snippet.html" />
 <style>
   .section-hero {
     background-color: var(--bg-first);
@@ -26,30 +27,12 @@
 <script>
   //this is only called on server side
   import { globals } from '@ossph/temple';
+  import snippets from '@/modules/snippets/home';
   const title = 'Temple - The reactive web component template engine.';
   const description = 'Temple is a template engine hat generates web components and support reactivity.';
 </script>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
-    <meta property="og:url" content="https://ossphilippines.github.io/temple/" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@OSSPhilippines" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
-    <link rel="favicon" href="/temple/favicon.ico" />
-    <link rel="shortcut icon" type="image/png" href="/temple/favicon.png" />
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-    <link rel="stylesheet" type="text/css" href="/temple/styles/theme.css" />
-  </head>
+  <html-head />
   <body class="dark panel panel-head">
     <panel-head />
     <panel-main class="panel-main">
@@ -70,7 +53,7 @@
           template engine with a built-in parser/compiler that 
           generates web components and support reactivity.
         </p>
-        <code-editor class="editor"></code-editor>
+        <code-snippet>{snippets.basic}</code-snippet>
       </section>
       <section class="section-bullets">
         Bullets "ok" good
