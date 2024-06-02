@@ -5,14 +5,14 @@
     "packages/*"
   ],
   "scripts": {
-    "build:packages": "yarn build:server && yarn build:client && yarn build:parser && yarn build:compiler && yarn build:loader && yarn build:temple",
+    "build:packages": "yarn build:server && yarn build:client && yarn build:parser && yarn build:compiler && yarn build:loader && yarn build:temple && yarn build:dev",
     "build:temple": "yarn --cwd packages/temple build",
     "build:parser": "yarn --cwd packages/temple-parser build",
     "build:compiler": "yarn --cwd packages/temple-compiler build",
     "build:client": "yarn --cwd packages/temple-client build",
     "build:server": "yarn --cwd packages/temple-server build",
     "build:loader": "yarn --cwd packages/temple-loader build",
-    "build:typescript": "yarn --cwd packages/temple-typescript build",
+    "build:dev": "yarn --cwd packages/temple-dev build",
     "build:web": "yarn --cwd packages/temple-web build",
     "test:parser": "yarn --cwd packages/temple-parser test",
     "test:compiler": "yarn --cwd packages/temple-compiler test",
