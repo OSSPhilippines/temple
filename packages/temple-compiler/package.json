@@ -1,6 +1,6 @@
 {
   "name": "@ossph/temple-compiler",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Compiles Temple markup language files to JavaScript and HTML.",
   "license": "Apache-2.0",
   "author": "Chris <chris@incept.asia>",
@@ -21,9 +21,9 @@
     "test": "nyc ts-mocha tests/*.test.ts"
   },
   "dependencies": {
-    "@ossph/temple-client": "0.0.10",
-    "@ossph/temple-parser": "0.0.10",
-    "@ossph/temple-server": "0.0.10",
+    "@ossph/temple-client": "0.0.11",
+    "@ossph/temple-parser": "0.0.11",
+    "@ossph/temple-server": "0.0.11",
     "esbuild": "0.21.3",
     "typescript": "5.3.3",
     "ts-morph": "22.0.0"

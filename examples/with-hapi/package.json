@@ -9,7 +9,7 @@
   "dependencies": {
     "@hapi/hapi": "21.3.9",
     "@hapi/inert": "7.1.0",
-    "@ossph/temple": "0.0.10"
+    "@ossph/temple": "0.0.11"
   },
   "devDependencies": {
     "@types/node": "20.12.7",
