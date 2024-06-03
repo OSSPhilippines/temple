@@ -1,5 +1,4 @@
-import type { Node } from './types';
-
+import type { Node, Hash } from './types';
 import TempleText from './TempleText';
 import TempleElement from './TempleElement';
 
@@ -19,7 +18,7 @@ export default class TempleDocument {
    */
   public static createElement(
     name: string, 
-    attributes: Record<string, any>, 
+    attributes: Hash, 
     children: Node[] = []
   ) {
     return new TempleElement(name, attributes, children);
@@ -30,7 +29,7 @@ export default class TempleDocument {
    */
   public static createComponent(
     name: string, 
-    attributes: Record<string, any>, 
+    attributes: Hash, 
     children: Node[] = []
   ) {
     //get the tagname for the component

@@ -1,5 +1,5 @@
 import type { Node } from './types';
-import TempleText from './TempleText';
+import TempleCollection from './TempleCollection';
 
 const selfClosingTags = [
   'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input',
@@ -19,7 +19,7 @@ export default class TempleElement {
   //attributes of the element <div id="app">
   protected _attributes: Record<string, any> = {};
   //children of the element <div><p></p></div>
-  protected _children: Node[] = [];
+  protected _children: TempleCollection;
 
   /**
    * Returns the name of the element
@@ -48,11 +48,11 @@ export default class TempleElement {
   public constructor(
     name: string, 
     attributes: Record<string, any> = {},
-    children: (TempleElement|TempleText)[] = []
+    children: Node[] = []
   ) {
     this._name = name;
     this._attributes = attributes;
-    this._children = children;
+    this._children = new TempleCollection(children);
   }
 
   /**
@@ -72,14 +72,7 @@ export default class TempleElement {
     if (selfClosingTags.includes(this._name)) {
       return `<${this._name}${attributes} />`;
     }
-    const children: string = this._children.map(child => {
-      if (child instanceof TempleElement) {
-        return child.toString();
-      }
-      return child.toString();
-    }).join('');
-    return `<${this._name}${attributes}>${
-      children
-    }</${this._name}>`;
+    const children: string = this._children.toString();
+    return `<${this._name}${attributes}>${children}</${this._name}>`;
   }
 }
