@@ -1,6 +1,7 @@
 import type { Hash } from './types';
 
 import TempleDocument from './TempleDocument';
+import TempleElement from './TempleElement';
 import emitter from './TempleEmitter';
 import __APP_DATA__ from './data';
 
@@ -60,7 +61,7 @@ export default abstract class TempleComponent extends HTMLElement {
    * Returns the component's element registry
    */
   public get element() {
-    return TempleDocument.get(this) as TempleDocument;
+    return TempleDocument.get(this) as TempleElement;
   }
 
   /**

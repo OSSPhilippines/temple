@@ -1,5 +1,6 @@
 import TempleComponent from './TempleComponent';
 import TempleDocument from './TempleDocument';
+import TempleElement from './TempleElement';
 import emitter, { TempleEmitter } from './TempleEmitter';
 import TempleException from './TempleException';
 import data from './data';
@@ -14,8 +15,9 @@ export {
   children,
   signal, 
   emitter,
-  TempleComponent ,
+  TempleComponent,
   TempleDocument,
+  TempleElement,
   TempleEmitter,
   TempleException,
   SignalRegistry
