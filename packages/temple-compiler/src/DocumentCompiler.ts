@@ -364,7 +364,7 @@ export default class DocumentCompiler extends ComponentCompiler {
         __APP_DATA__.set('bindings', ${
           this._bindings(markup, components)
         });
-        return ${this._markup(markup, components)};
+        return ${this._markup(null, markup, components)};
       `
     });
     //public render()
@@ -475,13 +475,14 @@ export default class DocumentCompiler extends ComponentCompiler {
    */
   protected _markupElement(
     expression: string, 
+    parent: MarkupToken|null,
     token: MarkupToken,
     components: Compiler[]
   ) {
     //if we are suppose to register this to customElements
     //it means we want to treat this as any other web component
     if (this._register) {
-      return super._markupElement(expression, token, components);
+      return super._markupElement(expression, parent, token, components);
     }
     //check to see if the token refers to a 
     //component directly imported by this file
@@ -498,6 +499,7 @@ export default class DocumentCompiler extends ComponentCompiler {
         //NOTE: if you want scoped templates, 
         // that's the same as a light component
         return expression + `...${this._markup(
+          parent,
           component.ast.markup, 
           components
         )}`;
@@ -519,6 +521,7 @@ export default class DocumentCompiler extends ComponentCompiler {
         //NOTE: if you want scoped templates, 
         // that's the same as a light component
         return expression + `...${this._markup(
+          parent,
           template.ast.markup, 
           components
         )}`;
@@ -567,7 +570,7 @@ export default class DocumentCompiler extends ComponentCompiler {
     } else {
       expression += ' }, ';
       if (token.children) {
-        expression += this._markup(token.children, components);
+        expression += this._markup(token, token.children, components);
       }
       expression += `)`;
     }

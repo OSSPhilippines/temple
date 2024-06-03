@@ -6,7 +6,8 @@ import type {
   ComponentToken,
   ScriptToken,
   StyleToken,
-  MarkupToken
+  MarkupToken,
+  MarkupChildToken
 } from '@ossph/temple-parser';
 
 export interface Compiler {
@@ -166,3 +167,10 @@ export interface TempleDocument {
   template(): (Node|false)[],
   render(scripts?: string, props?: Record<string, any>): string
 }
+
+//directives
+export type NextDirective = (
+  parent: MarkupToken|null,
+  token: MarkupChildToken[], 
+  components: Compiler[]
+) => string;

@@ -1,12 +1,10 @@
 //types
 import {
-  IdentifierToken,
   ComponentToken,
   MarkupToken,
-  MarkupChildToken, 
-  PropertyToken, 
-  ScriptToken
+  MarkupChildToken
 } from '@ossph/temple-parser';
+import type DirectiveInterface from './directives/DirectiveInterface';
 import type { 
   AST,
   Compiler,
@@ -21,6 +19,17 @@ import FileLoader from './FileLoader';
 import ts from 'typescript';
 import { Project, IndentationText } from 'ts-morph';
 import { DataParser, TempleParser } from '@ossph/temple-parser';
+//directives
+import { 
+  IfDirective,
+  ElifDirective,
+  ElseDirective
+} from './directives/ConditionalDirective';
+import { 
+  TryDirective,
+  CatchDirective
+} from './directives/TryCatchDirective';
+import IteratorDirective from './directives/IteratorDirective';
 //helpers
 import { camelize, slugify, serialize } from './helpers';
 import Exception from './CompilerException';
@@ -43,6 +52,8 @@ export default class ComponentCompiler implements Compiler {
   //current working directory
   //we need this to locate and compile imported components
   protected _cwd: string;
+  //directive registry
+  protected _directives = new Map<string, DirectiveInterface>();
   //file system to use
   protected _fs: typeof fs;
   //file loader helper
@@ -177,7 +188,7 @@ export default class ComponentCompiler implements Compiler {
    * Returns the compiled body script to put in template() 
    */
   public get markup() {
-    return this._markup(this.ast.markup, this.components);
+    return this._markup(null, this.ast.markup, this.components);
   }
 
   /**
@@ -290,6 +301,21 @@ export default class ComponentCompiler implements Compiler {
     this._tagname = slugify(options.name || this.basename);
     //set registry
     this._registry = registry;
+    //add directives
+    this.directive(new IfDirective(this));
+    this.directive(new ElifDirective(this));
+    this.directive(new ElseDirective(this));
+    this.directive(new TryDirective(this));
+    this.directive(new CatchDirective(this));
+    this.directive(new IteratorDirective(this));
+  }
+
+  /**
+   * Adds a directive to the compiler
+   */
+  public directive(directive: DirectiveInterface) {
+    this._directives.set(directive.name, directive);
+    return this;
   }
 
   /**
@@ -533,19 +559,20 @@ export default class ComponentCompiler implements Compiler {
   /**
    * Transforms markup to JS for the template() function
    */
-  protected _markup(markup: MarkupChildToken[], components: Compiler[]) {
+  protected _markup(
+    parent: MarkupToken|null,
+    markup: MarkupChildToken[], 
+    components: Compiler[]
+  ): string {
     return "[\n" + markup.map(child => {
       let expression = '';
       if (child.type === 'MarkupExpression') {
-        if (child.name === 'if') {
-          //syntax <if true={count > 1}>...</if>
-          return this._markupConditional(child, components);
-        } else if (child.name === 'each') {
-          //syntax <each value=item key=i from=list>...</each>
-          return this._markupIterator(child, components);
+        if (this._directives.has(child.name)) {
+          const directive = this._directives.get(child.name) as DirectiveInterface;
+          return directive.markup(parent, child, components, this._markup.bind(this));
         }
         //syntax <div title="Some Title">...</div>
-        expression += this._markupElement(expression, child, components);
+        expression += this._markupElement(expression, parent, child, components);
       } else if (child.type === 'Literal') {
         if (typeof child.value === 'string') {
           expression += `TempleDocument.createText(\`${child.value}\`)`;
@@ -561,59 +588,11 @@ export default class ComponentCompiler implements Compiler {
   }
 
   /**
-   * Generated the markup for a conditional statement
-   */
-  protected _markupConditional(token: MarkupToken, components: Compiler[]) {
-    let expression = '';
-    //syntax <if true={count > 1}>...</if>
-    if (!token.attributes 
-      || token.attributes.properties.length === 0 
-    ) {
-      throw Exception.for('Invalid if statement');
-    }
-    const truesy = token.attributes.properties.find(
-      property => property.key.name === 'true'
-    );
-    const falsesy = token.attributes.properties.find(
-      property => property.key.name === 'false'
-    );
-    if (!truesy && !falsesy) {
-      throw Exception.for('Invalid if statement');
-    }
-    expression += '...(!';
-    if (truesy) {
-      expression += '!';
-    }
-    const property = (truesy || falsesy) as PropertyToken;
-    if (property.value.type === 'ProgramExpression') {
-      const script = property.value as ScriptToken;
-      expression += `(${script.source}) ? `;
-    } else if (property.value.type === 'Literal') {
-      if (typeof property.value.value === 'string') {
-        expression += `('${property.value.value}') ? `;
-      } else {
-        expression += `(${property.value.value}) ? `;
-      }
-    } else if (property.value.type === 'Identifier') {
-      expression += `(${property.value.name}) ? `;
-    } else {
-      throw Exception.for('Invalid if statement');
-    }
-    
-    if (token.children) {
-      expression += this._markup(token.children, components);
-    } else {
-      expression += '[]';
-    }
-    expression += ' : [])';
-    return expression;
-  }
-
-  /**
    * Generates the markup for a standard element
    */
   protected _markupElement(
     expression: string, 
+    parent: MarkupToken|null,
     token: MarkupToken,
     components: Compiler[]
   ) {
@@ -631,6 +610,7 @@ export default class ComponentCompiler implements Compiler {
         //NOTE: if you want scoped templates, 
         // that's the same as a light component
         return expression + `...${this._markup(
+          parent,
           component.ast.markup, 
           components
         )}`;
@@ -653,6 +633,7 @@ export default class ComponentCompiler implements Compiler {
         //NOTE: if you want scoped templates, 
         // that's the same as a light component
         return expression + `...${this._markup(
+          parent,
           template.ast.markup, 
           components
         )}`;
@@ -702,67 +683,11 @@ export default class ComponentCompiler implements Compiler {
     } else {
       expression += ' }, ';
       if (token.children) {
-        expression += this._markup(token.children, components);
+        expression += this._markup(token, token.children, components);
       }
       expression += `).element`;
     }
     
-    return expression;
-  }
-
-  /**
-   * Generates the markup for an iterator (each)
-   */
-  protected _markupIterator(token: MarkupToken, components: Compiler[]) {
-    let expression = '';
-    //syntax <each value=item key=i from=list>...</each>
-    if (!token.attributes 
-      || token.attributes.properties.length === 0 
-    ) {
-      throw Exception.for('Invalid each statement');
-    }
-    const key = token.attributes.properties.find(
-      property => property.key.name === 'key'
-    );
-    const value = token.attributes.properties.find(
-      property => property.key.name === 'value'
-    );
-    const from = token.attributes.properties.find(
-      property => property.key.name === 'from'
-    );
-    if (!from || (!key && !value)) {
-      throw Exception.for('Invalid each statement');
-    } else if (key && key.value.type !== 'Identifier') {
-      throw Exception.for('Invalid key value in each');
-    } else if (value && value.value.type !== 'Identifier') {
-      throw Exception.for('Invalid value in each');
-    }
-    const keyName = (key?.value as IdentifierToken)?.name || '_';
-    const valueName = (value?.value as IdentifierToken)?.name || '_';
-    expression += `...`;
-    if (from.value.type === 'ProgramExpression') {
-      const script = from.value as ScriptToken;
-      expression += `Object.entries(${script.source})`;
-    } else if (from.value.type === 'ArrayExpression') {
-      expression += `Object.entries(${
-        JSON.stringify(DataParser.array(from.value))
-      })`;
-    } else if (from.value.type === 'ObjectExpression') {
-      expression += `Object.entries(${
-        JSON.stringify(DataParser.object(from.value))
-      })`;
-    } else if (from.value.type === 'Identifier') {
-      expression += `Object.entries(${from.value.name})`;
-    } else {
-      throw Exception.for('Invalid from value in each');
-    }
-    expression += `.map(([${keyName}, ${valueName}]) => `;
-    if (token.children) {
-      expression += this._markup(token.children, components);
-    } else {
-      expression += '[]';
-    }
-    expression += ').flat()';
     return expression;
   }
 }
