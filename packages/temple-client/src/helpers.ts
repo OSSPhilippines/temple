@@ -1,5 +1,6 @@
 import type TempleComponent from './TempleComponent';
-import TempleElement from './TempleDocument';
+import TempleDocument from './TempleDocument';
+import TempleElement from './TempleElement';
 import TempleEmitter from './TempleEmitter';
 
 //how binders should look like
@@ -12,12 +13,12 @@ const match = (element: Element|ShadowRoot, attribute: string) => {
     //filter by elements has the attribute
     (element: Element) => {
       //get the node
-      const node = TempleElement.get(element);
+      const node = TempleDocument.get(element);
       //return if the node has the attribute
       return node && node.hasAttribute(attribute);
     }
   //map the elements to TempleElement (this is what to return)
-  ).map(element => TempleElement.get(element)) as TempleElement[];
+  ).map(element => TempleDocument.get(element)) as TempleElement[];
 };
 
 //bind an attribute to a binder
@@ -39,10 +40,10 @@ function unbindAttribute(name: string, bind: AttributeBinder) {
 }
 
 //ex. <div mounted=callback>Hello World</div>
-bindAttribute('mounted', element => {
-  const callback = element.getAttribute('mounted');
+bindAttribute('mount', element => {
+  const callback = element.getAttribute('mount');
   if (typeof callback === 'function' ) {
-    const event = new CustomEvent('mounted', { 
+    const event = new CustomEvent('mount', { 
       detail: {
         node: element,
         target: element.element
@@ -53,10 +54,10 @@ bindAttribute('mounted', element => {
 });
 
 //ex. <div unmounted=callback>Hello World</div>
-unbindAttribute('unmounted', element => {
-  const callback = element.getAttribute('unmounted');
+unbindAttribute('unmount', element => {
+  const callback = element.getAttribute('unmount');
   if (typeof callback === 'function' ) {
-    const event = new CustomEvent('unmounted', { 
+    const event = new CustomEvent('unmount', { 
       detail: {
         node: element,
         target: element.element
