@@ -20,7 +20,9 @@
     "build": "tsc && npx esbuild ./src/sse/client.ts --global-name=temple_dev --format=iife --bundle --outfile=client.js"
   },
   "dependencies": {
-    "chokidar": "3.6.0"
+    "@blanquera/types": "1.0.1",
+    "chokidar": "3.6.0",
+    "ws": "8.17.0"
   },
   "devDependencies": {
     "@types/node": "20.11.16",
