@@ -1,7 +1,7 @@
 
 import DataParser from './DataParser';
 import GenericLexer from './GenericLexer';
-import SymbolParser from './SymbolParser';
+import DocumentParser from './DocumentParser';
 import TempleParser from './TempleParser';
 
 import definitions, { 
@@ -16,7 +16,7 @@ export type * from './types';
 export {
   DataParser,
   GenericLexer,
-  SymbolParser,
+  DocumentParser,
   TempleParser,
   definitions,
   scalar,

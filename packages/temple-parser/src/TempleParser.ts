@@ -10,14 +10,20 @@ import type {
   MarkupToken, 
   MarkupChildToken,
   UnknownMarkupToken,
-  SymbolComplete as Symbol,
   LiteralToken,
   Token
 } from './types';
 
+type TagToken = {
+  name: string,
+  kind: string,
+  start: number,
+  end: number
+};
+
 import ts from 'typescript';
 import DataParser from './DataParser';
-import SymbolParser from './SymbolParser';
+import DocumentParser from './DocumentParser';
 import GenericLexer from './GenericLexer';
 import Exception from './ParserException';
 import definitions, { data as anyData } from './definitions';
@@ -39,7 +45,7 @@ export default class TempleParser {
   //the data parser
   protected _dataParser = lexer;
   //the symbol parser
-  protected _symbolParser: SymbolParser;
+  protected _documentParser: DocumentParser;
   //the code to parse
   protected _code: string;
   //the stack of open tags
@@ -64,14 +70,37 @@ export default class TempleParser {
    */
   constructor(code: string) {
     this._code = code;
-    this._symbolParser = new SymbolParser(code, this.walk.bind(this));
+    this._documentParser = new DocumentParser(code);
   }
 
   /**
    * Parses the code, returns the results
    */
   public parse() {
-    this._symbolParser.parse();
+    for (const token of this._documentParser.tag()) {
+      const { name, kind } = token;
+
+      if (this._resource 
+        && name !== 'script' 
+        && name !== 'style' 
+        && kind !== 'close'
+      ) {
+        continue;
+      }
+
+      //let the modes handle the symbols
+      switch (kind) {
+        case 'open':
+          this._open(token);
+          break;
+        case 'close':
+          this._close(token);
+          break;
+        case 'self':
+          this._self(token);
+          break;
+      }
+    }
     return {
       imports: this._imports,
       components: this._components,
@@ -82,51 +111,18 @@ export default class TempleParser {
   }
 
   /**
-   * Walks through the symbols found and maps to markup tokens
-   */
-  public walk(symbol: Symbol) {
-    //only take in <> symbols
-    if (symbol.type !== '<>') {
-      return;
-    }
-
-    const name = this._name(symbol);
-    const mode = this._mode(symbol);
-
-    //ignore content inside script and style tags
-    if (this._resource 
-      && name !== 'script' 
-      && name !== 'style' 
-      && mode !== 'close'
-    ) {
-      return;
-    }
-    //let the modes handle the symbols
-    switch (mode) {
-      case 'open':
-        this._open(symbol);
-        break;
-      case 'close':
-        this._close(symbol);
-        break;
-      case 'self':
-        this._self(symbol);
-        break;
-    }
-  }
-
-  /**
    * Parses the attributes of a tag
    */
-  protected _attributes(tag: Symbol): ObjectToken|undefined {
+  protected _attributes(tag: TagToken): ObjectToken|undefined {
     //we are going to be using a different parser for the attributes
     //so we need to update the start and end of each node with the 
     //current tag's offset
     const offset = tag.start;
     //this is where we are going to store the attributes
     const properties: PropertyToken[] = [];
+    const snippet = this._substring(tag.start, tag.end);
     //load the code into the lexer
-    this._dataParser.load(tag.value as string);
+    this._dataParser.load(snippet as string);
     //<
     this._dataParser.expect('<');
     this._dataParser.optional('whitespace');
@@ -247,56 +243,34 @@ export default class TempleParser {
   /**
    * Removes the given tag from the stack and adds it to the markup
    */
-  protected _close(symbol: Symbol) {
-    //get the name and type of the tag
-    const name = this._name(symbol);
-    const type = this._type(symbol);
+  protected _close(tag: TagToken) {
+    //get the type of the tag
+    const type = this._type(tag);
     //pop the last open tag from the stack
     const open = this._stack.pop();
     //if there is no matching open tag
     if (!open) {
       throw Exception
-        .for('Could not find opening tag for %s', name)
-        .withPosition(symbol.start, symbol.end);
+        .for('Could not find opening tag for %s', tag.name)
+        .withPosition(tag.start, tag.end);
     }
     //if we are currently parsing a script tag
     if (type === 'ProgramExpression') {
-      return this._closeScript(symbol, open, name);
+      return this._closeScript(tag, open);
     //if we are currently parsing a style tag
     } else if (type === 'StyleExpression') {
-      return this._closeStyle(symbol, open, name);
+      return this._closeStyle(tag, open);
     }
-    return this._closeMarkup(symbol, open, name);
-  }
-
-  /**
-   * Returns the mode of the given symbol
-   */
-  protected _mode(symbol: Symbol) {
-    const value = this._substring(symbol.start, symbol.end);
-    return value.endsWith('/>') ? 'self' 
-      : value.startsWith('</') ? 'close' 
-      : 'open'
-  }
-
-  /**
-   * Returns the name of the given symbol
-   */
-  protected _name(symbol: Symbol) {
-    const children = symbol.children as Symbol[];
-    const name = children[0].value?.split(' ')[0] || '';
-    return name.startsWith('/') ? name.substring(1) : name;
+    return this._closeMarkup(tag, open);
   }
   
   /**
    * Adds the given tag to the stack
    */
-  protected _open(symbol: Symbol) {
-    //get the name and type
-    const name = this._name(symbol);
-    const type = this._type(symbol);
+  protected _open(tag: TagToken) {
+    const type = this._type(tag);
     //get the attributes
-    const attributes = this._attributes(symbol);
+    const attributes = this._attributes(tag);
     //if this is a script or style tag
     if (type === 'ProgramExpression' || type === 'StyleExpression') {
       //turn the resource mode on
@@ -305,19 +279,19 @@ export default class TempleParser {
     //add the tag to the stack
     this._stack.push(type === 'ProgramExpression' ? {
       type: 'ProgramExpression',
-      start: symbol.start,
-      end: symbol.end,
+      start: tag.start,
+      end: tag.end,
       attributes: attributes
     }: type === 'StyleExpression' ? {
       type: 'StyleExpression',
-      start: symbol.start,
-      end: symbol.end,
+      start: tag.start,
+      end: tag.end,
       attributes: attributes
     }: {
       type: 'MarkupExpression',
-      name: name,
-      start: symbol.start,
-      end: symbol.end,
+      name: tag.name,
+      start: tag.start,
+      end: tag.end,
       attributes: attributes,
       children: []
     });
@@ -326,12 +300,11 @@ export default class TempleParser {
   /**
    * Parses a self closing tag
    */
-  protected _self(symbol: Symbol) {
-    //get the name and type
-    const name = this._name(symbol);
-    const type = this._type(symbol);
+  protected _self(tag: TagToken) {
+    //get the type
+    const type = this._type(tag);
     //get the attributes
-    const attributes = this._attributes(symbol);
+    const attributes = this._attributes(tag);
     //if this is an import tag
     if (type === 'ImportDeclaration') {
       //if we have attributes
@@ -343,8 +316,8 @@ export default class TempleParser {
           //create a component token
           const component: ComponentToken = {
             type: 'ComponentDeclaration',
-            start: symbol.start,
-            end: symbol.end,
+            start: tag.start,
+            end: tag.end,
             attributes: attributes,
             source: {
               type: 'Literal',
@@ -365,11 +338,11 @@ export default class TempleParser {
     //this is a normal self closing tag (no children)
     const markup: MarkupToken = {
       type: 'MarkupExpression',
-      name: name,
+      name: tag.name,
       kind: 'inline',
       attributes: attributes,
-      start: symbol.start,
-      end: symbol.end
+      start: tag.start,
+      end: tag.end
     };
     //if we have a parent
     if (this._stack.length > 0) {
@@ -379,17 +352,17 @@ export default class TempleParser {
       if (!parent.children || parent.children.length === 0) {
         //find the gap between the parent and the self closing tag
         parent.children = [];
-        if (parent.end < symbol.start) {
+        if (parent.end < tag.start) {
           //and add it as a text node
-          this._text(parent.children, parent.end, symbol.start);
+          this._text(parent.children, parent.end, tag.start);
         }
       //there are children
       } else if (parent.children.length > 0) {
         //find the gap between the last child and the self closing tag
         const last = parent.children[parent.children.length - 1];
-        if (last.end < symbol.start) {
+        if (last.end < tag.start) {
           //and add it as a text node
-          this._text(parent.children, last.end, symbol.start);
+          this._text(parent.children, last.end, tag.start);
         }
       }
       //finally, add the markup to the parent's children
@@ -401,14 +374,14 @@ export default class TempleParser {
     if (this._markup.length > 0) {
       //find the gap between the last markup token and the self closing tag
       const last = this._markup[this._markup.length - 1];
-      if (last.end < symbol.start) {
-        this._text(this._markup, last.end, symbol.start);
+      if (last.end < tag.start) {
+        this._text(this._markup, last.end, tag.start);
       }
     //there are no markup tokens
     //if there is a gap between the start and the self closing tag
-    } else if (symbol.start > 0) {
+    } else if (tag.start > 0) {
       //add it as a text node
-      this._text(this._markup, 0, symbol.start);
+      this._text(this._markup, 0, tag.start);
     }
     //finally, add the markup to the markup
     this._markup.push(markup);
@@ -428,12 +401,8 @@ export default class TempleParser {
    */
   protected _text(children: MarkupChildToken[], start: number, end: number) {
     let last = start;
-    //find the programs in the text
-    const programs = this._symbolParser
-      .find({ min: start, max: end })
-      .filter(symbol => symbol.type === '{}');
-    //loop through the {} symbols
-    for (const program of programs) {
+    //loop through the programs in the text
+    for (const program of this._documentParser.program(start, end)) {
       //if there is text before the program
       if (last < program.start) {
         //push a literal token
@@ -474,8 +443,8 @@ export default class TempleParser {
   /**
    * Returns the type of the given symbol
    */
-  protected _type(symbol: Symbol) {
-    const name = this._name(symbol);
+  protected _type(token: TagToken) {
+    const { name } = token;
     return name === 'script' ? 'ProgramExpression'
       : name === 'style' ? 'StyleExpression' 
       : name === 'link' ? 'ImportDeclaration'
@@ -486,25 +455,24 @@ export default class TempleParser {
    * Removes the given tag from the stack and adds it to the markup
    */
   private _closeMarkup(
-    symbol: Symbol, 
+    tag: TagToken, 
     open: UnknownMarkupToken, 
-    name: string,
     withChildren = true
   ) {
     //This is a normal HTML tag....
     //if the open tag is not the same as the close tag
-    if (open.name !== name) {
+    if (open.name !== tag.name) {
       throw Exception
-        .for('Mismatched closing tag %s', name)
-        .withPosition(symbol.start, symbol.end);
+        .for('Mismatched closing tag %s', tag.name)
+        .withPosition(tag.start, tag.end);
     }
     //create the markup token
     const token: MarkupToken = {
       type: 'MarkupExpression',
-      name: name,
+      name: tag.name,
       kind: 'block',
       start: open.start,
-      end: symbol.end,
+      end: tag.end,
       attributes: open.attributes
     }
 
@@ -516,17 +484,17 @@ export default class TempleParser {
     if (token.children && token.children.length > 0) {
       //find the gap between the last child end and the close tag start
       const last = token.children[token.children.length - 1];
-      if (last.end < symbol.start) {
+      if (last.end < tag.start) {
         //add it as a text node
-        this._text(token.children, last.end, symbol.start);
+        this._text(token.children, last.end, tag.start);
       }
     //the tag has no children
     } else {
       //find the gap between the open tag end and the close tag start
-      if (open.end < symbol.start) {
+      if (open.end < tag.start) {
         //add it as a text node
         token.children = [];
-        this._text(token.children, open.end, symbol.start);
+        this._text(token.children, open.end, tag.start);
       }
     }
 
@@ -602,16 +570,12 @@ export default class TempleParser {
   /**
    * Removes the given script from the stack and adds it to the markup
    */
-  private _closeScript(
-    symbol: Symbol, 
-    open: UnknownMarkupToken, 
-    name: string
-  ) {
+  private _closeScript(tag: TagToken, open: UnknownMarkupToken) {
     //if the open tag is not a script tag
     if (open.type !== 'ProgramExpression') {
       throw Exception
-        .for('Mismatched closing tag %s', name)
-        .withPosition(symbol.start, symbol.end);
+        .for('Mismatched closing tag %s', tag.name)
+        .withPosition(tag.start, tag.end);
     }
     //check for src attribute
     const src = open.attributes?.properties.find(
@@ -624,11 +588,11 @@ export default class TempleParser {
       //we need to set this so the markup wont fail
       open.name = 'script';
       //create the markup token
-      this._closeMarkup(symbol, open, name, false);
+      this._closeMarkup(tag, open, false);
       return;
     }
     //parse the script 
-    const source = this._substring(open.end, symbol.start);
+    const source = this._substring(open.end, tag.start);
     // Parse the source code into an AST
     const sourceFile = ts.createSourceFile(
       // Arbitrary file name
@@ -648,8 +612,8 @@ export default class TempleParser {
       //get export default clause
       const name: LiteralToken|undefined = clause?.name ? {
         type: 'Literal',
-        start: symbol.start + clause.name.getStart(sourceFile),
-        end: symbol.start + clause.name.getEnd(),
+        start: tag.start + clause.name.getStart(sourceFile),
+        end: tag.start + clause.name.getEnd(),
         value: clause.name.getText(sourceFile),
         raw: `'${clause.name.getText(sourceFile)}'`
       }: undefined
@@ -657,8 +621,8 @@ export default class TempleParser {
       const sourceText = statement.moduleSpecifier.getText(sourceFile);
       const source: LiteralToken = {
         type: 'Literal',
-        start: symbol.start + statement.moduleSpecifier.getStart(sourceFile) + 1,
-        end: symbol.start + statement.moduleSpecifier.getEnd() - 1,
+        start: tag.start + statement.moduleSpecifier.getStart(sourceFile) + 1,
+        end: tag.start + statement.moduleSpecifier.getEnd() - 1,
         value: sourceText.substring(1, sourceText.length - 1),
         raw: `'${sourceText.substring(1, sourceText.length - 1)}'`
       };
@@ -671,8 +635,8 @@ export default class TempleParser {
         //add the name to the names
         names.push({
           type: 'Literal',
-          start: symbol.end + node.getStart(sourceFile),
-          end: symbol.end + node.getEnd(),
+          start: tag.end + node.getStart(sourceFile),
+          end: tag.end + node.getEnd(),
           value: name,
           raw: `'${name}'`
         });
@@ -680,8 +644,8 @@ export default class TempleParser {
       //create the import token
       const token: ImportToken = {
         type: 'ImportDeclaration',
-        start: symbol.end + statement.getStart(sourceFile),
-        end: symbol.end + statement.getEnd(),
+        start: tag.end + statement.getStart(sourceFile),
+        end: tag.end + statement.getEnd(),
         typeOnly: statement.importClause?.isTypeOnly === true,
         source
       };
@@ -702,10 +666,10 @@ export default class TempleParser {
     const script: ScriptToken = {
       type: 'ProgramExpression',
       start: open.end,
-      end: symbol.start,
+      end: tag.start,
       inline: false,
       attributes: open.attributes,
-      source: this._substring(open.end + offsetStart, symbol.start).trim()
+      source: this._substring(open.end + offsetStart, tag.start).trim()
     };
     //add scripts to the scripts
     this._scripts.push(script);
@@ -718,24 +682,20 @@ export default class TempleParser {
   /**
    * Removes the given style from the stack and adds it to the markup
    */
-  private _closeStyle(
-    symbol: Symbol, 
-    open: UnknownMarkupToken, 
-    name: string
-  ) {
+  private _closeStyle(tag: TagToken, open: UnknownMarkupToken) {
     //if the open tag is not a style tag
     if (open.type !== 'StyleExpression') {
       throw Exception
-        .for('Mismatched closing tag %s', name)
-        .withPosition(symbol.start, symbol.end);
+        .for('Mismatched closing tag %s', tag.name)
+        .withPosition(tag.start, tag.end);
     }
     //create a style token
     const styles: StyleToken = {
       type: 'StyleExpression',
       start: open.start,
-      end: symbol.end,
+      end: tag.end,
       attributes: open.attributes,
-      source: this._symbolParser.substring(open.end, symbol.start)
+      source: this._documentParser.substring(open.end, tag.start)
     };
     //add the style to the styles
     this._styles.push(styles);

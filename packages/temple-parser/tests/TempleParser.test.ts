@@ -12,7 +12,7 @@ describe('Temple Parser', () => {
     expect(actual.components.length).to.equal(4);
     expect(actual.scripts.length).to.equal(0);
     expect(actual.styles.length).to.equal(1);
-    expect(actual.markup.length).to.equal(2);
+    expect(actual.markup.length).to.equal(1);
   });
 
   it('Should parse link (inline) to style (block) issue', () => {

@@ -1,5 +1,3 @@
-import type SymbolParser from './SymbolParser';
-
 //For Lexer
 export type Reader = (lexer: Parser) => Token|undefined;
 export type Definition = { key: string, reader: Reader };
@@ -18,26 +16,6 @@ export interface Parser {
   next(keys: string | string[]): boolean,
   optional<T = Token>(keys: string | string[]): T | undefined
 }
-
-//symbol tokens (For Symbol Parser)
-export type SymbolPartial = {
-  type: string,
-  start: number,
-  children: SymbolComplete[]
-};
-
-export type SymbolComplete = {
-  type: string,
-  start: number,
-  end: number,
-  value?: string,
-  children?: SymbolComplete[]
-};
-
-export type Walker = (
-  symbol: SymbolComplete, 
-  instance: SymbolParser
-) => void;
 
 //generic tokens
 export type Token = {
