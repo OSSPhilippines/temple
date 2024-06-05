@@ -89,7 +89,7 @@ export default class DocumentParser {
           end: end
         };
         //move the index
-        index = end;
+        index = end - 1;
         continue;
       }
       //look ahead and check for <open>
@@ -109,6 +109,7 @@ export default class DocumentParser {
           };
           //move the index
           index = end;
+          continue;
         }
       }
     }

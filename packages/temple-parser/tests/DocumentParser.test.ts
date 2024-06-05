@@ -120,4 +120,55 @@ describe('Document Parser', () => {
     }
     expect(index).to.equal(answers.length);
   });
+
+  it('Should parse HTML back to back', () => {
+    const code = `<pre class="snippet"><br/><code class=language mount=highlight><hr /></code><br/></pre>`;
+
+    const answers = [
+      {
+        name: 'pre',
+        kind: 'open',
+        value: '<pre class="snippet">'
+      },
+      {
+        name: 'br',
+        kind: 'self',
+        value: '<br/>'
+      },
+      {
+        name: 'code',
+        kind: 'open',
+        value: `<code class=language mount=highlight>`
+      },
+      {
+        name: 'hr',
+        kind: 'self',
+        value: '<hr />'
+      },
+      {
+        name: 'code',
+        kind: 'close',
+        value: '</code>'
+      },
+      {
+        name: 'br',
+        kind: 'self',
+        value: '<br/>'
+      },
+      {
+        name: 'pre',
+        kind: 'close',
+        value: '</pre>'
+      }
+    ];
+    const parser = new DocumentParser(code);
+    let index = 0;
+    for (const { name, kind, start, end } of parser.tag()) {
+      expect(name).to.equal(answers[index].name);
+      expect(kind).to.equal(answers[index].kind);
+      expect(parser.substring(start, end)).to.equal(answers[index].value);
+      index++;
+    }
+    expect(index).to.equal(answers.length);
+  });
 });
