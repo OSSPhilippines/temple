@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import express from 'express';
 import temple from '@ossph/temple/server';
+import { dev, inject } from '@ossph/temple-dev';
 
 const engine = temple({ 
   cwd: __dirname, 
@@ -22,7 +23,7 @@ app.engine(
   ) => {
     const { settings, _locals, cache, ...props } = options;
     const render = await engine.load(filePath);
-    callback(null, render(props));
+    callback(null, inject(render(props)));
   },
 );
 //set the view engine to temple
@@ -31,6 +32,8 @@ app.set('view engine', 'html');
 
 //open public folder
 app.use('/temple', express.static('public'));
+//attach the dev middleware
+app.use(dev({ cwd: __dirname }));
 
 app.get('/temple/**', (req, res) => {
   const props = { title: 'Temple Documentation' };
@@ -58,5 +61,5 @@ app.get('/temple/**', (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000');
+  console.log(`HTTP server is running on http://localhost:3000`);
 });

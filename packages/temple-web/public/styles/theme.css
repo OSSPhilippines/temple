@@ -237,12 +237,12 @@ a, a:link a:hover, a:active, a:visited {
   overflow: hidden;
   position: absolute;
   right: 0;
-  top: -60px;
+  top: 0;
   transition: 1s;
 }
 
-.panel-head .panel-head {
-  top: 0;
+.with-left .panel-head {
+  left: 226px;
 }
 
 .panel .panel-foot {
@@ -255,36 +255,24 @@ a, a:link a:hover, a:active, a:visited {
   transition: 1s;
 }
 
-.panel-foot .panel-foot {
-  bottom: -60px;
-}
-
 .panel .panel-left {
   bottom: 0;
-  left: -226px;
+  left: 0;
   overflow: hidden;
   position: absolute;
   top: 0;
   transition: 1s;
   width: 226px;
-}
-
-.panel-left .panel-left {
-  left: 0;
 }
 
 .panel .panel-right {
   bottom: 0;
   overflow: hidden;
   position: absolute;
-  right: -226px;
+  right: 0;
   top: 0;
   transition: 1s;
   width: 226px;
-}
-
-.panel-right .panel-right {
-  right: 0;
 }
 
 .panel .panel-main {
@@ -304,20 +292,37 @@ a, a:link a:hover, a:active, a:visited {
   width: 100%;
 }
 
-.panel-head .panel-main {
+.with-head .panel-main {
   top: 60px;
 }
 
-.panel-foot .panel-main {
+.with-foot .panel-main {
   bottom: 60px;
 }
 
-.panel-left .panel-main {
+.with-left .panel-main {
   left: 226px;
 }
 
-.panel-right .panel-main {
+.with-right .panel-main {
   right: 226px;
+}
+
+@media (max-width: 767px) {
+  .panel .panel-left {
+    left: -226px;
+  }
+  .panel-left-open .panel-left {
+    left: 0;
+  }
+  .with-left .panel-head,
+  .with-left .panel-main {
+    left: 0;
+  }
+  .panel-left-open .panel-head,
+  .panel-left-open .panel-main {
+    left: 226px;
+  }
 }
 
 /* Head
@@ -328,6 +333,11 @@ a, a:link a:hover, a:active, a:visited {
   display: flex;
   padding: 0 20px;
 }
+.head .menu {
+  cursor: pointer;
+  display: none;
+  padding: 10px 10px 10px 0;
+}
 .head img {
   height: 26px;
   margin-right: 10px;
@@ -335,6 +345,12 @@ a, a:link a:hover, a:active, a:visited {
 .head h3 {
   flex-grow: 1;
   text-transform: uppercase;
+}
+.with-left .head img {
+  display: none;
+}
+.with-left .head h3 {
+  opacity: 0;
 }
 .head nav {
   align-items: center;
@@ -362,4 +378,68 @@ a, a:link a:hover, a:active, a:visited {
   margin-left: 5px;
   padding: 5px;
   text-align: center;
+}
+
+@media (max-width: 767px) {
+  .with-left .head .menu {
+    display: block;
+  }
+}
+
+/* Left
+---------------------------------*/
+.left {
+  display: flex;
+  flex-direction: column;
+}
+.left header {
+  align-items: center;
+  background-color: var(--bg-second);
+  display: flex;
+  padding: 17px 5px 17px 10px;
+}
+.left header img {
+  height: 26px;
+  margin-right: 10px;
+}
+.left header h3 {
+  flex-grow: 1;
+  text-transform: uppercase;
+}
+.left header .toggle {
+  cursor: pointer;
+  display: none;
+}
+
+.left nav {
+  flex-grow: 1;
+  background-color: #151515;
+  overflow: auto;
+  padding-bottom: 100px;
+}
+
+.left nav h6 {
+  border-top: 1px solid #121212;
+  color: #999999;
+  font-size: 14px;
+  margin-top: 20px;
+  padding: 20px 0 10px 10px;
+  text-transform: uppercase;
+}
+
+.left nav h6:first-child {
+  border-top: none;
+  margin-top: 0;
+}
+
+.left nav a {
+  color: #EFEFEF;
+  display: block;
+  padding: 10px 0 10px 10px;
+}
+
+@media (max-width: 767px) {
+  .left header .toggle {
+    display: block;
+  }
 }
