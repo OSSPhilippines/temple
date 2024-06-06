@@ -1,6 +1,5 @@
 import type { CompilerOptions } from '@ossph/temple-compiler';
 import { urlToRequest } from 'loader-utils';
-//import { validate } from 'schema-utils';
 import temple from '@ossph/temple/server';
 
 type Loader = {
@@ -21,8 +20,8 @@ const templeLoader: LoaderFunction = function () {
   const engine = temple({ ...options, register: true });
   engine
     .source(inputPath)
-    .then((code: { client: string, server: string }) => {
-      callback(null, code.server);
+    .then((code: { component: string }) => {
+      callback(null, code.component);
     })
     .catch(console.log);
 };
