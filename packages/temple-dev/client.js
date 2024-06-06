@@ -23,12 +23,29 @@ var temple_dev = (() => {
   __export(client_exports, {
     default: () => client
   });
-  function client(options = {}) {
+  function client(options = {}, wait = 0) {
     const { path = "/__temple_dev__" } = options;
     const source = new EventSource(path);
     source.addEventListener("refresh", () => {
       window.location.reload();
     });
+    source.onopen = () => {
+      if (wait > 0) {
+        console.clear();
+        console.log("Connection re-established.");
+      }
+      wait = 0;
+    };
+    source.onerror = () => {
+      source.close();
+      if (wait < 1e4) {
+        setTimeout(() => client(options, wait + 2e3), wait);
+      } else {
+        console.error(
+          "Too many connection attempts. Please check your server and refresh page."
+        );
+      }
+    };
   }
   return __toCommonJS(client_exports);
 })();
