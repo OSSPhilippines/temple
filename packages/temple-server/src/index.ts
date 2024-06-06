@@ -1,19 +1,24 @@
+import TempleCollection from './TempleCollection';
 import TempleDocument from './TempleDocument';
 import TempleElement from './TempleElement';
-import TempleCollection from './TempleCollection';
+import emitter, { TempleEmitter } from './TempleEmitter';
 import TempleText from './TempleText';
 import TempleException from './TempleException';
 import data from './data';
 import props from './props';
+import signal from './signal';
 
 export type * from './types';
 
 export {
   data,
+  emitter,
   props,
-  TempleDocument,
+  signal,
   TempleCollection,
+  TempleDocument,
   TempleElement,
-  TempleText,
-  TempleException
+  TempleEmitter,
+  TempleException,
+  TempleText
 };
