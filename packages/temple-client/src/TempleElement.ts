@@ -61,7 +61,11 @@ export default class TempleElement {
     this._element.removeAttribute(key);
     if (!silent) {
       //emit the change event
-      TempleEmitter.emit('attribute-remove', this, key, current);
+      TempleEmitter.emit('attribute-remove', {
+        element: this, 
+        key: key, 
+        previous: current
+      });
     }
     return this;
   }
@@ -88,9 +92,14 @@ export default class TempleElement {
     if (!silent) {
       //emit the change event
       if (typeof current === 'undefined') {
-        TempleEmitter.emit('attribute-create', this, key, value);
+        TempleEmitter.emit('attribute-create', { element: this, key, value });
       } else {
-        TempleEmitter.emit('attribute-update', this, key, value, current);
+        TempleEmitter.emit('attribute-update', {
+          element: this, 
+          key: key, 
+          value: value,
+          previous: current
+        });
       }
     }
     

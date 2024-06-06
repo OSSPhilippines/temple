@@ -14,6 +14,13 @@ export default class TempleDocument {
   protected static _registry = new Map<Element, TempleElement>();
 
   /**
+   * Returns the registry
+   */
+  public static get registry() {
+    return this._registry;
+  }
+
+  /**
    * Sets the brand prefix
    */
   public static set brand(value: string) {
