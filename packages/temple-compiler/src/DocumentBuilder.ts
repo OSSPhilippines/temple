@@ -6,18 +6,30 @@ import fs from 'fs';
 import path from 'path';
 import esbuild from 'esbuild';
 import FileLoader from './FileLoader';
+import CompilerGenerator from './CompilerGenerator';
 import DocumentCompiler from './DocumentCompiler';
 
 type Platform = 'node'|'browser';
 
 export default class DocumentBuilder {
+  //the build directory
+  protected _build: string;
+  //whether to bundle the code
+  protected _bundle: boolean;
   //the compiler instance
   protected _compiler: DocumentCompiler;
+  //whether to cache the compiled code
   protected _cache: boolean;
-  protected _minify: boolean;
-  protected _bundle: boolean;
+  //the file system
   protected _fs: typeof fs;
+  //the generator instance
+  protected _generator: CompilerGenerator;
+  //whether to minify the code
+  protected _minify: boolean;
+  //the file loader
   protected _loader: FileLoader;
+  //the location of the tsconfig file
+  protected _tsconfig: string;
 
   /**
    * Gets the compiler instance
@@ -27,16 +39,45 @@ export default class DocumentBuilder {
   }
 
   /**
+   * Gets the generator instance
+   */
+  public get generator() {
+    return this._generator;
+  }
+
+  /**
    * Sets the compiler
    */
   constructor(compiler: DocumentCompiler, options: CompilerOptions = {}) {
-    const { cache = false, minify = true, bundle = true } = options;
+    const { 
+      cache = false, 
+      minify = true, 
+      bundle = true,
+      build = './.temple'
+    } = options;
+
     this._compiler = compiler;
     this._cache = cache;
     this._minify = minify;
     this._bundle = bundle;
     this._fs = options.fs || fs;
     this._loader = new FileLoader(this._fs);
+
+    //generated values
+    this._build = path.join(
+      this._loader.absolute(build, this._compiler.cwd),
+      this._compiler.id
+    );
+
+    this._tsconfig = this._loader.absolute(
+      options.tsconfig || path.resolve(__dirname, '../tsconfig.json'), 
+      this._compiler.cwd
+    );
+
+    this._generator = new CompilerGenerator(
+      this._compiler, 
+      this._tsconfig
+    );
   }
 
   /**
@@ -125,10 +166,11 @@ export default class DocumentBuilder {
    * - temple(..options...).source(file)
    */
   public async source() {
-    const build = this._compiler.build;
+    const build = this._build;
     return {
       server: await this._cached(`${build}/server`, 'node'),
-      client: await this._cached(`${build}/client`, 'browser')
+      client: await this._cached(`${build}/client`, 'browser'),
+      component: await this._cached(`${build}/component`, 'browser')
     };
   }
 
@@ -171,20 +213,27 @@ export default class DocumentBuilder {
     //map of filename to ts code
     const files: Record<string, () => string> = {};
     const cache: Record<string, string> = {};
-    const build = this._compiler.build;
+    const build = this._build;
     //the client file in [build]/client.ts
     const client = `${build}/client.ts`;
-    files[client] = this._readFile(client, this._compiler.manifest, cache);
+    files[client] = this._readFile(client, this._generator.client, cache);
+    //the entry file in [build]/entry.ts
+    const entry = `${build}/entry.ts`;
+    files[entry] = this._readFile(entry, this._generator.entry, cache);
     //the server file in [build]/server.ts
     const server = `${build}/server.ts`;
-    files[server] = this._readFile(server, this._compiler.sourceCode, cache);
+    files[server] = this._readFile(server, this._generator.server, cache);
+    //the server file in [build]/server.ts
+    const component = `${build}/component.ts`;
+    files[component] = this._readFile(component, this._generator.component, cache);
     //loop through all components
     this._compiler.registry.forEach(component => {
       const id = component.id;
       const name = component.classname;
       //the component file in [build]/[name]_[id]
       const path = `${build}/${name}_${id}.ts`;
-      files[path] = this._readFile(path, component.sourceCode, cache);
+      const generator = new CompilerGenerator(component, this._tsconfig);
+      files[path] = this._readFile(path, generator.component, cache);
     });
 
     return files;

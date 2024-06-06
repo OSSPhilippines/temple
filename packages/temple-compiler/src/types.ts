@@ -1,5 +1,4 @@
 import type fs from 'fs';
-import type { SourceFile } from 'ts-morph';
 import type { Node } from '@ossph/temple-server'
 import type {
   ImportToken,
@@ -30,11 +29,6 @@ export interface Compiler {
    * Gets the brand prefix
    */
   get brand(): string;
-
-  /**
-   * Returns the absolute path of the build folder
-   */
-  get build(): string;
 
   /**
    * Returns the class name (based on the basename)
@@ -98,11 +92,6 @@ export interface Compiler {
   get sourceFile(): string;
 
   /**
-   * Returns the compiled source code
-   */
-  get sourceCode(): SourceFile;
-
-  /**
    * Returns the compiled styles
    */
   get styles(): string[];
@@ -111,11 +100,6 @@ export interface Compiler {
    * Returns the tag name
    */
   get tagname(): string;
-
-  /**
-   * Returns the location of the tsconfig file
-   */
-  get tsconfig(): string|undefined;
 
   /**
    * Returns the location of the tsconfig file

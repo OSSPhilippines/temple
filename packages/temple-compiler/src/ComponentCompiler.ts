@@ -16,8 +16,6 @@ import fs from 'fs';
 import path from 'path';
 import FileLoader from './FileLoader';
 //parsers/compilers
-import ts from 'typescript';
-import { Project, IndentationText } from 'ts-morph';
 import { DataParser, TempleParser } from '@ossph/temple-parser';
 //directives
 import { 
@@ -47,8 +45,6 @@ export default class ComponentCompiler implements Compiler {
   protected _ast: AST|null = null;
   //prefix brand
   protected _brand: string;
-  //build folder
-  protected _build: string;
   //current working directory
   //we need this to locate and compile imported components
   protected _cwd: string;
@@ -66,8 +62,6 @@ export default class ComponentCompiler implements Compiler {
   protected _registry: ComponentRegistry;
   //the source file location
   protected _sourceFile: string;
-  //tsconfig file
-  protected _tsconfig: string|undefined;
   //type of the source file
   protected _type: 'document'|'component'|'template';
   
@@ -106,16 +100,6 @@ export default class ComponentCompiler implements Compiler {
    */
   public get brand() {
     return this._brand;
-  }
-
-  /**
-   * Returns the absolute path of the build folder
-   */
-  public get build() {
-    return path.join(
-      this._loader.absolute(this._build, this._cwd),
-      this.id
-    );
   }
 
   /**
@@ -227,13 +211,6 @@ export default class ComponentCompiler implements Compiler {
   }
 
   /**
-   * Returns the compiled source code
-   */
-  public get sourceCode() {
-    return this._generate();
-  }
-
-  /**
    * Returns the compiled styles
    */
   public get styles() {
@@ -245,13 +222,6 @@ export default class ComponentCompiler implements Compiler {
    */
   public get tagname() {
     return this._tagname;
-  }
-
-  /**
-   * Returns the location of the tsconfig file
-   */
-  public get tsconfig() {
-    return this._tsconfig;
   }
 
   /**
@@ -281,17 +251,10 @@ export default class ComponentCompiler implements Compiler {
     this._brand = typeof options.brand === 'string'
       ? options.brand
       : 'temple';
-    //determine the build folder
-    this._build = options.build || './.temple';
     //by default, we register the custom elements
     this._register = options.register !== false;
     //file loader
     this._loader = new FileLoader(this._fs);
-    //determine the tsconfig file
-    this._tsconfig = this._loader.absolute(
-      options.tsconfig || path.resolve(__dirname, '../tsconfig.json'), 
-      this._cwd
-    );
     //generated initializers
     this._absolute = this._loader.absolute(this._sourceFile, this._cwd);
     if (!this._fs.existsSync(this._absolute)) {
@@ -357,8 +320,6 @@ export default class ComponentCompiler implements Compiler {
           cwd: this._cwd,
           brand: this._brand,
           register: false,
-          build: this._build,
-          tsconfig: this._tsconfig,
           name: name,
           type: type
         },
@@ -369,119 +330,6 @@ export default class ComponentCompiler implements Compiler {
     }
     //return the compiled component
     return this._registry[id];
-  }
-
-  /**
-   * Generates code
-   */
-  protected _generate() {
-    //make a new project
-    const project = new Project({
-      tsConfigFilePath: this.tsconfig,
-      skipAddingFilesFromTsConfig: true,
-      compilerOptions: {
-        outDir: this.build,
-        // Generates corresponding '.d.ts' file.
-        declaration: true, 
-        // Generates a sourcemap for each corresponding '.d.ts' file.
-        declarationMap: true, 
-        // Generates corresponding '.map' file.
-        sourceMap: true, 
-        // Set the target JavaScript version
-        target: ts.ScriptTarget.ESNext,  
-        // Set the module system
-        module: ts.ModuleKind.CommonJS
-      },
-      manipulationSettings: {
-        indentationText: IndentationText.TwoSpaces
-      }
-    });
-    //get path without extension
-    //ex. /path/to/Counter.tml -> /path/to/Counter
-    const extname = path.extname(this._absolute);
-    const filePath = this._absolute.slice(0, -extname.length);
-    //create a new source file
-    const source = project.createSourceFile(`${filePath}.ts`);
-    //import { TempleDocument, TempleComponent } from '@ossph/temple-client';
-    source.addImportDeclaration({
-      moduleSpecifier: '@ossph/temple-client',
-      namedImports: [ 'TempleDocument', 'TempleComponent' ]
-    });
-    //import Counter from './Counter'
-    this.components.forEach(component => {
-      //now import
-      source.addImportDeclaration({
-        moduleSpecifier: `./${component.classname}_${component.id}`,
-        //we make sure there's no collisions
-        //this is also matched when generating the component tree
-        defaultImport: `${component.classname}_${component.id}`
-      });
-    });
-    //import others from <script>
-    this.imports.forEach(imported => {
-      if (imported.default && imported.names) {
-        source.addImportDeclaration({
-          isTypeOnly: imported.typeOnly,
-          moduleSpecifier: imported.source,
-          defaultImport: imported.default,
-          namedImports: imported.names
-        });
-      } else if (imported.default) {
-        source.addImportDeclaration({
-          isTypeOnly: imported.typeOnly,
-          moduleSpecifier: imported.source,
-          defaultImport: imported.default
-        });
-      } else if (imported.names) {
-        source.addImportDeclaration({
-          isTypeOnly: imported.typeOnly,
-          moduleSpecifier: imported.source,
-          namedImports: imported.names
-        });
-      }
-    });
-    //export default class FoobarComponent extends TempleComponent
-    const component = source.addClass({
-      name: this.classname,
-      extends: 'TempleComponent',
-      isDefaultExport: true,
-    });
-    //public static component = ['foo-bar', 'FoobarComponent'];
-    component.addProperty({
-      name: 'component',
-      isStatic: true,
-      initializer: `[ '${this.tagname}', '${this.classname}' ] as [ string, string ]`
-    });
-    //public style()
-    component.addMethod({
-      name: 'styles',
-      returnType: 'string',
-      statements: `return \`${this.styles.join('\n').trim()}\`;`
-    });
-    //public template()
-    component.addMethod({
-      name: 'template',
-      statements: `${this.scripts.length > 0 
-        ? this.scripts.join('\n')
-        //allow scriptless components to use props
-        : (`const props = this.props;`)}
-        return () => ${this.markup.trim()};`
-    });
-
-    if (this._register) {
-      //customElements.define('foo-bar', 'FoobarComponent');
-      if (this._brand.length > 0) {
-        source.addStatements(
-          `customElements.define('${this._brand}-${this.tagname}', ${this.classname});`
-        );
-      } else {
-        source.addStatements(
-          `customElements.define('${this.tagname}', ${this.classname});`
-        );
-      }
-    }
-
-    return source;
   }
 
   /**
