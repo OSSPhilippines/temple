@@ -6,14 +6,9 @@ import emitter from './TempleEmitter';
 import __APP_DATA__ from './data';
 
 export default abstract class TempleComponent extends HTMLElement {
-  //total number of components created
-  protected static _total = 0;
   //name of the component
   public static component: [ string, string ];
 
-  //the id of the component
-  //NOTE: the id is undefined on the server
-  protected _id = 0;
   //whether the component has initiated
   //this is a flag used by signals to check
   //the number of signals that exists
@@ -36,17 +31,13 @@ export default abstract class TempleComponent extends HTMLElement {
   public abstract template(): () => (Element|false)[];
 
   /**
-   * Returns the component's names
+   * Returns the component's metadata
    */
   public get metadata() {
     const [ tagname, classname ] = (
       this.constructor as typeof TempleComponent
     ).component;
-    return {
-      id: this._id,
-      tagname,
-      classname
-    };
+    return { tagname, classname };
   }
 
   /**
@@ -101,7 +92,7 @@ export default abstract class TempleComponent extends HTMLElement {
           properties[name] = decoded;
         } else if (value.startsWith('global:')) {
           const key = value.substring(7);
-          const props = __APP_DATA__.props || {};
+          const props = __APP_DATA__.get('props') || {};
           if (props && typeof props[key] !== 'undefined') {
             properties[name] = props[key];
           }
@@ -171,10 +162,7 @@ export default abstract class TempleComponent extends HTMLElement {
   }
 
   public init(attributes: Hash = {}) {
-    if (!this._id) {
-      TempleDocument.register(this, attributes);
-      this._id = ++TempleComponent._total;
-    }
+    TempleDocument.register(this, attributes);
   }
 
   /**
@@ -189,7 +177,7 @@ export default abstract class TempleComponent extends HTMLElement {
       return;
     }
     //set the current component
-    __APP_DATA__.current = this;
+    __APP_DATA__.set('current', this);
     //get the styles
     const styles = this.styles();
     //get the template
@@ -229,7 +217,7 @@ export default abstract class TempleComponent extends HTMLElement {
       children.forEach(child => this.shadowRoot?.appendChild(child));
     }
     //reset the current component
-    delete __APP_DATA__.current;
+    __APP_DATA__.delete('current');
     this._initiated = true;
     //emit the mounted event
     emitter.emit('mounted', this);
@@ -255,31 +243,12 @@ export default abstract class TempleComponent extends HTMLElement {
    * Sets the initial properties and children
    */
   protected _update() { 
-    //get the attributes natively set using `<input value="foo" />`
-    const attributes: Hash = Object.fromEntries(
-      Array.from(this.attributes).map(
-        attribute => [ attribute.nodeName, attribute.nodeValue ]
-      )
-    );
-    //look for non-string values in the bindings
-    const bindings = __APP_DATA__.bindings || {};
-    //get the data from the bindings
-    const data = bindings[String(this._id)];
-    //if there is data
-    if (typeof data === 'object') {
-      //merge it with the attributes
-      Object.assign(attributes, data);
-    }
     //if children are not set
     if (typeof this._children === 'undefined') {
       this._children = Array.from(this.childNodes || []);
     }
-    //if no children in the attributes
-    if (!attributes.children) {
-      attributes.children = this._children;
-    }
     //settings props will try to trigger a render
-    this.props = { ...this.props, ...attributes};
+    this.props = { ...this.props, children: this._children };
     //only render if not initiated
     if (!this._initiated) {
       this.render();
