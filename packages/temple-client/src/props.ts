@@ -12,7 +12,7 @@ export default function props<
   //if no component
   if (!component) {
     //try getting the current component from global
-    component = data.current || null;
+    component = data.get('current') || null;
   }
 
   if (component) {

@@ -1,20 +1,7 @@
+import type { Property, Observer } from './types';
 import type TempleComponent from './TempleComponent';
 import Exception from './TempleException';
 import data from './data';
-
-//types
-export type Observer = {
-  observed: number,
-  values: { raw: any }[]
-};
-
-export type Property<T = any> = {
-  raw: T,
-  getter(callback: () => any): Property,
-  setter(callback: (value: any) => any): Property,
-  value: T
-
-};
 
 /**
  * Signal registry
@@ -52,7 +39,7 @@ export class SignalRegistry {
         const formatted = methods.setter(value);
         const rerender = SignalRegistry.serialize(formatted) 
           !== SignalRegistry.serialize(property.raw);
-        property.raw = value;
+        property.raw = formatted;
         if (rerender) {
           component.render();
         }
@@ -103,7 +90,7 @@ export default function signal<T = any>(
 ) {
   if (!component) {
     //try getting the current component from global
-    component = data.current || null;
+    component = data.get('current') || null;
   }
   //if still no current component
   if (!component) {
