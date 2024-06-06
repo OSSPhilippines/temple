@@ -1,27 +1,47 @@
-import type { Listenable, EventAction } from '@blanquera/types';
-
-import EventEmitter from '@blanquera/types/dist/EventEmitter';
-
-export class TempleEmitter<Args extends any[]> extends EventEmitter<Args> {
+export class TempleEmitter extends EventTarget {
   /**
-   * Adds a callback to the given event listener
+   * Emits an event
    */
-  on(
-    event: Listenable, 
-    callback: EventAction<Args>, 
-    priority: number = 0
-  ): EventEmitter<Args> {
+  emit<T = any>(event: string, target?: T) {
+    this.dispatchEvent(new CustomEvent<T>(event, { detail: target }));
+    return this;
+  }
+
+  /**
+   * Listens for an event
+   */
+  on(event: string, callback: EventListener) {
     if (event === 'ready') {
-      const next = callback as unknown as Function;
       // see if DOM is already available
       if (document.readyState !== 'loading') {
+        const event = new CustomEvent<undefined>('ready');
         // call on next available tick
-        setTimeout(next, 1);
+        setTimeout(() => callback(event), 1);
         return this;
       }
     }
+    this.addEventListener(event, callback);
+    return this;
+  }
 
-    return super.on(event, callback, priority);
+  /**
+   * Listens for an event once
+   */
+  once(event: string, callback: EventListener) {
+    const unbinder: EventListener = e => {
+      this.unbind(event, unbinder);
+      callback(e);
+    };
+    this.on(event, unbinder);
+    return this;
+  }
+
+  /**
+   * Unbinds an event
+   */
+  unbind(event: string, callback: EventListener) {
+    this.removeEventListener(event, callback);
+    return this;
   }
 }
 

@@ -1,3 +1,4 @@
+import type { TempleEvent } from './types';
 import type TempleComponent from './TempleComponent';
 import TempleDocument from './TempleDocument';
 import TempleElement from './TempleElement';
@@ -23,7 +24,11 @@ const match = (element: Element|ShadowRoot, attribute: string) => {
 
 //bind an attribute to a binder
 function bindAttribute(name: string, bind: AttributeBinder) {
-  TempleEmitter.on('mounted', (element: TempleComponent) => {
+  TempleEmitter.on('mounted', (e: TempleEvent<TempleComponent>) => {
+    //if there is no detail, return
+    if (!e.detail) return;
+    //get the element
+    const element = e.detail;
     //this is called for every listener, 
     //there will be a lot of listeners...
     match(element.shadowRoot || element, name).forEach(bind);
@@ -32,7 +37,11 @@ function bindAttribute(name: string, bind: AttributeBinder) {
 
 //unbind an attribute to a binder
 function unbindAttribute(name: string, bind: AttributeBinder) {
-  TempleEmitter.on('unmounted', (element: TempleComponent) => {
+  TempleEmitter.on('unmounted', (e: TempleEvent<TempleComponent>) => {
+    //if there is no detail, return
+    if (!e.detail) return;
+    //get the element
+    const element = e.detail;
     //this is called for every listener, 
     //there will be a lot of listeners...
     match(element.shadowRoot || element, name).forEach(bind);
@@ -145,6 +154,7 @@ bindAttribute('if', element => {
 ].forEach(event => bindAttribute(event, element => {
   const callback = element.getAttribute(event);
   if (typeof callback === 'function' ) {
+    element.element.removeEventListener(event, callback);
     element.element.addEventListener(event, callback);
   }
 }));
