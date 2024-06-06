@@ -1,6 +1,6 @@
 {
   "name": "@ossph/temple-dev",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Temple developer mode with hot page reload",
   "license": "Apache-2.0",
   "author": "Chris <chris@incept.asia>",

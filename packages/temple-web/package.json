@@ -1,6 +1,6 @@
 {
   "name": "temple-web",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Temple Website",
   "private": true,
   "scripts": {
@@ -8,11 +8,11 @@
     "dev": "nodemon ./src/index.ts"
   },
   "dependencies": {
-    "@ossph/temple": "0.0.11",
+    "@ossph/temple": "0.0.12",
     "express": "4.19.2"
   },
   "devDependencies": {
-    "@ossph/temple-dev": "0.0.11",
+    "@ossph/temple-dev": "0.0.12",
     "@types/express": "4.17.21",
     "@types/node": "20.12.7",
     "nodemon": "3.1.2",

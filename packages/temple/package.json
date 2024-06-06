@@ -1,6 +1,6 @@
 {
   "name": "@ossph/temple",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "The reactive web component template engine.",
   "license": "Apache-2.0",
   "author": "Chris <chris@incept.asia>",
@@ -28,7 +28,7 @@
     "test": "nyc cross-env DATABASE_URL=test ts-mocha tests/*.test.ts"
   },
   "dependencies": {
-    "@ossph/temple-compiler": "0.0.11"
+    "@ossph/temple-compiler": "0.0.12"
   },
   "devDependencies": {
     "@types/chai": "4.3.5",
