@@ -1,0 +1,17 @@
+name: Auto Comment
+on: [issues, pull_request]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        uses: wow-actions/auto-comment@v1.1.2
+        with:
+          GITHUB_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
+          issuesOpened: |
+            👋 @{{ author }}
+            Thank you for raising an issue! Please make sure you have given as much context as possible. Screenshots are appreciated!
+          pullRequestOpened: |
+            👋 @{{ author }}
+            Thank you for raising your pull request. Please make sure you have followed our contributing guidelines. If you haven't done so in your commits, please reference the issue numbers as well as the time you spent on this in the comments below so we can track time. example `fixed button #1001 3h` 

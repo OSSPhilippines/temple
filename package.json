@@ -14,6 +14,7 @@
     "build:loader": "yarn --cwd packages/temple-loader build",
     "build:dev": "yarn --cwd packages/temple-dev build",
     "build:web": "yarn --cwd packages/temple-web build",
+    "test": "yarn test:parser && yarn test:compiler",
     "test:parser": "yarn --cwd packages/temple-parser test",
     "test:compiler": "yarn --cwd packages/temple-compiler test",
     "dev:express": "yarn --cwd examples/with-express dev",
