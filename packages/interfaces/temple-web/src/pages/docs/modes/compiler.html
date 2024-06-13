@@ -1,0 +1,26 @@
+<link rel="import" type="template" href="@/templates/html-head.html" />
+<link rel="import" type="component" href="@/components/panel-layout.html" />
+<style></style>
+<script>
+  //This is ran on both the server and the browser
+  //There is no signal, children prop here because 
+  //this is not a component.
+  //
+  //We also need to becareful with importing browser 
+  //scripts here. You should do that in the <head>
+  //instead.
+  const url = '/docs/modes/compiler';
+  const title = 'Signals - Modes - Documentation - Temple';
+  const description = 'Temple is a template engine hat generates web components and support reactivity.';
+  const show = (e) => {
+    e.detail.target.classList.remove('loading');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark">
+    <panel-layout mount=show class="loading" {url} head left>
+      Compiler
+    </panel-layout>
+  </body>
+</html>

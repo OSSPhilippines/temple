@@ -1,0 +1,10 @@
+{
+  "name": "@ossph/temple-eslint",
+  "version": "0.0.13",
+  "description": "Temple linter",
+  "license": "Apache-2.0",
+  "author": "Chris <chris@incept.asia>",
+  "homepage": "https://github.com/OSSPhilippines/temple",
+  "bugs": "https://github.com/OSSPhilippines/temple/issues",
+  "repository": "OSSPhilippines/temple"
+}

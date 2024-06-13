@@ -1,0 +1,87 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" />
+<style>
+  :host {
+    display: block;
+    font-size: 16px;
+    line-height: 26px;
+  }
+  .snippet {
+    background-color: #101113;
+    color: #ABB2BF;
+    margin: 0;
+    padding: 0;
+  }
+
+  .snippet table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+  }
+  .snippet .hljs-ln-numbers {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    background-color: #040404;
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 2px solid #000000;
+    border-spacing: 0;
+    border-top: 0;
+    color: #CCCCCC;
+    padding: 3px 10px;
+    text-align: center;
+    user-select: none;
+    vertical-align: top;
+  }
+  .snippet .hljs-ln-n:before {
+    content: attr(data-line-number);
+  }
+  .snippet .hljs-ln-code {
+    padding-left: 10px;
+    width: 100%;
+  }
+  .snippet .hljs-punctuation, 
+  .snippet .hljs-tag {
+    color: #A0A0A0;
+  }
+  .snippet .hljs-tag .hljs-attr, 
+  .snippet .hljs-tag .hljs-name {
+    color: #476482;
+  }
+  .snippet .hljs-keyword,
+  .snippet .hljs-attribute {
+    color: #6596CB;
+  }
+  .snippet .hljs-selector-tag {
+    color: #D7BA7D;
+  }
+  .snippet .hljs-deletion, 
+  .snippet .hljs-number, 
+  .snippet .hljs-quote, 
+  .snippet .hljs-selector-class, 
+  .snippet .hljs-selector-id, 
+  .snippet .hljs-string, 
+  .snippet .hljs-template-tag, 
+  .snippet .hljs-type {
+    color: #C3937B;
+  }
+</style>
+<script>
+  import { props } from '@ossph/temple';
+  const { lang = 'html', children, lines } = props();
+  const language = `language-${lang}`;
+
+  const highlight = event => {
+    const code = hljs.highlight(
+      children[0].textContent,
+      { language: lang }
+    ).value;
+    event.detail.target.innerHTML = code;
+    if (lines) {
+      hljs.lineNumbersBlock(event.detail.target);
+    }
+  };
+</script>
+<pre class="snippet"><code class=language mount=highlight></code></pre>

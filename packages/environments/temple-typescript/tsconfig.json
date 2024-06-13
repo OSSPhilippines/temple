@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+		"lib": [ "esnext", "dom", "dom.iterable" ],
+		"target": "esnext",
+		"allowSyntheticDefaultImports": true,
+		"moduleResolution": "bundler",
+    "sourceMap": true,
+		"strict": true,
+		"allowJs": true,
+		"checkJs": true,
+    "paths": {
+      "*": [ "./types/*" ]
+    }
+  },
+  "include": [ "types/**/*" ],
+}

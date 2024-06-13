@@ -1,0 +1,198 @@
+<script>
+  import { props } from '@ossph/temple';
+  const { url, children, head, left, right, foot } = props();
+  const classnames = [ 'panel' ];
+  if (head) {
+    classnames.push('with-head');
+  }
+  if (left) {
+    classnames.push('with-left');
+  }
+  if (right) {
+    classnames.push('with-right');
+  }
+  if (foot) {
+    classnames.push('with-foot');
+  }
+  const classname = classnames.join(' ');
+  const toggle = _ => {
+    document.body.classList.toggle('panel-left-open');
+  };
+</script>
+<section class=classname>
+  <if true=left>
+    <aside class="left panel-left">
+      <header>
+        <img src="/temple/temple-icon.png" alt="Temple Logo" />
+        <h3>Temple</h3>
+        <i class="toggle fas fa-fw fa-chevron-left" click=toggle></i>
+      </header>
+      <nav>
+        <h6>Introduction</h6>
+        <a 
+          class={url === '/docs/' ? 'active': ''} 
+          href="/temple/docs/"
+        >
+          Prologue
+        </a>
+        <a 
+          class={url === '/docs/started' ? 'active': ''} 
+          href="/temple/docs/started"
+        >
+          Getting Started
+        </a>
+        <a 
+          class={url === '/docs/questions' ? 'active': ''} 
+          href="/temple/docs/questions"
+        >
+          Frequent Questions
+        </a>
+        <a 
+          class={url === '/docs/quirks' ? 'active': ''} 
+          href="/temple/docs/quirks"
+        >
+          Quirks
+        </a>
+        <a 
+          class={url === '/docs/contributing' ? 'active': ''} 
+          href="/temple/docs/contributing"
+        >
+          Contributing
+        </a>
+
+        <h6>Temple Modes</h6>
+        <a 
+          class={url === '/docs/modes/engine' ? 'active': ''} 
+          href="/temple/docs/modes/engine"
+        >
+          Template Engine
+        </a>
+        <a 
+          class={url === '/docs/modes/static' ? 'active': ''} 
+          href="/temple/docs/modes/static"
+        >
+          Static Site Generator
+        </a>
+        <a 
+          class={url === '/docs/modes/publisher' ? 'active': ''} 
+          href="/temple/docs/modes/publisher"
+        >
+          Component Publisher
+        </a>
+        <a 
+          class={url === '/docs/modes/compiler' ? 'active': ''} 
+          href="/temple/docs/modes/compiler"
+        >
+          Custom Compiler
+        </a>
+
+        <h6>Temple Syntax</h6>
+        <a 
+          class={url === '/docs/syntax/attributes' ? 'active': ''} 
+          href="/temple/docs/syntax/attributes"
+        >
+          Attributes
+        </a>
+        <a 
+          class={url === '/docs/syntax/conditionals' ? 'active': ''} 
+          href="/temple/docs/syntax/conditionals"
+        >
+          Conditionals
+        </a>
+        <a 
+          class={url === '/docs/syntax/iterations' ? 'active': ''} 
+          href="/temple/docs/syntax/iterations"
+        >
+          Iterations
+        </a>
+        <a 
+          class={url === '/docs/syntax/trycatch' ? 'active': ''} 
+          href="/temple/docs/syntax/trycatch"
+        >
+          Try Catch
+        </a>
+        <a 
+          class={url === '/docs/syntax/directives' ? 'active': ''} 
+          href="/temple/docs/syntax/directives"
+        >
+          Directives
+        </a>
+
+        <h6>State Management</h6>
+        <a 
+          class={url === '/docs/state/props' ? 'active': ''} 
+          href="/temple/docs/state/props"
+        >
+          Props
+        </a>
+        <a 
+          class={url === '/docs/state/signals' ? 'active': ''} 
+          href="/temple/docs/state/signals"
+        >
+          Signals
+        </a>
+        <a 
+          class={url === '/docs/state/shared' ? 'active': ''} 
+          href="/temple/docs/state/shared"
+        >
+          Shared State
+        </a>
+        <a 
+          class={url === '/docs/state/events' ? 'active': ''} 
+          href="/temple/docs/state/events"
+        >
+          Events
+        </a>
+
+        <h6>Web Components</h6>
+        <a 
+          class={url === '/docs/components/templates' ? 'active': ''} 
+          href="/temple/docs/components/templates"
+        >
+          Templates
+        </a>
+        <a 
+          class={url === '/docs/components/web' ? 'active': ''} 
+          href="/temple/docs/components/web"
+        >
+          Components
+        </a>
+      </nav>
+    </aside>
+  </if>
+  <if true=head>
+    <header class="head panel-head">
+      <i class="menu fas fa-fw fa-bars" click=toggle></i>
+      <img src="/temple/temple-icon.png" alt="Temple Logo" />
+      <h3>Temple</h3>
+      <nav>
+        <a href="/temple/docs">Docs</a>
+        <a 
+          class="github" 
+          href="https://github.com/ossPhilippines/frui" 
+          target="_blank"
+        >
+          <i class="fab fa-github"></i>
+        </a>
+        <a 
+          class="npm" 
+          href="https://www.npmjs.com/package/frui"
+          target="_blank"
+        >
+          <i class="fab fa-npm text-white"></i>
+        </a>
+        <a 
+          class="discord" 
+          href="https://discord.gg/open-source-software-ph-905496362982981723"
+          target="_blank"
+        >
+          <i class="fab fa-discord text-white"></i>
+        </a>
+      </nav>
+    </header>
+  </if>
+  <main class="main panel-main">
+    {children}
+    <footer class="foot"></footer>
+  </main>
+</section>

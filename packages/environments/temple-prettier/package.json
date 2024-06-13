@@ -1,0 +1,10 @@
+{
+  "name": "@ossph/temple-prettier",
+  "version": "0.0.13",
+  "description": "Temple made prettier",
+  "license": "Apache-2.0",
+  "author": "Chris <chris@incept.asia>",
+  "homepage": "https://github.com/OSSPhilippines/temple",
+  "bugs": "https://github.com/OSSPhilippines/temple/issues",
+  "repository": "OSSPhilippines/temple"
+}

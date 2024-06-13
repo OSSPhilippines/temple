@@ -1,0 +1,25 @@
+{
+  "name": "@ossph/temple-typescript",
+  "version": "0.0.13",
+  "description": "Typescript support for the Temple markup language.",
+  "license": "Apache-2.0",
+  "author": "Chris <chris@incept.asia>",
+  "homepage": "https://github.com/OSSPhilippines/temple",
+  "bugs": "https://github.com/OSSPhilippines/temple/issues",
+  "repository": "OSSPhilippines/temple",
+  "main": "dist/index.js",
+  "files": [
+    "types.d.ts",
+    "LICENSE",
+    "README.md",
+    "tsconfig.json"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/node": "20.11.16"
+  }
+}

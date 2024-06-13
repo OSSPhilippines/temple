@@ -1,0 +1,51 @@
+<link rel="import" type="template" href="@/templates/html-head.html" />
+<link rel="import" type="component" href="@/components/code-snippet.html" />
+<link rel="import" type="component" href="@/components/panel-layout.html" />
+<style></style>
+<script>
+  //This is ran on both the server and the browser
+  //There is no signal, children prop here because 
+  //this is not a component.
+  //
+  //We also need to becareful with importing browser 
+  //scripts here. You should do that in the <head>
+  //instead.
+  import { signal } from '@ossph/temple';
+  const url = '/docs/started';
+  const title = 'Getting Started - Documentation - Temple';
+  const description = 'Temple is a template engine hat generates web components and support reactivity.';
+  const show = (e) => {
+    e.detail.target.classList.remove('loading');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark">
+    <panel-layout mount=show class="loading" {url} head left>
+      <h1>Getting Started</h1>
+      <p>
+        To use Temple in your project, run one of the following 
+        commands in your terminal:
+      </p>
+      <sl-tab-group>
+        <sl-tab slot="nav" panel="npm">
+          <i class="fab fa-npm"></i>
+        </sl-tab>
+        <sl-tab slot="nav" panel="yarn">
+          <i class="fab fa-yarn"></i>
+        </sl-tab>
+      
+        <sl-tab-panel name="npm">
+          <code-snippet>
+            npm install @ossph/temple
+          </code-snippet>
+        </sl-tab-panel>
+        <sl-tab-panel name="yarn">
+          <code-snippet>
+            yarn add @ossph/temple
+          </code-snippet>
+        </sl-tab-panel>
+      </sl-tab-group>
+    </panel-layout>
+  </body>
+</html>

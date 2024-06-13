@@ -2,18 +2,27 @@
   "private": true,
   "workspaces": [
     "examples/*",
-    "packages/*"
+    "packages/core/*",
+    "packages/environments/*",
+    "packages/interfaces/*",
+    "packages/plugins/*"
+  ],
+  "nohoist": [
+    "packages/environments/*"
   ],
   "scripts": {
-    "build:packages": "yarn build:server && yarn build:client && yarn build:parser && yarn build:compiler && yarn build:temple && yarn build:loader && yarn build:dev",
-    "build:temple": "yarn --cwd packages/temple build",
-    "build:parser": "yarn --cwd packages/temple-parser build",
-    "build:compiler": "yarn --cwd packages/temple-compiler build",
-    "build:client": "yarn --cwd packages/temple-client build",
-    "build:server": "yarn --cwd packages/temple-server build",
-    "build:loader": "yarn --cwd packages/temple-loader build",
-    "build:dev": "yarn --cwd packages/temple-dev build",
-    "build:web": "yarn --cwd packages/temple-web build",
+    "build:packages": "yarn build:core && yarn build:env && yarn build:plugins",
+    "build:core": "yarn build:core:server && yarn build:core:client && yarn build:core:parser && yarn build:core:compiler && yarn build:core:temple",
+    "build:core:parser": "yarn --cwd packages/core/temple-parser build",
+    "build:core:compiler": "yarn --cwd packages/core/temple-compiler build",
+    "build:core:client": "yarn --cwd packages/core/temple-client build",
+    "build:core:server": "yarn --cwd packages/core/temple-server build",
+    "build:core:temple": "yarn --cwd packages/core/temple build",
+    "build:plugins": "yarn build:plugins:loader",
+    "build:plugins:loader": "yarn --cwd packages/plugins/temple-loader build",
+    "build:env": "yarn build:env:dev",
+    "build:env:dev": "yarn --cwd packages/environments/-dev build",
+    "build:env:web": "yarn --cwd packages/environments/temple-web build",
     "test": "yarn test:parser && yarn test:compiler",
     "test:parser": "yarn --cwd packages/temple-parser test",
     "test:compiler": "yarn --cwd packages/temple-compiler test",
