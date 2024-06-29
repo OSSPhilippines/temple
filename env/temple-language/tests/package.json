@@ -1,0 +1,15 @@
+{
+  "name": "temple-language-tests",
+  "displayName": "Temple Language",
+  "description": "Adds syntax highlighting, formatting, auto-completion, jump-to-definition and linting for a custom.",
+  "version": "0.0.13",
+  "license": "MIT",
+  "publisher": "ossph",
+  "main": "./client",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "vscode-languageclient": "9.0.1"
+  }
+}

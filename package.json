@@ -2,30 +2,30 @@
   "private": true,
   "workspaces": [
     "examples/*",
-    "packages/core/*",
-    "packages/environments/*",
-    "packages/interfaces/*",
-    "packages/plugins/*"
-  ],
-  "nohoist": [
-    "packages/environments/*"
+    "core/*",
+    "env/*",
+    "interfaces/*",
+    "plugins/*",
+    "labs/*"
   ],
   "scripts": {
     "build:packages": "yarn build:core && yarn build:env && yarn build:plugins",
     "build:core": "yarn build:core:server && yarn build:core:client && yarn build:core:parser && yarn build:core:compiler && yarn build:core:temple",
-    "build:core:parser": "yarn --cwd packages/core/temple-parser build",
-    "build:core:compiler": "yarn --cwd packages/core/temple-compiler build",
-    "build:core:client": "yarn --cwd packages/core/temple-client build",
-    "build:core:server": "yarn --cwd packages/core/temple-server build",
-    "build:core:temple": "yarn --cwd packages/core/temple build",
+    "build:core:parser": "yarn --cwd core/temple-parser build",
+    "build:core:compiler": "yarn --cwd core/temple-compiler build",
+    "build:core:client": "yarn --cwd core/temple-client build",
+    "build:core:server": "yarn --cwd core/temple-server build",
+    "build:core:temple": "yarn --cwd core/temple build",
     "build:plugins": "yarn build:plugins:loader",
-    "build:plugins:loader": "yarn --cwd packages/plugins/temple-loader build",
+    "build:plugins:loader": "yarn --cwd plugins/temple-loader build",
     "build:env": "yarn build:env:dev",
-    "build:env:dev": "yarn --cwd packages/environments/-dev build",
-    "build:env:web": "yarn --cwd packages/environments/temple-web build",
+    "build:env:dev": "yarn --cwd env/temple-develop build",
+    "build:env:web": "yarn --cwd env/temple-web build",
+    "build:env:langugage": "yarn --cwd env/temple-language build",
     "test": "yarn test:parser && yarn test:compiler",
-    "test:parser": "yarn --cwd packages/temple-parser test",
-    "test:compiler": "yarn --cwd packages/temple-compiler test",
+    "test:parser": "yarn --cwd core/temple-parser test",
+    "test:compiler": "yarn --cwd core/temple-compiler test",
+    "test:language": "yarn --cwd env/temple-language test",
     "dev:express": "yarn --cwd examples/with-express dev",
     "dev:fastify": "yarn --cwd examples/with-fastify dev",
     "dev:koa": "yarn --cwd examples/with-koa dev",
@@ -33,7 +33,7 @@
     "dev:restify": "yarn --cwd examples/with-restify dev",
     "dev:hapi": "yarn --cwd examples/with-hapi dev",
     "dev:webpack": "yarn --cwd examples/with-webpack dev",
-    "dev:web": "yarn --cwd packages/temple-web dev"
+    "dev:web": "yarn --cwd temple-web dev"
   },
   "devDependencies": {
     "npm-run-all": "4.1.5"

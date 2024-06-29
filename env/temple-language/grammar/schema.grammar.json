@@ -1,0 +1,324 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Custom Language",
+  "scopeName": "source.custom",
+  "fileTypes": [ "custom" ],
+  "patterns": [
+		{
+      "include": "#block_plugin"
+    },
+    {
+      "include": "#block_use"
+    },
+		{
+      "include": "#block_enum"
+    },
+		{
+      "include": "#block_prop"
+    },
+		{
+      "include": "#block_type"
+    },
+		{
+      "include": "#block_model"
+    },
+    {
+      "include": "#comment"
+    },
+		{
+      "include": "#attribute"
+    },
+		{
+      "include": "#attribute_function"
+    },
+		{
+			"include": "#null"
+		},
+		{
+			"include": "#boolean"
+		},
+		{
+			"include": "#number"
+		},
+		{
+			"include": "#string"
+		},
+		{
+			"include": "#type"
+		}
+  ],
+  "repository": {
+    "punctuation": {
+      "patterns": [
+        {
+					"name": "punctuation.definition.idea", 
+					"match": "[\\{\\}\\[\\]\\(\\)]"
+				}
+      ]
+    },
+    "comment": {
+      "begin": "//",
+      "end": "$\\n?",
+      "name": "comment.idea"
+    },
+    "null": {
+      "match": "\\bnull\\b",
+      "name": "constant.language.null.idea"
+    },
+    "boolean": {
+      "match": "\\b(true|false)\\b",
+      "name": "constant.language.boolean.idea"
+    },
+    "number": {
+      "match": "((0(x|X)[0-9a-fA-F]*)|(\\+|-)?\\b(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)([LlFfUuDdg]|UL|ul)?\\b",
+      "name": "constant.numeric.idea"
+    },
+    "string": {
+      "begin": "\"",
+      "beginCaptures": {
+        "0": {
+          "name": "string.quoted.double.start.idea"
+        }
+      },
+      "end": "\"",
+      "endCaptures": {
+        "0": {
+          "name": "string.quoted.double.end.idea"
+        }
+      },
+      "patterns": [
+        {
+          "match": "([\\w\\-\\/\\._\\\\%@:\\?=]+)",
+          "name": "string.quoted.double.idea"
+        }
+      ],
+      "name": "unnamed"
+    },
+		"type": {
+      "patterns": [
+        {
+          "match": "\\b([A-Z][a-zA-Z0-9_]*)\\b",
+          "name": "entity.name.type.keyword.idea"
+        }
+      ]
+    },
+    "functional": {
+      "name": "source.idea.functional",
+      "begin": "(\\w+)(\\()",
+      "beginCaptures": {
+        "1": {
+          "name": "support.function.functional.idea"
+        },
+        "2": {
+          "name": "punctuation.definition.idea"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#array"
+        },
+        {
+          "include": "#object"
+        },
+        {
+          "include": "#functional"
+        },
+        {
+          "include": "#null"
+        },
+        {
+          "include": "#boolean"
+        },
+        {
+          "include": "#number"
+        },
+        {
+          "include": "#string"
+        },
+        {
+          "include": "#type"
+        }
+      ],
+      "end": "\\)",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.idea"
+        }
+      }
+    },
+    "array": {
+      "name": "source.idea.array",
+      "begin": "\\[",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.idea"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#value"
+        }
+      ],
+      "end": "\\]",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.idea"
+        }
+      }
+    },
+    "object": {
+      "name": "source.idea.object",
+      "begin": "\\{",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.idea"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#value"
+        }
+      ],
+      "end": "\\}",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.idea"
+        }
+      }
+    },
+    "value": {
+      "name": "source.idea.value",
+      "patterns": [
+        {
+          "include": "#array"
+        },
+        {
+          "include": "#object"
+        },
+        {
+          "include": "#functional"
+        },
+        {
+          "include": "#null"
+        },
+        {
+          "include": "#boolean"
+        },
+        {
+          "include": "#number"
+        },
+        {
+          "include": "#string"
+        },
+        {
+          "include": "#type"
+        }
+      ]
+    },
+    "attribute_function": {
+      "name": "source.idea.attribute.with_arguments",
+      "begin": "(@@?[\\w\\.]+)(\\()",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.name.function.attribute.idea"
+        },
+        "2": {
+          "name": "punctuation.definition.idea"
+        }
+      },
+      "end": "\\)",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.idea"
+        }
+      }
+    },
+    "attribute": {
+      "name": "source.idea.attribute",
+      "match": "(@@?[\\w\\.]+)",
+      "captures": {
+        "1": {
+          "name": "entity.name.function.attribute.idea"
+        }
+      }
+    },
+		"block_plugin": {
+      "name": "source.idea.embedded.source",
+			"begin": "^\\s*(plugin)\\s+(\"[^\"]*\")",
+			"beginCaptures": {
+        "1": {
+          "name": "storage.type.plugin.idea"
+        },
+        "2": {
+          "name": "string.quoted.double.name.plugin.idea"
+        }
+      },
+			"end": "\\s+"
+    },
+		"block_use": {
+      "name": "source.idea.embedded.source",
+			"begin": "^\\s*(use)\\s+(\"[^\"]*\")",
+			"beginCaptures": {
+        "1": {
+          "name": "storage.type.plugin.idea"
+        },
+        "2": {
+          "name": "string.quoted.double.name.plugin.idea"
+        }
+      },
+			"end": "\\s+"
+    },
+		"block_enum": {
+      "name": "source.idea.embedded.source",
+			"begin": "^\\s*(enum)\\s+([A-Za-z][\\w]*)",
+			"beginCaptures": {
+        "1": {
+          "name": "storage.type.keyword.idea"
+        },
+        "2": {
+          "name": "entity.name.type.keyword.idea"
+        }
+      },
+			"end": "\\s+"
+    },
+		"block_prop": {
+      "name": "source.idea.embedded.source",
+			"begin": "^\\s*(prop)\\s+([A-Za-z][\\w]*)",
+			"beginCaptures": {
+        "1": {
+          "name": "storage.type.keyword.idea"
+        },
+        "2": {
+          "name": "entity.name.type.keyword.idea"
+        }
+      },
+			"end": "\\s+"
+    },
+		"block_type": {
+      "name": "source.idea.embedded.source",
+			"begin": "^\\s*(type)\\s+([A-Za-z][\\w]*)",
+			"beginCaptures": {
+        "1": {
+          "name": "storage.type.keyword.idea"
+        },
+        "2": {
+          "name": "entity.name.type.keyword.idea"
+        }
+      },
+			"end": "\\s+"
+    },
+		"block_model": {
+      "name": "source.idea.embedded.source",
+			"begin": "^\\s*(model)\\s+([A-Za-z][\\w]*)",
+			"beginCaptures": {
+        "1": {
+          "name": "storage.type.keyword.idea"
+        },
+        "2": {
+          "name": "entity.name.type.keyword.idea"
+        }
+      },
+			"end": "\\s+"
+    }
+  }
+}

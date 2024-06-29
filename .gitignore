@@ -132,3 +132,4 @@ dist
 archives
 .temple
 .DS_Store
+.build

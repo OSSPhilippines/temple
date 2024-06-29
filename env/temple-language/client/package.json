@@ -1,0 +1,12 @@
+{
+  "name": "temple-language-client",
+  "description": "Adds syntax highlighting, formatting, auto-completion, jump-to-definition and linting for a custom.",
+  "version": "0.0.13",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "vscode-languageclient": "9.0.1"
+  }
+}
