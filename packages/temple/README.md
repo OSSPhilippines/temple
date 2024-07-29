@@ -15,9 +15,9 @@ import temple from '@ossph/temple/server';
 //make a template engine
 const engine = temple({...options...});
 //load a Temple file
-const render = await engine.load('./page.html');
+const build = await engine.import('./page.html');
 //render final HTML
-const results = render({...props...});
+const results = build.document.render({...props...});
 ```
 
 ### Document Options

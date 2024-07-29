@@ -1,6 +1,6 @@
 {
   "name": "@ossph/temple",
-  "version": "0.0.12",
+  "version": "0.0.15",
   "description": "The reactive web component template engine.",
   "license": "Apache-2.0",
   "author": "Chris <chris@incept.asia>",
@@ -25,21 +25,22 @@
   ],
   "scripts": {
     "build": "tsc",
-    "test": "nyc cross-env DATABASE_URL=test ts-mocha tests/*.test.ts"
+    "test": "ts-mocha tests/*.test.ts"
   },
   "dependencies": {
-    "@ossph/temple-compiler": "0.0.12"
+    "@blanquera/types": "1.0.2",
+    "esbuild": "0.23.0",
+    "ts-morph": "23.0.0",
+    "typescript": "5.5.4"
   },
   "devDependencies": {
     "@types/chai": "4.3.5",
-    "@types/deep-equal-in-any-order": "1.0.1",
     "@types/expect": "24.3.0",
     "@types/mocha": "10.0.1",
-    "@types/node": "20.11.16",
-    "chai": "4.3.7",
-    "deep-equal-in-any-order": "2.0.6",
+    "@types/node": "22.0.0",
+    "chai": "5.1.1",
     "mocha": "10.2.0",
-    "nyc": "15.1.0",
+    "nyc": "17.0.0",
     "ts-mocha": "10.0.0",
     "ts-node": "10.9.2"
   }
