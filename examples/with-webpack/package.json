@@ -5,11 +5,11 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --mode development",
-    "build": "webpack"
+    "build": "webpack --mode production"
   },
   "dependencies": {
-    "@ossph/temple": "0.0.12",
-    "@ossph/temple-loader": "0.0.12"
+    "@ossph/temple": "0.0.15",
+    "@ossph/temple-loader": "0.0.15"
   },
   "devDependencies": {
     "@types/node": "20.12.7",
