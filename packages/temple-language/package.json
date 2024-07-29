@@ -1,0 +1,109 @@
+{
+  "name": "temple-language",
+  "version": "0.0.15",
+  "description": "Adds syntax highlighting, formatting, auto-completion, jump-to-definition and linting for .tml files.",
+  "license": "Apache-2.0",
+	"icon": "temple-logo.png",
+  "author": "Chris <chris@incept.asia>",
+  "publisher": "ossph",
+  "homepage": "https://github.com/OSSPhilippines/temple",
+  "bugs": "https://github.com/OSSPhilippines/temple/issues",
+  "repository": "OSSPhilippines/temple",
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "multi-root ready"
+  ],
+  "activationEvents": [],
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Basic configuration",
+      "properties": {
+        "languageServerExample.maxNumberOfProblems": {
+          "scope": "resource",
+          "type": "number",
+          "default": 100,
+          "description": "Controls the maximum number of problems produced by the server."
+        },
+        "languageServerExample.trace.server": {
+          "scope": "window",
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Traces the communication between VS Code and the language server."
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "tml",
+        "aliases": [ "Temple", "tml" ],
+        "icon": {
+          "light": "./temple-icon.png",
+          "dark": "./temple-icon.png"
+        },
+        "extensions": [ ".tml" ],
+        "configuration": "./grammar/schema.language.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "tml",
+        "scopeName": "source.tml",
+        "path": "./grammar/schema.grammar.json",
+        "embeddedLanguages": {
+          "text.html.basic": "html",
+          "text.html.markdown": "markdown",
+          "source.css": "css",
+          "source.js": "javascript",
+          "source.ts": "typescript"
+        },
+        "unbalancedBracketScopes": [
+          "keyword.operator.relational",
+          "storage.type.function.arrow",
+          "keyword.operator.bitwise.shift",
+          "meta.brace.angle",
+          "punctuation.definition.tag"
+        ]
+      }
+    ]
+  },
+  "main": "./client/out/index.js",
+  "scripts": {
+    "build": "yarn build:client && yarn build:server && yarn build:tests",
+    "build:client": "yarn --cwd client build",
+    "build:server": "yarn --cwd server build",
+    "build:tests": "yarn --cwd tests build",
+    "test": "yarn build && sh tests/boot.sh"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+	},
+  "dependencies": {
+    "typescript": "5.5.4",
+    "vscode-languageclient": "9.0.1",
+    "vscode-languageserver": "8.1.0",
+    "vscode-languageserver-textdocument": "1.0.8",
+    "vscode-uri": "3.0.8"
+  },
+  "devDependencies": {
+    "@types/mocha": "10.0.1",
+    "@types/node": "22.0.0",
+    "@types/vscode": "1.90.0",
+    "@typescript-eslint/eslint-plugin": "5.62.0",
+    "@typescript-eslint/parser": "5.61.0",
+    "@vscode/test-electron": "2.4.0",
+    "cross-env": "7.0.3",
+    "prettier": "3.3.1",
+    "eslint": "8.57.0",
+    "mocha": "10.2.0",
+    "ts-mocha": "10.0.0",
+    "ts-node": "10.9.2"
+  }
+}

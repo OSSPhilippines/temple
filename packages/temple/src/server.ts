@@ -19,7 +19,9 @@ import {
 } from './directives/TryCatchDirective';
 
 import Component from './component/Component';
-import Exception from './component/Exception';
+import ComponentException from './component/Exception';
+import DirectiveException from './directives/Exception';
+import TempleException from './server/TempleException';
 import Lexer from './component/Lexer';
 import Parser from './component/Parser';
 import Tokenizer from './component/Tokenizer';
@@ -57,10 +59,12 @@ export {
   TryDirective, 
   CatchDirective,
   Component,
+  ComponentException,
   ComponentTranspiler,
+  DirectiveException,
   DocumentBuilder,
   DocumentTranspiler,
-  Exception,
+  TempleException,
   FileLoader,
   Lexer,
   Parser,
