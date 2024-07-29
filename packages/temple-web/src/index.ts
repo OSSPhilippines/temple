@@ -1,31 +1,18 @@
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
-import temple from '@ossph/temple/server';
-import { dev, inject } from '@ossph/temple-dev';
-
-const engine = temple({ 
-  cwd: __dirname, 
-  minify: false,
-  build: '../.temple',
-  brand: '' 
-});
+import { dev } from '@ossph/temple-dev';
+import engine from '@ossph/temple-express';
 
 //setup an HTTP server
 const app = express();
 //let's use express' template engine feature
-app.engine(
-  'html',
-  async (
-    filePath: string,
-    options: Record<string, any>,
-    callback: (err: Error | null, results: string | undefined) => void,
-  ) => {
-    const { settings, _locals, cache, ...props } = options;
-    const render = await engine.load(filePath);
-    callback(null, inject(render(props)));
-  },
-);
+app.engine('html', engine({ 
+  cwd: __dirname, 
+  minify: false,
+  build: '../.temple',
+  brand: '' 
+}));
 //set the view engine to temple
 app.set('views', path.join(__dirname, 'pages'));
 app.set('view engine', 'html');

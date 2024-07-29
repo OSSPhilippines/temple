@@ -1,7 +1,7 @@
-<link rel="import" type="template" href="@/templates/html-head.html" />
-<link rel="import" type="template" href="@/templates/panel-head.html" />
-<link rel="import" type="template" href="@/templates/panel-left.html" />
-<link rel="import" type="component" href="@/components/panel-main.html" />
+<link rel="import" type="template" href="@/templates/html-head.tml" />
+<link rel="import" type="template" href="@/templates/panel-head.tml" />
+<link rel="import" type="template" href="@/templates/panel-left.tml" />
+<link rel="import" type="component" href="@/components/panel-main.tml" />
 <style>
   body {
     font-family: Arial, Helvetica, sans-serif;

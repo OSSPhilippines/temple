@@ -1,11 +1,11 @@
-<link rel="import" type="template" href="@/templates/html-head.html" />
-<link rel="import" type="template" href="@/templates/panel-head.html" />
-<link rel="import" type="component" href="@/components/panel-main.html" />
-<link rel="import" type="component" href="@/components/tui-button.html" />
-<link rel="import" type="component" href="@/components/code-snippet.html" />
-<link rel="import" type="component" href="@/components/code-preview.html" />
-<link rel="import" type="component" href="@/components/window-app.html" />
-<link rel="import" type="component" href="@/components/tweet-box.html" />
+<link rel="import" type="template" href="@/templates/html-head.tml" />
+<link rel="import" type="template" href="@/templates/panel-head.tml" />
+<link rel="import" type="component" href="@/components/panel-main.tml" />
+<link rel="import" type="component" href="@/components/tui-button.tml" />
+<link rel="import" type="component" href="@/components/code-snippet.tml" />
+<link rel="import" type="component" href="@/components/code-preview.tml" />
+<link rel="import" type="component" href="@/components/window-app.tml" />
+<link rel="import" type="component" href="@/components/tweet-box.tml" />
 <style>
   body {
     font-family: Arial, Helvetica, sans-serif;
