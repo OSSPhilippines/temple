@@ -220,9 +220,15 @@ export default class Transpiler extends ComponentTranspiler {
       scripts, 
       ast 
     } = this._component;
-    const components = this._component.components
-      .filter(component => component.type === 'component')
-      .filter(component => !!component.token);
+    //components and templates
+    const partials = this._component.components.filter(
+      //only components with tokens (all sub-components have this)
+      component => !!component.token
+    );
+    //only components (vs templates)
+    const components = partials.filter(
+      component => component.type === 'component'
+    );
     //create a new source file
     const { source } = this._createSourceFile('client.ts');
     //import type { Hash } from '@ossph/temple/client';
@@ -286,7 +292,7 @@ export default class Transpiler extends ComponentTranspiler {
       //now serialize the props
       //this is predicting the order rendered on the server
       //with the order determined by doc.body.querySelectorAll
-      const __BINDINGS__: Record<string, Record<string, any>> = ${this._bindings(ast.markup, components)};
+      const __BINDINGS__: Record<string, Record<string, any>> = ${this._bindings(ast.markup, partials)};
       //loop through the initial elements before js manipulation
       for (const element of document.body.querySelectorAll('*')) {
         //pull the attributes from the rendered HTML
@@ -400,7 +406,7 @@ export default class Transpiler extends ComponentTranspiler {
       const child = components.find(
         component => component.tagname === token.name
       );
-      //we only hydrate elements
+      //we only hydrate elements and components
       if (child && child.type === 'template') {
         expression += this._bindings(
           child.ast.markup, 
