@@ -14,8 +14,7 @@ import LanguageServer, {
   TextDocumentSyncKind
 } from './language/LanguageServer';
 
-import TempleParser from '@ossph/temple-parser/dist/TempleParser';
-import ParserException from '@ossph/temple-parser/dist/ParserException';
+import { ComponentException, Tokenizer } from '@ossph/temple/compiler';
 
 // - validate example usage
 async function validate(document: TextDocument) {
@@ -26,9 +25,9 @@ async function validate(document: TextDocument) {
 
 	const diagnostics: Diagnostic[] = [];
 	try {
-		TempleParser.parse(text);
+		Tokenizer.tokenize(text);
 	} catch (e) {
-		const error = e as ParserException;
+		const error = e as ComponentException;
 		const diagnostic: Diagnostic = {
 			severity: DiagnosticSeverity.Error,
 			message: error.message,
