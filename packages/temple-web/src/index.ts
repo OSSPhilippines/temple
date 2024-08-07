@@ -1,21 +1,20 @@
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
-import { dev } from '@ossph/temple-dev';
+import { dev, inject } from '@ossph/temple-dev';
 import engine from '@ossph/temple-express';
 
 //setup an HTTP server
 const app = express();
 //let's use express' template engine feature
-app.engine('html', engine({ 
+app.engine('tml', engine({ 
   cwd: __dirname, 
   minify: false,
-  build: '../.temple',
   brand: '' 
-}));
+}, inject));
 //set the view engine to temple
 app.set('views', path.join(__dirname, 'pages'));
-app.set('view engine', 'html');
+app.set('view engine', 'tml');
 
 //open public folder
 app.use('/temple', express.static('public'));
@@ -31,14 +30,14 @@ app.get('/temple/**', (req, res) => {
     res.type('text/html');
     return res.render('index', props);
   }
-  //try templates/app.html
-  let template = path.join(__dirname, 'pages', route + '.html');
+  //try templates/app.tml
+  let template = path.join(__dirname, 'pages', route + '.tml');
   if (fs.existsSync(template)) {
     res.type('text/html');
     return res.render(route, props);
   }
-  //try templates/app/index.html
-  template = path.join(__dirname, 'pages', route, 'index.html');
+  //try templates/app/index.tml
+  template = path.join(__dirname, 'pages', route, 'index.tml');
   if (fs.existsSync(template)) {
     res.type('text/html');
     return res.render(`${route}/index`, props);

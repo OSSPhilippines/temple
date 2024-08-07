@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { globSync as glob } from 'fast-glob';
-import temple from '@ossph/temple/server';
+import temple from '@ossph/temple/compiler';
 
 const output = path.resolve(__dirname, '../../../docs');
 const engine = temple({ cwd: __dirname });
