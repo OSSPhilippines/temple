@@ -9,7 +9,7 @@ import {
   Component, 
   FileLoader,
   toJS
-} from '@ossph/temple/server';
+} from '@ossph/temple/compiler';
 
 const componentLoader: LoaderFunction = function () {
   const self = this as unknown as WebpackLoader;
