@@ -12,7 +12,7 @@
     "@ossph/temple-loader": "0.0.15"
   },
   "devDependencies": {
-    "@types/node": "22.0.0",
+    "@types/node": "22.1.0",
     "html-webpack-plugin": "5.6.0",
     "webpack-dev-server": "5.0.4",
     "ts-loader": "9.5.1",

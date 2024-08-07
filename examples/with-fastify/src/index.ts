@@ -1,7 +1,7 @@
 import path from 'path';
 import fastify from 'fastify';
 import fstatic from '@fastify/static';
-import temple from '@ossph/temple/server';
+import temple from '@ossph/temple/compiler';
 
 const app = fastify({ logger: true });
 
@@ -9,11 +9,11 @@ app.register(fstatic, {
   root: path.join(path.dirname(__dirname), 'public')
 })
 
-const engine = temple({ cwd: __dirname });
+const compiler = temple({ cwd: __dirname });
 
 app.get('/', async (req, res) => {
-  const render = await engine.load('./templates/page.tml');
-  const results = render({
+  const { document } = await compiler.import('./templates/page.tml');
+  const results = document.render({
     title: 'Temple',
     description: 'Edit this file to change the content of the page.',
     start: 0,

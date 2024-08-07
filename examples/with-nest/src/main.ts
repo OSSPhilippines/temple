@@ -2,7 +2,7 @@ import type { NestExpressApplication } from '@nestjs/platform-express';
 import * as path from 'path';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import temple from '@ossph/temple/server';
+import temple from '@ossph/temple/compiler';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -10,7 +10,7 @@ async function bootstrap() {
   app.useStaticAssets(path.join(cwd, 'public'));
   app.setBaseViewsDir(path.join(cwd, 'templates'));
 
-  const engine = temple({ cwd });
+  const compiler = temple({ cwd });
 
   app.engine(
     'tml',
@@ -19,8 +19,8 @@ async function bootstrap() {
       options: Record<string, any>,
       callback: (err: Error | null, results: string | undefined) => void,
     ) => {
-      const render = await engine.load(filePath);
-      const results = render(options);
+      const { document } = await compiler.import(filePath);
+      const results = document.render(options);
       callback(null, results);
     },
   );

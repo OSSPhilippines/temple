@@ -2,15 +2,15 @@ import path from 'path';
 import Koa from 'koa';
 import Router from 'koa-router';
 import serve from 'koa-static';
-import temple from '@ossph/temple/server';
+import temple from '@ossph/temple/compiler';
 const app = new Koa();
 
-const engine = temple({ cwd: __dirname });
+const compiler = temple({ cwd: __dirname });
 
 const router = new Router();
 router.get('/', async (ctx, next) => {
-  const render = await engine.load('./templates/page.tml');
-  ctx.body = render({
+  const { document } = await compiler.import('./templates/page.tml');
+  ctx.body = document.render({
     title: 'Temple',
     description: 'Edit this file to change the content of the page.',
     start: 0,

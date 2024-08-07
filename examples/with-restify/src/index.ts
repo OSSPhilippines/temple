@@ -1,16 +1,16 @@
 import path from 'path';
 import restify from 'restify';
-import temple from '@ossph/temple/server';
+import temple from '@ossph/temple/compiler';
 
 const cwd = path.dirname(__dirname);
 
 //general options for temple
-const engine = temple({ cwd: __dirname });
+const compiler = temple({ cwd: __dirname });
 
 var server = restify.createServer();
 server.get('/', async (req, res, next) => {
-  const render = await engine.load('./templates/page.tml');
-  const results = render({
+  const { document } = await compiler.import('./templates/page.tml');
+  const results = document.render({
     title: 'Temple',
     description: 'Edit this file to change the content of the page.',
     start: 0,
