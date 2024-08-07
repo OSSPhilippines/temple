@@ -17,21 +17,21 @@ $ npm -i @ossph/temple-dev
 
 ```js
 import express from 'express';
-import temple from '@ossph/temple/server';
+import temple from '@ossph/temple/compiler';
 import { dev, inject } from '@ossph/temple-dev';
 
 //setup a template engine
-const engine = temple({ cwd: __dirname });
+const compiler = temple({ cwd: __dirname });
 //setup an HTTP server
 const app = express();
 //attach the dev middleware
 app.use(dev({ cwd: __dirname }));
 
 app.get('/', async (req, res) => {
-  const render = await engine.load('./templates/page.tml');
+  const { document } = await compiler.import('./templates/page.tml');
   //here we are going to inject the dev 
   //script needed to listen to the server
-  res.send(inject(render()));
+  res.send(inject(document.render()));
 });
 
 app.listen(3000);

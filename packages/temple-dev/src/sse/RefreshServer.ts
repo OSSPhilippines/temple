@@ -4,7 +4,7 @@ import { ServerOptions, OptionIgnore, Request, Response } from './types';
 import path from 'path';
 import chokidar from 'chokidar';
 
-const extensions = [ '.html', '.ts', '.js', '.json', '.css' ];
+const extensions = [ '.tml', '.ts', '.js', '.json', '.css' ];
 
 /**
  * Socket server to be used in node

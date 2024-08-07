@@ -7,7 +7,7 @@ import path from 'path';
 import ws from 'ws';
 import chokidar from 'chokidar';
 
-const extensions = [ '.html', '.ts', '.js', '.json', '.css' ];
+const extensions = [ '.tml', '.ts', '.js', '.json', '.css' ];
 
 /**
  * Socket server to be used in node
