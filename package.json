@@ -5,10 +5,9 @@
     "packages/*"
   ],
   "scripts": {
-    "build:packages": "yarn build:temple && yarn build:esbuild && yarn build:rollup && yarn build:loader && yarn build:dev && yarn build:web",
+    "build:packages": "yarn build:temple && yarn build:esbuild && yarn build:loader && yarn build:dev && yarn build:web",
     "build:temple": "yarn --cwd packages/temple build",
     "build:esbuild": "yarn --cwd packages/temple-esbuild build",
-    "build:rollup": "yarn --cwd packages/temple-rollup build",
     "build:loader": "yarn --cwd packages/temple-loader build",
     "build:express": "yarn --cwd packages/temple-express build",
     "build:dev": "yarn --cwd packages/temple-dev build",
