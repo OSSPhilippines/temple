@@ -10,7 +10,7 @@ export default class TempleElement {
   /**
    * Converts the markup to HTML
    */
-  protected static render(markup: Node[]) {
+  public static render(markup: Node[]) {
     return markup.map(child => child.toString()).join('');
   }
 

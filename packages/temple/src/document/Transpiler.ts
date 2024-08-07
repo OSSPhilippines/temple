@@ -38,9 +38,9 @@ export default class Transpiler extends ComponentTranspiler {
     //  TempleElement, 
     //  TempleDocument, 
     //  TempleException 
-    //} from '@ossph/temple-server';
+    //} from '@ossph/temple/server';
     source.addImportDeclaration({
-      moduleSpecifier: '@ossph/temple-server',
+      moduleSpecifier: '@ossph/temple/server',
       namedImports: [
         'data as __APP_DATA__',
         'TempleElement',  
@@ -52,9 +52,9 @@ export default class Transpiler extends ComponentTranspiler {
     imports.forEach(imported => {
       const specifier = imported.source
         //replace client with server
-        .replace('@ossph/temple-client', '@ossph/temple-server')
+        .replace('@ossph/temple/client', '@ossph/temple/server')
         //replace client with server
-        .replace('@ossph/temple', '@ossph/temple-server');
+        .replace('@ossph/temple/client', '@ossph/temple/server');
       if (imported.default && imported.names) {
         source.addImportDeclaration({
           isTypeOnly: imported.typeOnly,
@@ -225,7 +225,15 @@ export default class Transpiler extends ComponentTranspiler {
       .filter(component => !!component.token);
     //create a new source file
     const { source } = this._createSourceFile('client.ts');
-    //import { TempleDocument, emitter, data as __APP_DATA__ } from '@ossph/temple-client';
+    //import type { Hash } from '@ossph/temple/client';
+    source.addImportDeclaration({
+      isTypeOnly: true,
+      moduleSpecifier: '@ossph/temple/client',
+      namedImports: [ 
+        'Hash' 
+      ]
+    });
+    //import { TempleDocument, emitter, data as __APP_DATA__ } from '@ossph/temple/client';
     source.addImportDeclaration({
       moduleSpecifier: '@ossph/temple/client',
       namedImports: [ 
@@ -278,7 +286,7 @@ export default class Transpiler extends ComponentTranspiler {
       //now serialize the props
       //this is predicting the order rendered on the server
       //with the order determined by doc.body.querySelectorAll
-      const __BINDINGS__ = ${this._bindings(ast.markup, components)};
+      const __BINDINGS__: Record<string, Record<string, any>> = ${this._bindings(ast.markup, components)};
       //loop through the initial elements before js manipulation
       for (const element of document.body.querySelectorAll('*')) {
         //pull the attributes from the rendered HTML
@@ -311,9 +319,9 @@ export default class Transpiler extends ComponentTranspiler {
       emitter.emit('mounted', document.body);
     });`);
 
-    //export { TempleComponent, TempleDocument, ... } from '@ossph/temple-client';
+    //export { TempleComponent, TempleDocument, ... } from '@ossph/temple/client';
     source.addExportDeclaration({
-      moduleSpecifier: '@ossph/temple-client',
+      moduleSpecifier: '@ossph/temple/client',
       namedExports: [
         'data',
         'props',

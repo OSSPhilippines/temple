@@ -10,6 +10,45 @@ import ComponentTranspiler from '../component/Transpiler';
 import DocumentTranspiler from '../document/Transpiler';
 import { toTS, load } from '../component/helpers';
 
+export function aliasPlugin(parent: Component) {
+  const name = 'temple-alias-plugin';
+  return {
+    name: name,
+    setup: (build: PluginBuild) => {
+      build.onResolve({ filter: /^@\// }, args => {
+        const absolute = path.resolve(
+          parent.cwd, 
+          args.path.replace('@/', '')
+        );
+
+        if (parent.fs.existsSync(absolute)) {
+          if (absolute.endsWith('.tml')) {
+            return { 
+              path: absolute, 
+              namespace: 'temple-component-plugin' 
+            };
+          } else if (absolute.endsWith('.ts')) {
+            return { path: absolute, loader: 'ts' };
+          }
+          return { path: absolute };
+        }
+
+        for (const extname of ['.ts', '.js', '.json']) {
+          const file = absolute + extname;
+          if (parent.fs.existsSync(file)) {
+            if (absolute.endsWith('.ts')) {
+              return { path: file, loader: 'ts' };
+            }
+            return { path: file };
+          }
+        }
+        
+        return undefined;
+      });
+    }
+  };
+};
+
 export function tmlPlugin(parent: Component, tsconfig: string) {
   const name = 'temple-component-plugin';
   return {
@@ -55,8 +94,6 @@ export function tmlPlugin(parent: Component, tsconfig: string) {
           contents: toTS(transpiler.transpile()),
           loader: 'ts'
         };
-
-        return undefined;
       });
     }
   };
@@ -68,18 +105,25 @@ export function docPlugin(document: Component, tsconfig: string) {
   return {
     name: name,
     setup: (build: PluginBuild) => {
-      const filter = /^(__SERVER_ENTRY__)|(__CLIENT_ENTRY__)$/;
-      build.onResolve({ filter }, args => {
-        return { path: args.path, namespace: name };
+      build.onResolve({ 
+        filter: /^(__SERVER_ENTRY__)|(__CLIENT_ENTRY__)$/ 
+      }, args => {
+        return { 
+          path: path.join(document.pwd, args.path), 
+          namespace: name
+        };
       });
 
-      build.onLoad({ filter, namespace: name }, args => {
-        if (args.path === '__SERVER_ENTRY__') {
+      build.onLoad({ 
+        filter: /(__SERVER_ENTRY__)|(__CLIENT_ENTRY__)$/, 
+        namespace: name 
+      }, args => {
+        if (args.path.endsWith('__SERVER_ENTRY__')) {
           return {
             contents: toTS(transpiler.transpile()),
             loader: 'ts'
           };
-        } else if (args.path === '__CLIENT_ENTRY__') {
+        } else if (args.path.endsWith('__CLIENT_ENTRY__')) {
           return {
             contents: toTS(transpiler.client()),
             loader: 'ts'
@@ -90,6 +134,28 @@ export function docPlugin(document: Component, tsconfig: string) {
       });
     }
   };
+}
+
+export function workspacePlugin() {
+  return {
+    name: 'resolve-workspace-packages',
+    setup(build: PluginBuild) {
+      //Filter match examples
+      // ex. a...   // ex. A...   // ex. 1...
+      // ex. @a...  // ex. @A...  // ex. @1...
+      build.onResolve({ filter: /^@{0,1}[a-zA-Z0-9]/ }, args => {
+        //use the native require API to resolve the path
+        const resolved = require.resolve(args.path, { 
+          paths: [ path.resolve(args.resolveDir) ] 
+        });
+        //if the resolved is a file path
+        if (resolved.startsWith('/')) {
+          return { path: resolved };
+        }
+        return undefined;
+      });
+    }
+  }
 }
 
 export default class Builder {
@@ -129,7 +195,7 @@ export default class Builder {
 
     //generated values
     this._tsconfig = this._loader.absolute(
-      options.tsconfig || path.resolve(__dirname, '../tsconfig.json'), 
+      options.tsconfig || path.resolve(__dirname, '../../tsconfig.json'), 
       this._document.cwd
     );
   }
@@ -149,7 +215,12 @@ export default class Builder {
       //for browser compatibility
       format: 'iife', 
       globalName: 'TempleBundle',
-      plugins: [ tmlPlugin(this._document, this._tsconfig) ],
+      plugins: [ 
+        aliasPlugin(this._document),
+        tmlPlugin(this._document, this._tsconfig),
+        docPlugin(this._document, this._tsconfig),
+        workspacePlugin()
+      ],
       platform: 'browser',
       preserveSymlinks: true,
       // Do not write to disk
@@ -204,7 +275,11 @@ export default class Builder {
       //for browser compatibility
       format: 'iife', 
       globalName: 'TempleBundle',
-      plugins: [ docPlugin(this._document, this._tsconfig) ],
+      plugins: [ 
+        aliasPlugin(this._document),
+        docPlugin(this._document, this._tsconfig),
+        workspacePlugin()
+      ],
       platform: 'node',
       preserveSymlinks: true,
       // Do not write to disk

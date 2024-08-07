@@ -11,13 +11,13 @@ $ npm -i @ossph/temple
 ## Server Usage
 
 ```js
-import temple from '@ossph/temple/server';
+import temple from '@ossph/temple/compiler';
 //make a template engine
-const engine = temple({...options...});
+const compiler = temple({...options...});
 //load a Temple file
-const build = await engine.import('./page.html');
+const { document } = await compiler.import('./page.html');
 //render final HTML
-const results = build.document.render({...props...});
+const results = document.render({...props...});
 ```
 
 ### Document Options

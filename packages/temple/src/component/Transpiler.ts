@@ -120,7 +120,7 @@ export default class Transpiler {
     const { source } = this._createSourceFile(`${filePath}.ts`);
     //import { TempleDocument, TempleComponent } from '@ossph/temple/client';
     source.addImportDeclaration({
-      moduleSpecifier: '@ossph/temple',
+      moduleSpecifier: '@ossph/temple/client',
       namedImports: [ 'TempleDocument', 'TempleComponent' ]
     });
     //import Counter from './Counter'
