@@ -1,0 +1,39 @@
+<link rel="import" type="template" href="@/templates/html-head.tml" />
+<link rel="import" type="template" href="@/templates/panel-head.tml" />
+<link rel="import" type="component" href="@/components/panel-main.tml" />
+<style>
+  p { padding: 20px; }
+</style>
+<script>
+  //This is ran on both the server and the browser
+  //There is no signal, children prop here because 
+  //this is not a component.
+  //
+  //We also need to becareful with importing browser 
+  //scripts here. You should do that in the <head>
+  //instead.
+  import { props } from '@ossph/temple';
+
+  const url = '/temple/500.html';
+  const title = 'Oops... - Temple - The reactive web component template engine.';
+  const description = 'Temple is a template engine hat generates web components and support reactivity.';
+
+  const { error } = props();
+
+  const toggle = _ => {
+    document.body.classList.toggle('panel-left-open');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark panel with-head">
+    <panel-head />
+    <panel-main class="panel-main">
+      <div class="container">
+        <h1>Oops...</h1>
+        <p>Something went wrong. Please try again later.</p>
+        <pre>{error || ''}</pre>
+      </div>
+    </panel-main>
+  </body>
+</html>

@@ -3,7 +3,7 @@ import temple from '@ossph/temple/compiler';
 
 export default function engine(
   options: TempleOptions, 
-  next: (res: string) => string = (res) => res,
+  next: (res: string) => string = (res) => res
 ) {
   const compiler = temple(options);
   return async (
@@ -12,7 +12,11 @@ export default function engine(
     callback: (err: Error | null, results: string | undefined) => void,
   ) => {
     const { settings, _locals, cache, ...props } = options;
-    const build = await compiler.import(filePath);
-    callback(null, next(build.document.render(props)));
+    try {
+      const build = await compiler.import(filePath);
+      callback(null, next(build.document.inline(props)));
+    } catch (e) {
+      callback(e as Error, undefined);
+    }
   };
 }

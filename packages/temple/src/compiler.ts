@@ -49,7 +49,7 @@ import DocumentBuilder, {
   tmlPlugin as tmlESBuildPlugin, 
   docPlugin as docESBuildPlugin
 } from './document/Builder';
-import FileLoader from './Loader';
+import FileLoader from './filesystem/FileLoader';
 
 export {
   AbstractDirective,

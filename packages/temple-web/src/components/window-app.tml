@@ -69,8 +69,8 @@
   }
 </style>
 <script>
-  import { props } from '@ossph/temple';
-  const { title, children } = props();
+  import { props, children } from '@ossph/temple';
+  const { title } = props();
 </script>
 <div class="window">
   <div class="head">
@@ -79,5 +79,5 @@
     <span class="dot"></span>
     <span class="title">{title}</span>
   </div>
-  <div class="body">{children}</div>
+  <div class="body">{children()}</div>
 </div>

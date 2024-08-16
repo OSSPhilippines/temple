@@ -10,16 +10,30 @@
     margin: 0;
     padding: 0;
   }
+  h1 { text-transform: uppercase; }
   a, a:link, a:hover, a:active, a:visited {
     color: var(--fg-primary);
     text-decoration: none;
   }
   p, li {
-    font-size: 20px;
     line-height: 36px;
+  }
+  th {
+    padding: 10px;
+    text-align: left;
+    text-transform: uppercase;
+  }
+  td {
+    border-color: var(--muted);
+    border-top-style: solid;
+    border-top-width: 1px;
+    padding: 10px;
   }
   .fab, .fas, .fa {
     line-height: 16px;
+  }
+  .container {
+    padding: 10px 20px;
   }
   
 </style>
@@ -45,7 +59,43 @@
     <panel-head />
     <panel-left />
     <panel-main class="panel-main">
-      something
+      <h1 class="container">Documentation</h1>
+      <p class="container">
+        Temple is a template engine with a built-in compiler that 
+        generates HTML markup, web components and support reactivity. 
+      </p>
+      <p class="container">
+        Temple can be used as a template engine on the server side, as a
+        site generator to make static websites and single page 
+        applications, and can be used to publish native HTML5 web 
+        components. The focus of the Temple project are the following.
+      </p>
+      <div class="tbl-container container">
+        <table class="tbl">
+          <thead>
+            <th>Features</th>
+            <th>De-Features</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Template Engine</td>
+              <td>No Hydration</td>
+            </tr>
+            <tr>
+              <td>Web Components</td>
+              <td>No Hooks</td>
+            </tr>
+            <tr>
+              <td>Server First</td>
+              <td>No Memo</td>
+            </tr>
+            <tr>
+              <td>Reactive Signals</td>
+              <td>No Brandcuffs</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <footer class="foot"></footer>
     </panel-main>
   </body>

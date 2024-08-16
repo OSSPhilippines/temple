@@ -7,17 +7,17 @@ import TempleElement from './TempleElement';
  * A registry of all TempleElement/TempleComponent instances 
  * to add better attribute handling
  */
-export default class TempleDocument {
+export default class TempleRegistry {
   //prefix brand
   protected static _brand = 'temple';
   //A registry of all TempleElement instances
-  protected static _registry = new Map<Element, TempleElement>();
+  protected static _elements = new Map<Element, TempleElement>();
 
   /**
    * Returns the registry
    */
-  public static get registry() {
-    return this._registry;
+  public static get elements() {
+    return this._elements;
   }
 
   /**
@@ -111,7 +111,7 @@ export default class TempleDocument {
    */
   public static filter(callback: RegistryIterator<boolean>) {
     const elements: TempleElement[] = [];
-    this._registry.forEach((temple, html) => {
+    this._elements.forEach((temple, html) => {
       if (callback(temple, html)) {
         elements.push(temple);
       }
@@ -123,7 +123,7 @@ export default class TempleDocument {
    * Returns the TempleElement instance for the given element
    */
   public static get(element: Element) {
-    return this._registry.get(element) || null;
+    return this._elements.get(element) || null;
   }
 
   /**
@@ -131,7 +131,7 @@ export default class TempleDocument {
    */
   public static map<T = any>(callback: RegistryIterator<T>) {
     const elements: T[] = [];
-    this._registry.forEach((temple, html) => {
+    this._elements.forEach((temple, html) => {
       elements.push(callback(temple, html));
     });
     return elements;
@@ -141,11 +141,11 @@ export default class TempleDocument {
    * Registers a new TempleElement instance
    */
   public static register(element: Element, attributes?: Record<string, any>) {
-    if (this._registry.has(element)) {
+    if (this._elements.has(element)) {
       return this.get(element);
     }
     const node = new TempleElement(element, attributes || {});
-    this._registry.set(element, node);
+    this._elements.set(element, node);
     return node;
   }
 }

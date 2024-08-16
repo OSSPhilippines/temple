@@ -1,19 +1,18 @@
-import type fs from 'fs';
-
+import type FSInterface from './FSInterface';
 import path from 'path';
-import Exception from './Exception';
+import Exception from '../Exception';
 
 /**
  * Loader
  */
 export default class FileLoader {
   //filesystem to use
-  protected _fs: typeof fs;
+  protected _fs: FSInterface;
 
   /**
    * Choose the filesystem to use
    */
-  constructor(filesystem: typeof fs) {
+  constructor(filesystem: FSInterface) {
     this._fs = filesystem;
   }
   /**
@@ -21,7 +20,12 @@ export default class FileLoader {
    */
   public absolute(pathname: string, cwd?: string) {
     cwd = cwd || this.cwd();
-    if (/^\.{1,2}\//.test(pathname)) {
+    //ex. @/path/to/file.ext
+    if (pathname.startsWith('@/')) {
+      pathname = path.resolve(cwd, pathname.substring(2));
+    //if the pathname starts with ./ or ../
+    } else if (/^\.{1,2}\//.test(pathname)) {
+      //get the absolute path
       pathname = path.resolve(cwd, pathname);
     }
     //if the pathname does not start with /, 

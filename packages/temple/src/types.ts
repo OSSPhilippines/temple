@@ -1,12 +1,10 @@
-import type fs from 'fs';
-import type { ComponentToken } from './component/types';
+import type FSInterface from './filesystem/FSInterface';
 
 export type TempleOptions = { 
-  fs?: typeof fs,
+  fs?: FSInterface,
   cwd?: string,
   brand?: string,
   name?: string,
-  token?: ComponentToken,
   type?: 'document'|'component'|'template'
   build?: string,
   minify?: boolean,

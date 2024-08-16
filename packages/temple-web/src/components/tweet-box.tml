@@ -38,8 +38,8 @@
   }
 </style>
 <script>
-  import { props } from '@ossph/temple';
-  const { name, handle, href, src, children } = props();
+  import { props, children } from '@ossph/temple';
+  const { name, handle, href, src } = props();
 </script>
 <main class="tweet-box">
   <aside class="avatar">
@@ -48,6 +48,6 @@
   <section class="content">
     <h3>{name}</h3>
     <a {href} target="_blank">{handle}</a>
-    <div class="message">{children}</div>
+    <div class="message">{children()}</div>
   </section>
 </main>

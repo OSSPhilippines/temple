@@ -36,7 +36,7 @@
 </style>
 <script>
   //this is only called on server side
-  import { props } from '@ossph/temple';
+  import { props, children } from '@ossph/temple';
   // Separate component related props from field attributes
   const { 
     block,     full,    color,
@@ -48,8 +48,7 @@
     error,     muted,   primary, 
     secondary, outline, transparent, 
     solid,     style,   classname,   
-    children,  href,
-    ...attributes 
+    href,      ...attributes 
   } = props();
 
   const defaults = {
@@ -144,11 +143,11 @@
 </script>
 <if true={!!href}>
   <a class={map.classes} style={map.style} href={href} {...attributes}>
-    {children}
+    {children()}
   </a>
 </if>
 <if true={!href}>
   <button class={map.classes} style={map.style} {...attributes}>
-    {children}
+    {children()}
   </button>
 </if>

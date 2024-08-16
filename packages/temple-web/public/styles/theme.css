@@ -325,6 +325,97 @@ a, a:link a:hover, a:active, a:visited {
   }
 }
 
+/* Table
+---------------------------------*/
+.tbl-container {
+  position: relative;
+}
+.tbl {
+  border-collapse: collapse;
+  display: table;
+  width: 100%;
+}
+
+.tbl-scroll {
+  overflow: auto;
+  flex-grow: 1;
+  height: 100%;
+  width: 100%;
+}
+
+.tbl-nowrap {
+  white-space: nowrap;
+}
+
+.tbl-z0 {
+  z-index: 0;
+}
+.tbl-z1 {
+  z-index: 1;
+}
+.tbl-z2 {
+  z-index: 2;
+}
+.tbl-z3 {
+  z-index: 3;
+}
+.tbl-z4 {
+  z-index: 4;
+}
+
+.tbl-sticky {
+  position: sticky;
+}
+.tbl-sticky-b {
+  bottom: 0;
+}
+.tbl-sticky-l {
+  left: 0;
+}
+.tbl-sticky-t {
+  top: 0;
+}
+.tbl-sticky-r {
+  right: 0;
+}
+
+.tbl-col {
+  border-color: black;
+  border-style: solid;
+  border-top-width: 1px;
+  padding-bottom: 16px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 16px;
+}
+
+.tbl-foot {
+  border-color: black;
+  border-style: solid;
+  border-top-width: 1px;
+  padding-bottom: 16px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 16px;
+}
+
+.tbl-row {
+  padding-bottom: 16px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 16px;
+}
+
+.tbl-head {
+  border-color: black;
+  border-style: solid;
+  border-top-width: 1px;
+  padding-bottom: 16px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 16px;
+}
+
 /* Head
 ---------------------------------*/
 .head {

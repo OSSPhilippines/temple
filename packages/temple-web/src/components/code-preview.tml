@@ -12,7 +12,6 @@
   }
 </style>
 <script>
-  import { props } from '@ossph/temple';
-  const { children } = props();
+  import { children } from '@ossph/temple';
 </script>
-<div class="preview">{children}</div>
+<div class="preview">{children()}</div>

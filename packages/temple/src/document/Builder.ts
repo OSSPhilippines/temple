@@ -1,10 +1,11 @@
 //types
 import type { PluginBuild } from 'esbuild';
-import type { BuilderOptions, TempleDocument } from './types';
+import type TempleDocument from '../server/TempleDocument';
+import type { BuilderOptions } from './types';
 
 import path from 'path';
 import esbuild from 'esbuild';
-import FileLoader from '../Loader';
+import FileLoader from '../filesystem/FileLoader';
 import Component from '../component/Component';
 import ComponentTranspiler from '../component/Transpiler';
 import DocumentTranspiler from '../document/Transpiler';
@@ -86,7 +87,6 @@ export function tmlPlugin(parent: Component, tsconfig: string) {
           fs: parent.fs,
           cwd: parent.cwd,
           brand: parent.brand,
-          name: parent.tagname,
           type: 'component'
         })
         const transpiler = new ComponentTranspiler(component, tsconfig);
@@ -109,7 +109,7 @@ export function docPlugin(document: Component, tsconfig: string) {
         filter: /^(__SERVER_ENTRY__)|(__CLIENT_ENTRY__)$/ 
       }, args => {
         return { 
-          path: path.join(document.pwd, args.path), 
+          path: path.join(document.dirname, args.path), 
           namespace: name
         };
       });

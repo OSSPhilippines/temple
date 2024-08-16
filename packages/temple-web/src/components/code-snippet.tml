@@ -3,7 +3,6 @@
   :host {
     display: block;
     font-size: 16px;
-    line-height: 26px;
   }
   .snippet {
     background-color: #101113;
@@ -67,19 +66,33 @@
   .snippet .hljs-type {
     color: #C3937B;
   }
+  .terminal {
+    background-color: #000000;
+    padding: 10px;
+  }
+  .terminal span {
+    color: #00FF00;
+  }
 </style>
 <script>
-  import { props } from '@ossph/temple';
-  const { lang = 'html', children } = props();
+  import { props, children } from '@ossph/temple';
+  const { lang = 'html' } = props();
   const language = `language-${lang}`;
+
+  const snippet = children()[0];
 
   const highlight = event => {
     const code = hljs.highlight(
-      children[0].textContent,
+      snippet.textContent,
       { language: lang }
     ).value;
     event.detail.target.innerHTML = code;
     hljs.lineNumbersBlock(event.detail.target);
   };
 </script>
-<pre class="snippet"><code class=language mount=highlight></code></pre>
+<if true={lang === 'bash'}>
+  <div class="terminal"><span>$</span> {children()}</div>
+<else />
+  <pre class="snippet"><code class=language mount=highlight></code></pre>
+</if>
+

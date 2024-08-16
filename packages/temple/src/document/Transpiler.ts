@@ -1,9 +1,5 @@
 //types
-import type { 
-  ComponentToken, 
-  MarkupToken,
-  MarkupChildToken 
-} from '../component/types';
+import type { MarkupToken, MarkupChildToken } from '../component/types';
 import type Component from '../component/Component';
 //file systems
 import path from 'path';
@@ -18,15 +14,13 @@ export default class Transpiler extends ComponentTranspiler {
    */
   public transpile() {
     const { 
-      id,
       absolute, 
-      brand, 
+      brand,
       classname, 
       imports,
       scripts, 
       styles 
     } = this._component;
-
     //get path without extension
     //ex. /path/to/Counter.tml -> /path/to/Counter
     const extname = path.extname(absolute);
@@ -35,26 +29,25 @@ export default class Transpiler extends ComponentTranspiler {
     const { source } = this._createSourceFile(`${filePath}.ts`);
     //import { 
     //  data,
-    //  TempleElement, 
-    //  TempleDocument, 
-    //  TempleException 
+    //  TempleElement,  
+    //  TempleDocument,
+    //  TempleRegistry
     //} from '@ossph/temple/server';
     source.addImportDeclaration({
       moduleSpecifier: '@ossph/temple/server',
       namedImports: [
         'data as __APP_DATA__',
+        'TempleDocument',
         'TempleElement',  
-        'TempleDocument', 
-        'TempleException'
+        'TempleRegistry'
       ]
     });
     //import others from <script>
     imports.forEach(imported => {
       const specifier = imported.source
         //replace client with server
-        .replace('@ossph/temple/client', '@ossph/temple/server')
-        //replace client with server
-        .replace('@ossph/temple/client', '@ossph/temple/server');
+        .replaceAll('@ossph/temple/client', '@ossph/temple/server')
+        .replace(/^@ossph\/temple$/, '@ossph/temple/server');
       if (imported.default && imported.names) {
         source.addImportDeclaration({
           isTypeOnly: imported.typeOnly,
@@ -76,21 +69,21 @@ export default class Transpiler extends ComponentTranspiler {
         });
       }
     });
-    //TempleDocument.brand = 'temple';
-    source.addStatements(`TempleDocument.brand = '${brand}';`);
-    //export default class FoobarComponent
+    //TempleRegistry.brand = 'temple';
+    source.addStatements(`TempleRegistry.brand = '${brand}';`);
+    //export default class FoobarComponent extends TempleDocument
     const component = source.addClass({
-      name: `${classname}_${id}`,
-      isDefaultExport: true,
+      name: classname,
+      extends: 'TempleDocument',
+      isDefaultExport: true
     });
-    //protected _bundler: (clientScript) => string
-    component.addProperty({ name: '_client', type: 'string'});
-    //public constructor(clientScript: string)
-    component.addConstructor({
-      parameters: [ { name: 'client', type: 'string' } ],
-      statements: `this._client = client;`
+    //public id()
+    component.addMethod({
+      name: 'id',
+      returnType: 'string',
+      statements: `return '${this._component.id}';`
     });
-    //public style()
+    //public styles()
     component.addMethod({
       name: 'styles',
       returnType: 'string',
@@ -107,104 +100,6 @@ export default class Transpiler extends ComponentTranspiler {
         return ${this.markup.trim()};
       `
     });
-    //public render()
-    component.addMethod({
-      name: 'render',
-      parameters: [ 
-        { name: 'props?', type: 'Record<string, any>' } 
-      ],
-      returnType: 'string',
-      statements: (`
-        //set props (this is so template() can read it)
-        __APP_DATA__.set('props', props || {});
-        //set the current component (this is so template() can read it)
-        __APP_DATA__.set('current', this);
-        //get the styles
-        const styles = this.styles();
-        //get the children build w/o re-initializing the variables
-        const children = this.template();
-        //get the client script
-        const clientScript = this._client;
-        //reset the current component before validating
-        __APP_DATA__.delete('current');
-        
-        //NOTE: in document there is no shadow dom
-        //so there's no need to case for it...
-    
-        //used to prevent the browser from 
-        //misinterpretting these tags
-        const tags = {
-          head: 'head',
-          script: 'script',
-          style: 'style'
-        }
-    
-        //this is the <html> tag
-        let document = TempleElement.render(children).trim();
-        //check if the root element is an <html> tag
-        if (!document.toLowerCase().startsWith('<html')) {
-          throw TempleException.for('Document must start with an <html> tag.');
-        }
-
-        //we are good to go
-
-        //if there are styles
-        if (styles.length > 0) {
-          //add styles to the head
-          document = document.replace(
-            \`</\${tags.head}>\`, 
-            \`<\${tags.style}>\${styles}</\${tags.style}></\${tags.head}>\`
-          );
-        }
-        //add props and bindings to the head
-        document = document.replace(
-          \`</\${tags.head}>\`, 
-          \`<\${tags.script} class="templejs">window.__APP_DATA__ = \${JSON.stringify(
-            Object.fromEntries(__APP_DATA__.entries())
-          )};</\${tags.script}></\${tags.head}>\`
-        );
-        if (clientScript && clientScript.length > 0) {
-          //add script to the head
-          document = document.replace(
-            \`</\${tags.head}>\`, 
-            \`<\${tags.script} class="templejs">\${clientScript}</\${tags.script}></\${tags.head}>\`
-          );
-        }
-        //prettify document
-        document = document.replace(
-          \`</\${tags.head}>\`, 
-          \`<\${tags.script} class="templejs">Array.from(
-            document.head.getElementsByTagName('\${tags.script}')
-          ).filter(s => s.classList.contains('templejs')).forEach(s => s.remove());
-          </\${tags.script}></\${tags.head}>\`
-        );
-        //return the full html
-        return \`<!DOCTYPE html>\n\${document}\`;
-      `)
-    });
-    //protected _toNodeList(value: any)
-    component.addMethod({
-      name: '_toNodeList',
-      parameters: [ { name: 'value', type: 'any' } ],
-      statements: `
-        if (typeof value === 'object' 
-          && typeof value.nodeType === 'number'
-        ) {
-          return [ value ];
-        }
-    
-        if (Array.isArray(value)) {
-          if (value.every(
-            item => typeof item === 'object' 
-              && typeof item.nodeType === 'number'
-          )) {
-            return value;
-          }
-        }
-    
-        return [ TempleDocument.createText(String(value)) ];
-      `
-    });
 
     return source;
   }
@@ -215,18 +110,12 @@ export default class Transpiler extends ComponentTranspiler {
    */
   public client() {
     const { 
-      brand, 
       imports, 
       scripts, 
       ast 
     } = this._component;
-    //components and templates
-    const partials = this._component.components.filter(
-      //only components with tokens (all sub-components have this)
-      component => !!component.token
-    );
     //only components (vs templates)
-    const components = partials.filter(
+    const components = this._component.components.filter(
       component => component.type === 'component'
     );
     //create a new source file
@@ -239,24 +128,23 @@ export default class Transpiler extends ComponentTranspiler {
         'Hash' 
       ]
     });
-    //import { TempleDocument, emitter, data as __APP_DATA__ } from '@ossph/temple/client';
+    //import { TempleRegistry, emitter, data as __APP_DATA__ } from '@ossph/temple/client';
     source.addImportDeclaration({
       moduleSpecifier: '@ossph/temple/client',
       namedImports: [ 
-        'TempleDocument', 
+        'TempleRegistry', 
         'emitter', 
         'data as __APP_DATA__' 
       ]
     });
     //import Counter_abc123 from './Counter_abc123'
     components.forEach(component => {
-      const token = component.token as ComponentToken;
       //now import
       source.addImportDeclaration({
-        moduleSpecifier: token.source.value,
+        moduleSpecifier: component.source,
         //we make sure there's no collisions
         //this is also matched when generating the component tree
-        defaultImport: `${component.classname}_${component.id}`
+        defaultImport: component.classname
       });
     });
     //import others from <script>
@@ -292,7 +180,12 @@ export default class Transpiler extends ComponentTranspiler {
       //now serialize the props
       //this is predicting the order rendered on the server
       //with the order determined by doc.body.querySelectorAll
-      const __BINDINGS__: Record<string, Record<string, any>> = ${this._bindings(ast.markup, partials)};
+      const __BINDINGS__: Record<string, Record<string, any>> = ${
+        this._bindings(
+          ast.markup, 
+          this._component.components
+        )
+      };
       //loop through the initial elements before js manipulation
       for (const element of document.body.querySelectorAll('*')) {
         //pull the attributes from the rendered HTML
@@ -302,30 +195,26 @@ export default class Transpiler extends ComponentTranspiler {
           )
         );
         //determine the id of the element by its index in the registry
-        const id = String(TempleDocument.registry.size);
+        const id = String(TempleRegistry.elements.size);
         //if the element has bindings
         if (__BINDINGS__[id]) {
           //this is where we need to add the bindings to the attributes
           Object.assign(attributes, __BINDINGS__[id]);
         }
         //finally add the element to the registry
-        TempleDocument.register(element, attributes);
+        TempleRegistry.register(element, attributes);
       }
       //after we registered all the elements, we can now register the 
       //components and let it manip the HTML further if it wants to
       ${components.map(component => {
-        const { id, tagname, classname } = component;
-        if (brand.length > 0) {
-          return `customElements.define('${brand}-${tagname}', ${classname}_${id});`;
-        } else {
-          return `customElements.define('${tagname}', ${classname}_${id});`
-        }
+        const { tagname, classname } = component;
+        return `customElements.define('${tagname}', ${classname});`;
       }).join('\n')}
       //emit the mounted event
       emitter.emit('mounted', document.body);
     });`);
 
-    //export { TempleComponent, TempleDocument, ... } from '@ossph/temple/client';
+    //export { TempleComponent, TempleRegistry, ... } from '@ossph/temple/client';
     source.addExportDeclaration({
       moduleSpecifier: '@ossph/temple/client',
       namedExports: [
@@ -335,7 +224,7 @@ export default class Transpiler extends ComponentTranspiler {
         'signal', 
         'emitter',
         'TempleComponent', 
-        'TempleDocument', 
+        'TempleRegistry', 
         'TempleElement', 
         'TempleEmitter', 
         'TempleException'
@@ -350,7 +239,7 @@ export default class Transpiler extends ComponentTranspiler {
         name: 'components',
         initializer: `{
           ${components.map(component => {
-            return `'${component.tagname}': ${component.classname}_${component.id}`;
+            return `'${component.tagname}': ${component.classname}`;
           }).join(',\n')}
         }`
       }]
@@ -503,11 +392,11 @@ export default class Transpiler extends ComponentTranspiler {
         )}`;
       }
       //business as usual
-      expression += `TempleDocument.createComponent('${token.name}', {`;
+      expression += `TempleRegistry.createComponent('${token.name}', {`;
     } else {
       //check to see if the token refers to a 
       //template in the registry
-      const template = Object.values(this._component.registry).find(
+      const template = this._component.components.find(
         component => component.tagname === token.name 
           && component.type === 'template'
       );
@@ -524,7 +413,7 @@ export default class Transpiler extends ComponentTranspiler {
           components
         )}`;
       }
-      expression += `TempleDocument.createElement('${token.name}', {`;
+      expression += `TempleRegistry.createElement('${token.name}', {`;
     }
     
     if (token.attributes && token.attributes.properties.length > 0) {

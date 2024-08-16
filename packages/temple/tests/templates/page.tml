@@ -1,0 +1,35 @@
+<link rel="import" type="component" href="./dollar.tml" />
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+<script>
+  import snippets from '@/modules/snippets/home';
+  const url = '/';
+  const title = 'Temple - The reactive web component template engine.';
+  const description = 'Temple is a template engine hat generates web components and support reactivity.';
+</script>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
+    <meta property="og:url" content={`https://ossphilippines.github.io/temple${url}`} />
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" type="text/css" href="/temple/styles/theme.css" />
+    <script src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js/dist/highlightjs-line-numbers.min.js"></script>
+  </head>
+  <body class="dark panel with-head">
+    <dollar>
+      <div title={title}><span>$</span> Ok</div>
+    </dollar>
+  </body>
+</html>

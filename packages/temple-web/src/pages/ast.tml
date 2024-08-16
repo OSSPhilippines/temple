@@ -1,0 +1,73 @@
+<link rel="import" type="template" href="@/templates/html-head.tml" />
+<link rel="import" type="template" href="@/templates/panel-head.tml" />
+<link rel="import" type="component" href="@/components/panel-main.tml" />
+<link rel="import" type="component" href="@/components/tui-button.tml" />
+<style>
+  .form {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 40px);
+    padding: 20px;
+  }
+  .form .action {
+    margin-bottom: 10px;
+  }
+  .form .grow {
+    display: flex;
+    flex-grow: 1;
+  }
+  .form .input {
+    background-color: white;
+    border-radius: 5px;
+    color: black;
+    flex: 1;
+    font-family: Courier, monospace;
+    font-size: 16px;
+    overflow: scroll;
+    padding: 10px;
+  }
+  .form .results {
+    background-color: var(--bg-secondary);
+    border-radius: 5px;
+    color: var(--fg-primary);
+    flex: 1;
+    font-family: Courier, monospace;
+    font-size: 16px;
+    padding: 10px;
+  }
+</style>
+<script>
+  //This is ran on both the server and the browser
+  //There is no signal, children prop here because 
+  //this is not a component.
+  //
+  //We also need to becareful with importing browser 
+  //scripts here. You should do that in the <head>
+  //instead.
+  const url = '/';
+  const title = 'Temple - The reactive web component template engine.';
+  const description = 'Temple is a template engine hat generates web components and support reactivity.';
+  const ast = _ => {
+    const input = this.querySelector('.input').innerText.trim();
+  };
+  const toggle = _ => {
+    document.body.classList.toggle('panel-left-open');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark panel with-head">
+    <panel-head />
+    <panel-main class="panel-main">
+      <section class="form">
+        <div class="action">
+          <tui-button info curved xl click=ast>Show AST</tui-button>
+        </div>
+        <div class="grow">
+          <div class="input" contenteditable></div>
+          <div class="results"></div>
+        </div>
+      </section>
+    </panel-main>
+  </body>
+</html>

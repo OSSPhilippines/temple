@@ -1,10 +1,6 @@
 //types
 import type { ProjectOptions } from 'ts-morph';
-import type { 
-  ComponentToken,
-  MarkupToken,
-  MarkupChildToken,
-} from './types';
+import type { MarkupToken, MarkupChildToken } from './types';
 import type DirectiveInterface from '../directives/DirectiveInterface';
 import type Component from './Component';
 //file systems
@@ -57,7 +53,7 @@ export default class Transpiler {
   /**
    * Sets the compiler and generator options
    */
-  constructor(component: Component, tsconfig: string) {
+  constructor(component: Component, tsconfig?: string) {
     //compiler
     this._component = component;
     this._config = {
@@ -101,37 +97,37 @@ export default class Transpiler {
    */
   public transpile() {
     const { 
-      absolute, 
-      brand,
-      tagname, 
+      absolute,
       classname, 
       imports,
       styles, 
       scripts
     } = this._component;
-    const components = this._component.components
-      .filter(component => component.type === 'component')
-      .filter(component => !!component.token);
+    //determine tagname
+    const tagname = this._component.brand 
+      ? `${this._component.brand}-${this._component.tagname}`
+      : this._component.tagname;
     //get path without extension
     //ex. /path/to/Counter.tml -> /path/to/Counter
     const extname = path.extname(absolute);
     const filePath = absolute.slice(0, -extname.length);
     //create a new source file
     const { source } = this._createSourceFile(`${filePath}.ts`);
-    //import { TempleDocument, TempleComponent } from '@ossph/temple/client';
+    //import { TempleRegistry, TempleComponent } from '@ossph/temple/client';
     source.addImportDeclaration({
       moduleSpecifier: '@ossph/temple/client',
-      namedImports: [ 'TempleDocument', 'TempleComponent' ]
+      namedImports: [ 'TempleRegistry', 'TempleComponent' ]
     });
     //import Counter from './Counter'
-    components.forEach(component => {
-      const token = component.token as ComponentToken;
+    this._component.components.filter(
+      component => component.type === 'component'
+    ).forEach(component => {
       //now import
       source.addImportDeclaration({
-        moduleSpecifier: token.source.value,
+        moduleSpecifier: component.source,
         //we make sure there's no collisions
         //this is also matched when generating the component tree
-        defaultImport: `${component.classname}_${component.id}`
+        defaultImport: component.classname
       });
     });
     //import others from <script>
@@ -167,9 +163,7 @@ export default class Transpiler {
     component.addProperty({
       name: 'component',
       isStatic: true,
-      initializer: brand 
-        ? `[ '${brand}-${tagname}', '${classname}' ] as [ string, string ]`
-        : `[ '${tagname}', '${classname}' ] as [ string, string ]`
+      initializer: `[ '${tagname}', '${classname}' ] as [ string, string ]`
     });
     //public style()
     component.addMethod({
@@ -183,7 +177,10 @@ export default class Transpiler {
       statements: `${scripts.length > 0 
         ? scripts.join('\n')
         //allow scriptless components to use props
-        : (`const props = this.props;`)}
+        : (`
+          const props = this.props; 
+          const children = () => this.originalChildren;
+        `)}
         return () => ${this.markup.trim()};`
     });
 
@@ -218,10 +215,10 @@ export default class Transpiler {
         expression += this._markupElement(expression, parent, child, components);
       } else if (child.type === 'Literal') {
         if (typeof child.value === 'string') {
-          expression += `TempleDocument.createText(\`${child.value}\`)`;
+          expression += `TempleRegistry.createText(\`${child.value}\`)`;
         //null, true, false, number 
         } else {
-          expression += `TempleDocument.createText(String(${child.value}))`;
+          expression += `TempleRegistry.createText(String(${child.value}))`;
         }
       } else if (child.type === 'ProgramExpression') {
         expression += `...this._toNodeList(${child.source})`;
@@ -259,30 +256,11 @@ export default class Transpiler {
         )}`;
       }
       //business as usual
-      const componentName = `${component.classname}_${component.id}`;
-      expression += `TempleDocument.createComponent(${componentName}, {`;
+      const componentName = component.classname;
+      expression += `TempleRegistry.createComponent(${componentName}, {`;
+    //this is a tag that is not a component/template
     } else {
-      //check to see if the token refers to a 
-      //template in the registry
-      const template = Object.values(this._component.registry).find(
-        component => component.tagname === token.name 
-          && component.type === 'template'
-      );
-      if (template) {
-        //templates take no children and scope is 
-        //the same as the parent scope. template
-        //tags are simply replaced with its children
-        //syntax <x-head />
-        //NOTE: if you want scoped templates, 
-        // that's the same as a light component
-        return expression + `...${this._markup(
-          parent,
-          template.ast.markup, 
-          components
-        )}`;
-      }
-      const tagName = this._getTagName(token); 
-      expression += `TempleDocument.createElement('${tagName}', {`;
+      expression += `TempleRegistry.createElement('${token.name}', {`;
     }
     
     if (token.attributes && token.attributes.properties.length > 0) {
@@ -332,23 +310,5 @@ export default class Transpiler {
     }
     
     return expression;
-  }
-
-  /**
-   * Determines the tag name
-   */
-  protected _getTagName(token: MarkupToken) {
-    return this._isComponent(token) && this._component.brand.length > 0
-      ? `${this._component.brand}-${token.name}`
-      : token.name; 
-  }
-
-  /**
-   * Determines if the child is a component
-   */
-  protected _isComponent(token: MarkupToken) {
-    return Object
-      .values(this._component.registry)
-      .find(component => component.tagname === token.name);
   }
 }

@@ -1,4 +1,4 @@
-import type fs from 'fs';
+import type FSInterface from '../filesystem/FSInterface';
 import type Lexer from './Lexer';
 import type Component from './Component';
 
@@ -142,12 +142,12 @@ export type AST = {
 }
 
 //options for the component
-export type ComponentOptions = { 
-  fs?: typeof fs,
-  cwd?: string,
+export type ComponentOptions = {
   brand?: string,
+  cwd?: string,
+  fs?: FSInterface,
   name?: string,
-  token?: ComponentToken,
+  seed?: string,
   type?: 'document'|'component'|'template'
 };
 

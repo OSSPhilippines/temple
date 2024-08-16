@@ -19,9 +19,6 @@
   "scripts": {
     "build": "tsc"
   },
-  "peerDependencies": {
-    "esbuild": "^0.20"
-  },
   "dependencies": {
     "@ossph/temple": "0.0.15"
   },

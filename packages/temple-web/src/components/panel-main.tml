@@ -1,1 +1,1 @@
-<main>{props.children}</main>
+<main>{children()}</main>

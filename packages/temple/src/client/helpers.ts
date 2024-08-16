@@ -1,6 +1,6 @@
 import type { TempleEvent } from './types';
 import type TempleComponent from './TempleComponent';
-import TempleDocument from './TempleDocument';
+import TempleDocument from './TempleRegistry';
 import TempleElement from './TempleElement';
 import TempleEmitter from './TempleEmitter';
 

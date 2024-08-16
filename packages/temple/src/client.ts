@@ -1,7 +1,7 @@
 export type * from './client/types';
 
 import TempleComponent from './client/TempleComponent';
-import TempleDocument from './client/TempleDocument';
+import TempleRegistry from './client/TempleRegistry';
 import TempleElement from './client/TempleElement';
 import emitter, { TempleEmitter } from './client/TempleEmitter';
 import TempleException from './client/TempleException';
@@ -19,7 +19,7 @@ export {
   signal, 
   emitter,
   TempleComponent,
-  TempleDocument,
+  TempleRegistry,
   TempleElement,
   TempleEmitter,
   TempleException,

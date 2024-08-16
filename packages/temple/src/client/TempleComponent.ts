@@ -1,6 +1,6 @@
 import type { Hash } from './types';
 
-import TempleDocument from './TempleDocument';
+import TempleDocument from './TempleRegistry';
 import TempleElement from './TempleElement';
 import emitter from './TempleEmitter';
 import __APP_DATA__ from './data';
@@ -261,7 +261,7 @@ export default abstract class TempleComponent extends HTMLElement {
       this._children = Array.from(this.childNodes || []);
     }
     //settings props will try to trigger a render
-    this.props = { ...this.props, children: this._children };
+    this.props = Object.assign({}, this.element.attributes);
     //only render if not initiated
     if (!this._initiated) {
       this.render();
