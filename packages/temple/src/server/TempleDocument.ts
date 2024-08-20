@@ -79,12 +79,8 @@ export default abstract class TempleDocument {
   public markup(props: Record<string, any> = {}) {
     //set props (this is so template() can read it)
     data.set('props', props || {});
-    //set the current component (this is so template() can read it)
-    data.set('current', this);
     //get the children build w/o re-initializing the variables
     const children = this.template();
-    //reset the current component before validating
-    data.delete('current');
     
     //NOTE: in document there is no shadow dom
     //so there's no need to case for it...

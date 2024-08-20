@@ -109,11 +109,7 @@ export default class Transpiler extends ComponentTranspiler {
    * render(client, props) method generated in transpile()
    */
   public client() {
-    const { 
-      imports, 
-      scripts, 
-      ast 
-    } = this._component;
+    const { imports, scripts, ast } = this._component;
     //only components (vs templates)
     const components = this._component.components.filter(
       component => component.type === 'component'
@@ -172,11 +168,12 @@ export default class Transpiler extends ComponentTranspiler {
     });
 
     source.addStatements(`emitter.once('ready', () => {
+      //set the current component
+      __APP_DATA__.set('current', 'document');
       //run the user entry script
-      ${scripts.length > 0 
-        ? scripts.join('\n')
-        : `const props = __APP_DATA__.get('props') || {};`
-      }
+      ${scripts.join('\n')}
+      //reset the current component
+      __APP_DATA__.delete('current');
       //now serialize the props
       //this is predicting the order rendered on the server
       //with the order determined by doc.body.querySelectorAll

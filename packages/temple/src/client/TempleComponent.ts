@@ -86,34 +86,7 @@ export default abstract class TempleComponent extends HTMLElement {
    * Sets the component properties
    */
   public set props(props: Hash) {
-    //clone the props
-    const properties = Object.assign({}, props);
-    //loop through the props
-    for (const [ name, value ] of Object.entries(props)) {
-      //check data being passed from server to browser
-      //if this is a literal value
-      if (typeof value === 'string') {
-        if (value.startsWith('data:')) {
-          let decoded: any = value.substring(5);
-          if (value === 'true') {
-            decoded = true;
-          } else if (value === 'false') {
-            decoded = false;
-          } else if (value === 'null') {
-            decoded = null;
-          }
-          properties[name] = decoded;
-        } else if (value.startsWith('global:')) {
-          const key = value.substring(7);
-          const props = __APP_DATA__.get('props') || {};
-          if (props && typeof props[key] !== 'undefined') {
-            properties[name] = props[key];
-          }
-        }
-      }
-    }
-
-    this.element.setAttributes(properties);
+    this.element.setAttributes(Object.assign({}, props));
     this.render();
   }
 

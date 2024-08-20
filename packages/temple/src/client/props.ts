@@ -8,7 +8,7 @@ import data from './data';
  */
 export default function props<
   T = Record<string, any>
->(component: TempleComponent|null = null) {
+>(component: TempleComponent|'document'|null = null) {
   //if no component
   if (!component) {
     //try getting the current component from global
@@ -16,6 +16,9 @@ export default function props<
   }
 
   if (component) {
+    if (component === 'document') {
+      return data.get('props') || {};
+    }
     return component.props as T;
   }
   return {} as T;

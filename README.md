@@ -8,14 +8,14 @@ The reactive web component template engine.
 $ npm -i @ossph/temple
 ```
 
-## Server Usage
+## Compiler Usage
 
 ```js
 import temple from '@ossph/temple/compiler';
 //make a template engine
 const compiler = temple({...options...});
 //load a Temple file
-const { document } = await compiler.import('./page.html');
+const { document } = await compiler.import('./page.tml');
 //render final HTML
 const results = document.render({...props...});
 ```
