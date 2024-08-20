@@ -14,7 +14,7 @@ export default function engine(
     const { settings, _locals, cache, ...props } = options;
     try {
       const build = await compiler.import(filePath);
-      callback(null, next(build.document.inline(props)));
+      callback(null, next(build.document.render(props)));
     } catch (e) {
       callback(e as Error, undefined);
     }
