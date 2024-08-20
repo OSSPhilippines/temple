@@ -33,7 +33,7 @@ export default abstract class TempleDocument {
    * Returns the rendered document with build files
    */
   public build(path: string, props: Record<string, any> = {}) {
-    let document = this.render(props);
+    let document = this.markup(props);
     const id = this.id();
     const styles = this.styles().trim();
     const inject = [
@@ -50,8 +50,8 @@ export default abstract class TempleDocument {
   /**
    * Returns the rendered document with inline code
    */
-  public inline(props: Record<string, any> = {}) {
-    const document = this.render(props);
+  public render(props: Record<string, any> = {}) {
+    const document = this.markup(props);
     const styles = this.styles().trim();
     const inject = [
       `<script class="temple-build">${this.props()}</script>`,
@@ -76,7 +76,7 @@ export default abstract class TempleDocument {
   /**
    * Renders the redered document without injections
    */
-  public render(props: Record<string, any> = {}) {
+  public markup(props: Record<string, any> = {}) {
     //set props (this is so template() can read it)
     data.set('props', props || {});
     //set the current component (this is so template() can read it)

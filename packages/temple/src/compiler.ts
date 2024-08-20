@@ -35,6 +35,8 @@ import definitions, {
 import {
   camelize,
   capitalize,
+  decrypt,
+  encrypt,
   lowerlize,
   slugify,
   serialize,
@@ -77,6 +79,8 @@ export {
   identifier,
   camelize,
   capitalize,
+  decrypt,
+  encrypt,
   lowerlize,
   slugify,
   serialize,

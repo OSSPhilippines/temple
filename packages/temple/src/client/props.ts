@@ -18,5 +18,5 @@ export default function props<
   if (component) {
     return component.props as T;
   }
-  return {};
+  return {} as T;
 }

@@ -7,6 +7,7 @@ import TempleText from './server/TempleText';
 import TempleServerException from './server/TempleException';
 import data from './server/data';
 import props from './server/props';
+import classnames from './server/classnames';
 import signal from './server/signal';
 
 export type * from './types';
@@ -15,6 +16,7 @@ export {
   data,
   emitter,
   props,
+  classnames,
   signal,
   TempleCollection,
   TempleDocument,

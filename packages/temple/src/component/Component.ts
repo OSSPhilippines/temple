@@ -82,24 +82,42 @@ export default class Component {
       this._components = this.ast.components.map(component => {
         //get property attributes
         const properties = component.attributes.properties;
-        //find type property
-        const property = properties.find(
+        //find type property 
+        // ie. <link type="component" />
+        // ie. <link type="template" />
+        const typeProperty = properties.find(
           property => property.key.name === 'type'
         );
         //determine the type of component
         const type = (
           //if property is found
-          property 
+          typeProperty 
           //and the value type is a literal
-          && property.value.type === 'Literal'
+          && typeProperty.value.type === 'Literal'
           //and the value is 'template'
-          && property.value.value === 'template'
+          && typeProperty.value.value === 'template'
         ) ? 'template' : 'component';
+
+        //find name property
+        // ie. <link name="foo-bar" />
+        const nameProperty = properties.find(
+          property => property.key.name === 'name'
+        );
+        //determine the type of component
+        const name = (
+          //if property is found
+          nameProperty 
+          //and the value type is a literal
+          && nameProperty.value.type === 'Literal'
+          //and type of value is string
+          && typeof nameProperty.value.value === 'string'
+        ) ? nameProperty.value.value : undefined;
           
         return new Component(component.source.value, {
           cwd: this._cwd,
           fs: this._fs,
           seed: this._seed,
+          name: name,
           type: type
         });
       });
