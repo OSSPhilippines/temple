@@ -1,9 +1,14 @@
-import type { TempleOptions } from '@ossph/temple/compiler';
+import type { TempleOptions, Build } from '@ossph/temple/compiler';
 import temple from '@ossph/temple/compiler';
+
+export type Props = Record<string, any>;
+export type Next = (build: Build, props: Props) => string;
+
+export const defaultNext: Next = (build, props) => build.document.render(props);
 
 export default function engine(
   options: TempleOptions, 
-  next: (res: string) => string = (res) => res
+  next: Next = defaultNext
 ) {
   const compiler = temple(options);
   return async (
@@ -14,7 +19,7 @@ export default function engine(
     const { settings, _locals, cache, ...props } = options;
     try {
       const build = await compiler.import(filePath);
-      callback(null, next(build.document.render(props)));
+      callback(null, next(build, props));
     } catch (e) {
       callback(e as Error, undefined);
     }

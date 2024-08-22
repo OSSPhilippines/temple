@@ -1,15 +1,29 @@
-import { FSWatcher } from 'chokidar';
-import { ServerOptions, OptionIgnore, Request, Response } from './types';
+
+import type { FSWatcher } from 'chokidar';
+import type { 
+  ServerOptions, 
+  OptionIgnore, 
+  Request, 
+  Response, 
+  Props 
+} from './types';
 
 import path from 'path';
 import chokidar from 'chokidar';
+import { Component, DocumentBuilder } from '@ossph/temple/compiler';
+import { dependantsOf, update } from './helpers';
 
-const extensions = [ '.tml', '.ts', '.js', '.json', '.css' ];
+const extensions = [ '.tml', '.dtml', '.ts', '.js', '.json', '.css' ];
 
 /**
  * Socket server to be used in node
  */
 export default class RefreshServer {
+  //active build and props
+  protected _registry = new Map<string, {
+    builder: DocumentBuilder,
+    props: Props
+  }>();
   //the current working directory
   protected _cwd: string;
   //file extensions to listen to
@@ -40,6 +54,13 @@ export default class RefreshServer {
   }
 
   /**
+   * Registers rendered document builder
+   */
+  public register(builder: DocumentBuilder, props: Props) {
+    this._registry.set(builder.document.absolute, { builder, props });
+  }
+
+  /**
    * Closes the socket connection
    */
   public close() {
@@ -58,15 +79,64 @@ export default class RefreshServer {
   /**
    * Tell all the browsers to reload their page
    */
-  public refresh(filepath: string) {
-    const extname = path.extname(filepath);
+  public async refresh(filePath: string) {
+    const extname = path.extname(filePath);
     if (!this._extensions.includes(extname)) {
       return this;
     }
 
+    //what file changed?
+    //what components import this file?
+    //what document imports this component?
+    const absolute = path.resolve(this._cwd, filePath);
+    const updates: Record<string, string[]> = {};
+    
+    //loop through the registry
+    for (const { builder } of this._registry.values()) {
+      const document = builder.document;
+      //if the document is the same as the changed file
+      if (document.absolute === absolute) {
+        //just reload
+        updates[document.id] = [ 'window.location.reload();' ];
+        continue;
+      }
+      //get any dependencies that import this file
+      const dependants = dependantsOf(absolute, document);
+      //if there are no dependants, skip
+      if (dependants.length === 0) {
+        continue;
+      }
+
+      updates[document.id] = [];
+      for (const dependant of dependants) {
+        //if the filePath was imported as a component
+        if (dependant.type === 'component') {
+          //update the imported component
+          const component = new Component(absolute, { 
+            brand: document.brand,
+            cwd: document.cwd,
+            fs: document.fs,
+            seed: document.seed
+          });
+          const script = await update(component);
+          updates[document.id].push(script);
+          continue;
+        //if the parent component is a component
+        } else if (dependant.component.type === 'component') {
+          //the filePath was imported as a template 
+          // or file, update the parent component
+          const script = await update(dependant.component);
+          updates[document.id].push(script);
+          continue;
+        }
+        
+        updates[document.id].push('window.location.reload();');
+      }
+    };
+
     this._clients.forEach(res => {
       res.write("event: refresh\n");
-      res.write("data: 1\n\n");
+      res.write(`data: ${JSON.stringify(updates)}\n\n`);
       //if this works, then the browser will reload
       //causing the req.close event to be triggered
       //and the client will be removed from the list

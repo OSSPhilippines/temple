@@ -1,7 +1,7 @@
-import { Exception } from '@blanquera/types';
+import TempleException from '../Exception';
 
 /**
  * Exceptions are used to give more information
  * of an error that has occured
  */
-export default class TempleComponentException extends Exception {}
+export default class TempleComponentException extends TempleException {}

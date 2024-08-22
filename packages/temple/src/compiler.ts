@@ -47,11 +47,14 @@ import {
 
 import DocumentTranspiler from './document/Transpiler';
 import DocumentBuilder, { 
-  aliasPlugin as aliasESBuildPlugin, 
-  tmlPlugin as tmlESBuildPlugin, 
-  docPlugin as docESBuildPlugin
+  esAliasPlugin, 
+  esComponentPlugin, 
+  esDocumentPlugin,
+  esWorkspacePlugin
 } from './document/Builder';
+import FSInterface from './filesystem/FSInterface';
 import FileLoader from './filesystem/FileLoader';
+import FileSystem from './filesystem/FileSystem';
 
 export {
   AbstractDirective,
@@ -68,7 +71,9 @@ export {
   DirectiveException,
   DocumentBuilder,
   DocumentTranspiler,
+  FSInterface,
   FileLoader,
+  FileSystem,
   Lexer,
   Parser,
   Tokenizer,
@@ -87,9 +92,10 @@ export {
   toJS,
   toTS,
   load,
-  aliasESBuildPlugin,
-  tmlESBuildPlugin, 
-  docESBuildPlugin
+  esAliasPlugin, 
+  esComponentPlugin, 
+  esDocumentPlugin,
+  esWorkspacePlugin
 };
 
 /**
@@ -106,10 +112,8 @@ export {
 export default function temple(options: TempleOptions = {}) {
   return {
     builder(sourceFile: string) {
-      //make a new document
-      const document = new Component(sourceFile, options);
       //return builder
-      return new DocumentBuilder(document, options);
+      return new DocumentBuilder(sourceFile, options);
     },
     async import(sourceFile: string) {
       //get bundler

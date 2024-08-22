@@ -1,6 +1,6 @@
 import type { Hash } from './types';
 
-import TempleDocument from './TempleRegistry';
+import TempleRegistry from './TempleRegistry';
 import TempleElement from './TempleElement';
 import emitter from './TempleEmitter';
 import __APP_DATA__ from './data';
@@ -26,7 +26,7 @@ export default abstract class TempleComponent extends HTMLElement {
   //this is a flag used by signals to check
   //the number of signals that exists
   //in this component
-  protected _initiated: boolean = false;
+  protected _initiated = false;
   //the callback to render just the children 
   //(wo initializing the variables again)
   protected _template: (() => (Element|false)[])|null = null;
@@ -65,7 +65,7 @@ export default abstract class TempleComponent extends HTMLElement {
    * Returns the component's element registry
    */
   public get element() {
-    return TempleDocument.get(this) as TempleElement;
+    return TempleRegistry.get(this) as TempleElement;
   }
 
   /**
@@ -148,7 +148,7 @@ export default abstract class TempleComponent extends HTMLElement {
   }
 
   public init(attributes: Hash = {}) {
-    TempleDocument.register(this, attributes);
+    TempleRegistry.register(this, attributes);
   }
 
   /**
@@ -257,6 +257,6 @@ export default abstract class TempleComponent extends HTMLElement {
       }
     }
 
-    return [ TempleDocument.createText(String(value)) ];
+    return [ TempleRegistry.createText(String(value)) ];
   }
 }

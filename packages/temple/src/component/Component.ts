@@ -114,6 +114,7 @@ export default class Component {
         ) ? nameProperty.value.value : undefined;
           
         return new Component(component.source.value, {
+          brand: this._brand,
           cwd: this._cwd,
           fs: this._fs,
           seed: this._seed,
@@ -137,6 +138,24 @@ export default class Component {
    */
   public get cwd() {
     return this._cwd;
+  }
+
+  /**
+   * Returns a raw list of dependencies
+   * this component imports
+   * Used fast refresh
+   */
+  public get dependencies() {
+    const imports = this.imports.map(token => ({
+      path: this._loader.absolute(token.source, this.dirname),
+      type: 'file'
+    }));
+    const components = this.components.map(component => ({
+      path: component.absolute,
+      type: component.type
+    }));
+
+    return [ ...components, ...imports ];
   }
 
   /**
@@ -203,6 +222,13 @@ export default class Component {
    */
   public get scripts() {
     return this.ast.scripts.map(script => script.source);
+  }
+
+  /**
+   * Returns the seed used for encoding the build id
+   */
+  public get seed() {
+    return this._seed;
   }
 
   /**

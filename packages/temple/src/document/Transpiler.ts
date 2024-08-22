@@ -242,6 +242,16 @@ export default class Transpiler extends ComponentTranspiler {
       }]
     });
 
+    // export const id = { ... }
+    source.addVariableStatement({
+      declarationKind: VariableDeclarationKind.Const,
+      isExported: true,
+      declarations: [{
+        name: 'id',
+        initializer: `'${this._component.id}'`
+      }]
+    });
+
     return source;
   }
 

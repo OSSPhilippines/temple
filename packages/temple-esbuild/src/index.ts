@@ -1,5 +1,6 @@
 export {
-  aliasESBuildPlugin,
-  tmlESBuildPlugin, 
-  docESBuildPlugin
+  esAliasPlugin, 
+  esComponentPlugin, 
+  esDocumentPlugin,
+  esWorkspacePlugin
 } from '@ossph/temple/compiler';

@@ -10,6 +10,13 @@ export default class FileLoader {
   protected _fs: FSInterface;
 
   /**
+   * Gets the filesystem
+   */
+  public get fs() {
+    return this._fs;
+  }
+
+  /**
    * Choose the filesystem to use
    */
   constructor(filesystem: FSInterface) {
