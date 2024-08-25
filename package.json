@@ -13,6 +13,7 @@
     "build:dev": "yarn --cwd packages/temple-dev build",
     "build:web": "yarn --cwd packages/temple-web build",
     "test": "yarn --cwd packages/temple test",
+    "dev:http": "yarn --cwd examples/with-http dev",
     "dev:express": "yarn --cwd examples/with-express dev",
     "dev:fastify": "yarn --cwd examples/with-fastify dev",
     "dev:koa": "yarn --cwd examples/with-koa dev",
