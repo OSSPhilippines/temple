@@ -8,7 +8,7 @@ export class AppController {
 
   @Get()
   getHomePage(@Res() res: Response) {
-    return res.render('page', {
+    return res.render('index', {
       title: this.appService.getTitle(),
       description: this.appService.getDescription(),
       start: this.appService.getStart(),

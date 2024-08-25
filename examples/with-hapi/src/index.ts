@@ -26,7 +26,7 @@ const init = async () => {
     method: 'GET',
     path: '/',
     handler: async () => {
-      const { document } = await compiler.import('./templates/page.tml');
+      const { document } = await compiler.import('./pages/index.dtml');
       return document.render({
         title: 'Temple',
         description: 'Edit this file to change the content of the page.',

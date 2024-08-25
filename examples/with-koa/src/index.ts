@@ -9,7 +9,7 @@ const compiler = temple({ cwd: __dirname });
 
 const router = new Router();
 router.get('/', async (ctx, next) => {
-  const { document } = await compiler.import('./templates/page.tml');
+  const { document } = await compiler.import('./pages/index.dtml');
   ctx.body = document.render({
     title: 'Temple',
     description: 'Edit this file to change the content of the page.',

@@ -5,11 +5,11 @@ import temple from '@ossph/temple/compiler';
 const cwd = path.dirname(__dirname);
 
 //general options for temple
-const compiler = temple({ cwd: __dirname });
+const compiler = temple({ cwd: __dirname, minify: false });
 
 var server = restify.createServer();
 server.get('/', async (req, res, next) => {
-  const { document } = await compiler.import('./templates/page.tml');
+  const { document } = await compiler.import('./pages/index.dtml');
   const results = document.render({
     title: 'Temple',
     description: 'Edit this file to change the content of the page.',
