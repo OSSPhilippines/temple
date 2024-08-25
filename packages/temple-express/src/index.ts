@@ -1,16 +1,23 @@
-import type { TempleOptions, Build } from '@ossph/temple/compiler';
-import temple from '@ossph/temple/compiler';
+import type { 
+  Hash,
+  Request,
+  Response,
+  TempleCompiler, 
+  BuildResults
+} from '@ossph/temple/compiler';
+import type { DevelopOptions } from '@ossph/temple-dev';
 
-export type Props = Record<string, any>;
-export type Next = (build: Build, props: Props) => string;
+import { inject, develop as dev } from '@ossph/temple-dev';
+
+export type Next = (build: BuildResults, props: Hash) => string;
+export type NextView = (err: Error | null, results: string | undefined) => void;
 
 export const defaultNext: Next = (build, props) => build.document.render(props);
 
 export default function engine(
-  options: TempleOptions, 
+  compiler: TempleCompiler, 
   next: Next = defaultNext
 ) {
-  const compiler = temple(options);
   return async (
     filePath: string,
     options: Record<string, any>,
@@ -24,4 +31,46 @@ export default function engine(
       callback(e as Error, undefined);
     }
   };
-}
+};
+
+export function develop(
+  compiler: TempleCompiler, 
+  options: DevelopOptions = {}
+) {
+  const { refresh, serve } = dev(compiler, options);
+
+  return {
+    compiler,
+    refresh,
+    engine: async (
+      filePath: string,
+      options: Record<string, any>,
+      callback: NextView
+    ) => {
+      const { settings, _locals, cache, ...props } = options;
+      try {
+        //load the builder
+        const builder = compiler.builder(filePath);
+        //register the builder
+        refresh.register(builder, props);
+        //get the build object
+        const build = await builder.build();
+        //render the document
+        const html = inject(build.document.render(props));
+        callback(null, html);
+      } catch (e) {
+        callback(e as Error, undefined);
+      }
+    },
+    serve: function(req: Request, res: Response, next: () => void) {
+      !serve(req, res) && next();
+    }
+  };
+};
+
+export function build(compiler: TempleCompiler) {
+  const build = compiler.serve();
+  return function(req: Request, res: Response, next: () => void) {
+    build(req, res).then(resolved => !resolved && next());
+  }
+};
