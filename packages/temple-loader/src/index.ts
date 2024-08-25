@@ -1,13 +1,11 @@
-import type { TempleOptions } from '@ossph/temple/server';
+import type { TempleOptions } from '@ossph/temple/compiler';
 import type { WebpackLoader, LoaderFunction } from './types';
 
-import fs from 'fs';
 import path from 'path';
 import { urlToRequest } from 'loader-utils';
 import { 
   ComponentTranspiler, 
   Component, 
-  FileLoader,
   toJS
 } from '@ossph/temple/compiler';
 
@@ -20,10 +18,8 @@ const componentLoader: LoaderFunction = function () {
   const inputPath = urlToRequest(self.resourcePath).replace('.//', '/');
   //create a new compiler
   const compiler = new Component(inputPath, { ...options });
-  //create a new file loader
-  const loader = new FileLoader(options.fs || fs);
   //determine the tsconfig path
-  const tsconfig = loader.absolute(
+  const tsconfig = compiler.loader.absolute(
     options.tsconfig || path.resolve(__dirname, '../tsconfig.json'), 
     compiler.cwd
   );
