@@ -2,7 +2,15 @@
 <link rel="import" type="template" href="@/templates/panel-head.tml" />
 <link rel="import" type="component" href="@/components/panel-main.tml" />
 <style>
-  p { padding: 20px; }
+  .container { padding: 20px; }
+  .error pre {
+    border: 1px solid #222222;
+    font-family: Courier, monospace;
+    line-height: 22px;
+    padding: 20px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
 </style>
 <script>
   //This is ran on both the server and the browser
@@ -32,7 +40,7 @@
       <div class="container">
         <h1>Oops...</h1>
         <p>Something went wrong. Please try again later.</p>
-        <pre>{error || ''}</pre>
+        <div class="error"><pre>{error || ''}</pre></div>
       </div>
     </panel-main>
   </body>

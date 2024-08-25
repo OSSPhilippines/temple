@@ -1,0 +1,51 @@
+<style>
+  :host a {
+    background-color: #222222;
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid #222222;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+  }
+  :host(.active) a {
+    background-color: #121212;
+  }
+</style>
+<script>
+  import { props, children } from '@ossph/temple';
+  const { group, selector, ...attributes } = props();
+
+  const tab = this;
+
+  const init = () => {
+    //find all the content elements that this tab controls
+    //and either show or hide it based on the active state
+    Array.from(document.querySelectorAll(selector)).forEach(content => {
+      content.style.display = tab.classList.contains('active') ? 'block' : 'none';
+    });
+  };
+  
+  const show = () => {
+    //find all the tabs in the same group and remove the active class
+    Array.from(document.querySelectorAll(`[group="${group}"]`)).forEach(tab => {
+      //remove active state
+      tab.classList.remove('active');
+      //remember each tab is a TempleComponent...
+      //so we can get the selector using the props property
+      const selector = tab.props.selector;
+      //find all the content elements that this tab controls
+      Array.from(document.querySelectorAll(selector)).forEach(content => {
+        //hide the content
+        content.style.display = 'none';
+      });
+    });
+    //set this tab active
+    tab.classList.add('active');
+    //find all the content elements that this tab controlsand show it
+    Array.from(document.querySelectorAll(selector)).forEach(content => {
+      content.style.display = 'block';
+    });
+  };
+</script>
+<a {...attributes} class="tab" click=show mount=init>{children()}</a>

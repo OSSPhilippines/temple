@@ -1,8 +1,19 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-tomorrow.min.css" />
 <style>
   :host {
     display: block;
-    font-size: 16px;
+    font-size: 14px;
+    line-height: 20px;
+    overflow: auto;
+  }
+  :host([inline]) {
+    display: inline;
+  }
+  :host([inline]),
+  :host([inline]) > pre,
+  :host([inline]) > pre > code {
+    display: inline;
   }
   .snippet {
     background-color: #101113;
@@ -11,61 +22,55 @@
     padding: 0;
   }
 
-  .snippet table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;
+  .line-numbers {
+    position: relative;
+    padding-left: 3.8em;
+    counter-reset: linenumber;
   }
-  .snippet .hljs-ln-numbers {
-    -webkit-touch-callout: none;
+  :host([inline]) .line-numbers {
+    position: static;
+    padding-left: 0;
+  }
+
+  .line-numbers > code {
+    position: relative;
+    white-space: inherit;
+  }
+
+  .line-numbers .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em; /* works for line-numbers below 1000 lines */
+    letter-spacing: -1px;
+    border-right: 1px solid #999;
+
     -webkit-user-select: none;
-    -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    background-color: #040404;
-    border-bottom: 0;
-    border-left: 0;
-    border-right: 2px solid #000000;
-    border-spacing: 0;
-    border-top: 0;
-    color: #CCCCCC;
-    padding: 3px 10px;
-    text-align: center;
     user-select: none;
-    vertical-align: top;
+
   }
-  .snippet .hljs-ln-n:before {
-    content: attr(data-line-number);
+
+  :host([inline]) .line-numbers .line-numbers-rows {
+    display: none;
   }
-  .snippet .hljs-ln-code {
-    padding-left: 10px;
-    width: 100%;
+
+  .line-numbers-rows > span {
+    display: block;
+    counter-increment: linenumber;
   }
-  .snippet .hljs-punctuation, 
-  .snippet .hljs-tag {
-    color: #A0A0A0;
+
+  .line-numbers-rows > span:before {
+    content: counter(linenumber);
+    color: #999;
+    display: block;
+    padding-right: 0.8em;
+    text-align: right;
   }
-  .snippet .hljs-tag .hljs-attr, 
-  .snippet .hljs-tag .hljs-name {
-    color: #476482;
-  }
-  .snippet .hljs-keyword,
-  .snippet .hljs-attribute {
-    color: #6596CB;
-  }
-  .snippet .hljs-selector-tag {
-    color: #D7BA7D;
-  }
-  .snippet .hljs-deletion, 
-  .snippet .hljs-number, 
-  .snippet .hljs-quote, 
-  .snippet .hljs-selector-class, 
-  .snippet .hljs-selector-id, 
-  .snippet .hljs-string, 
-  .snippet .hljs-template-tag, 
-  .snippet .hljs-type {
-    color: #C3937B;
-  }
+
   .terminal {
     background-color: #000000;
     padding: 10px;
@@ -75,24 +80,35 @@
   }
 </style>
 <script>
+  import Prism from 'prismjs';
   import { props, children } from '@ossph/temple';
-  const { lang = 'html' } = props();
-  const language = `language-${lang}`;
-
+  const { lang = 'markup', inline = false } = props();
   const snippet = children()[0];
 
   const highlight = event => {
-    const code = hljs.highlight(
-      snippet.textContent,
-      { language: lang }
-    ).value;
+    const code = Prism.highlight(
+      snippet.textContent, 
+      Prism.languages[lang], 
+      lang
+    );
+    const match = code.match(/\n(?!$)/g);
+    const total = match ? match.length + 1 : 1;
+    const lines = new Array(total + 1).join('<span></span>');
+    const wrapper = document.createElement('span');
+
+    wrapper.setAttribute('aria-hidden', 'true');
+    wrapper.className = 'line-numbers-rows';
+    wrapper.innerHTML = lines;
+
     event.detail.target.innerHTML = code;
-    hljs.lineNumbersBlock(event.detail.target);
+    if (!inline) {
+      event.detail.target.appendChild(wrapper);
+    }
   };
 </script>
 <if true={lang === 'bash'}>
   <div class="terminal"><span>$</span> {children()}</div>
 <else />
-  <pre class="snippet"><code class=language mount=highlight></code></pre>
+  <pre class="snippet line-numbers"><code mount=highlight></code></pre>
 </if>
 

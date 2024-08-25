@@ -1,0 +1,340 @@
+<link rel="import" type="template" href="@/templates/html-head.tml" />
+<link rel="import" type="template" href="@/templates/panel-head.tml" />
+<link rel="import" type="template" href="@/templates/panel-left.tml" />
+<link rel="import" type="component" href="@/components/panel-main.tml" />
+<link rel="import" type="component" href="@/components/window-app.tml" />
+<link rel="import" type="component" href="@/components/code-snippet.tml" />
+<link rel="import" type="component" href="@/components/tui-tab.tml" />
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+  }
+  h1 { text-transform: uppercase; }
+  a, a:link, a:hover, a:active, a:visited {
+    color: var(--fg-primary);
+    text-decoration: none;
+  }
+  p, li {
+    line-height: 24px;
+  }
+  p {
+    margin-bottom: 10px;
+  }
+  th {
+    padding: 10px;
+    text-align: left;
+    text-transform: uppercase;
+  }
+  td {
+    border-color: var(--muted);
+    border-top-style: solid;
+    border-top-width: 1px;
+    padding: 10px;
+  }
+  .fab, .fas, .fa {
+    line-height: 16px;
+  }
+  .container {
+    padding: 10px 20px;
+  }
+  .relative {
+    
+  }
+  .tabs {
+    margin-bottom: -1px;
+    padding: 0 20px;
+    position: relative;
+  }
+  .tab-content {
+    display: none;
+    margin: 0 20px;
+    padding: 10px;
+    border: 1px solid #222222;
+  }
+</style>
+<script>
+  //This is ran on both the server and the browser
+  //There is no signal, children prop here because 
+  //this is not a component.
+  //
+  //We also need to becareful with importing browser 
+  //scripts here. You should do that in the <head>
+  //instead.
+  import { globals } from '@ossph/temple';
+  const url = '/docs/';
+  const title = 'Getting Started - Temple reactive web component template engine.';
+  const description = 'Temple is a template engine hat generates web components and support reactivity.';
+  const toggle = _ => {
+    document.body.classList.toggle('panel-left-open');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark panel with-head with-left">
+    <panel-head />
+    <panel-left />
+    <panel-main class="panel-main">
+      <h1 class="container">Getting Started</h1>
+      <p class="container">
+        To use Temple in a project, run the following commands in terminal: 
+      </p>
+      <div class="container">
+        <window-app title="Terminal">
+          <code-snippet lang="bash">
+            npm install @ossph/temple
+          </code-snippet>
+        </window-app>
+      </div>
+      <div class="tabs">
+        <tui-tab group="build" selector="#express" class="active">Express</tui-tab>
+        <tui-tab group="build" selector="#fastify">Fastify</tui-tab>
+        <tui-tab group="build" selector="#hapi">Hapi</tui-tab>
+        <tui-tab group="build" selector="#koa">Koa</tui-tab>
+        <tui-tab group="build" selector="#nestjs">NestJS</tui-tab>
+        <tui-tab group="build" selector="#restify">Restify</tui-tab>
+        <tui-tab group="build" selector="#webpack">Webpack</tui-tab>
+        <tui-tab group="build" selector="#custom">Custom</tui-tab>
+      </div>
+      <div id="express" class="tab-content">
+        <p>
+          Use the <code-snippet lang="javascript" inline>'@ossph/temple-express'</code-snippet>
+          extension instead.
+        </p>
+        <window-app title="Terminal">
+          <code-snippet lang="bash">
+            npm install @ossph/temple-express
+          </code-snippet>
+        </window-app>
+        <p>
+          To use Temple in an Express 
+          server file. It covers both production and development mode 
+          logic.
+        </p>
+        <window-app title="src/server.ts">
+          <code-snippet lang="js">{`
+import path from 'path';
+import express from 'express';
+import engine, { develop } from '@ossph/temple-express';
+
+//create express app
+const app = express();
+
+//set the view engine to temple
+app.set('views', path.join(__dirname, 'pages'));
+app.set('view engine', 'dtml');
+
+//if production (live)
+if (process.env.NODE_ENV === 'production') {
+  //let's use express' template engine feature
+  app.engine('dtml', engine);
+  //...other production settings...
+//if development mode
+} else {
+  //get development middleware
+  const { serve: dev, engine: view } = develop({ cwd: __dirname });
+  //use development middleware
+  app.use(dev);
+  //let's use express' template engine feature
+  app.engine('dtml', view);
+  //...other development settings...
+}
+
+//routes
+app.get('/', async (req, res) => {
+  //now use the temple template engine
+  res.render('index', {
+    title: 'Temple',
+    description: 'Edit this file to change the content of the page.'
+  })
+  res.type('text/html');
+});
+//...other routes...
+
+//listen
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
+});
+            `.trim()}</code-snippet>
+        </window-app>
+      </div>
+      <div id="custom" class="tab-content">
+        <p>
+          A basic example of using Temple in backend code is with the compiler.
+        </p>
+        <div>
+          <window-app title="Basic Example">
+            <code-snippet lang="js">{`
+//on server:
+import temple from '@ossph/temple/compiler';
+//make a template engine
+const compiler = temple({...options...});
+//load a Temple file
+const component = await compiler.import('./page.tml');
+//render final HTML
+const results = component.document.render({...props...});
+            `.trim()}</code-snippet>
+          </window-app>
+        </div>
+        <p>
+          The <code-snippet lang="js" inline>temple()</code-snippet> 
+          function in the example above takes in the 
+          following options, all of which are optional.
+        </p>
+        <div class="tbl-container">
+          <table class="tbl">
+            <thead>
+              <th>Option</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>brand</td>
+                <td>string; Name to prefix all components</td>
+              </tr>
+              <tr>
+                <td>build</td>
+                <td>string, The path to the build folder</td>
+              </tr>
+              <tr>
+                <td>bundle</td>
+                <td>boolean; Whether to bundle the code in one file</td>
+              </tr>
+              <tr>
+                <td>cwd</td>
+                <td>The current working directory; the path to your project root</td>
+              </tr>
+              <tr>
+                <td>fs</td>
+                <td>
+                  The file system to use as defined in 
+                  <a href="https://github.com/OSSPhilippines/temple/blob/version/0.0.15/packages/temple/src/filesystem/FSInterface.ts" target="_blank">
+                    FSInterface
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>minify</td>
+                <td>boolean; Whether to minify the code</td>
+              </tr>
+              <tr>
+                <td>name</td>
+                <td>string; Custom name of component</td>
+              </tr>
+              <tr>
+                <td>type</td>
+                <td>string; Type of component. ie. component, document</td>
+              </tr>
+              <tr>
+                <td>tsconfig</td>
+                <td>string; Path for a custom typescript configuration file</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Calling <code-snippet lang="js" inline>{`temple()`}</code-snippet> as in 
+          <code-snippet lang="js" inline>{`compiler = temple({...options...})`}</code-snippet> 
+          returns the following object.
+        </p>
+        <div class="tbl-container">
+          <table class="tbl">
+            <thead>
+              <th>Property</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <code-snippet lang="js" inline>compiler.builder</code-snippet>
+                </td>
+                <td>
+                  An instance of a DocumentBuilder as defined in
+                  <a href="https://github.com/OSSPhilippines/temple/blob/version/0.0.15/packages/temple/src/document/Builder.ts" target="_blank">
+                    DocumentBuilder
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code-snippet lang="js" inline>compiler.import</code-snippet>
+                </td>
+                <td>An importer that returns an object that can be used on the server.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Calling <code-snippet lang="js" inline>{`import()`}</code-snippet> as in 
+          <code-snippet lang="js" inline>{`component = await compiler.import('./page.tml')`}</code-snippet> 
+          returns the following object.
+        </p>
+        <div class="tbl-container">
+          <table class="tbl">
+            <thead>
+              <th>Property</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <code-snippet lang="js" inline>component.source.server</code-snippet>
+                </td>
+                <td>string; The JavaScript server code</td>
+              </tr>
+              <tr>
+                <td>
+                  <code-snippet lang="js" inline>component.source.client</code-snippet>
+                </td>
+                <td>string; The JavaScript client code</td>
+              </tr>
+              <tr>
+                <td>
+                  <code-snippet lang="js" inline>component.TempleDocument</code-snippet>
+                </td>
+                <td>
+                  The Document class definition to use on the server and as defined in 
+                  <a href="https://github.com/OSSPhilippines/temple/blob/version/0.0.15/packages/temple/src/server/TempleDocument.ts" target="_blank">
+                    TempleDocument
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code-snippet lang="js" inline>component.document</code-snippet>
+                </td>
+                <td>
+                  The Document class instance to use on the server and as defined in 
+                  <a href="https://github.com/OSSPhilippines/temple/blob/version/0.0.15/packages/temple/src/server/TempleDocument.ts" target="_blank">
+                    TempleDocument
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <window-app title="src/server.ts">
+            <code-snippet lang="js">{`
+import http from 'http';
+import temple from '@ossph/temple/compiler';
+import { develop } from '@ossph/temple-dev';
+
+
+//make a template engine
+const compiler = temple({...options...});
+//load a Temple file
+const component = await compiler.import('./page.tml');
+//render final HTML
+const results = component.document.render({...props...});
+            `.trim()}</code-snippet>
+          </window-app>
+        </div>
+      </div>
+      <footer class="foot"></footer>
+    </panel-main>
+  </body>
+</html>

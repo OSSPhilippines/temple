@@ -5,16 +5,18 @@
   "private": true,
   "scripts": {
     "build": "ts-node ./src/build.ts",
-    "dev": "nodemon ./src/index.ts"
+    "dev": "ts-node ./src/index.ts"
   },
   "dependencies": {
     "@ossph/temple": "0.0.15",
-    "express": "4.19.2"
+    "express": "4.19.2",
+    "prismjs": "1.29.0"
   },
   "devDependencies": {
     "@ossph/temple-dev": "0.0.15",
     "@types/express": "4.17.21",
     "@types/node": "22.1.0",
+    "@types/prismjs": "1.26.4",
     "nodemon": "3.1.2",
     "ts-loader": "9.5.1",
     "ts-node": "10.9.2",

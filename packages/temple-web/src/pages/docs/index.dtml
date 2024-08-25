@@ -2,6 +2,8 @@
 <link rel="import" type="template" href="@/templates/panel-head.tml" />
 <link rel="import" type="template" href="@/templates/panel-left.tml" />
 <link rel="import" type="component" href="@/components/panel-main.tml" />
+<link rel="import" type="component" href="@/components/code-snippet.tml" />
+<link rel="import" type="component" href="@/components/window-app.tml" />
 <style>
   body {
     font-family: Arial, Helvetica, sans-serif;
@@ -95,6 +97,47 @@
             </tr>
           </tbody>
         </table>
+      </div>
+      <p class="container">
+        At it's core, a temple file is a special template file that 
+        allows HTML, JavaScript, CSS and importing of components and 
+        templates. All of which are transpiled to its respective 
+        TypeScript or JavaScript soure code.
+      </p>
+      <div class="container">
+        <window-app title="Transpiler Example">
+          <div class="snippet-preview">
+            <code-snippet>{`<style>
+  h1 { font-weight: bold; }
+</style>
+<script>
+  import { props } from '@ossph/temple';
+  const { name } = props();
+</script>
+<h1>Hello {name}!</h1>
+
+
+
+
+
+            `}</code-snippet>
+            <code-snippet lang="js">{`
+import { props } from '@ossph/temple';
+
+export default class Hello extends TempleComponent {
+  styles() {
+    return 'h1 { font-weight: bold; }';
+  }
+  template() {
+    const { name } = props();
+    return () => [
+      TempleRegistry.createElement('h1', null, \`Hello \${name}\`)
+    ]
+  }
+}
+            `.trim()}</code-snippet>
+          </div>
+        </window-app>
       </div>
       <footer class="foot"></footer>
     </panel-main>
