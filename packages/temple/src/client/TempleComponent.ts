@@ -1,4 +1,4 @@
-import type { Hash } from './types';
+import type { Hash } from '../types';
 
 import TempleRegistry from './TempleRegistry';
 import TempleElement from './TempleElement';

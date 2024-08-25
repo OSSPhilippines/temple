@@ -1,4 +1,5 @@
 import type { 
+  Token,
   IdentifierToken,
   DataToken,
   ObjectToken,
@@ -10,9 +11,8 @@ import type {
   MarkupToken, 
   MarkupChildToken,
   UnknownMarkupToken,
-  LiteralToken,
-  Token
-} from './types';
+  LiteralToken
+} from '../types';
 
 type TagToken = {
   name: string,
@@ -24,7 +24,7 @@ type TagToken = {
 import ts from 'typescript';
 import Parser from './Parser';
 import Lexer from './Lexer';
-import Exception from './Exception';
+import Exception from '../Exception';
 import definitions, { data as anyData } from './definitions';
 
 const lexer = new Lexer();

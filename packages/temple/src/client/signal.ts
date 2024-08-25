@@ -1,6 +1,6 @@
-import type { Property, Observer } from './types';
+import type { SignalProps, SignalObserver } from '../types';
 import type TempleComponent from './TempleComponent';
-import Exception from './TempleException';
+import Exception from '../Exception';
 import data from './data';
 
 /**
@@ -8,7 +8,7 @@ import data from './data';
  */
 export class SignalRegistry {
   //map of components and their observer
-  protected static observers: Map<TempleComponent, Observer> = new Map();
+  protected static _observers: Map<TempleComponent, SignalObserver> = new Map();
 
   /**
    * Observe a value
@@ -46,12 +46,12 @@ export class SignalRegistry {
       }
     });
     //get the component's values
-    const observer = this.observers.get(component);
+    const observer = this._observers.get(component);
     //if no observer
     if (!observer) {
       //means there's no observer
       //so set a new observer
-      this.observers.set(component, { 
+      this._observers.set(component, { 
         observed: 1, 
         values: [ property ] 
       });
@@ -67,7 +67,7 @@ export class SignalRegistry {
    * Get the observer for a component
    */
   public static observer(component: TempleComponent) {
-    return this.observers.get(component) || null;
+    return this._observers.get(component) || null;
   }
 
   /**
@@ -118,7 +118,7 @@ export default function signal<T = any>(
   //get the property...
   //we are relying on JS single threaded nature to figure out 
   //what value to return based on how many times it was observed...
-  const values = observer.values as Property<T>[];
+  const values = observer.values as SignalProps<T>[];
   return values[
     observer.observed++ % observer.values.length
   ];

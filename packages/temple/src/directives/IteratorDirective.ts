@@ -2,12 +2,12 @@ import type Component from '../component/Component';
 import type { 
   MarkupToken, 
   IdentifierToken, 
-  ScriptToken,
-} from '../component/types';
-import type { NextDirective } from './types';
+  ScriptToken, 
+  NextDirective 
+} from '../types';
 
+import Exception from '../Exception';
 import Parser from '../component/Parser';
-import DirectiveException from './Exception';
 import AbstractDirective from './AbstractDirective';
 
 export default class IteratorDirective extends AbstractDirective {
@@ -32,7 +32,7 @@ export default class IteratorDirective extends AbstractDirective {
     if (!token.attributes 
       || token.attributes.properties.length === 0 
     ) {
-      throw DirectiveException.for('Invalid each statement');
+      throw Exception.for('Invalid each statement');
     }
     const key = token.attributes.properties.find(
       property => property.key.name === 'key'
@@ -44,11 +44,11 @@ export default class IteratorDirective extends AbstractDirective {
       property => property.key.name === 'from'
     );
     if (!from || (!key && !value)) {
-      throw DirectiveException.for('Invalid each statement');
+      throw Exception.for('Invalid each statement');
     } else if (key && key.value.type !== 'Identifier') {
-      throw DirectiveException.for('Invalid key value in each');
+      throw Exception.for('Invalid key value in each');
     } else if (value && value.value.type !== 'Identifier') {
-      throw DirectiveException.for('Invalid value in each');
+      throw Exception.for('Invalid value in each');
     }
     const keyName = (key?.value as IdentifierToken)?.name || '_';
     const valueName = (value?.value as IdentifierToken)?.name || '_';
@@ -67,7 +67,7 @@ export default class IteratorDirective extends AbstractDirective {
     } else if (from.value.type === 'Identifier') {
       expression += `Object.entries(${from.value.name})`;
     } else {
-      throw DirectiveException.for('Invalid from value in each');
+      throw Exception.for('Invalid from value in each');
     }
     expression += `.map(([${keyName}, ${valueName}]) => `;
     if (token.children) {

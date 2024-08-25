@@ -1,6 +1,6 @@
-import { Reader, Token, Definition } from './types';
+import { Token, TokenReader, TokenDefinition } from '../types';
 
-import Exception from './Exception';
+import Exception from '../Exception';
 
 export default class Lexer {
   //the code to parse
@@ -8,7 +8,7 @@ export default class Lexer {
   //the current index
   protected _index = 0;
   //a collection of definitions
-  protected _dictionary: Record<string, Definition> = {};
+  protected _dictionary: Record<string, TokenDefinition> = {};
 
   /**
    * Returns the shallow copy of the dictionary
@@ -46,7 +46,7 @@ export default class Lexer {
   /**
    * Makes a new definition
    */
-  public define(key: string, reader: Reader) {
+  public define(key: string, reader: TokenReader) {
     this._dictionary[key] = { key, reader };
   }
 

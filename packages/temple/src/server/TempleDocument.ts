@@ -1,11 +1,12 @@
+import Exception from '../Exception';
 import data from './data';
 import TempleElement from './TempleElement';
 import TempleRegistry from './TempleRegistry';
-import TempleException from './TempleException';
 
 export default abstract class TempleDocument {
-  //client script
-  protected _script: string;
+  //client script or build path
+  protected _build: string;
+  protected _mode: 'inline'|'include';
 
   /**
    * Returns the build id for the document
@@ -25,26 +26,9 @@ export default abstract class TempleDocument {
   /**
    * Sets the client script
    */
-  public constructor(script: string) {
-    this._script = script;
-  }
-
-  /**
-   * Returns the rendered document with build files
-   */
-  public build(path: string, props: Record<string, any> = {}) {
-    let document = this.markup(props);
-    const id = this.id();
-    const styles = this.styles().trim();
-    const inject = [
-      `<script class="temple-build">${this.props()}</script>`,
-      `<script class="temple-build" src="${path}/${id}.js"></script>`
-    ];
-    if (styles.length > 0) {
-      inject.unshift(`<link rel="stylesheet" href="${path}/${id}.css" />`);
-    }
-    const [ before, after ] = document.split('</head>', 2);
-    return `${before}${inject.join('')}</head>${after}`;
+  public constructor(build: string, mode: 'inline'|'include' = 'include') {
+    this._build = build;
+    this._mode = mode;
   }
 
   /**
@@ -53,13 +37,28 @@ export default abstract class TempleDocument {
   public render(props: Record<string, any> = {}) {
     const document = this.markup(props);
     const styles = this.styles().trim();
-    const inject = [
-      `<script class="temple-build">${this.props()}</script>`,
-      `<script class="temple-build">${this._script}</script>`
+    const inject: string[] = [
+      `<script class="temple-build">${this.props()}</script>`
     ];
-    if (styles.length > 0) {
-      inject.unshift(`<style>${styles}</style>`);
+    if (this._mode === 'inline') {
+      inject.push(
+        `<script class="temple-build">${this._build}</script>`
+      );
+      if (styles.length > 0) {
+        inject.unshift(`<style>${styles}</style>`);
+      }
+    } else {
+      const buildPath = `${this._build}/${this.id()}`;
+      inject.push(
+        `<script class="temple-build" src="${buildPath}c.js"></script>`
+      );
+      if (styles.length > 0) {
+        inject.unshift(
+          `<link rel="stylesheet" href="${buildPath}c.css" />`
+        );
+      }
     }
+    
     const [ before, after ] = document.split('</head>', 2);
     return `${before}${inject.join('')}</head>${after}`;
   }
@@ -89,7 +88,7 @@ export default abstract class TempleDocument {
     let document = TempleElement.render(children).trim();
     //check if the root element is an <html> tag
     if (!document.toLowerCase().startsWith('<html')) {
-      throw TempleException.for('Document must start with an <html> tag.');
+      throw Exception.for('Document must start with an <html> tag.');
     }
     //return the full html
     return `<!DOCTYPE html>\n${document}`;

@@ -28,6 +28,7 @@
     "test": "ts-mocha tests/*.test.ts"
   },
   "dependencies": {
+    "@blanquera/types": "1.0.2",
     "esbuild": "0.23.0",
     "ts-morph": "23.0.0",
     "typescript": "5.5.4"

@@ -1,7 +1,6 @@
 import type Component from '../component/Component';
 import type Transpiler from '../component/Transpiler';
-import type { MarkupToken } from '../component/types';
-import type { NextDirective } from './types';
+import type { MarkupToken, NextDirective } from '../types';
 
 import DirectiveInterface from './DirectiveInterface';
 

@@ -1,12 +1,12 @@
 import type Component from '../component/Component';
 import type { 
-  MarkupToken,
+  MarkupToken, 
+  NextDirective,
   PropertyToken, 
   ScriptToken
-} from '../component/types';
-import type { NextDirective } from './types';
+} from '../types';
 
-import DirectiveException from './Exception';
+import Exception from '../Exception';
 import AbstractDirective from './AbstractDirective';
 
 export class IfDirective extends AbstractDirective {
@@ -30,7 +30,7 @@ export class IfDirective extends AbstractDirective {
     if (!token.attributes 
       || token.attributes.properties.length === 0 
     ) {
-      throw DirectiveException.for('Invalid if statement');
+      throw Exception.for('Invalid if statement');
     }
     const truesy = token.attributes.properties.find(
       property => property.key.name === 'true'
@@ -39,7 +39,7 @@ export class IfDirective extends AbstractDirective {
       property => property.key.name === 'false'
     );
     if (!truesy && !falsesy) {
-      throw DirectiveException.for('Invalid if statement');
+      throw Exception.for('Invalid if statement');
     }
     let expression = '';
     // ...(!
@@ -65,7 +65,7 @@ export class IfDirective extends AbstractDirective {
       // ...(!!(count) ?
       expression += `(${property.value.name}) ? `;
     } else {
-      throw DirectiveException.for('Invalid if statement');
+      throw Exception.for('Invalid if statement');
     }
     
     if (token.children) {
@@ -104,7 +104,7 @@ export class ElifDirective extends AbstractDirective {
       || token.attributes.properties.length === 0 
       //children will be ignored
     ) {
-      throw DirectiveException.for('Invalid elif statement');
+      throw Exception.for('Invalid elif statement');
     }
     const truesy = token.attributes.properties.find(
       property => property.key.name === 'true'
@@ -113,7 +113,7 @@ export class ElifDirective extends AbstractDirective {
       property => property.key.name === 'false'
     );
     if (!truesy && !falsesy) {
-      throw DirectiveException.for('Invalid elif statement');
+      throw Exception.for('Invalid elif statement');
     }
 
     // ...(!!(count) ? [
@@ -142,7 +142,7 @@ export class ElifDirective extends AbstractDirective {
       // ]: !!(count) ? [
       expression += `(${property.value.name}) ? [ `;
     } else {
-      throw DirectiveException.for('Invalid elif statement');
+      throw Exception.for('Invalid elif statement');
     }
     
     // ...(!!(count) ? [
@@ -176,7 +176,7 @@ export class ElseDirective extends AbstractDirective {
       //attributes will be ignored
       //children will be ignored
     ) {
-      throw DirectiveException.for('Invalid else statement');
+      throw Exception.for('Invalid else statement');
     }
 
     // ...(!!(count) ? [

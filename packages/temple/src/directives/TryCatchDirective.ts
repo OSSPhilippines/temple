@@ -1,8 +1,7 @@
 import type Component from '../component/Component';
-import type { MarkupToken } from '../component/types';
-import type { NextDirective } from './types';
+import type { MarkupToken, NextDirective } from '../types';
 
-import DirectiveException from './Exception';
+import Exception from '../Exception';
 import AbstractDirective from './AbstractDirective';
 
 export class TryDirective extends AbstractDirective {
@@ -34,7 +33,7 @@ export class TryDirective extends AbstractDirective {
     
     //scan children to catch...
     if (!token.children) {
-      throw DirectiveException.for('Invalid try statement');
+      throw Exception.for('Invalid try statement');
     }
 
     const hasCatch = token.children.find(
@@ -42,7 +41,7 @@ export class TryDirective extends AbstractDirective {
     );
 
     if (!hasCatch) {
-      throw DirectiveException.for('Invalid try statement');
+      throw Exception.for('Invalid try statement');
     }
       
     //...(() => { try { return 
@@ -75,7 +74,7 @@ export class CatchDirective extends AbstractDirective {
     let expression = '';
     //syntax <catch error=error />
     if (!parent || parent.name !== 'try') {
-      throw DirectiveException.for('Invalid catch statement');
+      throw Exception.for('Invalid catch statement');
     }
     //determine error name
     let errorName = 'error';

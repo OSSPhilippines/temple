@@ -1,4 +1,4 @@
-import type { TempleComponentClass, RegistryIterator } from './types';
+import type { TempleComponentClass, RegistryIterator } from '../types';
 import type TempleComponent from './TempleComponent';
 
 import TempleElement from './TempleElement';
@@ -8,8 +8,6 @@ import TempleElement from './TempleElement';
  * to add better attribute handling
  */
 export default class TempleRegistry {
-  //prefix brand
-  protected static _brand = 'temple';
   //A registry of all TempleElement instances
   protected static _elements = new Map<Element, TempleElement>();
 
@@ -18,13 +16,6 @@ export default class TempleRegistry {
    */
   public static get elements() {
     return this._elements;
-  }
-
-  /**
-   * Sets the brand prefix
-   */
-  public static set brand(value: string) {
-    this._brand = value;
   }
 
   /**
@@ -43,9 +34,7 @@ export default class TempleRegistry {
     //inside of another component without having to register it.
 
     //get the tagname for the component
-    const tagname = this._brand.length > 0 
-      ? `${this._brand}-${definition.component[0]}`
-      : definition.component[0];
+    const tagname = definition.component[0];
     // Create a template for the inner component
     const template = document.createElement('template');
     template.innerHTML = `<${tagname}></${tagname}>`;

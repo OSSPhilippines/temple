@@ -1,4 +1,4 @@
-import type { TempleEvent } from './types';
+import type { TempleBrowserEvent } from '../types';
 import type TempleComponent from './TempleComponent';
 import TempleDocument from './TempleRegistry';
 import TempleElement from './TempleElement';
@@ -24,7 +24,7 @@ const match = (element: Element|ShadowRoot, attribute: string) => {
 
 //bind an attribute to a binder
 function bindAttribute(name: string, bind: AttributeBinder) {
-  TempleEmitter.on('mounted', (e: TempleEvent<TempleComponent>) => {
+  TempleEmitter.on('mounted', (e: TempleBrowserEvent<TempleComponent>) => {
     //if there is no detail, return
     if (!e.detail) return;
     //get the element
@@ -37,7 +37,7 @@ function bindAttribute(name: string, bind: AttributeBinder) {
 
 //unbind an attribute to a binder
 function unbindAttribute(name: string, bind: AttributeBinder) {
-  TempleEmitter.on('unmounted', (e: TempleEvent<TempleComponent>) => {
+  TempleEmitter.on('unmounted', (e: TempleBrowserEvent<TempleComponent>) => {
     //if there is no detail, return
     if (!e.detail) return;
     //get the element

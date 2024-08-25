@@ -1,4 +1,4 @@
-import type { Node } from './types';
+import type { Node } from '../types';
 export default class TempleCollection {
   //elements in the collection
   protected _elements = new Set<Node>();

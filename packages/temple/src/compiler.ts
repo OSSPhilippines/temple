@@ -1,7 +1,3 @@
-
-import type { TempleOptions } from './types';
-export type * from './component/types';
-export type * from './document/types';
 export type * from './types';
 
 import AbstractDirective from './directives/AbstractDirective';
@@ -18,8 +14,6 @@ import {
 } from './directives/TryCatchDirective';
 
 import Component from './component/Component';
-import ComponentException from './component/Exception';
-import DirectiveException from './directives/Exception';
 import Lexer from './component/Lexer';
 import Parser from './component/Parser';
 import Tokenizer from './component/Tokenizer';
@@ -35,8 +29,6 @@ import definitions, {
 import {
   camelize,
   capitalize,
-  decrypt,
-  encrypt,
   lowerlize,
   slugify,
   serialize,
@@ -45,16 +37,22 @@ import {
   load
 } from './component/helpers';
 
+import DocumentBuilder from './document/Builder';
+import DocumentManifest from './document/Manifest';
 import DocumentTranspiler from './document/Transpiler';
-import DocumentBuilder, { 
+import router from './document/router';
+import { 
   esAliasPlugin, 
   esComponentPlugin, 
   esDocumentPlugin,
   esWorkspacePlugin
-} from './document/Builder';
-import FSInterface from './filesystem/FSInterface';
-import FileLoader from './filesystem/FileLoader';
+} from './document/plugins';
 import FileSystem from './filesystem/FileSystem';
+import FileLoader from './filesystem/FileLoader';
+import NodeFS from './filesystem/NodeFS';
+
+import Exception from './Exception';
+import temple from './temple';
 
 export {
   AbstractDirective,
@@ -66,17 +64,17 @@ export {
   TryDirective, 
   CatchDirective,
   Component,
-  ComponentException,
   ComponentTranspiler,
-  DirectiveException,
   DocumentBuilder,
+  DocumentManifest,
   DocumentTranspiler,
-  FSInterface,
-  FileLoader,
   FileSystem,
+  FileLoader,
+  NodeFS,
   Lexer,
   Parser,
   Tokenizer,
+  Exception,
   definitions,
   scalar,
   data,
@@ -84,8 +82,6 @@ export {
   identifier,
   camelize,
   capitalize,
-  decrypt,
-  encrypt,
   lowerlize,
   slugify,
   serialize,
@@ -95,31 +91,8 @@ export {
   esAliasPlugin, 
   esComponentPlugin, 
   esDocumentPlugin,
-  esWorkspacePlugin
+  esWorkspacePlugin,
+  router
 };
 
-/**
- * Returns a server version of TempleComponent 
- * and a default render function
- * 
- * For Interface:
- * - temple(..options...).import(file).TempleDocument
- * - temple(..options...).import(file).source.server
- * - temple(..options...).import(file).source.client
- * - temple(..options...).import(file).document.render(props)
- * - temple(..options...).builder(file)
- */
-export default function temple(options: TempleOptions = {}) {
-  return {
-    builder(sourceFile: string) {
-      //return builder
-      return new DocumentBuilder(sourceFile, options);
-    },
-    async import(sourceFile: string) {
-      //get bundler
-      const builder = this.builder(sourceFile);
-      //get the { source, TempleDocument, document }
-      return await builder.build();
-    }
-  };
-};
+export default temple;

@@ -1,7 +1,12 @@
 import type Lexer from './Lexer';
-import type { Reader, Token, DataToken, IdentifierToken } from './types';
+import type { 
+  Token, 
+  TokenReader, 
+  DataToken, 
+  IdentifierToken 
+} from '../types';
 
-const definitions: Record<string, Reader> = {
+const definitions: Record<string, TokenReader> = {
   'whitespace': lexer => scan('_Whitespace', /^\s+/, lexer),
   ':': lexer => scan('_Comma', /^:/, lexer),
   ',': lexer => scan('_Comma', /^,/, lexer),

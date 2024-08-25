@@ -1,4 +1,4 @@
-import type FSInterface from './FSInterface';
+import type FileSystem from './FileSystem';
 import path from 'path';
 import Exception from '../Exception';
 
@@ -6,8 +6,17 @@ import Exception from '../Exception';
  * Loader
  */
 export default class FileLoader {
+  //the current working directory
+  protected _cwd: string;
   //filesystem to use
-  protected _fs: FSInterface;
+  protected _fs: FileSystem;
+
+  /**
+   * Returns the current working directory
+   */
+  public get cwd() {
+    return this._cwd;
+  }
 
   /**
    * Gets the filesystem
@@ -19,43 +28,35 @@ export default class FileLoader {
   /**
    * Choose the filesystem to use
    */
-  constructor(filesystem: FSInterface) {
+  constructor(filesystem: FileSystem, cwd?: string) {
+    this._cwd = cwd || process.cwd();
     this._fs = filesystem;
   }
   /**
    * Returns the absolute path to the file
    */
-  public absolute(pathname: string, cwd?: string) {
-    cwd = cwd || this.cwd();
+  public absolute(pathname: string, pwd = this._cwd) {
     //ex. @/path/to/file.ext
     if (pathname.startsWith('@/')) {
-      pathname = path.resolve(cwd, pathname.substring(2));
+      pathname = path.resolve(this._cwd, pathname.substring(2));
     //if the pathname starts with ./ or ../
     } else if (/^\.{1,2}\//.test(pathname)) {
       //get the absolute path
-      pathname = path.resolve(cwd, pathname);
+      pathname = path.resolve(pwd, pathname);
     }
     //if the pathname does not start with /, 
     //the path should start with modules
     if (!pathname.startsWith('/')) {
-      pathname = path.resolve(this.modules(cwd), pathname);
+      pathname = path.resolve(this.modules(this._cwd), pathname);
     }
     return pathname;
-  }
-
-  /**
-   * Returns the current working directory
-   */
-  public cwd() {
-    return process.cwd();
   }
 
   /**
    * Should locate the node_modules directory 
    * where idea is actually installed
    */
-  public modules(cwd?: string): string {
-    cwd = cwd || this.cwd();
+  public modules(cwd = this._cwd): string {
     if (cwd === '/') {
       throw new Error('Could not find node_modules');
     }
@@ -105,8 +106,7 @@ export default class FileLoader {
   /**
    * Resolves the path name to a path that can be required
    */
-  public resolve(pathname?: string, cwd?: string): string {
-    cwd = cwd || this.cwd();
+  public resolve(pathname?: string, cwd = this._cwd): string {
     //if no pathname
     if (!pathname) {
       pathname = cwd;

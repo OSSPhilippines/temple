@@ -1,18 +1,8 @@
-import type { Node, Hash } from './types';
+import type { Node, Hash } from '../types';
 import TempleText from './TempleText';
 import TempleElement from './TempleElement';
 
 export default class TempleRegistry {
-  //prefix brand
-  protected static _brand = 'temple';
-
-  /**
-   * Sets the brand prefix
-   */
-  public static set brand(value: string) {
-    this._brand = value;
-  }
-
   /**
    * Creates a new TempleElement instance
    */
@@ -32,11 +22,7 @@ export default class TempleRegistry {
     attributes: Hash, 
     children: Node[] = []
   ) {
-    //get the tagname for the component
-    const tagname = this._brand.length > 0 
-      ? `${this._brand}-${name}`
-      : name;
-    return new TempleElement(tagname, attributes, children);
+    return new TempleElement(name, attributes, children);
   }
 
   /**

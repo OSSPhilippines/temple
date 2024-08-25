@@ -1,15 +1,15 @@
 //types
 import type { 
   Data,
-  References,
+  TokenReferences,
   DataToken,
   ArrayToken,
   ObjectToken, 
   LiteralToken, 
   IdentifierToken
-} from './types';
+} from '../types';
 
-import Exception from './Exception';
+import Exception from '../Exception';
 
 export default class Parser {
   // markup symbols
@@ -22,14 +22,22 @@ export default class Parser {
   /**
    * Compiles an array tree into an actual array
    */
-  static array<T = Data[]>(token: ArrayToken, references: References = false) {
-    return token.elements.map(element => this.data(element, references)) as T;
+  static array<T = Data[]>(
+    token: ArrayToken, 
+    references: TokenReferences = false
+  ) {
+    return token.elements.map(
+      element => this.data(element, references)
+    ) as T;
   }
 
   /**
    * Compiles an array, object or scalar tree into the actual value
    */
-  static data(token: DataToken, references: References = false): Data {
+  static data(
+    token: DataToken, 
+    references: TokenReferences = false
+  ): Data {
     if (token.type === 'ObjectExpression') {
       return this.object(token, references);
     } else if (token.type === 'ArrayExpression') {
@@ -45,7 +53,10 @@ export default class Parser {
   /**
    * Compiles an identifier into the actual value it's referencing
    */
-  static identifier(token: IdentifierToken, references: References = false) {
+  static identifier(
+    token: IdentifierToken, 
+    references: TokenReferences = false
+  ) {
     if (references && token.name in references) {
       return references[token.name];
     } else if (references === false) {
@@ -65,7 +76,10 @@ export default class Parser {
   /**
    * Compiles an object tree into the actual object
    */
-  static object<T = Data>(token: ObjectToken, references: References = false) {
+  static object<T = Data>(
+    token: ObjectToken, 
+    references: TokenReferences = false
+  ) {
     return Object.fromEntries(token.properties.map(property => [ 
       property.key.name, 
       this.data(property.value, references) 

@@ -1,4 +1,4 @@
-import type { Node } from './types';
+import type { Node } from '../types';
 import TempleCollection from './TempleCollection';
 
 const selfClosingTags = [

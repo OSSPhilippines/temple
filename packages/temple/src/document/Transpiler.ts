@@ -1,5 +1,5 @@
 //types
-import type { MarkupToken, MarkupChildToken } from '../component/types';
+import type { MarkupToken, MarkupChildToken } from '../types';
 import type Component from '../component/Component';
 //file systems
 import path from 'path';
@@ -15,7 +15,6 @@ export default class Transpiler extends ComponentTranspiler {
   public transpile() {
     const { 
       absolute, 
-      brand,
       classname, 
       imports,
       scripts, 
@@ -69,8 +68,6 @@ export default class Transpiler extends ComponentTranspiler {
         });
       }
     });
-    //TempleRegistry.brand = 'temple';
-    source.addStatements(`TempleRegistry.brand = '${brand}';`);
     //export default class FoobarComponent extends TempleDocument
     const component = source.addClass({
       name: classname,
@@ -114,6 +111,10 @@ export default class Transpiler extends ComponentTranspiler {
     const components = this._component.components.filter(
       component => component.type === 'component'
     );
+    //all components and sub components
+    const registry = Object.values(this._component.registry).filter(
+      component => component.type === 'component'
+    )
     //create a new source file
     const { source } = this._createSourceFile('client.ts');
     //import type { Hash } from '@ossph/temple/client';
@@ -134,10 +135,17 @@ export default class Transpiler extends ComponentTranspiler {
       ]
     });
     //import Counter_abc123 from './Counter_abc123'
-    components.forEach(component => {
+    registry.forEach(component => {
+      let relative = path.relative(
+        this._component.dirname, 
+        component.absolute
+      );
+      if (!relative.startsWith('.')) {
+        relative = `./${relative}`;
+      }
       //now import
       source.addImportDeclaration({
-        moduleSpecifier: component.source,
+        moduleSpecifier: relative,
         //we make sure there's no collisions
         //this is also matched when generating the component tree
         defaultImport: component.classname
@@ -171,7 +179,9 @@ export default class Transpiler extends ComponentTranspiler {
       //set the current component
       __APP_DATA__.set('current', 'document');
       //run the user entry script
-      ${scripts.join('\n')}
+      ${scripts.length > 0 
+        ? scripts.join('\n')
+        : `const props = __APP_DATA__.get('props') || {};`}
       //reset the current component
       __APP_DATA__.delete('current');
       //now serialize the props
@@ -204,8 +214,10 @@ export default class Transpiler extends ComponentTranspiler {
       //after we registered all the elements, we can now register the 
       //components and let it manip the HTML further if it wants to
       ${components.map(component => {
-        const { tagname, classname } = component;
-        return `customElements.define('${tagname}', ${classname});`;
+        const { brand, tagname, classname } = component;
+        return brand 
+          ? `customElements.define('${brand}-${tagname}', ${classname});` 
+          : `customElements.define('${tagname}', ${classname});`
       }).join('\n')}
       //emit the mounted event
       emitter.emit('mounted', document.body);
@@ -235,9 +247,9 @@ export default class Transpiler extends ComponentTranspiler {
       declarations: [{
         name: 'components',
         initializer: `{
-          ${components.map(component => {
-            return `'${component.tagname}': ${component.classname}`;
-          }).join(',\n')}
+          ${registry.map(
+            component => `'${component.classname}': ${component.classname}`
+          ).join(',\n')}
         }`
       }]
     });
@@ -398,8 +410,15 @@ export default class Transpiler extends ComponentTranspiler {
           components
         )}`;
       }
-      //business as usual
-      expression += `TempleRegistry.createComponent('${token.name}', {`;
+      
+      //business as usual...
+
+      //get the tagname for the component
+      const tagname = this._component.brand.length > 0 
+        ? `${this._component.brand}-${token.name}`
+        : token.name;
+      //create the component
+      expression += `TempleRegistry.createComponent('${tagname}', {`;
     } else {
       //check to see if the token refers to a 
       //template in the registry

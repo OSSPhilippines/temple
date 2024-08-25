@@ -1,6 +1,6 @@
 //types
 import type { ProjectOptions } from 'ts-morph';
-import type { MarkupToken, MarkupChildToken } from './types';
+import type { MarkupToken, MarkupChildToken } from '../types';
 import type DirectiveInterface from '../directives/DirectiveInterface';
 import type Component from './Component';
 //file systems

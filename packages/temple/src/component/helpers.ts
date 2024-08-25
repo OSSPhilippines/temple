@@ -32,32 +32,6 @@ export function capitalize(word: string) {
 }
 
 /**
- * Decrypts an encrypted message using a seed
- */
-export function decrypt(message: string, seed: string) {
-  const iv = crypto.scryptSync(seed, 'salt', 16);
-  const key = crypto.scryptSync(seed, 'salt', 32);
-  const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
-  const decrypted = Buffer.concat([
-    decipher.update(Buffer.from(message, 'hex')), decipher.final()
-  ]);
-  return decrypted.toString();
-}
-
-/**
- * Encrypts a message using a seed
- */
-export function encrypt(message: string, seed: string) {
-  const iv = crypto.scryptSync(seed, 'salt', 16);
-  const key = crypto.scryptSync(seed, 'salt', 32);
-  const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
-  const encrypted = Buffer.concat(
-    [cipher.update(message), cipher.final()]
-  );
-  return encrypted.toString('hex');
-}
-
-/**
  * Converts a word into lower format
  * ie. "Title" to "title"
  */

@@ -1,14 +1,14 @@
 //types
-import type FSInterface from '../filesystem/FSInterface';
-import type { AST, ComponentOptions } from './types';
+import type FSInterface from '../filesystem/FileSystem';
+import type { AST, ComponentType, ComponentOptions } from '../types';
 //filesystem
 import path from 'path';
 import FileLoader from '../filesystem/FileLoader';
-import FileSystem from '../filesystem/FileSystem';
+import FileSystem from '../filesystem/NodeFS';
 //parsers/compilers
 import Tokenizer from './Tokenizer';
 //helpers
-import { camelize, encrypt, slugify } from './helpers';
+import { camelize, serialize, slugify } from './helpers';
 
 /**
  * The Temple Compiler
@@ -31,18 +31,19 @@ export default class Component {
   protected _name: string;
   //file loader helper
   protected _loader: FileLoader;
-  //the seed to use for encoding the path
-  protected _seed: string;
+  //parent compoent
+  protected _parent: Component|null;
   //the source file
   protected _source: string;
   //the component type
-  protected _type: 'document'|'component'|'template';
+  protected _type: ComponentType;
 
   /**
    * Returns the absolute path to the file
    */
   public get absolute() {
-    return this._loader.absolute(this._source, this._cwd);
+    const pwd: string = this._parent ? this._parent.dirname : this._cwd;
+    return this._loader.absolute(this._source, pwd);
   }
   
   /**
@@ -117,10 +118,9 @@ export default class Component {
           brand: this._brand,
           cwd: this._cwd,
           fs: this._fs,
-          seed: this._seed,
           name: name,
           type: type
-        });
+        }, this);
       });
     }
     return this._components;
@@ -173,6 +173,15 @@ export default class Component {
   }
 
   /**
+   * Returns the unique hash of the source file.
+   * This is like id but cannot be decoded and 
+   * is fixed length.
+   */
+  public get id() {
+    return serialize(this.absolute);
+  }
+
+  /**
    * Returns the tml imports information
    * these imports are extracted from the <script>
    */
@@ -186,17 +195,36 @@ export default class Component {
   }
 
   /**
-   * Returns the unique id of the source file
-   */
-  public get id() {
-    return encrypt(this.relative, this._seed);
-  }
-
-  /**
    * Returns the markup tokens
    */
   public get markup() {
     return this.ast.markup;
+  }
+
+  /**
+   * Returns the file loader
+   */
+  public get loader() {
+    return this._loader;
+  }
+
+  /**
+   * Returns the parent component
+   */
+  public get parent() {
+    return this._parent;
+  }
+
+  /**
+   * Returns all child components and subcomponents
+   */
+  public get registry() {
+    const registry: Record<string, Component> = {};
+    for (const component of this.components) {
+      registry[component.classname] = component;
+      Object.assign(registry, component.registry);
+    }
+    return registry;
   }
 
   /**
@@ -225,13 +253,6 @@ export default class Component {
   }
 
   /**
-   * Returns the seed used for encoding the build id
-   */
-  public get seed() {
-    return this._seed;
-  }
-
-  /**
    * Returns the compiled styles
    */
   public get styles() {
@@ -255,7 +276,11 @@ export default class Component {
   /**
    * Sets the source code to compile
    */
-  public constructor(source: string, options: ComponentOptions = {}) {
+  public constructor(
+    source: string, 
+    options: ComponentOptions = {}, 
+    parent: Component|null = null
+  ) {
     //set the prefix brand
     this._brand = typeof options.brand === 'string'
       ? options.brand
@@ -265,11 +290,9 @@ export default class Component {
     //filesystem to use
     this._fs = options.fs || new FileSystem();
     //file loader helper
-    this._loader = new FileLoader(this._fs);
+    this._loader = new FileLoader(this._fs, this._cwd);
     //the name of the component
     this._name = options.name || path.basename(source, path.extname(source));
-    //the seed to use for encoding the build id
-    this._seed = options.seed || 'temple';
     //ex. /path/to/component.tml
     //ex. ./path/to/component.tml
     //ex. ../path/to/component.tml
@@ -278,5 +301,7 @@ export default class Component {
     this._source = source;
     //the component type
     this._type = options.type || 'component';
+    //parent component
+    this._parent = parent;
   }
 }
