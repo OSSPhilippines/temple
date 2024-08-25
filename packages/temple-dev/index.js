@@ -1,3 +1,3 @@
 module.exports = {
-  ...require('./dist/sse/server')
+  ...require('./dist/server')
 }

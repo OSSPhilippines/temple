@@ -45,9 +45,8 @@ export function dependantsOf(
   const imported = component.dependencies.find(dependency => {
     const extname = path.extname(dependency.path);
     const end = dependency.path.length - extname.length;
-    const basename = filePath.substring(0, end);
-    return dependency.path === filePath 
-      || basename === filePath
+    const basename = dependency.path.substring(0, end);
+    return dependency.path === filePath || basename === filePath;
   });
   if (imported) {
     dependants[component.absolute] = { component, type: imported.type };
@@ -81,15 +80,12 @@ export function esRefreshPlugin(component: Component) {
 export function transpile(component: Component) {
   const { 
     absolute,
+    classname,
     imports,
     styles, 
     scripts
   } = component;
   const transpiler = new ComponentTranspiler(component);
-  //determine tagname
-  const tagname = component.brand 
-    ? `${component.brand}-${component.tagname}`
-    : component.tagname;
   //get path without extension
   //ex. /path/to/Counter.tml -> /path/to/Counter
   const extname = path.extname(absolute);
@@ -161,9 +157,9 @@ export function transpile(component: Component) {
       return () => ${transpiler.markup.trim()};`
   });
 
-  //TempleBundle.Counter_abc123
+  //main script
   source.addStatements(`
-    const Component = TempleBundle.components['${tagname}'];
+    const Component = TempleBundle.components['${classname}'];
     if (Component) {
       Component.prototype.styles = styles;
       Component.prototype.template = template;
@@ -245,8 +241,7 @@ export async function update(component: Component) {
       esComponentPlugin({
         brand: component.brand,
         cwd: component.cwd,
-        fs: component.fs,
-        seed: component.seed
+        fs: component.fs
       }),
       esWorkspacePlugin()
     ]

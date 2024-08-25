@@ -18,7 +18,7 @@ var temple_dev = (() => {
   };
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // src/sse/client.ts
+  // src/client.ts
   var client_exports = {};
   __export(client_exports, {
     default: () => client

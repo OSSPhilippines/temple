@@ -1,12 +1,7 @@
 
 import type { FSWatcher } from 'chokidar';
-import type { 
-  ServerOptions, 
-  OptionIgnore, 
-  Request, 
-  Response, 
-  Props 
-} from './types';
+import type { Hash, Request, Response } from '@ossph/temple/compiler';
+import type { ServerOptions, OptionIgnore } from './types';
 
 import path from 'path';
 import chokidar from 'chokidar';
@@ -22,7 +17,7 @@ export default class RefreshServer {
   //active build and props
   protected _registry = new Map<string, {
     builder: DocumentBuilder,
-    props: Props
+    props: Hash
   }>();
   //the current working directory
   protected _cwd: string;
@@ -56,7 +51,7 @@ export default class RefreshServer {
   /**
    * Registers rendered document builder
    */
-  public register(builder: DocumentBuilder, props: Props) {
+  public register(builder: DocumentBuilder, props: Hash) {
     this._registry.set(builder.document.absolute, { builder, props });
   }
 
@@ -85,21 +80,24 @@ export default class RefreshServer {
       return this;
     }
 
-    //what file changed?
-    //what components import this file?
-    //what document imports this component?
+    //Lots of things to figure out for hot refresh...
+    // - What file changed? (filePath)
+    // - What document imports this component?
+    // - What components import this file?
     const absolute = path.resolve(this._cwd, filePath);
     const updates: Record<string, string[]> = {};
     
-    //loop through the registry
+    //loop through the registry of loaded documents
     for (const { builder } of this._registry.values()) {
       const document = builder.document;
+      // - What document imports this component?
       //if the document is the same as the changed file
       if (document.absolute === absolute) {
         //just reload
         updates[document.id] = [ 'window.location.reload();' ];
         continue;
       }
+      // - What components import this file?
       //get any dependencies that import this file
       const dependants = dependantsOf(absolute, document);
       //if there are no dependants, skip
@@ -115,8 +113,7 @@ export default class RefreshServer {
           const component = new Component(absolute, { 
             brand: document.brand,
             cwd: document.cwd,
-            fs: document.fs,
-            seed: document.seed
+            fs: document.fs
           });
           const script = await update(component);
           updates[document.id].push(script);

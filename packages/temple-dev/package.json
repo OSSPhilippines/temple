@@ -17,7 +17,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc && npx esbuild ./src/sse/client.ts --global-name=temple_dev --format=iife --bundle --outfile=client.js"
+    "build": "tsc && npx esbuild ./src/client.ts --global-name=temple_dev --format=iife --bundle --outfile=client.js"
   },
   "dependencies": {
     "@blanquera/types": "1.0.2",

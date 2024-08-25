@@ -1,1 +1,2 @@
-export * from './dist/sse/server';
+export type * from './dist/types';
+export * from './dist/server';
