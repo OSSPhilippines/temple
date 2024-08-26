@@ -9,10 +9,38 @@
   }
 </style>
 <script>
-  import snippets from '@/modules/snippets/home';
-  const url = '/';
-  const title = 'Temple - The reactive web component template engine.';
-  const description = 'Temple is a template engine hat generates web components and support reactivity.';
+import snippets from '@/modules/snippets/home';
+const url = '/';
+const title = 'Temple - The reactive web component template engine.';
+const description = 'Temple is a template engine hat generates web components and support reactivity.';
+const snippet1 = `//on server:
+import temple from '@ossph/temple/compiler';
+//make a temple compiler
+const compiler = temple();
+//import a temple document file
+const { document } = await compiler.import('./page.dtml');
+//render final HTML
+const results = document.render();
+//show final HTML
+console.log(results);`;
+const snippet2 = `<style>
+body { 
+  background-color: #DA532C; 
+  color: #EFEFEF; 
+}
+.title { text-align: center; }
+</style>
+<script>
+const title = 'Hello World';
+</script>
+<html>
+<head>
+  <title>{title}</title>
+</head>
+<body>
+  <h1 class="title">{title}</h1>
+</body>
+</html>`;
 </script>
 <html>
   <head>
@@ -31,5 +59,7 @@
     <dollar>
       <div title={title}><span>$</span> Ok</div>
     </dollar>
+    <p>{snippet1}</p>
+    <p>{snippet2}</p>
   </body>
 </html>

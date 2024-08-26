@@ -1,4 +1,4 @@
-import type Component from '../component/Component';
+import type Component from '../compiler/Component';
 import type { 
   MarkupToken, 
   IdentifierToken, 
@@ -7,7 +7,7 @@ import type {
 } from '../types';
 
 import Exception from '../Exception';
-import Parser from '../component/Parser';
+import Parser from '../compiler/Parser';
 import AbstractDirective from './AbstractDirective';
 
 export default class IteratorDirective extends AbstractDirective {

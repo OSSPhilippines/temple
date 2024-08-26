@@ -1,4 +1,4 @@
-import type Component from '../component/Component';
+import type Component from '../compiler/Component';
 import type { MarkupToken, NextDirective } from '../types';
 
 export default interface DirectiveInterface {

@@ -1,12 +1,13 @@
-import type { ObjectToken, ArrayToken } from '../src/component/types';
+import type { ObjectToken, ArrayToken } from '../src/types';
 
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import Lexer from '../src/component/Lexer';
-import Parser from '../src/component/Parser';
-import definitions, { data } from '../src/component/definitions';
 
-describe('Temple Lexer/Parser', () => {
+import Lexer from '../src/compiler/Lexer';
+import Parser from '../src/compiler/Parser';
+import definitions, { data } from '../src/compiler/definitions';
+
+describe('Temple Compiler Parser', () => {
   const lexer = new Lexer();
   Object.keys(definitions).forEach((key) => {
     lexer.define(key, definitions[key]);

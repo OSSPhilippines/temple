@@ -1,14 +1,14 @@
 import path from 'path';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import Component from '../src/component/Component';
+import Component from '../src/compiler/Component';
 import Transpiler from '../src/document/Transpiler';
-import { toTS } from '../src/component/helpers';
+import { toTS } from '../src/compiler/helpers';
 
 describe('Temple Document Transpiler', () => {
   const tsconfig = path.join(__dirname, '../tsconfig.json');
   const component = new Component(
-    path.join(__dirname, 'templates/page.tml'), 
+    path.join(__dirname, 'fixtures/page.dtml'), 
     { cwd: __dirname }
   );
   it('Should transpile component', () => {
@@ -18,17 +18,16 @@ describe('Temple Document Transpiler', () => {
   it('Should transpile $', () => {
     const transpiler = new Transpiler(component, tsconfig);
     const server = toTS(transpiler.transpile());
-    //console.log('server', server);
     // [
-    //   TempleDocument.createElement('div', { }, [
-    //     TempleDocument.createElement('span', { }, [
-    //       TempleDocument.createText(`$`)
+    //   TempleRegistry.createElement('div', { }, [
+    //     TempleRegistry.createElement('span', { }, [
+    //       TempleRegistry.createText(`$`)
     //     ]).element, 
-    //     TempleDocument.createText(`ok`)
+    //     TempleRegistry.createText(`ok`)
     //   ]).element
     // ]
-    expect(server).to.contain('TempleDocument.createElement(\'div\', { \'title\': title }, [');
-    expect(server).to.contain('TempleDocument.createText(`$`)');
+    expect(server).to.contain('TempleRegistry.createElement(\'div\', { \'title\': title }, [');
+    expect(server).to.contain('TempleRegistry.createText(`$`)');
 
     const client = toTS(transpiler.client());
     //console.log('client', client);

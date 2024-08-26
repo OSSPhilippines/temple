@@ -13,18 +13,18 @@ import {
   CatchDirective 
 } from './directives/TryCatchDirective';
 
-import Component from './component/Component';
-import Lexer from './component/Lexer';
-import Parser from './component/Parser';
-import Tokenizer from './component/Tokenizer';
-import ComponentTranspiler from './component/Transpiler';
+import Component from './compiler/Component';
+import Lexer from './compiler/Lexer';
+import Parser from './compiler/Parser';
+import Tokenizer from './compiler/Tokenizer';
+import ComponentTranspiler from './compiler/Transpiler';
 
 import definitions, { 
   scalar, 
   data, 
   scan, 
   identifier 
-} from './component/definitions';
+} from './compiler/definitions';
 
 import {
   camelize,
@@ -35,7 +35,7 @@ import {
   toJS,
   toTS,
   load
-} from './component/helpers';
+} from './compiler/helpers';
 
 import DocumentBuilder from './document/Builder';
 import DocumentManifest from './document/Manifest';

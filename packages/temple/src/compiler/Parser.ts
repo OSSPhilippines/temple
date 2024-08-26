@@ -155,7 +155,10 @@ export default class Parser {
         if (char === Parser.symbols.program[0]) {
           //parse the program and move the index
           index = this._findProgram(index);
-        } 
+        } else if (Parser.symbols.quotes.includes(char)) {
+          //parse the string and move the index
+          index = this._findQuote(index, char);
+        }
         continue;
       }
       //look ahead and check for </close>

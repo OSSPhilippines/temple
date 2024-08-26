@@ -1,12 +1,12 @@
 //types
 import type { MarkupToken, MarkupChildToken } from '../types';
-import type Component from '../component/Component';
+import type Component from '../compiler/Component';
 //file systems
 import path from 'path';
 //parsers
 import { VariableDeclarationKind } from 'ts-morph';
-import Parser from '../component/Parser';
-import ComponentTranspiler from '../component/Transpiler';
+import Parser from '../compiler/Parser';
+import ComponentTranspiler from '../compiler/Transpiler';
 
 export default class Transpiler extends ComponentTranspiler {
   /**

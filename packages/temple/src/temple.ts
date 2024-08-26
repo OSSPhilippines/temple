@@ -5,7 +5,7 @@ import type {
 } from './types';
 
 import EventEmitter from '@blanquera/types/dist/EventEmitter';
-import Component from './component/Component';
+import Component from './compiler/Component';
 import DocumentBuilder from './document/Builder';
 import DocumentManifest from './document/Manifest';
 import router from './document/router';

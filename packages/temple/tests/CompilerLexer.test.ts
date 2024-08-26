@@ -1,11 +1,11 @@
-import type { LiteralToken } from '../src/component/types';
+import type { LiteralToken } from '../src/types';
 
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import Lexer from '../src/component/Lexer';
-import definitions, { data } from '../src/component/definitions';
+import Lexer from '../src/compiler/Lexer';
+import definitions, { data } from '../src/compiler/definitions';
 
-describe('Temple Lexer/Parser', () => {
+describe('Temple Compiler Lexer', () => {
   const lexer = new Lexer();
   Object.keys(definitions).forEach((key) => {
     lexer.define(key, definitions[key]);

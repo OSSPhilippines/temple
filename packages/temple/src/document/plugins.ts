@@ -8,10 +8,10 @@ import type {
 
 import path from 'path';
 import FileSystem from '../filesystem/NodeFS';
-import Component from '../component/Component';
-import ComponentTranspiler from '../component/Transpiler';
+import Component from '../compiler/Component';
+import ComponentTranspiler from '../compiler/Transpiler';
 import DocumentTranspiler from '../document/Transpiler';
-import { toTS } from '../component/helpers';
+import { toTS } from '../compiler/helpers';
 
 export function esAliasPlugin(options: AliasPluginOptions) {
   const { cwd = process.cwd(), fs = new FileSystem() } = options;

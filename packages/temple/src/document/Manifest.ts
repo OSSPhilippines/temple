@@ -1,7 +1,7 @@
 import type { ManifestOptions } from '../types';
 
 import EventEmitter from '@blanquera/types/dist/EventEmitter';
-import Component from '../component/Component';
+import Component from '../compiler/Component';
 import Builder from './Builder';
 import Exception from '../Exception';
 

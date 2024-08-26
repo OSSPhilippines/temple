@@ -9,9 +9,9 @@ import type {
 import path from 'path';
 import esbuild from 'esbuild';
 import EventEmitter from '@blanquera/types/dist/EventEmitter';
-import Component from '../component/Component';
+import Component from '../compiler/Component';
 import DocumentTranspiler from '../document/Transpiler';
-import { load } from '../component/helpers';
+import { load } from '../compiler/helpers';
 import {
   esAliasPlugin,
   esComponentPlugin,

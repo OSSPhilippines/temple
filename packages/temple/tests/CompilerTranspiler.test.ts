@@ -1,14 +1,14 @@
 import path from 'path';
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import Component from '../src/component/Component';
-import Transpiler from '../src/component/Transpiler';
-import { toTS } from '../src/component/helpers';
+import Component from '../src/compiler/Component';
+import Transpiler from '../src/compiler/Transpiler';
+import { toTS } from '../src/compiler/helpers';
 
-describe('Temple Component Transpiler', () => {
+describe('Temple Compiler Transpiler', () => {
   const tsconfig = path.join(__dirname, '../tsconfig.json');
   const component = new Component(
-    path.join(__dirname, 'templates/dollar.tml'), 
+    path.join(__dirname, 'fixtures/dollar.tml'), 
     { cwd: __dirname }
   );
   it('Should transpile component', () => {
@@ -20,13 +20,13 @@ describe('Temple Component Transpiler', () => {
     const actual = transpiler.transpile();
     //console.log(toTS(actual));
     // [
-    //   TempleDocument.createElement('div', { }, [
-    //     TempleDocument.createElement('span', { }, [
-    //       TempleDocument.createText(`$`)
+    //   TempleRegistry.createElement('div', { }, [
+    //     TempleRegistry.createElement('span', { }, [
+    //       TempleRegistry.createText(`$`)
     //     ]).element, 
-    //     TempleDocument.createText(`ok`)
+    //     TempleRegistry.createText(`ok`)
     //   ]).element
     // ]
-    expect(toTS(actual)).to.contain('TempleDocument.createText(`$`)');
+    expect(toTS(actual)).to.contain('TempleRegistry.createText(`$`)');
   });
 });
