@@ -1,18 +1,30 @@
-import { Controller, Get, Res } from '@nestjs/common';
+import { Controller, Get, Res, Param } from '@nestjs/common';
 import { Response } from 'express';
 import { AppService } from './app.service';
+import { TempleService } from './temple/temple.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly templeService: TempleService,
+    private readonly appService: AppService
+  ) {}
 
   @Get()
   getHomePage(@Res() res: Response) {
-    return res.render('index', {
-      title: this.appService.getTitle(),
-      description: this.appService.getDescription(),
-      start: this.appService.getStart(),
-      list: this.appService.getList(),
-    });
+    return res.render('index', this.appService.getHomeProps());
+  }
+
+  @Get('/build/:filename')
+  async getAsset(
+    @Param('filename') filename: string, 
+    @Res() res: Response
+  ) {
+    //get compiler
+    const { compiler } = this.templeService;
+    //get asset
+    const { type, content } = await compiler.asset(filename);
+    //send response
+    res.type(type).send(content);
   }
 }
