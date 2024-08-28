@@ -1,8 +1,10 @@
-import type { Component } from '@ossph/temple/compiler';
+import type { Component, EventEmitter } from '@ossph/temple/compiler';
 
 export type OptionIgnore = (string|RegExp|((string: string) => boolean))[];
 
 export type DevelopOptions = {
+  cwd?: string,
+  emitter?: EventEmitter,
   include?: string[],
   ignore?: OptionIgnore,
   route?: string
@@ -10,6 +12,7 @@ export type DevelopOptions = {
 
 export type ServerOptions = {
   cwd: string,
+  emitter?: EventEmitter,
   include?: string[],
   ignore?: OptionIgnore
 };

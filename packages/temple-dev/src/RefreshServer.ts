@@ -1,11 +1,15 @@
 
 import type { FSWatcher } from 'chokidar';
-import type { Hash, Request, Response } from '@ossph/temple/compiler';
+import type { Request, Response } from '@ossph/temple/compiler';
 import type { ServerOptions, OptionIgnore } from './types';
 
 import path from 'path';
 import chokidar from 'chokidar';
-import { Component, DocumentBuilder } from '@ossph/temple/compiler';
+import { 
+  Component, 
+  DocumentBuilder,
+  EventEmitter
+} from '@ossph/temple/compiler';
 import { dependantsOf, update } from './helpers';
 
 const extensions = [ '.tml', '.dtml', '.ts', '.js', '.json', '.css' ];
@@ -15,12 +19,11 @@ const extensions = [ '.tml', '.dtml', '.ts', '.js', '.json', '.css' ];
  */
 export default class RefreshServer {
   //active build and props
-  protected _registry = new Map<string, {
-    builder: DocumentBuilder,
-    props: Hash
-  }>();
+  protected _registry = new Map<string, DocumentBuilder>();
   //the current working directory
   protected _cwd: string;
+  //event emitter
+  protected _emitter: EventEmitter;
   //file extensions to listen to
   protected _extensions: string[];
   //patterns used to ignore files and folders
@@ -40,10 +43,18 @@ export default class RefreshServer {
   }
 
   /**
+   * Returns the watcher emitter
+   */
+  public get emitter() {
+    return this._watcher;
+  }
+
+  /**
    * Imports all the options and sets up the event listeners
    */
   public constructor(options: ServerOptions) {
     this._cwd = options.cwd;
+    this._emitter = options.emitter || new EventEmitter();
     this._extensions = options.include || extensions;
     this._ignore = options.ignore || [];
   }
@@ -51,8 +62,8 @@ export default class RefreshServer {
   /**
    * Registers rendered document builder
    */
-  public register(builder: DocumentBuilder, props: Hash) {
-    this._registry.set(builder.document.absolute, { builder, props });
+  public sync(builder: DocumentBuilder) {
+    this._registry.set(builder.document.absolute, builder);
   }
 
   /**
@@ -88,8 +99,12 @@ export default class RefreshServer {
     const updates: Record<string, string[]> = {};
     
     //loop through the registry of loaded documents
-    for (const { builder } of this._registry.values()) {
+    for (const builder of this._registry.values()) {
       const document = builder.document;
+      this._emitter.trigger(
+        'dev-update-document', 
+        { filePath, document }
+      );
       // - What document imports this component?
       //if the document is the same as the changed file
       if (document.absolute === absolute) {
@@ -111,12 +126,15 @@ export default class RefreshServer {
         if (dependant.type === 'component') {
           //update the imported component
           const component = new Component(absolute, { 
-            brand: document.brand,
             cwd: document.cwd,
             fs: document.fs
           });
           const script = await update(component);
           updates[document.id].push(script);
+          this._emitter.trigger(
+            'dev-update-component', 
+            { filePath, document, component }
+          );
           continue;
         //if the parent component is a component
         } else if (dependant.component.type === 'component') {
@@ -124,6 +142,10 @@ export default class RefreshServer {
           // or file, update the parent component
           const script = await update(dependant.component);
           updates[document.id].push(script);
+          this._emitter.trigger(
+            'dev-update-component', 
+            { filePath, document, component: dependant.component }
+          );
           continue;
         }
         
@@ -142,6 +164,8 @@ export default class RefreshServer {
       //this is also a provision for a better 
       //implementation of browser refresh
     });
+
+    this._emitter.trigger('dev-file-changed', { filePath });
 
     return this;
   }

@@ -1,8 +1,4 @@
-import type { 
-  Request, 
-  Response, 
-  TempleCompiler 
-} from '@ossph/temple/compiler';
+import type { Request, Response } from '@ossph/temple/compiler';
 import type { DevelopOptions } from './types';
 
 import fs from 'fs';
@@ -20,25 +16,19 @@ export {
 
 export { RefreshServer };
 
-export function inject(html: string) {
-  return html.replace(
-    '</body>',
-    '<script src="/dev.js"></script></body>'
-  );
-};
-
-export function develop(
-  compiler: TempleCompiler, 
-  options: DevelopOptions = {}
-) {
-  const { include, ignore, route = '/__temple_dev__' } = options;
-  const cwd = compiler.options.cwd || process.cwd();
-  const refresh = new RefreshServer({ cwd, include, ignore });
+export function dev(options: DevelopOptions = {}) {
+  const { 
+    include, 
+    ignore, 
+    emitter,
+    cwd = process.cwd(), 
+    route = '/__temple_dev__' 
+  } = options;
+  const refresh = new RefreshServer({ cwd, emitter, include, ignore });
   refresh.watch();
   return {
-    compiler,
     refresh,
-    serve: function(req: Request, res: Response) {
+    router: function(req: Request, res: Response) {
       if (req.url) {
         const url = new URL(req.url, `http://${req.headers.host}`);
         if (url.pathname === '/dev.js') {
@@ -46,7 +36,8 @@ export function develop(
           const script = fs.readFileSync(
             require.resolve('@ossph/temple-dev/client.js')
           );
-          const start = `;temple_dev.default(TempleBundle.id, {path: '${route}'});`;
+          const id = 'TempleBundle.BUILD_ID';
+          const start = `;temple_dev.default(${id}, {path: '${route}'});`;
           res.end(script + start); 
           return true;
         } else if (url.pathname === route) {

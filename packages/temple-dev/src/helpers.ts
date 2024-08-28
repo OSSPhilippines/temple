@@ -230,7 +230,6 @@ export function transpile(component: Component) {
 
 export async function update(component: Component) {
   return await DocumentBuilder.build('__REFRESH__', {
-    bundle: true,
     minify: false,
     plugins: [ 
       esAliasPlugin({
@@ -239,7 +238,6 @@ export async function update(component: Component) {
       }),
       esRefreshPlugin(component),
       esComponentPlugin({
-        brand: component.brand,
         cwd: component.cwd,
         fs: component.fs
       }),
