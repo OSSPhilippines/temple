@@ -11,7 +11,7 @@ async function bootstrap() {
   app.useStaticAssets(path.join(cwd, 'public'));
   app.setBaseViewsDir(path.join(cwd, 'pages'));
 
-  const compiler = app.get<TempleService>(TempleService).compiler;
+  const { compiler } = app.get<TempleService>(TempleService);
 
   app.engine('dtml', view(compiler));
   app.setViewEngine('dtml');
