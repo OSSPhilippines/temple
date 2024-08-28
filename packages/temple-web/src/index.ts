@@ -81,32 +81,10 @@ app.use((error: Error, req: Request, res: Response, next: Next) => {
 app.get('/temple/build/:build', async (req, res) => {
   //get filename ie. abc123.js
   const filename = req.params.build;
-  //get extension ie. .js
-  const extname = path.extname(filename);
-
-  //get id ie. abc123c
-  const id = path.basename(filename, extname);
-  //get builder from id
-  //const builder = compiler.builder(entry);
-  const builder = compiler.fromId(id);
-
-  //if we found a builder
-  if (builder) {
-    //get content
-    const content = extname === '.html' 
-      ? await builder.markup()
-      : extname === '.css'
-      ? await builder.styles()
-      : extname === '.js'
-      ? await builder.client()
-      : undefined;
-
-    //if we have content
-    if (content) {
-      //send response
-      res.type(extname).send(content);
-    }
-  }
+  //get asset
+  const { type, content } = await compiler.asset(filename);
+  //send response
+  res.type(type).send(content);
 });
 
 app.get('/temple/**', (req, res) => {

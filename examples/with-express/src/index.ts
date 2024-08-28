@@ -1,43 +1,31 @@
 import path from 'path';
 import express from 'express';
 import temple from '@ossph/temple/compiler';
-import engine, { develop, build } from '@ossph/temple-express';
+import { view } from '@ossph/temple-express';
 
 //create temple compiler
-const compiler = temple({ 
-  cwd: __dirname, 
-  buildRoute: '/build/',
-  buildPath: path.resolve(__dirname, '../.build')
-});
+const compiler = temple({ cwd: __dirname, minify: false });
 
 //create express app
 const app = express();
 //set the view engine to temple
 app.set('views', path.join(__dirname, 'pages'));
 app.set('view engine', 'dtml');
-
-//if production (live)
-if (process.env.NODE_ENV === 'production') {
-  //let's use express' template engine feature
-  app.engine('dtml', engine(compiler));
-  //...other production settings...
-//if development mode
-} else {
-  //get development middleware
-  const { serve, engine } = develop(compiler);
-  //use development middleware
-  app.use(serve);
-  //let's use express' template engine feature
-  app.engine('dtml', engine);
-  //...other development settings...
-}
-
-//use the build middleware
-app.use(build(compiler));
+//let's use express' template engine feature
+app.engine('dtml', view(compiler));
 //open public folder
 app.use(express.static('public'));
 
 //routes
+app.get('/build/:build', async (req, res) => {
+  //get filename ie. abc123.js
+  const filename = req.params.build;
+  //get asset
+  const { type, content } = await compiler.asset(filename);
+  //send response
+  res.type(type).send(content);
+});
+
 app.get('/', async (req, res) => {
   //now use the temple template engine
   res.render('index', {

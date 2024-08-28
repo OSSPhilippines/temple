@@ -16,7 +16,7 @@ module.exports = {
         test: /\.tml$/,
         use: {
           loader: '@ossph/temple-loader',
-          options: { minify: false, bundle: false }
+          options: { minify: false }
         },
         exclude: /node_modules/,
       },

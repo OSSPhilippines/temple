@@ -2459,6 +2459,11 @@ assert-plus@1.0.0, assert-plus@^1.0.0:
   resolved "https://registry.yarnpkg.com/assert-plus/-/assert-plus-1.0.0.tgz#f12e0f3c5d77b0b1cdd9146942e4e96c1e4dd525"
   integrity sha512-NfJ4UzBCcQGLDlQq7nHxH+tv3kyZ0hHQqF5BO6J7tNJeP5do1llPr8dZ8zHonfhAu0PHAdMkSo+8o0wxg9lZWw==
 
+assert-plus@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/assert-plus/-/assert-plus-0.1.5.tgz#ee74009413002d84cec7219c6ac811812e723160"
+  integrity sha512-brU24g7ryhRwGCI2y+1dGQmQXiZF7TtIj583S96y0jjdajIe6wn8BuXyELYhvD22dtIxDQVFk04YTJwwdwOYJw==
+
 assertion-error@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/assertion-error/-/assertion-error-1.1.0.tgz#e60b6b0e8f301bd97e5375215bda406c85118c0b"
@@ -7280,6 +7285,13 @@ restify-errors@^8.0.2:
     lodash "^4.17.15"
   optionalDependencies:
     safe-json-stringify "^1.0.4"
+
+restify-router@0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/restify-router/-/restify-router-0.6.2.tgz#b8030135399c4fed1a680ff851abf5fc37198e7c"
+  integrity sha512-GjGoem5KIwL57WGoSV0SnoF3e5ZAdDOQA8YxuyvzvWxLTwrrsg6Obtxi5F400IE8pg0lVqC9Rv37omezdPgq8Q==
+  dependencies:
+    assert-plus "^0.1.5"
 
 restify@11.1.0:
   version "11.1.0"

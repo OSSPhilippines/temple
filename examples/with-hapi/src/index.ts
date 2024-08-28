@@ -25,22 +25,32 @@ const init = async () => {
   server.route({
     method: 'GET',
     path: '/',
-    handler: async () => {
-      const { document } = await compiler.import('./pages/index.dtml');
-      return document.render({
-        title: 'Temple',
-        description: 'Edit this file to change the content of the page.',
-        start: 0,
-        list: [
-          'Edit this file',
-          'Restyle this page',
-          'Create your own component',
-          'Star the Temple Repo',
-          'Write a blog post about Temple',
-          'Fork the respository',
-          'Contribute to the project'
-        ]
-      });
+    handler: () => compiler.render('./pages/index.dtml', {
+      title: 'Temple',
+      description: 'Edit this file to change the content of the page.',
+      start: 0,
+      list: [
+        'Edit this file',
+        'Restyle this page',
+        'Create your own component',
+        'Star the Temple Repo',
+        'Write a blog post about Temple',
+        'Fork the respository',
+        'Contribute to the project'
+      ]
+    })
+  });
+
+  server.route({
+    method: 'GET',
+    path: '/build/{build}',
+    handler: async (req, handler) => {
+      //get filename ie. abc123.js
+      const filename = req.params.build;
+      //get asset
+      const { type, content } = await compiler.asset(filename);
+      //send response
+      return handler.response(content).type(type);
     }
   });
 

@@ -162,7 +162,7 @@ const results = document.render({...props...});
     <link rel="shortcut icon" type="image/png" href="/favicon.png" />
   </head>
   <body class="light">
-    <header class="title">{potitle}</header>
+    <header class="title">{title}</header>
     <div class="logo">
       <img src="/temple-logo.png" alt="Logo" />
     </div>

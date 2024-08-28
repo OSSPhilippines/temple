@@ -12,8 +12,8 @@ app.register(fstatic, {
 const compiler = temple({ cwd: __dirname });
 
 app.get('/', async (req, res) => {
-  const { document } = await compiler.import('./pages/index.dtml');
-  const results = document.render({
+  res.type('text/html');
+  res.send(await compiler.render('./pages/index.dtml', {
     title: 'Temple',
     description: 'Edit this file to change the content of the page.',
     start: 0,
@@ -26,9 +26,16 @@ app.get('/', async (req, res) => {
       'Fork the respository',
       'Contribute to the project'
     ]
-  });
-  res.type('text/html');
-  res.send(results);
+  }));
+});
+
+app.get<{Params: { build: string}}>('/build/:build', async (req, res) => {
+  //get filename ie. abc123.js
+  const filename = req.params.build;
+  //get asset
+  const { type, content } = await compiler.asset(filename);
+  //send response
+  res.type(type).send(content);
 });
 
 app.listen({ port: 3000 }, function (err, address) {

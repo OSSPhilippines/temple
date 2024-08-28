@@ -1,5 +1,6 @@
 import path from 'path';
 import restify from 'restify';
+import { Router } from 'restify-router';
 import temple from '@ossph/temple/compiler';
 
 const cwd = path.dirname(__dirname);
@@ -7,10 +8,11 @@ const cwd = path.dirname(__dirname);
 //general options for temple
 const compiler = temple({ cwd: __dirname, minify: false });
 
-var server = restify.createServer();
-server.get('/', async (req, res, next) => {
-  const { document } = await compiler.import('./pages/index.dtml');
-  const results = document.render({
+const server = restify.createServer();
+const router = new Router();
+router.get('/', async (req, res, next) => {
+  //res.contentType = 'text/html';
+  res.end(await compiler.render('./pages/index.dtml', {
     title: 'Temple',
     description: 'Edit this file to change the content of the page.',
     start: 0,
@@ -23,11 +25,22 @@ server.get('/', async (req, res, next) => {
       'Fork the respository',
       'Contribute to the project'
     ]
-  });
-  //res.contentType = 'text/html';
-  res.end(results);
+  }));
   next();
 });
+
+router.get('/build/:build', async (req, res, next) => {
+  //get filename ie. abc123.js
+  const filename = req.params.build;
+  //get asset
+  const { type, content } = await compiler.asset(filename);
+  //send response
+  res.contentType = type;
+  res.end(content);
+  next();
+});
+
+router.applyRoutes(server);
 
 server.get(
   '/*', 
@@ -36,6 +49,6 @@ server.get(
   )
 ); 
 
-server.listen(8080, function() {
+server.listen(3000, function() {
   console.log('%s listening at %s', server.name, server.url);
 });
