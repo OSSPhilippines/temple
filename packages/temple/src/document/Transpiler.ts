@@ -221,8 +221,10 @@ export default class Transpiler extends ComponentTranspiler {
       //after we registered all the elements, we can now register the 
       //components and let it manip the HTML further if it wants to
       ${components.map(component => {
-        const { tagname, classname } = component;
-        return `customElements.define('${tagname}', ${classname});`
+        const { brand, tagname, classname } = component;
+        return brand 
+          ? `customElements.define('${brand}-${tagname}', ${classname});` 
+          : `customElements.define('${tagname}', ${classname});`
       }).join('\n')}
       //emit the mounted event
       emitter.emit('mounted', document.body);
@@ -418,8 +420,12 @@ export default class Transpiler extends ComponentTranspiler {
       
       //business as usual...
 
+      //get the tagname for the component
+      const tagname = this._component.brand.length > 0 
+        ? `${this._component.brand}-${token.name}`
+        : token.name;
       //create the component
-      expression += `TempleRegistry.createElement('${token.name}', {`;
+      expression += `TempleRegistry.createElement('${tagname}', {`;
     } else {
       //check to see if the token refers to a 
       //template in the registry

@@ -277,6 +277,7 @@ export type FileOptions = {
 export type AliasPluginOptions = FileOptions;
 //options for esbuild plugin
 export type ComponentPluginOptions = FileOptions & {
+  brand?: string,
   tsconfig?: string,
   extname?: string
 };
@@ -286,6 +287,7 @@ export type DocumentPluginOptions = ComponentPluginOptions;
 //options for the component class
 export type ComponentOptions = FileOptions & {
   name?: string,
+  brand?: string,
   type?: ComponentType
 };
 
@@ -317,9 +319,7 @@ export type BuilderBuildOptions = {
 export type ManifestOptions = ComponentOptions & BuilderOptions;
 
 //options for temple() function
-export type TempleOptions = ManifestOptions & {
-  buildPath?: string
-};
+export type TempleOptions = ManifestOptions;
 
 export type CacheOptions = {
   buildPath: string,
@@ -329,8 +329,10 @@ export type CacheOptions = {
 //--------------------------------------------------------------------//
 // Compiler Types
 
+export type AssetType = 'text/html'|'text/javascript'|'text/css'|'text/plain';
+
 export type TempleCompiler = {
-  options: TempleOptions & {
+  config: TempleOptions & {
     cwd: string,
     fs: FileSystem,
     type: ComponentType
@@ -339,8 +341,9 @@ export type TempleCompiler = {
   emitter: EventEmitter,
   manifest: DocumentManifest,
   fromId: (id: string) => DocumentBuilder,
-  fromCache: (file: string) => BuildResults,
+  fromCache: (cacheFile: string) => BuildResults,
   fromSource: (sourceFile: string) => DocumentBuilder,
+  asset: (assetFile: string) => Promise<{ type: AssetType, content: string }>,
   client: (sourceFile: string) => Promise<string>,
   import: (sourceFile: string) => Promise<BuildResults>,
   markup: (sourceFile: string) => Promise<string>,

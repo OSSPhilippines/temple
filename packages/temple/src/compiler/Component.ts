@@ -19,6 +19,8 @@ import { camelize, serialize, slugify } from '../helpers';
 export default class Component {
   //cached AST
   protected _ast: AST|null = null;
+  //brand name used to prefix component names
+  protected _brand: string;
   //cache of component instances
   protected _components: Component[]|undefined;
   //current working directory
@@ -54,6 +56,13 @@ export default class Component {
     }
 
     return this._ast;
+  }
+
+  /**
+   * Gets the brand prefix
+   */
+  public get brand() {
+    return this._brand;
   }
 
   /**
@@ -106,6 +115,7 @@ export default class Component {
         ) ? nameProperty.value.value : undefined;
           
         return new Component(component.source.value, {
+          brand: this._brand,
           cwd: this._cwd,
           fs: this._fs,
           name: name,
@@ -271,6 +281,10 @@ export default class Component {
     options: ComponentOptions = {}, 
     parent: Component|null = null
   ) {
+    //brand name used to prefix component names
+    this._brand = typeof options.brand === 'string' 
+      ? options.brand 
+      : 'temple';
     //current working directory
     this._cwd = options.cwd || process.cwd();
     //filesystem to use

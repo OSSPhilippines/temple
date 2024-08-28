@@ -101,9 +101,12 @@ export default class Transpiler {
       classname, 
       imports,
       styles, 
-      scripts,
-      tagname
+      scripts
     } = this._component;
+    //determine tagname
+    const tagname = this._component.brand 
+      ? `${this._component.brand}-${this._component.tagname}`
+      : this._component.tagname;
     //get path without extension
     //ex. /path/to/Counter.tml -> /path/to/Counter
     const extname = path.extname(absolute);

@@ -5,12 +5,14 @@ import type {
   TempleCompiler 
 } from './types';
 
+import path from 'path';
 import Component from './compiler/Component';
 import DocumentBuilder from './document/Builder';
 import EventEmitter from './document/EventEmitter';
 import DocumentManifest from './document/Manifest';
 import FileSystem from './filesystem/FileSystem';
 import NodeFS from './filesystem/NodeFS';
+import Exception from './Exception';
 
 /**
  * Returns a server version of TempleComponent 
@@ -29,6 +31,9 @@ export default function temple(options: TempleOptions = {}) {
   options.fs = options.fs || new NodeFS();
   options.emitter = options.emitter || new EventEmitter();
   options.type = options.type || 'document';
+  options.brand = typeof options.brand === 'string' 
+    ? options.brand 
+    : 'temple';
   //format the build route
   if (typeof options.buildRoute === 'string') {
     //if the build route does not start with a slash
@@ -46,8 +51,9 @@ export default function temple(options: TempleOptions = {}) {
     }
   }
   const compiler: TempleCompiler = {
-    options: {
+    config: {
       ...options,
+      brand: options.brand as string,
       cwd: options.cwd as string,
       fs: options.fs as FileSystem,
       type: options.type as ComponentType
@@ -67,6 +73,42 @@ export default function temple(options: TempleOptions = {}) {
       const document = new Component(sourceFile, options);
       //return builder
       return new DocumentBuilder(document, options);
+    },
+    async asset(filename: string) {
+      //get extension ie. .js
+      const extname = path.extname(filename);
+      //get id ie. abc123c
+      const id = path.basename(filename, extname);
+      //get builder from id
+      //const builder = compiler.builder(entry);
+      const builder = compiler.fromId(id);
+
+      //if no builder
+      if (!builder) {
+        throw Exception.for('%s is not a registered document', id);
+      }
+      //get content
+      const content = extname === '.html' 
+        ? await builder.markup()
+        : extname === '.css'
+        ? await builder.styles()
+        : extname === '.js'
+        ? await builder.client()
+        : undefined;
+      
+      if (!content) {
+        throw Exception.for('%s has an unrecogized extension', filename);
+      }
+
+      const type = extname === '.html' 
+        ? 'text/html'
+        : extname === '.css'
+        ? 'text/css'
+        : extname === '.js'
+        ? 'text/javascript'
+        : 'text/plain';
+
+      return { content, type };
     },
     async client(sourceFile: string) {
       //get builder

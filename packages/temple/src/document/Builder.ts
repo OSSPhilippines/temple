@@ -191,12 +191,14 @@ export default class Builder {
             fs: this._document.fs
           }),
           esComponentPlugin({
+            brand: this._document.brand,
             cwd: this._document.cwd,
             fs: this._document.fs,
             tsconfig: this._tsconfig,
             extname: this._extnames[0]
           }),
           esDocumentPlugin({
+            brand: this._document.brand,
             cwd: this._document.cwd,
             fs: this._document.fs,
             tsconfig: this._tsconfig,
@@ -256,6 +258,7 @@ export default class Builder {
             fs: this._document.fs
           }),
           esDocumentPlugin({
+            brand: this._document.brand,
             cwd: this._document.cwd,
             fs: this._document.fs,
             tsconfig: this._tsconfig,
