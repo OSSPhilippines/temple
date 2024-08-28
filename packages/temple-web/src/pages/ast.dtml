@@ -44,6 +44,7 @@
   //We also need to becareful with importing browser 
   //scripts here. You should do that in the <head>
   //instead.
+  import { env } from '@ossph/temple';
   const url = '/';
   const title = 'Temple - The reactive web component template engine.';
   const description = 'Temple is a template engine hat generates web components and support reactivity.';

@@ -73,6 +73,7 @@
 
   .terminal {
     background-color: #000000;
+    font-size: 15px;
     padding: 10px;
   }
   .terminal span {

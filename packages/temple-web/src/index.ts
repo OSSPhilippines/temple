@@ -1,18 +1,47 @@
 import type { Request, Response } from 'express';
 
-import fs from 'fs';
+import type { TempleEvent, DocumentBuilder } from '@ossph/temple/compiler';
+
 import path from 'path';
 import express from 'express';
-import temple from '@ossph/temple/compiler';
-import engine, { develop } from '@ossph/temple-express';
+import temple, { withCache } from '@ossph/temple/compiler';
+import { view, dev } from '@ossph/temple-express';
 
 type Next = () => void;
+
+const docs = path.join(__dirname, '../../../docs');
 
 //create temple compiler
 const compiler = temple({ 
   cwd: __dirname,
-  minify: false,
-  brand: '' 
+  minify: false
+});
+
+withCache(compiler, { buildPath: path.join(docs, 'build') });
+
+//on post markup build, cache (dev and live)
+compiler.emitter.on('rendered', (event: TempleEvent<string>) => {
+  //extract builder and sourcecode from params
+  const builder = event.params.builder as DocumentBuilder;
+  const html = event.params.html as string;
+  //get fs and id ie. abc123c
+  const { fs, absolute } = builder.document;
+  const root = path.join(__dirname, 'pages');
+  if (absolute.startsWith(root)) {
+    const extname = path.extname(absolute);
+    const route = absolute.substring(
+      root.length + 1, 
+      absolute.length - extname.length
+    );
+    //get file path ie. /path/to/docs/client/abc123c.html
+    const cache = path.join(docs, `${route || 'index'}.html`);
+    //write the client source code to cache
+    const dirname = path.dirname(cache);
+    if (!fs.existsSync(dirname)) {
+      fs.mkdirSync(dirname, { recursive: true });
+    }
+    fs.writeFileSync(cache, html);
+  }
 });
 
 //create express app
@@ -24,21 +53,20 @@ app.set('view engine', 'dtml');
 //if production (live)
 if (process.env.NODE_ENV === 'production') {
   //let's use express' template engine feature
-  app.engine('dtml', engine(compiler));
+  app.engine('dtml', view(compiler));
   //...other production settings...
 //if development mode
 } else {
   //get development middleware
-  const { serve, engine } = develop(compiler);
+  const { router, view } = dev({ cwd: __dirname });
   //use development middleware
-  app.use(serve);
+  app.use(router);
   //let's use express' template engine feature
-  app.engine('dtml', engine);
-  //...other development settings...
+  app.engine('dtml', view(compiler));
 }
 
 //open public folder
-app.use('/temple', express.static('public'));
+app.use('/temple', express.static(docs));
 //error handling
 app.use((error: Error, req: Request, res: Response, next: Next) => {
   if (error) {
@@ -50,33 +78,52 @@ app.use((error: Error, req: Request, res: Response, next: Next) => {
 });
 
 //routes
+app.get('/temple/build/:build', async (req, res) => {
+  //get filename ie. abc123.js
+  const filename = req.params.build;
+  //get extension ie. .js
+  const extname = path.extname(filename);
+
+  //get id ie. abc123c
+  const id = path.basename(filename, extname);
+  //get builder from id
+  //const builder = compiler.builder(entry);
+  const builder = compiler.fromId(id);
+
+  //if we found a builder
+  if (builder) {
+    //get content
+    const content = extname === '.html' 
+      ? await builder.markup()
+      : extname === '.css'
+      ? await builder.styles()
+      : extname === '.js'
+      ? await builder.client()
+      : undefined;
+
+    //if we have content
+    if (content) {
+      //send response
+      res.type(extname).send(content);
+    }
+  }
+});
+
 app.get('/temple/**', (req, res) => {
   const props = { title: 'Temple Documentation' };
-  // ex. app
+  // from /temple/index.html to index
   const route = (() => {
-    if (req.path.endsWith('.html')) {
-      return req.path.substring(8, req.path.length - 5);
-    }
-    return req.path.substring(8)
+    const route = req.path.endsWith('.html')
+      ? req.path.substring(8, req.path.length - 5)
+      : req.path.substring(8);
+    return route.length === 0 ? 'index' : route;
   })();
-  //if route is empty, go to index
-  if (route.length === 0) {
-    res.type('text/html');
-    return res.render('index', props);
-  }
-  //try templates/app.tml
-  let template = path.join(__dirname, 'pages', route + '.dtml');
-  if (fs.existsSync(template)) {
+  //try /path/to/pages/[route].dtml
+  const template = path.join(__dirname, 'pages', route + '.dtml');
+  if (compiler.fs.existsSync(template)) {
     res.type('text/html');
     return res.render(route, props);
   }
-  //try templates/app/index.tml
-  template = path.join(__dirname, 'pages', route, 'index.dtml');
-  if (fs.existsSync(template)) {
-    res.type('text/html');
-    return res.render(`${route}/index`, props);
-  }
-
   res.status(404).send('Not Found');
 });
 

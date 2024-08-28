@@ -47,13 +47,37 @@
   //We also need to becareful with importing browser 
   //scripts here. You should do that in the <head>
   //instead.
-  import { globals } from '@ossph/temple';
+  import { env } from '@ossph/temple';
   const url = '/docs/';
   const title = 'Documentation - Temple reactive web component template engine.';
   const description = 'Temple is a template engine hat generates web components and support reactivity.';
   const toggle = _ => {
     document.body.classList.toggle('panel-left-open');
   };
+  const snippet1 = `<style>
+      h1 { font-weight: bold; }
+    </style>
+    <script>
+      import { props } from '@ossph/temple';
+      const { name } = props();
+    </script>
+    <h1>Hello {name}!</h1>
+    \n\n\n\n\n\n
+  `.replace(/\n\s{4}/g, '\n');
+  const snippet2 = `
+    import { props } from '@ossph/temple';
+    export default class Hello extends TempleComponent {
+      styles() {
+        return 'h1 { font-weight: bold; }';
+      }
+      template() {
+        const { name } = props();
+        return () => [
+          TempleRegistry.createElement('h1', null, \`Hello \${name}\`)
+        ]
+      }
+    }
+  `.trim().replace(/\n\s{8}/g, '\n');
 </script>
 <html>
   <html-head />
@@ -107,35 +131,8 @@
       <div class="container">
         <window-app title="Transpiler Example">
           <div class="snippet-preview">
-            <code-snippet>{`<style>
-  h1 { font-weight: bold; }
-</style>
-<script>
-  import { props } from '@ossph/temple';
-  const { name } = props();
-</script>
-<h1>Hello {name}!</h1>
-
-
-
-
-
-            `}</code-snippet>
-            <code-snippet lang="js">{`
-import { props } from '@ossph/temple';
-
-export default class Hello extends TempleComponent {
-  styles() {
-    return 'h1 { font-weight: bold; }';
-  }
-  template() {
-    const { name } = props();
-    return () => [
-      TempleRegistry.createElement('h1', null, \`Hello \${name}\`)
-    ]
-  }
-}
-            `.trim()}</code-snippet>
+            <code-snippet>{snippet1}</code-snippet>
+            <code-snippet lang="js">{snippet2}</code-snippet>
           </div>
         </window-app>
       </div>

@@ -20,7 +20,7 @@
   //We also need to becareful with importing browser 
   //scripts here. You should do that in the <head>
   //instead.
-  import { props } from '@ossph/temple';
+  import { env, props } from '@ossph/temple';
 
   const url = '/temple/500.html';
   const title = 'Oops... - Temple - The reactive web component template engine.';

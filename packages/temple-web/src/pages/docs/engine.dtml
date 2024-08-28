@@ -1,0 +1,327 @@
+<link rel="import" type="template" href="@/templates/html-head.tml" />
+<link rel="import" type="template" href="@/templates/panel-head.tml" />
+<link rel="import" type="template" href="@/templates/panel-left.tml" />
+<link rel="import" type="component" href="@/components/panel-main.tml" />
+<link rel="import" type="component" href="@/components/window-app.tml" />
+<link rel="import" type="component" href="@/components/code-snippet.tml" />
+<link rel="import" type="component" href="@/components/tui-tab.tml" />
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+  }
+  h1 { text-transform: uppercase; }
+  a, a:link, a:hover, a:active, a:visited {
+    color: var(--fg-primary);
+    text-decoration: none;
+  }
+  p, li {
+    line-height: 24px;
+  }
+  p {
+    margin-bottom: 20px;
+  }
+  th {
+    padding: 10px;
+    text-align: left;
+    text-transform: uppercase;
+  }
+  td {
+    border-color: var(--muted);
+    border-top-style: solid;
+    border-top-width: 1px;
+    padding: 10px;
+  }
+  .fab, .fas, .fa {
+    line-height: 16px;
+  }
+  h1 {
+    margin: 20px 0;
+  }
+  .container {
+    padding: 10px 20px;
+  }
+  .tbl-container {
+    margin-bottom: 20px;
+  }
+</style>
+<script>
+  //This is ran on both the server and the browser
+  //There is no signal, children prop here because 
+  //this is not a component.
+  //
+  //We also need to becareful with importing browser 
+  //scripts here. You should do that in the <head>
+  //instead.
+  import { env } from '@ossph/temple';
+  const url = '/docs/';
+  const title = 'Getting Started - Temple reactive web component template engine.';
+  const description = 'Temple is a template engine hat generates web components and support reactivity.';
+  const toggle = _ => {
+    document.body.classList.toggle('panel-left-open');
+  };
+
+  const tagname = { 
+    script: 'script',
+    style: 'style', 
+    head: 'head', 
+    body: 'body' 
+  };
+  const snippet1 = `//on server:
+    import temple from '@ossph/temple/compiler';
+    //make a temple compiler
+    const compiler = temple();
+    //import a temple document file
+    const { document } = await compiler.import('./page.dtml');
+    //render final HTML
+    const results = document.render();
+    //show final HTML
+    console.log(results);
+  `.trim().replace(/\n\s{4}/g, '\n');
+  
+  const snippet2 = `<${tagname.style}>
+      body { 
+        background-color: #DA532C; 
+        color: #EFEFEF; 
+      }
+      .title { text-align: center; }
+    </${tagname.style}>
+    <${tagname.script}>
+      const title = 'Hello World';
+    </${tagname.script}>
+    <html>
+      <${tagname.head}>
+        <title>{title}</title>
+      </${tagname.head}>
+      <${tagname.body}>
+        <h1 class="title">{title}</h1>
+      </${tagname.body}>
+    </html>
+  `.trim().replace(/\n\s{8}/g, '\n');
+</script>
+<html>
+  <html-head />
+  <body class="dark panel with-head with-left">
+    <panel-head />
+    <panel-left />
+    <panel-main class="panel-main">
+      <div class="container">
+        <h1>Getting Started</h1>
+        <p>
+          To use Temple in a project, run the following commands in terminal: 
+        </p>
+        <window-app title="Terminal">
+          <code-snippet lang="bash">
+            npm install --save @ossph/temple
+          </code-snippet>
+          <code-snippet lang="bash">
+            npm install --save-dev ts-node typescript
+          </code-snippet>
+        </window-app>
+        <p>
+          Create a server file called
+          <code-snippet lang="js" inline>'src/index.ts'</code-snippet> 
+          with the following code that uses the compiler.
+        </p>
+        <window-app title="src/index.ts">
+          <code-snippet lang="js">{snippet1}</code-snippet>
+        </window-app>
+        <p>
+          Next, create a document file called
+          <code-snippet lang="js" inline>'src/page.dtml'</code-snippet> 
+          with the following template code.
+        </p>
+        <window-app title="src/page.dtml">
+          <code-snippet>{snippet2}</code-snippet>
+        </window-app>
+        <p>
+          To test the script and see the results, run the following 
+          command in terminal.
+        </p>
+        <window-app title="Terminal">
+          <code-snippet lang="bash">
+            npx ts-node src/index.ts
+          </code-snippet>
+        </window-app>
+        <p>
+          The <code-snippet lang="js" inline>temple()</code-snippet> 
+          function in the example above takes in the 
+          following options, all of which are optional.
+        </p>
+        <div class="tbl-container">
+          <table class="tbl">
+            <thead>
+              <th>Option</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>brand</td>
+                <td>string; Name to prefix all components</td>
+              </tr>
+              <tr>
+                <td>buildPath</td>
+                <td>string, The path to the build folder</td>
+              </tr>
+              <tr>
+                <td>buildRoute</td>
+                <td>string, The build route path</td>
+              </tr>
+              <tr>
+                <td>cwd</td>
+                <td>The current working directory; the path to your project root</td>
+              </tr>
+              <tr>
+                <td>fs</td>
+                <td>
+                  The file system to use as defined in 
+                  <a href="https://github.com/OSSPhilippines/temple/blob/version/0.0.15/packages/temple/src/filesystem/FSInterface.ts" target="_blank">
+                    FSInterface
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>minify</td>
+                <td>boolean; Whether to minify the code</td>
+              </tr>
+              <tr>
+                <td>name</td>
+                <td>string; Custom name of component</td>
+              </tr>
+              <tr>
+                <td>type</td>
+                <td>string; Type of component. ie. component, document</td>
+              </tr>
+              <tr>
+                <td>tsconfig</td>
+                <td>string; Path for a custom typescript configuration file</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Calling <code-snippet lang="js" inline>{`temple()`}</code-snippet> as in 
+          <code-snippet lang="js" inline>{`compiler = temple({/*options*/})`}</code-snippet> 
+          returns the following object.
+        </p>
+        <div class="tbl-container">
+          <table class="tbl">
+            <thead>
+              <th>Property</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <code-snippet lang="js" inline>compiler.builder</code-snippet>
+                </td>
+                <td>
+                  An instance of a DocumentBuilder as defined in
+                  <a href="https://github.com/OSSPhilippines/temple/blob/version/0.0.15/packages/temple/src/document/Builder.ts" target="_blank">
+                    DocumentBuilder
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code-snippet lang="js" inline>compiler.import</code-snippet>
+                </td>
+                <td>
+                  An importer that returns an object that can be used 
+                  on the server.
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code-snippet lang="js" inline>compiler.options</code-snippet>
+                </td>
+                <td>An object with the final calculated options.</td>
+              </tr>
+              <tr>
+                <td>
+                  <code-snippet lang="js" inline>compiler.emitter</code-snippet>
+                </td>
+                <td>
+                  An event emitter that emits events through out the 
+                  build cycle of temple.
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code-snippet lang="js" inline>compiler.manifest</code-snippet>
+                </td>
+                <td>
+                  Manifest controls used to build the client script, 
+                  server script, styles and markup to build files.
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code-snippet lang="js" inline>compiler.serve</code-snippet>
+                </td>
+                <td>
+                  A handler for http server that serves build files 
+                  dynamically.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Calling <code-snippet lang="js" inline>{`import()`}</code-snippet> as in 
+          <code-snippet lang="js" inline>{`build = await compiler.import('./page.dtml')`}</code-snippet> 
+          returns the following object.
+        </p>
+        <div class="tbl-container">
+          <table class="tbl">
+            <thead>
+              <th>Property</th>
+              <th>Description</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <code-snippet lang="js" inline>build.source.server</code-snippet>
+                </td>
+                <td>string; The JavaScript server code</td>
+              </tr>
+              <tr>
+                <td>
+                  <code-snippet lang="js" inline>build.source.client</code-snippet>
+                </td>
+                <td>string; The JavaScript client code</td>
+              </tr>
+              <tr>
+                <td>
+                  <code-snippet lang="js" inline>build.TempleDocument</code-snippet>
+                </td>
+                <td>
+                  The Document class definition to use on the server and as defined in 
+                  <a href="https://github.com/OSSPhilippines/temple/blob/version/0.0.15/packages/temple/src/server/TempleDocument.ts" target="_blank">
+                    TempleDocument
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code-snippet lang="js" inline>build.document</code-snippet>
+                </td>
+                <td>
+                  The Document class instance with preloaded values to 
+                  use on the server and as defined in 
+                  <a href="https://github.com/OSSPhilippines/temple/blob/version/0.0.15/packages/temple/src/server/TempleDocument.ts" target="_blank">
+                    TempleDocument
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <footer class="foot"></footer>
+    </panel-main>
+  </body>
+</html>
