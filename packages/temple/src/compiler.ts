@@ -35,12 +35,14 @@ import {
   toJS,
   toTS,
   load
-} from './compiler/helpers';
+} from './helpers';
 
 import DocumentBuilder from './document/Builder';
+import EventEmitter, { 
+  Event as TempleEvent 
+} from './document/EventEmitter';
 import DocumentManifest from './document/Manifest';
 import DocumentTranspiler from './document/Transpiler';
-import router from './document/router';
 import { 
   esAliasPlugin, 
   esComponentPlugin, 
@@ -52,6 +54,7 @@ import FileLoader from './filesystem/FileLoader';
 import NodeFS from './filesystem/NodeFS';
 
 import Exception from './Exception';
+import withCache from './cache';
 import temple from './temple';
 
 export {
@@ -68,6 +71,7 @@ export {
   DocumentBuilder,
   DocumentManifest,
   DocumentTranspiler,
+  EventEmitter,
   FileSystem,
   FileLoader,
   NodeFS,
@@ -75,6 +79,7 @@ export {
   Parser,
   Tokenizer,
   Exception,
+  TempleEvent,
   definitions,
   scalar,
   data,
@@ -92,7 +97,7 @@ export {
   esComponentPlugin, 
   esDocumentPlugin,
   esWorkspacePlugin,
-  router
+  withCache
 };
 
 export default temple;

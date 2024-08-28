@@ -7,11 +7,11 @@ import type {
 } from '../types';
 
 import path from 'path';
+import EventEmitter from './EventEmitter';
 import esbuild from 'esbuild';
-import EventEmitter from '@blanquera/types/dist/EventEmitter';
 import Component from '../compiler/Component';
 import DocumentTranspiler from '../document/Transpiler';
-import { load } from '../compiler/helpers';
+import { load } from '../helpers';
 import {
   esAliasPlugin,
   esComponentPlugin,
@@ -28,6 +28,7 @@ export default class Builder {
     options: BuilderBuildOptions = {}
   ) {
     const { 
+      format = 'iife',
       minify = true, 
       bundle = true,
       platform = 'browser',
@@ -44,7 +45,7 @@ export default class Builder {
       minifySyntax: minify,
       //Immediately Invoked Function Expression format 
       //for browser compatibility
-      format: 'iife', 
+      format, 
       globalName,
       plugins,
       platform,
@@ -56,13 +57,27 @@ export default class Builder {
     return results.outputFiles[0].text;
   }
 
+  /**
+   * Loads a source code string into the runtime
+   */
+  public static load(source: string) {
+    const context = load(source);
+    //get the Document
+    const Document = context.TempleBundle.default as ServerDocumentClass;
+    //instantiate document
+    const document = new Document();
+    return {
+      source,
+      TempleDocument: Document,
+      document: document
+    };
+  }
+
   protected _buildRoute: string|undefined;
-  //whether to bundle the code
-  protected _bundle: boolean;
   //document component
   protected _document: Component;
   //emitter
-  protected _emitter: EventEmitter<any[]>;
+  protected _emitter: EventEmitter;
   //file extensions
   protected _extnames: [ string, string ] = [ 'tml', 'dtml' ];
   //whether to minify the code
@@ -95,13 +110,6 @@ export default class Builder {
   }
 
   /**
-   * Returns the build route prefix
-   */
-  public get buildRoute() {
-    return this._buildRoute;
-  }
-
-  /**
    * Returns the transpiler
    */
   public get transpiler() {
@@ -123,7 +131,6 @@ export default class Builder {
       buildRoute,
       emitter = new EventEmitter(),
       minify = true, 
-      bundle = true,
       component_extname = 'tml',
       document_extname = 'dtml',
       tsconfig = path.resolve(__dirname, '../../tsconfig.json')
@@ -132,7 +139,6 @@ export default class Builder {
     this._buildRoute = buildRoute;
     this._emitter = emitter;
     this._minify = minify;
-    this._bundle = bundle;
     this._extnames = [ component_extname, document_extname ];
 
     //generated values
@@ -148,49 +154,34 @@ export default class Builder {
   /**
    * Builds the document
    */
-  public async build() {
-    const server = await this.server();
+  public async build() {//emit build event
+    const pre = this._emitter.trigger<string>('build', { 
+      builder: this
+    });
+    const source = pre.data || await this.server();
     //run server script and get the context
-    const context = load(server);
-    //get the Document
-    const Document = context.TempleBundle.default as ServerDocumentClass;
-    if (this._buildRoute) {
-      //instantiate document
-      const document = new Document(this._buildRoute, 'include');
-      const results: BuildResults = {
-        source: { client: '', server },
-        TempleDocument: Document,
-        document: document
-      };
-      //emit build event
-      this._emitter.emitSync('build', results, this);
-      return results;
-    }
-    //generate client
-    const client = await this.client();
-    const document = new Document(client, 'inline');
-    const results: BuildResults = {
-      source: { client, server },
-      TempleDocument: Document,
-      document: document
-    };
-    //emit build event
-    this._emitter.emitSync('build', results, this);
-    return results;
+    const results: BuildResults = Builder.load(source);
+    //emit built event
+    const post = this._emitter.trigger<BuildResults>('built', { 
+      builder: this, 
+      build: results 
+    });
+    return post.data || results;
   }
 
   /**
    * Sets the source code to compile
    */
   public async client() {
-    const results: { source?: string } = {};
     //emit build-client event
-    this._emitter.emitSync('build-client', results, this);
+    const pre = this._emitter.trigger<string>('build-client', { 
+      builder: this 
+    });
     // Bundle with esbuild
-    const sourceCode = results.source || await Builder.build(
+    const sourceCode = pre.data || await Builder.build(
       this._document.absolute, 
       {
-        bundle: this._bundle,
+        bundle: true,
         minify: this._minify,
         platform: 'browser',
         globalName: 'TempleBundle',
@@ -200,14 +191,12 @@ export default class Builder {
             fs: this._document.fs
           }),
           esComponentPlugin({
-            brand: this._document.brand,
             cwd: this._document.cwd,
             fs: this._document.fs,
             tsconfig: this._tsconfig,
             extname: this._extnames[0]
           }),
           esDocumentPlugin({
-            brand: this._document.brand,
             cwd: this._document.cwd,
             fs: this._document.fs,
             tsconfig: this._tsconfig,
@@ -218,49 +207,55 @@ export default class Builder {
       }
     );
     //emit built-client event
-    this._emitter.emitSync('built-client', sourceCode, this);
-
-    return sourceCode;
+    const post = this._emitter.trigger<string>('built-client', { 
+      ...pre.params, 
+      sourceCode 
+    });
+    return post.data || sourceCode;
   }
 
   /**
    * Returns the markup
    */
   public async markup() {
-    const results: { source?: string } = {};
     //emit build-markup event
-    this._emitter.emitSync('build-markup', results, this);
+    const pre = this._emitter.trigger<string>('build-markup', { 
+      builder: this 
+    });
     //build the styles
-    const sourceCode = results.source || (
+    const sourceCode = pre.data || (
       await this.build()
     ).document.render();
     //emit built-markup event
-    this._emitter.emitSync('built-markup', sourceCode, this);
-    return sourceCode;
+    const post = this._emitter.trigger<string>('built-markup', { 
+      ...pre.params, 
+      sourceCode 
+    });
+    return post.data || sourceCode;
   }
 
   /**
    * Sets the source code to compile
    */
   public async server() {
-    const results: { source?: string } = {};
     //emit build-server event
-    this._emitter.emitSync('build-server', results, this);
+    const pre = this._emitter.trigger<string>('build-server', { 
+      builder: this 
+    });
     // Bundle with esbuild
-    const sourceCode = results.source || await Builder.build(
+    const sourceCode = pre.data || await Builder.build(
       this._document.absolute, 
       {
-        bundle: this._bundle,
         minify: this._minify,
-        globalName: 'TempleBundle',
+        bundle: true,
         platform: 'node',
+        globalName: 'TempleBundle',
         plugins: [ 
           esAliasPlugin({
             cwd: this._document.cwd,
             fs: this._document.fs
           }),
           esDocumentPlugin({
-            brand: this._document.brand,
             cwd: this._document.cwd,
             fs: this._document.fs,
             tsconfig: this._tsconfig,
@@ -271,23 +266,30 @@ export default class Builder {
       }
     );
     //emit build-server event
-    this._emitter.emitSync('built-server', sourceCode, this);
-    return sourceCode;
+    const post = this._emitter.trigger<string>('built-server', { 
+      ...pre.params, 
+      sourceCode 
+    });
+    return post.data || sourceCode;
   }
 
   /**
    * Returns the styles
    */
   public async styles() {
-    const results: { source?: string } = {};
     //emit build-markup event
-    this._emitter.emitSync('build-styles', results, this);
+    const pre = this._emitter.trigger<string>('build-styles', { 
+      builder: this 
+    });
     //build the styles
-    const sourceCode = results.source || (
+    const sourceCode = pre.data || (
       await this.build()
     ).document.styles();
     //emit built-styles event
-    this._emitter.emitSync('built-styles', sourceCode, this);
-    return sourceCode;
+    const post = this._emitter.trigger<string>('built-styles', { 
+      ...pre.params, 
+      sourceCode 
+    });
+    return post.data || sourceCode;
   }
 };

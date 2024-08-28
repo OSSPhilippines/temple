@@ -27,15 +27,13 @@ export default class Transpiler extends ComponentTranspiler {
     //create a new source file
     const { source } = this._createSourceFile(`${filePath}.ts`);
     //import { 
-    //  data,
-    //  TempleElement,  
     //  TempleDocument,
+    //  TempleElement,  
     //  TempleRegistry
     //} from '@ossph/temple/server';
     source.addImportDeclaration({
       moduleSpecifier: '@ossph/temple/server',
       namedImports: [
-        'data as __APP_DATA__',
         'TempleDocument',
         'TempleElement',  
         'TempleRegistry'
@@ -90,12 +88,9 @@ export default class Transpiler extends ComponentTranspiler {
     component.addMethod({
       name: 'template',
       statements: `
-        ${scripts.length > 0 
-          ? scripts.join('\n')
-          : `const props = __APP_DATA__.get('props') || {};`
-        }
+        ${scripts.join('\n')}
         return ${this.markup.trim()};
-      `
+      `.trim()
     });
 
     return source;
@@ -130,6 +125,7 @@ export default class Transpiler extends ComponentTranspiler {
       moduleSpecifier: '@ossph/temple/client',
       namedImports: [ 
         'TempleRegistry', 
+        'TempleException',
         'emitter', 
         'data as __APP_DATA__' 
       ]
@@ -176,12 +172,23 @@ export default class Transpiler extends ComponentTranspiler {
     });
 
     source.addStatements(`emitter.once('ready', () => {
+      const script = document.querySelector('script[data-app]');
+      if (!script) {
+        throw TempleException.for('APP_DATA not found');
+      }
+      try {
+        const data = atob(script.getAttribute('data-app'));
+        window.__APP_DATA__ = JSON.parse(data);
+        Object.entries(window.__APP_DATA__).forEach(([key, value]) => {
+          __APP_DATA__.set(key, value);
+        });
+      } catch (error) {
+        throw TempleException.for('APP_DATA is not a valid JSON');
+      }
       //set the current component
       __APP_DATA__.set('current', 'document');
       //run the user entry script
-      ${scripts.length > 0 
-        ? scripts.join('\n')
-        : `const props = __APP_DATA__.get('props') || {};`}
+      ${scripts.join('\n')}
       //reset the current component
       __APP_DATA__.delete('current');
       //now serialize the props
@@ -214,10 +221,8 @@ export default class Transpiler extends ComponentTranspiler {
       //after we registered all the elements, we can now register the 
       //components and let it manip the HTML further if it wants to
       ${components.map(component => {
-        const { brand, tagname, classname } = component;
-        return brand 
-          ? `customElements.define('${brand}-${tagname}', ${classname});` 
-          : `customElements.define('${tagname}', ${classname});`
+        const { tagname, classname } = component;
+        return `customElements.define('${tagname}', ${classname});`
       }).join('\n')}
       //emit the mounted event
       emitter.emit('mounted', document.body);
@@ -254,12 +259,12 @@ export default class Transpiler extends ComponentTranspiler {
       }]
     });
 
-    // export const id = { ... }
+    // export const BUILD_ID = { ... }
     source.addVariableStatement({
       declarationKind: VariableDeclarationKind.Const,
       isExported: true,
       declarations: [{
-        name: 'id',
+        name: 'BUILD_ID',
         initializer: `'${this._component.id}'`
       }]
     });
@@ -413,12 +418,8 @@ export default class Transpiler extends ComponentTranspiler {
       
       //business as usual...
 
-      //get the tagname for the component
-      const tagname = this._component.brand.length > 0 
-        ? `${this._component.brand}-${token.name}`
-        : token.name;
       //create the component
-      expression += `TempleRegistry.createComponent('${tagname}', {`;
+      expression += `TempleRegistry.createElement('${token.name}', {`;
     } else {
       //check to see if the token refers to a 
       //template in the registry

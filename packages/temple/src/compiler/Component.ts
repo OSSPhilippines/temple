@@ -1,14 +1,14 @@
 //types
-import type FSInterface from '../filesystem/FileSystem';
+import type FileSystem from '../filesystem/FileSystem';
 import type { AST, ComponentType, ComponentOptions } from '../types';
 //filesystem
 import path from 'path';
 import FileLoader from '../filesystem/FileLoader';
-import FileSystem from '../filesystem/NodeFS';
+import NodeFS from '../filesystem/NodeFS';
 //parsers/compilers
 import Tokenizer from './Tokenizer';
 //helpers
-import { camelize, serialize, slugify } from './helpers';
+import { camelize, serialize, slugify } from '../helpers';
 
 /**
  * The Temple Compiler
@@ -19,14 +19,12 @@ import { camelize, serialize, slugify } from './helpers';
 export default class Component {
   //cached AST
   protected _ast: AST|null = null;
-  //prefix brand
-  protected _brand: string;
   //cache of component instances
   protected _components: Component[]|undefined;
   //current working directory
   protected _cwd: string;
   //filesystem to use
-  protected _fs: FSInterface;
+  protected _fs: FileSystem;
   //the name of the component
   protected _name: string;
   //file loader helper
@@ -56,13 +54,6 @@ export default class Component {
     }
 
     return this._ast;
-  }
-
-  /**
-   * Gets the brand prefix
-   */
-  public get brand() {
-    return this._brand;
   }
 
   /**
@@ -115,7 +106,6 @@ export default class Component {
         ) ? nameProperty.value.value : undefined;
           
         return new Component(component.source.value, {
-          brand: this._brand,
           cwd: this._cwd,
           fs: this._fs,
           name: name,
@@ -281,18 +271,17 @@ export default class Component {
     options: ComponentOptions = {}, 
     parent: Component|null = null
   ) {
-    //set the prefix brand
-    this._brand = typeof options.brand === 'string'
-      ? options.brand
-      : 'temple';
     //current working directory
     this._cwd = options.cwd || process.cwd();
     //filesystem to use
-    this._fs = options.fs || new FileSystem();
+    this._fs = options.fs || new NodeFS();
     //file loader helper
     this._loader = new FileLoader(this._fs, this._cwd);
     //the name of the component
-    this._name = options.name || path.basename(source, path.extname(source));
+    this._name = options.name || path.basename(
+      source, 
+      path.extname(source)
+    );
     //ex. /path/to/component.tml
     //ex. ./path/to/component.tml
     //ex. ../path/to/component.tml

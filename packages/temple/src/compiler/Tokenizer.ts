@@ -154,10 +154,18 @@ export default class Tokenizer {
     if (type === 'ImportDeclaration') {
       //if we have attributes
       if (attributes) {
-        //map the attributes to an actual object
-        const config = Parser.object(attributes);
+        //find rel and href from attributes
+        const rel = attributes.properties.find(
+          property => property.key.name === 'rel'
+        );
+        const href = attributes.properties.find(
+          property => property.key.name === 'href'
+        );
         //if this is an import tag and there's an href
-        if (config.rel === 'import' && config.href) {
+        if (rel?.value.type === 'Literal' 
+          && rel.value.value === 'import' 
+          && href?.value.type === 'Literal'
+        ) {
           //create a component token
           const component: ComponentToken = {
             type: 'ComponentDeclaration',
@@ -168,8 +176,9 @@ export default class Tokenizer {
               type: 'Literal',
               start: attributes.start,
               end: attributes.end,
-              value: config.href,
-              raw: `'${config.href}'`
+              value: href.value.value,
+              raw: href.value.raw,
+              escape: false
             }
           };
           //add the import to the imports
@@ -288,7 +297,8 @@ export default class Tokenizer {
           start: last,
           end: program.start,
           value: this.substring(last, program.start),
-          raw: `'${this.substring(last, program.start).replace(/'/g, "\\'")}'`
+          raw: `'${this.substring(last, program.start).replace(/'/g, "\\'")}'`,
+          escape: false
         });
       }
       //push program expression token
@@ -297,6 +307,7 @@ export default class Tokenizer {
         start: program.start + 1,
         end: program.end - 1,
         inline: true,
+        runtime: false,
         source: this.substring(
           program.start + 1, 
           program.end - 1
@@ -312,7 +323,8 @@ export default class Tokenizer {
         start: last,
         end: end,
         value: this.substring(last, end),
-        raw: `'${this.substring(last, end).replace(/'/g, "\\'")}'`
+        raw: `'${this.substring(last, end).replace(/'/g, "\\'")}'`,
+        escape: false
       });
     }
   }
@@ -431,7 +443,8 @@ export default class Tokenizer {
             start: name.start,
             end: name.end,
             value: true,
-            raw: 'true'
+            raw: 'true',
+            escape: false
           },
           spread: false,
           method: false,
@@ -483,6 +496,45 @@ export default class Tokenizer {
       //create the markup token
       this._addTagToMarkup(tag, open, false);
       return;
+    //if this script tag is inside of another html tag
+    } else if (this._stack.length > 0) {
+      //dont parse this sub script, it will be ran on the 
+      //browser (not the server); treat it like a literal
+      //that wont be escaped...
+
+      //check for type attribute
+      // const type = open.attributes?.properties.find(
+      //   property => property.key.name === 'type'
+      // );
+      
+      //get the parent
+      const parent = this._stack[this._stack.length - 1];
+      //create the markup token
+      const token: MarkupToken = {
+        type: 'MarkupExpression',
+        name: tag.name,
+        kind: 'block',
+        start: open.start,
+        end: tag.end,
+        attributes: open.attributes,
+        children: [ 
+          {
+            type: 'Literal',
+            start: open.end,
+            end: tag.start,
+            value: this.substring(open.end, tag.start),
+            raw: `'${this.substring(open.end, tag.start).replace(/'/g, "\\'")}'`,
+            escape: true
+          }  
+        ]
+      };
+      //if the parent has no children
+      if (!parent.children || parent.children.length === 0) {
+        parent.children = [];
+      }
+      //add the token to the parent
+      parent.children.push(token);
+      return;
     }
     //parse the script 
     const source = this.substring(open.end, tag.start);
@@ -508,7 +560,8 @@ export default class Tokenizer {
         start: tag.start + clause.name.getStart(sourceFile),
         end: tag.start + clause.name.getEnd(),
         value: clause.name.getText(sourceFile),
-        raw: `'${clause.name.getText(sourceFile)}'`
+        raw: `'${clause.name.getText(sourceFile)}'`,
+        escape: true
       }: undefined
       //get the from clause
       const sourceText = statement.moduleSpecifier.getText(sourceFile);
@@ -517,7 +570,8 @@ export default class Tokenizer {
         start: tag.start + statement.moduleSpecifier.getStart(sourceFile) + 1,
         end: tag.start + statement.moduleSpecifier.getEnd() - 1,
         value: sourceText.substring(1, sourceText.length - 1),
-        raw: `'${sourceText.substring(1, sourceText.length - 1)}'`
+        raw: `'${sourceText.substring(1, sourceText.length - 1)}'`,
+        escape: true
       };
       //get name bindings
       const names: LiteralToken[] = [];
@@ -531,7 +585,8 @@ export default class Tokenizer {
           start: tag.end + node.getStart(sourceFile),
           end: tag.end + node.getEnd(),
           value: name,
-          raw: `'${name}'`
+          raw: `'${name}'`,
+          escape: true
         });
       });
       //create the import token
@@ -561,6 +616,7 @@ export default class Tokenizer {
       start: open.end,
       end: tag.start,
       inline: false,
+      runtime: true,
       attributes: open.attributes,
       source: this.substring(open.end + offsetStart, tag.start).trim()
     };

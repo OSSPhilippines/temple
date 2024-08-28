@@ -1,17 +1,16 @@
 import type { 
+  Hash,
   ComponentType, 
   TempleOptions, 
   TempleCompiler 
 } from './types';
 
-import EventEmitter from '@blanquera/types/dist/EventEmitter';
 import Component from './compiler/Component';
 import DocumentBuilder from './document/Builder';
+import EventEmitter from './document/EventEmitter';
 import DocumentManifest from './document/Manifest';
-import router from './document/router';
 import FileSystem from './filesystem/FileSystem';
 import NodeFS from './filesystem/NodeFS';
-import Exception from './Exception';
 
 /**
  * Returns a server version of TempleComponent 
@@ -54,26 +53,74 @@ export default function temple(options: TempleOptions = {}) {
       type: options.type as ComponentType
     },
     emitter: options.emitter,
+    fs: options.fs as FileSystem,
     manifest: new DocumentManifest(options),
-    serve() {
-      if (!options.buildRoute) {
-        throw Exception.for('No build route specified in options');
-      } else if (!options.buildPath) {
-        throw Exception.for('No build path specified in options');
-      }
-      return router(compiler, options.buildRoute, options.buildPath);
+    fromId(id: string) {
+      return compiler.manifest.builder(id);
     },
-    builder(sourceFile: string) {
+    fromCache(cacheFile: string) {
+      const source = compiler.fs.readFileSync(cacheFile, 'utf8');
+      return DocumentBuilder.load(source);
+    },
+    fromSource(sourceFile: string) {
       //make component
       const document = new Component(sourceFile, options);
       //return builder
       return new DocumentBuilder(document, options);
     },
+    async client(sourceFile: string) {
+      //get builder
+      const builder = this.fromSource(sourceFile);
+      //get the { source, TempleDocument, document }
+      return await builder.client();
+    },
     async import(sourceFile: string) {
-      //get bundler
-      const builder = this.builder(sourceFile);
+      //get builder
+      const builder = this.fromSource(sourceFile);
       //get the { source, TempleDocument, document }
       return await builder.build();
+    },
+    async markup(sourceFile: string) {
+      //get builder
+      const builder = this.fromSource(sourceFile);
+      //get the { source, TempleDocument, document }
+      return await builder.markup();
+    },
+    async server(sourceFile: string) {
+      //get builder
+      const builder = this.fromSource(sourceFile);
+      //get the { source, TempleDocument, document }
+      return await builder.server();
+    },
+    async styles(sourceFile: string) {
+      //get builder
+      const builder = this.fromSource(sourceFile);
+      //get the { source, TempleDocument, document }
+      return await builder.styles();
+    },
+    async render(sourceFile: string, props: Hash) {
+      //get builder
+      const builder = compiler.fromSource(sourceFile);
+      //update manifest in memory
+      compiler.manifest.set(
+        builder.document.id, 
+        builder.document.absolute
+      );
+      //get the build object
+      const build = await builder.build();
+      //emit view render event
+      const pre = compiler.emitter.trigger<string>(
+        'render', 
+        { builder, build, props }
+      );
+      //render the document
+      const html = pre.data || build.document.render(props);
+      //emit view rendered event
+      const post = compiler.emitter.trigger<string>(
+        'rendered', 
+        { builder, build, props, html }
+      );
+      return post.data || html;
     }
   };
   return compiler;

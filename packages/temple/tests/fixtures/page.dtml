@@ -9,38 +9,41 @@
   }
 </style>
 <script>
-import snippets from '@/modules/snippets/home';
-const url = '/';
-const title = 'Temple - The reactive web component template engine.';
-const description = 'Temple is a template engine hat generates web components and support reactivity.';
-const snippet1 = `//on server:
-import temple from '@ossph/temple/compiler';
-//make a temple compiler
-const compiler = temple();
-//import a temple document file
-const { document } = await compiler.import('./page.dtml');
-//render final HTML
-const results = document.render();
-//show final HTML
-console.log(results);`;
-const snippet2 = `<style>
-body { 
-  background-color: #DA532C; 
-  color: #EFEFEF; 
-}
-.title { text-align: center; }
-</style>
-<script>
-const title = 'Hello World';
-</script>
-<html>
-<head>
-  <title>{title}</title>
-</head>
-<body>
-  <h1 class="title">{title}</h1>
-</body>
-</html>`;
+  import snippets from '@/modules/snippets/home';
+  const url = '/';
+  const title = 'Temple - The reactive web component template engine.';
+  const description = 'Temple is a template engine hat generates web components and support reactivity.';
+  const snippet1 = `//on server:
+    import temple from '@ossph/temple/compiler';
+    //make a temple compiler
+    const compiler = temple();
+    //import a temple document file
+    const { document } = await compiler.import('./page.dtml');
+    //render final HTML
+    const results = document.render();
+    //show final HTML
+    console.log(results);`;
+  const snippet2 = `<style>
+      body { 
+        background-color: #DA532C; 
+        color: #EFEFEF; 
+      }
+      .title { text-align: center; }
+    </style>
+    <script>
+      const title = 'Hello World';
+    </script>
+    <html>
+    <head>
+      <title>{title}</title>
+    </head>
+    <body>
+      <h1 class="title">{title}</h1>
+    </body>
+    </html>`;
+  const APP_DATA = 'window.__APP_DATA__ = { title, description, url };';
+  const BUILD_ID = 'a1b2c3d4';
+  const MODE = 'development';
 </script>
 <html>
   <head>
@@ -53,7 +56,15 @@ const title = 'Hello World';
     <meta property="og:url" content={`https://ossphilippines.github.io/temple${url}`} />
     <meta property="og:type" content="website" />
     <link rel="stylesheet" type="text/css" href="/temple/styles/theme.css" />
+    <link rel="stylesheet" type="text/css" href={`/temple/build/${BUILD_ID}.css`} />
+    
     <script src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js/dist/highlightjs-line-numbers.min.js"></script>
+    <script>{APP_DATA}</script>
+    <script>console.log('hello')</script>
+    <script src={`/temple/build/${BUILD_ID}.js`}></script>
+    <if true={MODE !== 'production'}>
+      <script src="/dev.js"></script>
+    </if>
   </head>
   <body class="dark panel with-head">
     <dollar>
@@ -61,5 +72,35 @@ const title = 'Hello World';
     </dollar>
     <p>{snippet1}</p>
     <p>{snippet2}</p>
+    <div>{`
+<style>
+  body { 
+    background-color: #DA532C; 
+    color: #EFEFEF; 
+  }
+  .title { text-align: center; }
+</style>
+<script>
+  const title = 'Hello World';
+</script>
+<html>
+<head>
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/theme.css" />
+  <script src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js/dist/highlightjs-line-numbers.min.js"></script>
+  <script>{APP_DATA}</script>
+  <script>alert('hello')</script>
+  <if true={MODE !== 'production'}>
+    <script src="/dev.js"></script>
+  </if>
+</head>
+<body>
+  <h1 class="title">{title}</h1>
+</body>
+</html>
+`}</div>
   </body>
 </html>

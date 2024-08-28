@@ -12,8 +12,8 @@ describe('Temple Compiler Tokenizer', () => {
     const actual = Tokenizer.tokenize(
       fs.readFileSync(__dirname + '/fixtures/page.dtml', 'utf8')
     );
-    //console.log(JSON.stringify(actual, null, 2));
-    //expect(actual.components.length).to.equal(3);
+    //console.log('--page.dtml--', JSON.stringify(actual, null, 2));
+    expect(actual.components.length).to.equal(1);
     expect(actual.scripts.length).to.equal(1);
     expect(actual.styles.length).to.equal(1);
     expect(actual.markup.length).to.equal(2);
@@ -23,7 +23,7 @@ describe('Temple Compiler Tokenizer', () => {
     const actual = Tokenizer.tokenize(
       fs.readFileSync(__dirname + '/fixtures/app.tml', 'utf8')
     );
-    //console.log(JSON.stringify(actual, null, 2));
+    //console.log('--app.tml--', JSON.stringify(actual, null, 2));
     expect(actual.components.length).to.equal(3);
     expect(actual.scripts.length).to.equal(1);
     expect(actual.styles.length).to.equal(1);

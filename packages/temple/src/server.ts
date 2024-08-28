@@ -8,12 +8,14 @@ import TempleElement from './server/TempleElement';
 import emitter, { TempleEmitter } from './server/TempleEmitter';
 import TempleText from './server/TempleText';
 import data from './server/data';
+import env from './server/env';
 import props from './server/props';
 import classnames from './server/classnames';
 import signal from './server/signal';
 
 export {
   data,
+  env,
   emitter,
   props,
   classnames,

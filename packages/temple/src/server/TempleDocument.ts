@@ -4,17 +4,13 @@ import TempleElement from './TempleElement';
 import TempleRegistry from './TempleRegistry';
 
 export default abstract class TempleDocument {
-  //client script or build path
-  protected _build: string;
-  protected _mode: 'inline'|'include';
-
   /**
    * Returns the build id for the document
    */
   public abstract id(): string; 
 
   /**
-   * Returns the styles for the document
+   * Returns component styles
    */
   public abstract styles(): string; 
 
@@ -24,60 +20,37 @@ export default abstract class TempleDocument {
   public abstract template(): TempleElement[];
 
   /**
-   * Sets the client script
-   */
-  public constructor(build: string, mode: 'inline'|'include' = 'include') {
-    this._build = build;
-    this._mode = mode;
-  }
-
-  /**
-   * Returns the rendered document with inline code
-   */
-  public render(props: Record<string, any> = {}) {
-    const document = this.markup(props);
-    const styles = this.styles().trim();
-    const inject: string[] = [
-      `<script class="temple-build">${this.props()}</script>`
-    ];
-    if (this._mode === 'inline') {
-      inject.push(
-        `<script class="temple-build">${this._build}</script>`
-      );
-      if (styles.length > 0) {
-        inject.unshift(`<style>${styles}</style>`);
-      }
-    } else {
-      const buildPath = `${this._build}/${this.id()}`;
-      inject.push(
-        `<script class="temple-build" src="${buildPath}c.js"></script>`
-      );
-      if (styles.length > 0) {
-        inject.unshift(
-          `<link rel="stylesheet" href="${buildPath}c.css" />`
-        );
-      }
-    }
-    
-    const [ before, after ] = document.split('</head>', 2);
-    return `${before}${inject.join('')}</head>${after}`;
-  }
-
-  /**
    * Returns the document props
    */
-  public props() {
-    return `window.__APP_DATA__ = ${JSON.stringify(
+  public data() {
+    return `<script type="text/json">${JSON.stringify(
       Object.fromEntries(data.entries())
-    )};`
+    )}</script>`
   }
 
   /**
    * Renders the redered document without injections
    */
-  public markup(props: Record<string, any> = {}) {
-    //set props (this is so template() can read it)
+  public render(props: Record<string, any> = {}) {
+    //set server props (this is so template() can read it using props())
     data.set('props', props || {});
+    //set environment variables
+    data.set('env', {
+      ...(process.env || {}),
+      BUILD_ID: this.id(),
+      APP_DATA: btoa(JSON.stringify({
+        ...Object.fromEntries(data.entries()),
+        env: {
+          ...Object.fromEntries(
+            Object.entries(process.env || {}).filter(
+              entry => entry[0].startsWith('PUBLIC_')
+            )
+          ),
+          BUILD_ID: this.id()
+        }
+      }))
+    });
+    
     //get the children build w/o re-initializing the variables
     const children = this.template();
     

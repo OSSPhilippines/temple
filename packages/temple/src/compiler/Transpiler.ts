@@ -101,12 +101,9 @@ export default class Transpiler {
       classname, 
       imports,
       styles, 
-      scripts
+      scripts,
+      tagname
     } = this._component;
-    //determine tagname
-    const tagname = this._component.brand 
-      ? `${this._component.brand}-${this._component.tagname}`
-      : this._component.tagname;
     //get path without extension
     //ex. /path/to/Counter.tml -> /path/to/Counter
     const extname = path.extname(absolute);
@@ -215,7 +212,12 @@ export default class Transpiler {
         expression += this._markupElement(expression, parent, child, components);
       } else if (child.type === 'Literal') {
         if (typeof child.value === 'string') {
-          expression += `TempleRegistry.createText(\`${child.value}\`)`;
+          if (child.escape) {
+            expression += `TempleRegistry.createText(\`${child.value}\`, true)`;
+          } else {
+            expression += `TempleRegistry.createText(\`${child.value}\`, false)`;
+          }
+          
         //null, true, false, number 
         } else {
           expression += `TempleRegistry.createText(String(${child.value}))`;

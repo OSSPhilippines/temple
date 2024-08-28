@@ -12,4 +12,5 @@ export default interface FileSystem {
   writeFileSync(path: string, data: string): void;
   mkdirSync(path: string, options?: FileRecursiveOption): void
   createReadStream(path: string): FileStream;
+  unlinkSync(path: string): void;
 }

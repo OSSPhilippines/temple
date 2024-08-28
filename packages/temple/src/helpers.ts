@@ -89,6 +89,9 @@ export const load = function(source: string) {
   context.console = console;
   context.module = module;
   context.require = require;
+  context.process = process;
+  context.btoa = btoa;
+  context.atob = atob;
   //now run the server script
   script.runInContext(context);
   return context;

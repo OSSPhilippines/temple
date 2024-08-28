@@ -1,6 +1,7 @@
 import type http from 'http';
+import type EventEmitter from './document/EventEmitter';
+import type { Event as TempleEvent } from './document/EventEmitter';
 import type { PluginBuild } from 'esbuild';
-import type EventEmitter from '@blanquera/types/dist/EventEmitter';
 
 import type FileSystem from './filesystem/FileSystem';
 import type DocumentBuilder from './document/Builder';
@@ -25,6 +26,33 @@ export type Request = http.IncomingMessage;
 export type Response = http.ServerResponse<Request> & {
   req: Request;
 };
+
+//--------------------------------------------------------------------//
+// Event Types
+
+//build
+//built
+//build-client
+//built-client
+//build-markup
+//built-markup
+//build-server
+//built-server
+//build-styles
+//built-styles
+//manifest-load
+//manifest-resolve
+//manifest-resolved
+//manifest-unresolved
+
+//dev-file-changed
+//dev-update-document
+//dev-update-component
+
+//express-render
+//express-rendered
+
+export type TempleEventMap = Record<string, [ TempleEvent<any> ]>;
 
 //--------------------------------------------------------------------//
 // Filesystem Types
@@ -92,6 +120,7 @@ export type LiteralToken = {
   end: number;
   value: any;
   raw: string;
+  escape: boolean;
 };
 
 export type DataToken = IdentifierToken
@@ -127,7 +156,8 @@ export type ScriptToken = {
   attributes?: ObjectToken,
   imports?: ImportToken[],
   source: string,
-  exports?: LiteralToken[]
+  exports?: LiteralToken[],
+  runtime: boolean 
 };
 
 export type StyleToken = {
@@ -190,15 +220,12 @@ export type NextDirective = (
 export type BuildPlatform = 'node'|'browser';
 
 export type ServerDocumentClass = {
-  new(build: string, mode?: 'inline'|'include'): ServerDocument
+  new(): ServerDocument
 };
 
 //what's returned by builder.build()
 export type BuildResults = {
-  source: {
-    client: string,
-    server: string
-  },
+  source: string,
   TempleDocument: ServerDocumentClass,
   document: ServerDocument
 };
@@ -250,7 +277,6 @@ export type FileOptions = {
 export type AliasPluginOptions = FileOptions;
 //options for esbuild plugin
 export type ComponentPluginOptions = FileOptions & {
-  brand?: string,
   tsconfig?: string,
   extname?: string
 };
@@ -259,7 +285,6 @@ export type DocumentPluginOptions = ComponentPluginOptions;
 
 //options for the component class
 export type ComponentOptions = FileOptions & {
-  brand?: string,
   name?: string,
   type?: ComponentType
 };
@@ -267,10 +292,9 @@ export type ComponentOptions = FileOptions & {
 //options for builder class
 export type BuilderOptions = { 
   minify?: boolean,
-  bundle?: boolean,
   tsconfig?: string,
   buildRoute?: string,
-  emitter?: EventEmitter<any[]>
+  emitter?: EventEmitter
   component_extname?: string,
   document_extname?: string
 };
@@ -282,6 +306,7 @@ export type BuilderBuildOptions = {
   bundle?: boolean,
   platform?: BuildPlatform,
   globalName?: string,
+  format?: 'iife'|'esm'|'cjs',
   plugins?: {
     name: string,
     setup: (build: PluginBuild) => void
@@ -296,6 +321,11 @@ export type TempleOptions = ManifestOptions & {
   buildPath?: string
 };
 
+export type CacheOptions = {
+  buildPath: string,
+  manifestFile?: string
+};
+
 //--------------------------------------------------------------------//
 // Compiler Types
 
@@ -305,9 +335,16 @@ export type TempleCompiler = {
     fs: FileSystem,
     type: ComponentType
   },
-  serve: () => (req: Request, res: Response) => Promise<boolean>
-  emitter: EventEmitter<any[]>,
+  fs: FileSystem
+  emitter: EventEmitter,
   manifest: DocumentManifest,
-  builder: (sourceFile: string) => DocumentBuilder,
-  import: (sourceFile: string) => Promise<BuildResults>
+  fromId: (id: string) => DocumentBuilder,
+  fromCache: (file: string) => BuildResults,
+  fromSource: (sourceFile: string) => DocumentBuilder,
+  client: (sourceFile: string) => Promise<string>,
+  import: (sourceFile: string) => Promise<BuildResults>,
+  markup: (sourceFile: string) => Promise<string>,
+  render: (sourceFile: string, props: Hash) => Promise<string>,
+  server: (sourceFile: string) => Promise<string>,
+  styles: (sourceFile: string) => Promise<string>
 };

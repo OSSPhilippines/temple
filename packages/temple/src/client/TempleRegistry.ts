@@ -91,7 +91,8 @@ export default class TempleRegistry {
   /**
    * Creates a TextNode and returns it
    */
-  public static createText(value: string) {
+  public static createText(value: string, escape = false) {
+    //NOTE: no need to case for escaping on the browser?
     return document.createTextNode(value);
   }
 

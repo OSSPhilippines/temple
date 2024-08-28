@@ -11,7 +11,7 @@ import FileSystem from '../filesystem/NodeFS';
 import Component from '../compiler/Component';
 import ComponentTranspiler from '../compiler/Transpiler';
 import DocumentTranspiler from '../document/Transpiler';
-import { toTS } from '../compiler/helpers';
+import { toTS } from '../helpers';
 
 export function esAliasPlugin(options: AliasPluginOptions) {
   const { cwd = process.cwd(), fs = new FileSystem() } = options;

@@ -149,22 +149,21 @@ export default class Parser {
     for(let index = start; index < end; index++) {
       //get the character
       const char = this._code[index];
-      //we are only interested in open markup tags
+      //we are only interested in open markup tags,
+      //so if this char is not a markup symbol (<)
       if (char !== Parser.symbols.markup[0]) {
-        //if we have an open program symbol
+        //if we have an open program symbol ({)
         if (char === Parser.symbols.program[0]) {
-          //parse the program and move the index
+          //parse the program and move the index (^{)
           index = this._findProgram(index);
-        } else if (Parser.symbols.quotes.includes(char)) {
-          //parse the string and move the index
-          index = this._findQuote(index, char);
         }
         continue;
       }
-      //look ahead and check for </close>
+      //we found an open markup symbol (<) now
+      //look ahead and see if its a </close> tag
       const closed = this._findCloseTag(index);
       //this will return [ '</em>', 'em' ]
-      //if we have a close tag
+      //if it is a close tag
       if (closed) {
         const end = index + closed[0].length;
         //yield results
@@ -178,10 +177,11 @@ export default class Parser {
         index = end - 1;
         continue;
       }
-      //look ahead and check for <open>
+      //look ahead and see if its a <open> or <self /> tag
+      //this will return [ '<em>', 'em' ] or [ '<em />', 'em' ]
       const opened = this._findOpenTag(index);
       if (opened) {
-        //parse the markup
+        //parse the markup (^<) and determine where it ends (<open^>)
         const end = this._findMarkup(index);
         const self = this._code[end - 1] === '/';
         //if markup was parsed
@@ -195,6 +195,24 @@ export default class Parser {
           };
           //move the index
           index = end;
+          //SPECIAL CASE: for <script> can have tags in here that can be 
+          // misinterpretted as actual tags vs in string, so we need to 
+          // ignore everthing in between it and make it function as a 
+          // ProgramExpression
+          if (opened[1] === 'script' && !self) {
+            const end = this._findScript(index + 1);
+            if (end > index) {
+              //yield results
+              yield { 
+                kind: 'close',
+                name: opened[1],
+                start: end - 8,
+                end: end + 1
+              };
+              //move the index
+              index = end;
+            }
+          }
           continue;
         }
       }
@@ -221,17 +239,18 @@ export default class Parser {
     for(let index = start; index < this._code.length; index++) {
       //get the current character
       const char = this._code[index];
-      //if we have a closing markup symbol
+      //if we have a closing markup symbol (>)
       if (char === Parser.symbols.markup[1]) {
         //this is the one we are looking for
         return index;
-      //if we have an open program symbol
+      //if we have an open program symbol (^{)
       } else if (char === Parser.symbols.program[0]) {
-        //parse the program and move the index
+        //parse the program and move the index (^})
         index = this._findProgram(index);
-      //if we have a quote symbol
+        continue;
+      //if we have a quote symbol (^'"`)
       } else if (Parser.symbols.quotes.includes(char)) {
-        //parse the string and move the index
+        //parse the string and move the index (^'"`)
         index = this._findQuote(index, char);
       }
     }
@@ -263,7 +282,9 @@ export default class Parser {
       //if we have a quote symbol
       if (Parser.symbols.quotes.includes(char)) {
         //parse the string and move the index
+        //this will move it to ^'"`
         index = this._findQuote(index, char);
+        continue;
       }
       //check for backslash
       const backslash = this._code[index - 1] === '\\';
@@ -287,8 +308,33 @@ export default class Parser {
       const backslash = this._code[index - 1] === '\\';
       //if we have a closing quote symbol
       if (this._code[index] === quote && !backslash) {
-        //this is the one we are looking for
+        //this is the one we are looking for (^'"`)
         return index;
+      }
+    }
+    //reset the index
+    return start;
+  }
+
+  /**
+   * Parse a program and find the closing program symbol
+   */
+  protected _findScript(start: number) {
+    //continue parsing the code
+    for(let index = start; index < this._code.length; index++) {
+      //get the current character
+      const char = this._code[index];
+      //if we have a quote symbol
+      if (Parser.symbols.quotes.includes(char)) {
+        //parse the string and move the index
+        //this will move it to ^'"`
+        index = this._findQuote(index, char);
+        continue;
+      }
+      //if we have a closing script tag
+      if (this._code.substring(index, index + 9) === '</script>') {
+        //this is the one we are looking for
+        return index + 8;
       }
     }
     //reset the index

@@ -3,7 +3,7 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import Component from '../src/compiler/Component';
 import Transpiler from '../src/document/Transpiler';
-import { toTS } from '../src/compiler/helpers';
+import { toTS } from '../src/helpers';
 
 describe('Temple Document Transpiler', () => {
   const tsconfig = path.join(__dirname, '../tsconfig.json');
@@ -18,6 +18,7 @@ describe('Temple Document Transpiler', () => {
   it('Should transpile $', () => {
     const transpiler = new Transpiler(component, tsconfig);
     const server = toTS(transpiler.transpile());
+    //console.log('--server--', server);
     // [
     //   TempleRegistry.createElement('div', { }, [
     //     TempleRegistry.createElement('span', { }, [
@@ -30,7 +31,7 @@ describe('Temple Document Transpiler', () => {
     expect(server).to.contain('TempleRegistry.createText(`$`)');
 
     const client = toTS(transpiler.client());
-    //console.log('client', client);
+    //console.log('--client--', client);
     //const __BINDINGS__: Record<string, Record<string, any>> = {'1': { 'title': title }, };
     expect(client).to.contain('{\'1\': { \'title\': title }, }');
   });

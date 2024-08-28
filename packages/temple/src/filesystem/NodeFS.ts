@@ -32,4 +32,7 @@ export default class NodeFS implements FileSystem {
   createReadStream(path: string) {
     return this._fs.createReadStream(path);
   }
+  unlinkSync(path: string): void {
+    this._fs.unlinkSync(path);
+  }
 }

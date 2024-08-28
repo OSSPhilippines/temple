@@ -15,20 +15,9 @@ export default class TempleRegistry {
   }
 
   /**
-   * Creates a new TempleElement instance
-   */
-  public static createComponent(
-    name: string, 
-    attributes: Hash, 
-    children: Node[] = []
-  ) {
-    return new TempleElement(name, attributes, children);
-  }
-
-  /**
    * Creates a new TempleText instance
    */
-  public static createText(value: string) {
-    return new TempleText(value);
+  public static createText(value: string, escape = true) {
+    return new TempleText(value, escape);
   }
 }

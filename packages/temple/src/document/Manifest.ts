@@ -1,6 +1,6 @@
 import type { ManifestOptions } from '../types';
 
-import EventEmitter from '@blanquera/types/dist/EventEmitter';
+import EventEmitter from './EventEmitter';
 import Component from '../compiler/Component';
 import Builder from './Builder';
 import Exception from '../Exception';
@@ -11,7 +11,7 @@ export default class Manifest {
   //registry
   protected _registry = new Map<string, string>();
   //emitter
-  protected _emitter: EventEmitter<any[]>;
+  protected _emitter: EventEmitter;
 
   /**
    * Returns the emitter
@@ -57,7 +57,7 @@ export default class Manifest {
    */
   public delete(id: string) {
     const results = this._registry.delete(id);
-    this._emitter.emitSync('manifest-delete', id, this);
+    this._emitter.trigger('manifest-unresolved', { id, manifest: this });
     return results;
   }
 
@@ -75,7 +75,7 @@ export default class Manifest {
     if (this.has(id)) {
       return this._registry.get(id);
     }
-    this._emitter.emitSync('manifest-resolve', id, this);
+    this._emitter.trigger('manifest-resolve', { id, manifest: this });
     if (this.has(id)) {
       return this._registry.get(id);
     }
@@ -100,7 +100,12 @@ export default class Manifest {
    * Populates the manifest registry
    */
   public load(manifest: Record<string, string>) {
-    this._registry = new Map(Object.entries(manifest));
+    const event = this._emitter.trigger('manifest-load', { 
+      map: new Map(Object.entries(manifest)), 
+      manifest: this 
+    });
+    this._registry = event.data || event.params.map;
+
     return this;
   }
 
@@ -108,8 +113,16 @@ export default class Manifest {
    * Sets a path in the manifest
    */
   public set(id: string, path: string) {
-    this._registry.set(id, path);
-    this._emitter.emitSync('manifest-resolved', id, path, this);
+    //only if the path is not the same
+    if (this._registry.get(id) !== path) {
+      //set the path
+      this._registry.set(id, path);
+      //trigger the event
+      this._emitter.trigger(
+        'manifest-resolved', 
+        { id, path, manifest: this }
+      );
+    }
     return this;
   }
 

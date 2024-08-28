@@ -3,7 +3,7 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import Component from '../src/compiler/Component';
 import Transpiler from '../src/compiler/Transpiler';
-import { toTS } from '../src/compiler/helpers';
+import { toTS } from '../src/helpers';
 
 describe('Temple Compiler Transpiler', () => {
   const tsconfig = path.join(__dirname, '../tsconfig.json');
