@@ -11,7 +11,7 @@ import TempleComponent from './client/TempleComponent';
 import TempleRegistry from './client/TempleRegistry';
 import TempleElement from './client/TempleElement';
 import emitter, { TempleEmitter } from './client/TempleEmitter';
-import data from './client/data';
+import data, { TempleDataMap } from './client/data';
 import env from './client/env';
 import props from './client/props';
 import classnames from './client/classnames';
@@ -28,6 +28,7 @@ export {
   innerHTML,
   signal, 
   emitter,
+  TempleDataMap,
   TempleComponent,
   TempleRegistry,
   TempleElement,

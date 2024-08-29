@@ -92,16 +92,6 @@ export function transpile(component: Component) {
   const filePath = absolute.slice(0, -extname.length);
   //create a new source file
   const { source } = createSourceFile(`${filePath}.ts`);
-  //import { TempleRegistry, TempleComponent } from '@ossph/temple/client';
-  source.addImportDeclaration({
-    moduleSpecifier: '@ossph/temple/client',
-    namedImports: [ 
-      'emitter',
-      'data as __APP_DATA__',
-      'TempleRegistry', 
-      'TempleComponent' 
-    ]
-  });
   //import Counter from './Counter'
   component.components.filter(
     component => component.type === 'component'
@@ -138,92 +128,52 @@ export function transpile(component: Component) {
     }
   });
 
-  //function styles()
+  //function refresh()
   source.addFunction({
-    name: 'styles',
-    statements: `return \`${styles.join('\n').trim()}\`;`
-  });
-
-  //function template()
-  source.addFunction({
-    name: 'template',
-    statements: `${scripts.length > 0 
-      ? scripts.join('\n')
-      //allow scriptless components to use props
-      : (`
-        const props = this.props; 
-        const children = () => this.originalChildren;
-      `)}
-      return () => ${transpiler.markup.trim()};`
+    name: '__REFRESH__',
+    statements: (`
+      const { TempleRegistry, components, data } = TempleBundle;
+      const styles = function styles() {
+        return \`${styles.join('\n').trim()}\`;
+      };
+      const template = function template() {
+        ${scripts.length > 0 ? scripts.join('\n') : (`
+          const props = this.props; 
+          const children = () => this.originalChildren;
+        `)}
+        return () => ${transpiler.markup.trim()};
+      };
+      const Component = components['${classname}'];
+      if (Component) {
+        Component.prototype.styles = styles;
+        Component.prototype.template = template;
+        
+        //get elements and components from registry
+        const components = Array.from(TempleRegistry.elements.keys());
+        //for each component
+        components.forEach(component => {
+          //if the component is an instance of Counter
+          if (component instanceof Component) {
+            //replace styles() and template()
+            component.styles = styles;  
+            component.template = template;
+            //set the current component
+            data.set('current', component);
+            //reset initiated
+            component._initiated = false;
+            //cache the template
+            component._template = template.call(component);
+            //then re-render
+            component.render();
+            data.delete('current');
+          }
+        });
+      }
+    `)
   });
 
   //main script
-  source.addStatements(`
-    const Component = TempleBundle.components['${classname}'];
-    if (Component) {
-      Component.prototype.styles = styles;
-      Component.prototype.template = template;
-      
-      //get elements and components from registry
-      const components = Array.from(TempleBundle.TempleRegistry.elements.keys());
-      //for each component
-      components.forEach(component => {
-        //if the component is an instance of Counter
-        if (component instanceof Component) {
-          //replace styles() and template()
-          component.styles = styles;  
-          component.template = template;
-          component._template = null;
-          component._initiated = false;
-          component.update = function() {
-            //set the current component
-            __APP_DATA__.set('current', this);
-            //get the styles
-            const styles = this.styles();
-            //get the template
-            this._template = this.template();
-            //emit the unmounted event
-            emitter.emit('unmounted', this);
-            //get the children build w/o re-initializing the variables
-            const children = this._template().filter(Boolean) as Element[];
-            //if no styles, just set the innerHTML
-            if (styles.length === 0) {
-              //empty the current text content
-              this.textContent = '';
-              //now append the children
-              children.forEach(child => this.appendChild(child));
-            //there are styles, use shadow dom
-            } else {
-              //if shadow root is not set, create it
-              if (!this.shadowRoot) {
-                this.attachShadow({ mode: 'open' });
-              }
-
-              const shadowRoot = this.shadowRoot as ShadowRoot;
-              //empty the current text content
-              //the old data is captured in props
-              this.textContent = '';
-              shadowRoot.textContent = '';
-              //append the styles
-              const style = document.createElement('style');
-              style.innerText = styles;
-              shadowRoot.appendChild(style);
-              //now append the children
-              children.forEach(child => this.shadowRoot?.appendChild(child));
-            }
-            //reset the current component
-            __APP_DATA__.delete('current');
-            this._initiated = true;
-            //emit the mounted event
-            emitter.emit('mounted', this);
-            return this.shadowRoot ? this.shadowRoot.innerHTML :this.innerHTML;
-          };
-          //then re-render
-          component.update();
-        }
-      });
-    }
-  `);
+  source.addStatements(`__REFRESH__();`);
 
   return source;
 };

@@ -1,7 +1,7 @@
 import path from 'path';
 import express from 'express';
 import temple from '@ossph/temple/compiler';
-import { view } from '@ossph/temple-express';
+import { view, dev } from '@ossph/temple-express';
 
 //create temple compiler
 const compiler = temple({ cwd: __dirname, minify: false });
@@ -11,8 +11,22 @@ const app = express();
 //set the view engine to temple
 app.set('views', path.join(__dirname, 'pages'));
 app.set('view engine', 'dtml');
-//let's use express' template engine feature
-app.engine('dtml', view(compiler));
+
+//if production (live)
+if (process.env.NODE_ENV === 'production') {
+  //let's use express' template engine feature
+  app.engine('dtml', view(compiler));
+  //...other production settings...
+//if development mode
+} else {
+  //get development middleware
+  const { router, view } = dev({ cwd: __dirname });
+  //use development middleware
+  app.use(router);
+  //let's use express' template engine feature
+  app.engine('dtml', view(compiler));
+}
+
 //open public folder
 app.use(express.static('public'));
 

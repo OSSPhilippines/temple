@@ -14,7 +14,7 @@
 </style>
 <script>
   import { env, props } from '@ossph/temple';
-  const { BUILD_ID, APP_DATA } = env();
+  const { BUILD_ID, APP_DATA, NODE_ENV } = env();
   const { title, description, list, start } = props();
 </script>
 <html>
@@ -24,6 +24,9 @@
     <link rel="shortcut icon" type="image/png" href="/favicon.png" />
     <link rel="stylesheet" type="text/css" href={`/build/${BUILD_ID}.css`} />
     <script data-app={APP_DATA} src={`/build/${BUILD_ID}.js`}></script>
+    <if true={NODE_ENV !== 'production'}>
+      <script src="/dev.js"></script>
+    </if>
   </head>
   <body class="light">
     <header class="title">

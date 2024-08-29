@@ -24,7 +24,9 @@
   };
   //import props
   const { count, list } = props<TodoProps>();
-  const add = () => count.value++;
+  const add = () => {
+    count.value++;
+  };
 </script>
 <if true={count.value > 0}>
   <div class="total">
