@@ -84,65 +84,68 @@
   </nav>
 </aside>
     <panel-main class="panel-main">
-      <h1 class="container">Documentation</h1>
-      <p class="container">
-        Temple is a template engine with a built-in compiler that 
-        generates HTML markup, web components and support reactivity. 
-      </p>
-      <p class="container">
-        Temple can be used as a template engine on the server side, as a
-        site generator to make static websites and single page 
-        applications, and can be used to publish native HTML5 web 
-        components. The focus of the Temple project are the following.
-      </p>
-      <div class="tbl-container container">
-        <table class="tbl">
-          <thead>
-            <th>Features</th>
-            <th>De-Features</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Template Engine</td>
-              <td>No Hydration</td>
-            </tr>
-            <tr>
-              <td>Web Components</td>
-              <td>No Hooks</td>
-            </tr>
-            <tr>
-              <td>Server First</td>
-              <td>No Memo</td>
-            </tr>
-            <tr>
-              <td>Reactive Signals</td>
-              <td>No Brandcuffs</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="container">
-        At it's core, a temple file is a special template file that 
-        allows HTML, JavaScript, CSS and importing of components and 
-        templates. All of which are transpiled to its respective 
-        TypeScript or JavaScript soure code.
-      </p>
-      <div class="container">
+      <div class="docs container">
+        <h1>Documentation</h1>
+        <p>
+          Temple is a template engine with a built-in compiler that 
+          generates HTML markup, web components and support reactivity. 
+        </p>
+        <p>
+          Temple can be used as a template engine on the server side, as a
+          site generator to make static websites and single page 
+          applications, and can be used to publish native HTML5 web 
+          components. The focus of the Temple project are the following.
+        </p>
+        <div class="tbl-container">
+          <table class="tbl">
+            <thead>
+              <th>Features</th>
+              <th>De-Features</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Template Engine</td>
+                <td>No Hydration</td>
+              </tr>
+              <tr>
+                <td>Web Components</td>
+                <td>No Hooks</td>
+              </tr>
+              <tr>
+                <td>Server First</td>
+                <td>No Memo</td>
+              </tr>
+              <tr>
+                <td>Reactive Signals</td>
+                <td>No Brandcuffs</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          At it's core, a temple file is a special template file that 
+          allows HTML, JavaScript, CSS and importing of components and 
+          templates. All of which are transpiled to its respective 
+          TypeScript or JavaScript source code.
+        </p>
         <window-app title="Transpiler Example">
           <div class="snippet-preview">
-            <code-snippet>&lt;style&gt;
+            <code-snippet numbers>
+&lt;style&gt;
   h1 { font-weight: bold; }
 &lt;/style&gt;
 &lt;script&gt;
   import { props } from '@ossph/temple';
   const { name } = props();
 &lt;/script&gt;
-&lt;h1&gt;Hello {name}!&lt;/h1&gt;
+&lt;h1&gt;Hello {name}!!&lt;/h1&gt;
 
 
 
-  </code-snippet>
-            <code-snippet lang="js">import { props } from '@ossph/temple';
+.
+            </code-snippet>
+            <code-snippet lang="js" trim>
+import { props } from '@ossph/temple';
 export default class Hello extends TempleComponent {
   styles() {
     return 'h1 { font-weight: bold; }';
@@ -153,9 +156,16 @@ export default class Hello extends TempleComponent {
       TempleRegistry.createElement('h1', null, `Hello ${name}`)
     ]
   }
-}</code-snippet>
+}
+            </code-snippet>
           </div>
         </window-app>
+        <nav class="pager">
+          <a class="next" href="/temple/docs/started.html">
+            Getting Started
+            <i class="fas fa-fw fa-chevron-right"></i>
+          </a>
+        </nav>
       </div>
       <footer class="foot"></footer>
     </panel-main>

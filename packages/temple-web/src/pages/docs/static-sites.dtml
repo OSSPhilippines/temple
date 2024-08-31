@@ -1,0 +1,283 @@
+<link rel="import" type="template" href="@/templates/html-head.tml" />
+<link rel="import" type="template" href="@/templates/panel-head.tml" />
+<link rel="import" type="template" href="@/templates/panel-left.tml" />
+<link rel="import" type="component" href="@/components/panel-main.tml" />
+<link rel="import" type="component" href="@/components/window-app.tml" />
+<link rel="import" type="component" href="@/components/code-snippet.tml" />
+<link rel="import" type="component" href="@/components/dev-ui.tml" />
+<script>
+  //This is ran on both the server and the browser
+  //There is no signal, children prop here because 
+  //this is not a component.
+  //
+  //We also need to becareful with importing browser 
+  //scripts here. You should do that in the <head>
+  //instead.
+  import { env } from '@ossph/temple';
+  const url = '/docs/';
+  const title = 'Static Site Generator - Temple reactive web component template engine.';
+  const description = 'Temple is a template engine hat generates web components and support reactivity.';
+  const toggle = _ => {
+    document.body.classList.toggle('panel-left-open');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark panel with-head with-left">
+    <panel-head />
+    <panel-left />
+    <panel-main class="panel-main">
+      <div class="docs container">
+        <h1>Static Site Generator</h1>
+        <p>
+          Create a server file called
+          <code-snippet lang="js" inline>'src/index.ts'</code-snippet> 
+          with the following code that uses the compiler.
+        </p>
+        <window-app title="src/index.ts">
+          <code-snippet lang="js" numbers trim detab={12}>{`
+            import http from 'http';
+            import temple from '@ossph/temple/compiler';
+
+            //where your pages are:
+            const pages = path.join(__dirname, 'pages');
+            //where your build files are:
+            const build = path.join(__dirname, '../build');
+
+            //create temple compiler
+            const compiler = temple({ 
+              cwd: __dirname 
+            }).withCache({ 
+              buildPath: path.join(build, 'build') 
+            });
+            //create http server
+            const server = http.createServer(async (req, res) => {
+              //for build asset:
+              if (req.url?.startsWith('/build/')) {
+                //get filename ie. abc123.js
+                const filename = req.url.substring(7);
+                //get asset
+                const { type, content } = await compiler.asset(filename);
+                //send response
+                res.writeHead(200, { 'Content-Type': type });
+                return res.end(content);
+              }
+              // from /foo/bar.html to foo/bar.html
+              const route = request.url?.substring(1) || '';
+              const { fs } = compiler;
+              const file = path.join(build, route);
+              //for document pages: 
+              if (file.endsWith('.html')) {
+                const route = file.substring(0, file.length - 5);
+                const template = path.join(pages, route + '.dtml');
+                if (fs.existsSync(template)) {
+                  //send response
+                  return res.type('text/html').render(route, props);
+                }
+              }
+              //for static files:
+              if (fs.existsSync(file)) {
+                res.writeHead(200);
+                fs.createReadStream(file).pipe(res);
+                return;
+              } 
+              //anything else?
+              res.statusCode = 404;
+              res.end('Not Found');
+            });
+            //listen on port 3000
+            server.listen(3000);
+          `}</code-snippet>
+        </window-app>
+        <p>
+          Next, create a document file called
+          <code-snippet lang="js" inline>'src/page.dtml'</code-snippet> 
+          with the following template code.
+        </p>
+        <window-app title="src/page.dtml">
+          <code-snippet numbers trim detab={12}>{`
+            <style>
+              .title { text-align: center; }
+            </style>
+            <script>
+              import { env, props } from '@ossph/temple';
+              const { BUILD_ID, APP_DATA } = env();
+              const { title } = props();
+            </script>
+            <html>
+              <head>
+                <title>{title}</title>
+                <link rel="stylesheet" type="text/css" href={\`/build/\${BUILD_ID}.css\`} />
+                <script data-app={APP_DATA} src={\`/build/\${BUILD_ID}.js\`}></script>
+              </head>
+              <body>
+                <h1 class="title">{title}</h1>
+              </body>
+            </html>
+          `}</code-snippet>
+        </window-app>
+        <p>
+          To test the script and see the results, run the following 
+          command in terminal.
+        </p>
+        <window-app title="Terminal">
+          <code-snippet lang="bash">
+            npx ts-node src/index.ts
+          </code-snippet>
+        </window-app>
+        <p>
+          Load 
+          <code-snippet lang="js" inline>'http://localhost:3000/'</code-snippet> 
+          in your browser. After loading you should see files that were 
+          generated in a new build folder found in your project root. 
+        </p>
+        <p>
+          The <code-snippet lang="js" inline>temple()</code-snippet> 
+          function in the example above takes in the 
+          following options, all of which are optional.
+        </p>
+        <dev-ui start="Config" />
+        <p>
+          Calling Temple as in 
+          <code-snippet lang="js" inline>{`compiler = temple()`}</code-snippet> 
+          returns the Temple compiler which contains the following object.
+        </p>
+        <dev-ui />
+        <h2>Development Tools</h2>
+        <p>
+          Temple provides a separate package for a better development 
+          experience. Start by installing adding 
+          <code-snippet lang="js" inline>{`'@ossph/temple-dev'`}</code-snippet>
+          to your project.
+        </p>
+        <window-app title="Terminal">
+          <code-snippet lang="bash">
+            npm install --save-dev @ossph/temple-dev
+          </code-snippet>
+        </window-app>
+        <p>
+          Next, import the <code-snippet lang="js" inline>{`dev()`}</code-snippet> 
+          function from the package and use it in your existing 
+          <code-snippet lang="js" inline>{`'src/index.ts'`}</code-snippet> 
+          file to create a development server as shown in the example below.
+          Take note of the 
+          <code-snippet lang="js" inline>{`'**ADD**'`}</code-snippet> 
+          denotations to indicate the new lines of code.
+        </p>
+        <window-app title="src/index.ts">
+          <code-snippet lang="js" numbers trim detab={12}>{`
+            import http from 'http';
+            import temple from '@ossph/temple/compiler';
+            //**ADD** import dev tools
+            import { dev } from '@ossph/temple-dev';
+
+            //where your pages are:
+            const pages = path.join(__dirname, 'pages');
+            //where your build files are:
+            const build = path.join(__dirname, '../build');
+
+            //create temple compiler
+            const compiler = temple({ 
+              cwd: __dirname 
+            }).withCache({ 
+              buildPath: path.join(dist, 'build') 
+            });
+            //**ADD** create dev tools
+            const { router, refresh } = dev({ cwd: __dirname });
+
+            //create http server
+            const server = http.createServer(async (req, res) => {
+              //**ADD** if development route
+              if (router(req, res)) return;
+
+              //for build asset:
+              if (req.url?.startsWith('/build/')) {
+                //get filename ie. abc123.js
+                const filename = req.url.substring(7);
+                //get asset
+                const { type, content } = await compiler.asset(filename);
+                //send response
+                res.writeHead(200, { 'Content-Type': type });
+                return res.end(content);
+              }
+              // from /foo/bar.html to foo/bar.html
+              const route = request.url?.substring(1) || '';
+              const { fs } = compiler;
+              const file = path.join(build, route);
+              //for document pages: 
+              if (file.endsWith('.html')) {
+                const route = file.substring(0, file.length - 5);
+                const template = path.join(pages, route + '.dtml');
+                if (fs.existsSync(template)) {
+                  //**ADD** sync builder with refresh server
+                  refresh.sync(compiler.fromSource(template));
+                  //send response
+                  return res.type('text/html').render(route, props);
+                }
+              }
+              //for static files:
+              if (fs.existsSync(file)) {
+                res.writeHead(200);
+                fs.createReadStream(file).pipe(res);
+                return;
+              } 
+              //anything else?
+              res.statusCode = 404;
+              res.end('Not Found');
+            });
+            //listen on port 3000
+            server.listen(3000);
+          `}</code-snippet>
+        </window-app>
+        <p>
+          Lastly, update the document file 
+          <code-snippet lang="js" inline>{`'src/page.dtml'`}</code-snippet> 
+          to include the development script 
+          <code-snippet inline>{`<script src="/dev.js"></script>`}</code-snippet> 
+          as shown below.
+        </p>
+        <window-app title="src/page.dtml">
+          <code-snippet numbers trim detab={12}>{`
+            <style>
+              .title { text-align: center; }
+            </style>
+            <script>
+              import { env, props } from '@ossph/temple';
+              const { BUILD_ID, APP_DATA } = env();
+              const { title } = props();
+            </script>
+            <html>
+              <head>
+                <title>{title}</title>
+                <link rel="stylesheet" type="text/css" href={\`/build/\${BUILD_ID}.css\`} />
+                <script data-app={APP_DATA} src={\`/build/\${BUILD_ID}.js\`}></script>
+
+                <script src="/dev.js"></script>
+              </head>
+              <body>
+                <h1 class="title">{title}</h1>
+              </body>
+            </html>
+          `}</code-snippet>
+        </window-app>
+        <p>Re-run the following command in terminal.</p>
+        <window-app title="Terminal">
+          <code-snippet lang="bash">
+            npx ts-node src/index.ts
+          </code-snippet>
+        </window-app>
+        <nav class="pager">
+          <a class="prev" href="/temple/docs/engine.html">
+            <i class="fas fa-fw fa-chevron-left"></i>
+            Template Engine
+          </a>
+          <a class="next" href="/temple/docs/publisher.html">
+            Publish a Web Component
+            <i class="fas fa-fw fa-chevron-right"></i>
+          </a>
+        </nav>
+      </div>
+      <footer class="foot"></footer>
+    </panel-main>
+  </body>
+</html>

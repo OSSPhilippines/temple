@@ -239,11 +239,8 @@ var TempleBundle = (() => {
       var TempleElement_1 = __importDefault(require_TempleElement());
       var TempleRegistry_1 = __importDefault(require_TempleRegistry());
       var TempleDocument2 = class {
-        data() {
-          return `<script type="text/json">${JSON.stringify(Object.fromEntries(data_1.default.entries()))}</script>`;
-        }
-        render(props2 = {}) {
-          data_1.default.set("props", props2 || {});
+        render(props = {}) {
+          data_1.default.set("props", props || {});
           data_1.default.set("env", Object.assign(Object.assign({}, process.env || {}), { BUILD_ID: this.id(), APP_DATA: btoa(JSON.stringify(Object.assign(Object.assign({}, Object.fromEntries(data_1.default.entries())), { env: Object.assign(Object.assign({}, Object.fromEntries(Object.entries(process.env || {}).filter((entry) => entry[0].startsWith("PUBLIC_")))), { BUILD_ID: this.id() }) }))) }));
           const children = this.template();
           let document2 = TempleElement_1.default.render(children).trim();
@@ -323,9 +320,9 @@ ${document2}`;
         return mod && mod.__esModule ? mod : { "default": mod };
       };
       Object.defineProperty(exports, "__esModule", { value: true });
-      exports.default = props2;
+      exports.default = props;
       var data_1 = __importDefault(require_data());
-      function props2() {
+      function props() {
         return data_1.default.get("props") || {};
       }
     }
@@ -352,8 +349,8 @@ ${document2}`;
     "../temple/dist/server/signal.js"(exports) {
       "use strict";
       Object.defineProperty(exports, "__esModule", { value: true });
-      exports.default = signal2;
-      function signal2(value) {
+      exports.default = signal;
+      function signal(value) {
         const methods = {
           getter: () => property.raw,
           setter: (value2) => value2
@@ -462,80 +459,6 @@ ${document2}`;
   });
   var import_server = __toESM(require_server2());
   var import_server2 = __toESM(require_server2());
-
-  // src/modules/snippets/home.ts
-  var basic = `<style>
-  h1 { font-weight: bold; }
-</style>
-<script>
-  const name = 'world';
-</script>
-<h1>Hello {name}!</h1>`;
-  var props = `<style>
-  h1 { font-weight: bold; }
-</style>
-<script>
-  import { props } from '@ossph/temple';
-  const { name } = props();
-</script>
-<h1>Hello {name}!</h1>`;
-  var signal = `<style>
-  h1 { font-weight: bold; }
-</style>
-<script>
-  import { signal } from '@ossph/temple';
-  const name = signal('world');
-  name.value += '!';
-</script>
-<h1>Hello {name.value}</h1>`;
-  var imports = `<!-- page.html -->
-<link rel="import" href="./my-heading.html" />
-<script>
-  const name = 'world';
-</script>
-<my-heading {name}>Hello</my-heading>`;
-  var heading = `<!-- my-heading.html -->
-<script>
-  import { props } from '@ossph/temple';
-  const { name, children } = props();
-</script>
-<h1>{children} {name}</h1>`;
-  var conditional = `<script>
-  const name = 'world';
-  const show = name === "world";
-</script>
-
-<if true=show>
-  <h1>Hello {name}</h1>
-</if>`;
-  var each = `<script>
-  const list = [ 'a', 'b', 'c' ];
-</script>
-<ul>
-  <each key=i value=item from=list>
-    <li>{i}: {item}</li>
-  </each>
-</ul>`;
-  var server = `import temple from '@ossph/temple/server';
-//make a template engine
-const engine = temple({...options...});
-//load a Temple file
-const render = await engine.load('./page.html');
-//render final HTML
-const results = render({...props...});`;
-  var snippets = {
-    basic,
-    props,
-    signal,
-    imports,
-    heading,
-    conditional,
-    each,
-    server
-  };
-  var home_default = snippets;
-
-  // temple-document-server-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/index.dtml
   var Index_f01cefc94e8ee605f3f5 = class extends import_server.TempleDocument {
     id() {
       return "f01cefc94e8ee605f3f5";
@@ -922,8 +845,16 @@ const results = render({...props...});`;
                   import_server.TempleRegistry.createElement("div", { "class": `snippet-preview` }, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-snippet", {}, [
-                      ...this._toNodeList(home_default.basic)
+                    import_server.TempleRegistry.createElement("code-snippet", { "numbers": true, "trim": true, "detab": 14 }, [
+                      ...this._toNodeList(`
+              <style>
+                h1 { font-weight: bold; }
+              </style>
+              <script>
+                const name = 'world';
+              </script>
+              <h1>Hello {name}!</h1>
+            `)
                     ]),
                     import_server.TempleRegistry.createText(`
             `, false),
@@ -1041,8 +972,16 @@ const results = render({...props...});`;
                 import_server.TempleRegistry.createElement("window-app", { "title": `Server Example` }, [
                   import_server.TempleRegistry.createText(`
           `, false),
-                  import_server.TempleRegistry.createElement("code-snippet", { "lang": `javascript` }, [
-                    ...this._toNodeList(home_default.server)
+                  import_server.TempleRegistry.createElement("code-snippet", { "lang": `js`, "numbers": true, "trim": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            import temple from '@ossph/temple/server';
+            //make a template engine
+            const engine = temple({...options...});
+            //load a Temple file
+            const render = await engine.load('./page.html');
+            //render final HTML
+            const results = render({...props...});
+          `)
                   ]),
                   import_server.TempleRegistry.createText(`
         `, false)
@@ -1066,8 +1005,17 @@ const results = render({...props...});`;
                   import_server.TempleRegistry.createElement("div", { "class": `snippet-preview` }, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-snippet", {}, [
-                      ...this._toNodeList(home_default.props)
+                    import_server.TempleRegistry.createElement("code-snippet", { "numbers": true, "trim": true, "detab": 14 }, [
+                      ...this._toNodeList(`
+              <style>
+                h1 { font-weight: bold; }
+              </style>
+              <script>
+                import { props } from '@ossph/temple';
+                const { name } = props();
+              </script>
+              <h1>Hello {name}!</h1>
+            `)
                     ]),
                     import_server.TempleRegistry.createText(`
             `, false),
@@ -1111,8 +1059,18 @@ const results = render({...props...});`;
                   import_server.TempleRegistry.createElement("div", { "class": `snippet-preview` }, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-snippet", {}, [
-                      ...this._toNodeList(home_default.signal)
+                    import_server.TempleRegistry.createElement("code-snippet", { "numbers": true, "trim": true, "detab": 14 }, [
+                      ...this._toNodeList(`
+              <style>
+                h1 { font-weight: bold; }
+              </style>
+              <script>
+                import { signal } from '@ossph/temple';
+                const name = signal('world');
+                name.value += '!';
+              </script>
+              <h1>Hello {name.value}</h1>
+            `)
                     ]),
                     import_server.TempleRegistry.createText(`
             `, false),
@@ -1156,13 +1114,27 @@ const results = render({...props...});`;
                   import_server.TempleRegistry.createElement("div", { "class": `snippet-preview` }, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-snippet", {}, [
-                      ...this._toNodeList(home_default.imports)
+                    import_server.TempleRegistry.createElement("code-snippet", { "numbers": true, "trim": true, "detab": 14 }, [
+                      ...this._toNodeList(`
+              <!-- page.html -->
+              <link rel="import" href="./my-heading.html" />
+              <script>
+                const name = 'world';
+              </script>
+              <my-heading {name}>Hello</my-heading>
+            `)
                     ]),
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-snippet", {}, [
-                      ...this._toNodeList(home_default.heading)
+                    import_server.TempleRegistry.createElement("code-snippet", { "trim": true, "detab": 14 }, [
+                      ...this._toNodeList(`
+              <!-- my-heading.html -->
+              <script>
+                import { props } from '@ossph/temple';
+                const { name, children } = props();
+              </script>
+              <h1>{children} {name}</h1>
+            `)
                     ]),
                     import_server.TempleRegistry.createText(`
           `, false)
@@ -1191,13 +1163,31 @@ const results = render({...props...});`;
                   import_server.TempleRegistry.createElement("div", { "class": `snippet-preview` }, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-snippet", {}, [
-                      ...this._toNodeList(home_default.conditional)
+                    import_server.TempleRegistry.createElement("code-snippet", { "numbers": true, "trim": true, "detab": 14 }, [
+                      ...this._toNodeList(`
+              <script>
+                const name = 'world';
+                const show = name === "world";
+              </script>
+
+              <if true=show>
+                <h1>Hello {name}</h1>
+              </if>
+            `)
                     ]),
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-snippet", {}, [
-                      ...this._toNodeList(home_default.each)
+                    import_server.TempleRegistry.createElement("code-snippet", { "trim": true, "detab": 14 }, [
+                      ...this._toNodeList(`
+              <script>
+                const list = [ 'a', 'b', 'c' ];
+              </script>
+              <ul>
+                <each key=i value=item from=list>
+                  <li>{i}: {item}</li>
+                </each>
+              </ul>
+            `)
                     ]),
                     import_server.TempleRegistry.createText(`
           `, false)

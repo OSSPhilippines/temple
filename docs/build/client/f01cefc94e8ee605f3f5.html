@@ -66,13 +66,15 @@
         </p>
         <window-app title="Basic Example">
           <div class="snippet-preview">
-            <code-snippet>&lt;style&gt;
-  h1 { font-weight: bold; }
-&lt;/style&gt;
-&lt;script&gt;
-  const name = 'world';
-&lt;/script&gt;
-&lt;h1&gt;Hello {name}!&lt;/h1&gt;</code-snippet>
+            <code-snippet numbers trim >
+              &lt;style&gt;
+                h1 { font-weight: bold; }
+              &lt;/style&gt;
+              &lt;script&gt;
+                const name = 'world';
+              &lt;/script&gt;
+              &lt;h1&gt;Hello {name}!&lt;/h1&gt;
+            </code-snippet>
             <code-preview>
               <div>
                 <h1>Hello world!</h1>
@@ -113,27 +115,31 @@
           frameworks in just a few lines of code.
         </p>
         <window-app title="Server Example">
-          <code-snippet lang="javascript">import temple from '@ossph/temple/server';
-//make a template engine
-const engine = temple({...options...});
-//load a Temple file
-const render = await engine.load('./page.html');
-//render final HTML
-const results = render({...props...});</code-snippet>
+          <code-snippet lang="js" numbers trim >
+            import temple from '@ossph/temple/server';
+            //make a template engine
+            const engine = temple({...options...});
+            //load a Temple file
+            const render = await engine.load('./page.html');
+            //render final HTML
+            const results = render({...props...});
+          </code-snippet>
         </window-app>
 
         <h3>Props</h3>
         <p>Import your component props and use immediately</p>
         <window-app title="Props Example">
           <div class="snippet-preview">
-            <code-snippet>&lt;style&gt;
-  h1 { font-weight: bold; }
-&lt;/style&gt;
-&lt;script&gt;
-  import { props } from '@ossph/temple';
-  const { name } = props();
-&lt;/script&gt;
-&lt;h1&gt;Hello {name}!&lt;/h1&gt;</code-snippet>
+            <code-snippet numbers trim >
+              &lt;style&gt;
+                h1 { font-weight: bold; }
+              &lt;/style&gt;
+              &lt;script&gt;
+                import { props } from '@ossph/temple';
+                const { name } = props();
+              &lt;/script&gt;
+              &lt;h1&gt;Hello {name}!&lt;/h1&gt;
+            </code-snippet>
             <code-preview>
               <div>
                 <h1>Hello world!</h1>
@@ -146,15 +152,17 @@ const results = render({...props...});</code-snippet>
         <p>Use signals to manage state changes and re-renders.</p>
         <window-app title="Signal Example">
           <div class="snippet-preview">
-            <code-snippet>&lt;style&gt;
-  h1 { font-weight: bold; }
-&lt;/style&gt;
-&lt;script&gt;
-  import { signal } from '@ossph/temple';
-  const name = signal('world');
-  name.value += '!';
-&lt;/script&gt;
-&lt;h1&gt;Hello {name.value}&lt;/h1&gt;</code-snippet>
+            <code-snippet numbers trim >
+              &lt;style&gt;
+                h1 { font-weight: bold; }
+              &lt;/style&gt;
+              &lt;script&gt;
+                import { signal } from '@ossph/temple';
+                const name = signal('world');
+                name.value += '!';
+              &lt;/script&gt;
+              &lt;h1&gt;Hello {name.value}&lt;/h1&gt;
+            </code-snippet>
             <code-preview>
               <div>
                 <h1>Hello world!</h1>
@@ -167,18 +175,22 @@ const results = render({...props...});</code-snippet>
         <p>Import components and templates for reusability.</p>
         <window-app title="Import Example">
           <div class="snippet-preview">
-            <code-snippet>&lt;!-- page.html --&gt;
-&lt;link rel="import" href="./my-heading.html" /&gt;
-&lt;script&gt;
-  const name = 'world';
-&lt;/script&gt;
-&lt;my-heading {name}&gt;Hello&lt;/my-heading&gt;</code-snippet>
-            <code-snippet>&lt;!-- my-heading.html --&gt;
-&lt;script&gt;
-  import { props } from '@ossph/temple';
-  const { name, children } = props();
-&lt;/script&gt;
-&lt;h1&gt;{children} {name}&lt;/h1&gt;</code-snippet>
+            <code-snippet numbers trim >
+              &lt;!-- page.html --&gt;
+              &lt;link rel="import" href="./my-heading.html" /&gt;
+              &lt;script&gt;
+                const name = 'world';
+              &lt;/script&gt;
+              &lt;my-heading {name}&gt;Hello&lt;/my-heading&gt;
+            </code-snippet>
+            <code-snippet trim >
+              &lt;!-- my-heading.html --&gt;
+              &lt;script&gt;
+                import { props } from '@ossph/temple';
+                const { name, children } = props();
+              &lt;/script&gt;
+              &lt;h1&gt;{children} {name}&lt;/h1&gt;
+            </code-snippet>
           </div>
         </window-app>
 
@@ -188,22 +200,26 @@ const results = render({...props...});</code-snippet>
         </p>
         <window-app title="Conditional + Iteration Example">
           <div class="snippet-preview">
-            <code-snippet>&lt;script&gt;
-  const name = 'world';
-  const show = name === "world";
-&lt;/script&gt;
+            <code-snippet numbers trim >
+              &lt;script&gt;
+                const name = 'world';
+                const show = name === "world";
+              &lt;/script&gt;
 
-&lt;if true=show&gt;
-  &lt;h1&gt;Hello {name}&lt;/h1&gt;
-&lt;/if&gt;</code-snippet>
-            <code-snippet>&lt;script&gt;
-  const list = [ 'a', 'b', 'c' ];
-&lt;/script&gt;
-&lt;ul&gt;
-  &lt;each key=i value=item from=list&gt;
-    &lt;li&gt;{i}: {item}&lt;/li&gt;
-  &lt;/each&gt;
-&lt;/ul&gt;</code-snippet>
+              &lt;if true=show&gt;
+                &lt;h1&gt;Hello {name}&lt;/h1&gt;
+              &lt;/if&gt;
+            </code-snippet>
+            <code-snippet trim >
+              &lt;script&gt;
+                const list = [ 'a', 'b', 'c' ];
+              &lt;/script&gt;
+              &lt;ul&gt;
+                &lt;each key=i value=item from=list&gt;
+                  &lt;li&gt;{i}: {item}&lt;/li&gt;
+                &lt;/each&gt;
+              &lt;/ul&gt;
+            </code-snippet>
           </div>
         </window-app>
       </section>

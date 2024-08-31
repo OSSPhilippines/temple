@@ -239,9 +239,6 @@ var TempleBundle = (() => {
       var TempleElement_1 = __importDefault(require_TempleElement());
       var TempleRegistry_1 = __importDefault(require_TempleRegistry());
       var TempleDocument2 = class {
-        data() {
-          return `<script type="text/json">${JSON.stringify(Object.fromEntries(data_1.default.entries()))}</script>`;
-        }
         render(props = {}) {
           data_1.default.set("props", props || {});
           data_1.default.set("env", Object.assign(Object.assign({}, process.env || {}), { BUILD_ID: this.id(), APP_DATA: btoa(JSON.stringify(Object.assign(Object.assign({}, Object.fromEntries(data_1.default.entries())), { env: Object.assign(Object.assign({}, Object.fromEntries(Object.entries(process.env || {}).filter((entry) => entry[0].startsWith("PUBLIC_")))), { BUILD_ID: this.id() }) }))) }));
@@ -467,38 +464,7 @@ ${document2}`;
       return "3e6a90cc5da3e950a902";
     }
     styles() {
-      return `body {
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  h1, h2, h3, h4, h5, h6, p {
-    margin: 0;
-    padding: 0;
-  }
-  h1 { text-transform: uppercase; }
-  a, a:link, a:hover, a:active, a:visited {
-    color: var(--fg-primary);
-    text-decoration: none;
-  }
-  p, li {
-    line-height: 36px;
-  }
-  th {
-    padding: 10px;
-    text-align: left;
-    text-transform: uppercase;
-  }
-  td {
-    border-color: var(--muted);
-    border-top-style: solid;
-    border-top-width: 1px;
-    padding: 10px;
-  }
-  .fab, .fas, .fa {
-    line-height: 16px;
-  }
-  .container {
-    padding: 10px 20px;
-  }`;
+      return ``;
     }
     template() {
       const url = "/docs/";
@@ -507,36 +473,6 @@ ${document2}`;
       const toggle = (_) => {
         document.body.classList.toggle("panel-left-open");
       };
-      const snippet1 = `<style>
-      h1 { font-weight: bold; }
-    </style>
-    <script>
-      import { props } from '@ossph/temple';
-      const { name } = props();
-    </script>
-    <h1>Hello {name}!</h1>
-    
-
-
-
-
-
-
-  `.replace(/\n\s{4}/g, "\n");
-      const snippet2 = `
-        import { props } from '@ossph/temple';
-        export default class Hello extends TempleComponent {
-          styles() {
-            return 'h1 { font-weight: bold; }';
-          }
-          template() {
-            const { name } = props();
-            return () => [
-              TempleRegistry.createElement('h1', null, \`Hello \${name}\`)
-            ]
-          }
-        }
-      `.trim().replace(/\n\s{8}/g, "\n");
       return [
         import_server.TempleRegistry.createText(`
 `, false),
@@ -847,112 +783,118 @@ ${document2}`;
             import_server.TempleRegistry.createElement("panel-main", { "class": `panel-main` }, [
               import_server.TempleRegistry.createText(`
       `, false),
-              import_server.TempleRegistry.createElement("h1", { "class": `container` }, [
-                import_server.TempleRegistry.createText(`Documentation`, false)
-              ]),
-              import_server.TempleRegistry.createText(`
-      `, false),
-              import_server.TempleRegistry.createElement("p", { "class": `container` }, [
-                import_server.TempleRegistry.createText(`
-        Temple is a template engine with a built-in compiler that 
-        generates HTML markup, web components and support reactivity. 
-      `, false)
-              ]),
-              import_server.TempleRegistry.createText(`
-      `, false),
-              import_server.TempleRegistry.createElement("p", { "class": `container` }, [
-                import_server.TempleRegistry.createText(`
-        Temple can be used as a template engine on the server side, as a
-        site generator to make static websites and single page 
-        applications, and can be used to publish native HTML5 web 
-        components. The focus of the Temple project are the following.
-      `, false)
-              ]),
-              import_server.TempleRegistry.createText(`
-      `, false),
-              import_server.TempleRegistry.createElement("div", { "class": `tbl-container container` }, [
+              import_server.TempleRegistry.createElement("div", { "class": `docs container` }, [
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("table", { "class": `tbl` }, [
+                import_server.TempleRegistry.createElement("h1", {}, [
+                  import_server.TempleRegistry.createText(`Documentation`, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("p", {}, [
+                  import_server.TempleRegistry.createText(`
+          Temple is a template engine with a built-in compiler that 
+          generates HTML markup, web components and support reactivity. 
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("p", {}, [
+                  import_server.TempleRegistry.createText(`
+          Temple can be used as a template engine on the server side, as a
+          site generator to make static websites and single page 
+          applications, and can be used to publish native HTML5 web 
+          components. The focus of the Temple project are the following.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("div", { "class": `tbl-container` }, [
                   import_server.TempleRegistry.createText(`
           `, false),
-                  import_server.TempleRegistry.createElement("thead", {}, [
+                  import_server.TempleRegistry.createElement("table", { "class": `tbl` }, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("th", {}, [
-                      import_server.TempleRegistry.createText(`Features`, false)
-                    ]),
-                    import_server.TempleRegistry.createText(`
-            `, false),
-                    import_server.TempleRegistry.createElement("th", {}, [
-                      import_server.TempleRegistry.createText(`De-Features`, false)
-                    ]),
-                    import_server.TempleRegistry.createText(`
-          `, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-          `, false),
-                  import_server.TempleRegistry.createElement("tbody", {}, [
-                    import_server.TempleRegistry.createText(`
-            `, false),
-                    import_server.TempleRegistry.createElement("tr", {}, [
+                    import_server.TempleRegistry.createElement("thead", {}, [
                       import_server.TempleRegistry.createText(`
               `, false),
-                      import_server.TempleRegistry.createElement("td", {}, [
-                        import_server.TempleRegistry.createText(`Template Engine`, false)
+                      import_server.TempleRegistry.createElement("th", {}, [
+                        import_server.TempleRegistry.createText(`Features`, false)
                       ]),
                       import_server.TempleRegistry.createText(`
               `, false),
-                      import_server.TempleRegistry.createElement("td", {}, [
-                        import_server.TempleRegistry.createText(`No Hydration`, false)
+                      import_server.TempleRegistry.createElement("th", {}, [
+                        import_server.TempleRegistry.createText(`De-Features`, false)
                       ]),
                       import_server.TempleRegistry.createText(`
             `, false)
                     ]),
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("tr", {}, [
+                    import_server.TempleRegistry.createElement("tbody", {}, [
                       import_server.TempleRegistry.createText(`
               `, false),
-                      import_server.TempleRegistry.createElement("td", {}, [
-                        import_server.TempleRegistry.createText(`Web Components`, false)
+                      import_server.TempleRegistry.createElement("tr", {}, [
+                        import_server.TempleRegistry.createText(`
+                `, false),
+                        import_server.TempleRegistry.createElement("td", {}, [
+                          import_server.TempleRegistry.createText(`Template Engine`, false)
+                        ]),
+                        import_server.TempleRegistry.createText(`
+                `, false),
+                        import_server.TempleRegistry.createElement("td", {}, [
+                          import_server.TempleRegistry.createText(`No Hydration`, false)
+                        ]),
+                        import_server.TempleRegistry.createText(`
+              `, false)
                       ]),
                       import_server.TempleRegistry.createText(`
               `, false),
-                      import_server.TempleRegistry.createElement("td", {}, [
-                        import_server.TempleRegistry.createText(`No Hooks`, false)
-                      ]),
-                      import_server.TempleRegistry.createText(`
-            `, false)
-                    ]),
-                    import_server.TempleRegistry.createText(`
-            `, false),
-                    import_server.TempleRegistry.createElement("tr", {}, [
-                      import_server.TempleRegistry.createText(`
-              `, false),
-                      import_server.TempleRegistry.createElement("td", {}, [
-                        import_server.TempleRegistry.createText(`Server First`, false)
-                      ]),
-                      import_server.TempleRegistry.createText(`
-              `, false),
-                      import_server.TempleRegistry.createElement("td", {}, [
-                        import_server.TempleRegistry.createText(`No Memo`, false)
-                      ]),
-                      import_server.TempleRegistry.createText(`
-            `, false)
-                    ]),
-                    import_server.TempleRegistry.createText(`
-            `, false),
-                    import_server.TempleRegistry.createElement("tr", {}, [
-                      import_server.TempleRegistry.createText(`
-              `, false),
-                      import_server.TempleRegistry.createElement("td", {}, [
-                        import_server.TempleRegistry.createText(`Reactive Signals`, false)
+                      import_server.TempleRegistry.createElement("tr", {}, [
+                        import_server.TempleRegistry.createText(`
+                `, false),
+                        import_server.TempleRegistry.createElement("td", {}, [
+                          import_server.TempleRegistry.createText(`Web Components`, false)
+                        ]),
+                        import_server.TempleRegistry.createText(`
+                `, false),
+                        import_server.TempleRegistry.createElement("td", {}, [
+                          import_server.TempleRegistry.createText(`No Hooks`, false)
+                        ]),
+                        import_server.TempleRegistry.createText(`
+              `, false)
                       ]),
                       import_server.TempleRegistry.createText(`
               `, false),
-                      import_server.TempleRegistry.createElement("td", {}, [
-                        import_server.TempleRegistry.createText(`No Brandcuffs`, false)
+                      import_server.TempleRegistry.createElement("tr", {}, [
+                        import_server.TempleRegistry.createText(`
+                `, false),
+                        import_server.TempleRegistry.createElement("td", {}, [
+                          import_server.TempleRegistry.createText(`Server First`, false)
+                        ]),
+                        import_server.TempleRegistry.createText(`
+                `, false),
+                        import_server.TempleRegistry.createElement("td", {}, [
+                          import_server.TempleRegistry.createText(`No Memo`, false)
+                        ]),
+                        import_server.TempleRegistry.createText(`
+              `, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("tr", {}, [
+                        import_server.TempleRegistry.createText(`
+                `, false),
+                        import_server.TempleRegistry.createElement("td", {}, [
+                          import_server.TempleRegistry.createText(`Reactive Signals`, false)
+                        ]),
+                        import_server.TempleRegistry.createText(`
+                `, false),
+                        import_server.TempleRegistry.createElement("td", {}, [
+                          import_server.TempleRegistry.createText(`No Brandcuffs`, false)
+                        ]),
+                        import_server.TempleRegistry.createText(`
+              `, false)
                       ]),
                       import_server.TempleRegistry.createText(`
             `, false)
@@ -964,21 +906,15 @@ ${document2}`;
         `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
-      `, false)
-              ]),
-              import_server.TempleRegistry.createText(`
-      `, false),
-              import_server.TempleRegistry.createElement("p", { "class": `container` }, [
-                import_server.TempleRegistry.createText(`
-        At it's core, a temple file is a special template file that 
-        allows HTML, JavaScript, CSS and importing of components and 
-        templates. All of which are transpiled to its respective 
-        TypeScript or JavaScript soure code.
-      `, false)
-              ]),
-              import_server.TempleRegistry.createText(`
-      `, false),
-              import_server.TempleRegistry.createElement("div", { "class": `container` }, [
+        `, false),
+                import_server.TempleRegistry.createElement("p", {}, [
+                  import_server.TempleRegistry.createText(`
+          At it's core, a temple file is a special template file that 
+          allows HTML, JavaScript, CSS and importing of components and 
+          templates. All of which are transpiled to its respective 
+          TypeScript or JavaScript source code.
+        `, false)
+                ]),
                 import_server.TempleRegistry.createText(`
         `, false),
                 import_server.TempleRegistry.createElement("window-app", { "title": `Transpiler Example` }, [
@@ -987,14 +923,60 @@ ${document2}`;
                   import_server.TempleRegistry.createElement("div", { "class": `snippet-preview` }, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-snippet", {}, [
-                      ...this._toNodeList(snippet1)
+                    import_server.TempleRegistry.createElement("code-snippet", { "numbers": true }, [
+                      ...this._toNodeList(
+                        `
+              <style>
+                h1 { font-weight: bold; }
+              </style>
+              <script>
+                import { props } from '@ossph/temple';
+                const { name } = props();
+              </script>
+              <h1>Hello {name}!!</h1>
+              
+
+
+.
+            `.replace(new RegExp(`\\n {${14}}`, "g"), "\n")
+                      )
                     ]),
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-snippet", { "lang": `js` }, [
-                      ...this._toNodeList(snippet2)
+                    import_server.TempleRegistry.createElement("code-snippet", { "lang": `js`, "trim": true }, [
+                      ...this._toNodeList(
+                        `
+              import { props } from '@ossph/temple';
+              export default class Hello extends TempleComponent {
+                styles() {
+                  return 'h1 { font-weight: bold; }';
+                }
+                template() {
+                  const { name } = props();
+                  return () => [
+                    TempleRegistry.createElement('h1', null, \`Hello \${name}\`)
+                  ]
+                }
+              }
+            `.replace(new RegExp(`\\n {${14}}`, "g"), "\n")
+                      )
                     ]),
+                    import_server.TempleRegistry.createText(`
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("nav", { "class": `pager` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("a", { "class": `next`, "href": `/temple/docs/started.html` }, [
+                    import_server.TempleRegistry.createText(`
+            Getting Started
+            `, false),
+                    import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-chevron-right` }, []),
                     import_server.TempleRegistry.createText(`
           `, false)
                   ]),

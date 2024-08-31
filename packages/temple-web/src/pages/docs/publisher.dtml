@@ -1,0 +1,92 @@
+<link rel="import" type="template" href="@/templates/html-head.tml" />
+<link rel="import" type="template" href="@/templates/panel-head.tml" />
+<link rel="import" type="template" href="@/templates/panel-left.tml" />
+<link rel="import" type="component" href="@/components/panel-main.tml" />
+<link rel="import" type="component" href="@/components/window-app.tml" />
+<link rel="import" type="component" href="@/components/code-snippet.tml" />
+<link rel="import" type="component" href="@/components/dev-ui.tml" />
+<script>
+  //This is ran on both the server and the browser
+  //There is no signal, children prop here because 
+  //this is not a component.
+  //
+  //We also need to becareful with importing browser 
+  //scripts here. You should do that in the <head>
+  //instead.
+  import { env } from '@ossph/temple';
+  const url = '/docs/';
+  const title = 'Publish a Web Component - Temple reactive web component template engine.';
+  const description = 'Temple is a template engine hat generates web components and support reactivity.';
+  const toggle = _ => {
+    document.body.classList.toggle('panel-left-open');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark panel with-head with-left">
+    <panel-head />
+    <panel-left />
+    <panel-main class="panel-main">
+      <div class="docs container">
+        <h1>Publish a Web Component</h1>
+        <p>
+          Create a server file called
+          <code-snippet lang="js" inline>'src/index.ts'</code-snippet> 
+          with the following code that uses the compiler.
+        </p>
+        <window-app title="src/index.ts">
+          <code-snippet lang="js" numbers trim detab={12}>{`
+            import http from 'http';
+            import temple from '@ossph/temple/compiler';
+
+            //create temple compiler
+            const compiler = temple({ cwd: __dirname });
+            //load component, and render
+            const component = compiler
+              .fromSource('./component.tml')
+              .component();
+            
+            //save component
+            compiler.fs.writeFileSync('/path/to/component.js', component);
+          `}</code-snippet>
+        </window-app>
+        <p>
+          Next, create a document file called
+          <code-snippet lang="js" inline>'src/component.tml'</code-snippet> 
+          with the following template code.
+        </p>
+        <window-app title="src/component.dtml">
+          <code-snippet numbers trim detab={12}>{`
+            <style>
+              .title { text-align: center; }
+            </style>
+            <script>
+              const title = 'Hello';
+            </script>
+            <h1 class="title">{title}</h1>
+          `}</code-snippet>
+        </window-app>
+        <p>
+          To test the script and see the results, run the following 
+          command in terminal.
+        </p>
+        <window-app title="Terminal">
+          <code-snippet lang="bash">
+            npx ts-node src/index.ts
+          </code-snippet>
+        </window-app>
+        <nav class="pager">
+          <a class="prev" href="/temple/docs/started.html">
+            <i class="fas fa-fw fa-chevron-left"></i>
+            Getting Started
+          </a>
+          <a class="next" href="/temple/docs/static-sites.html">
+            Static Site Generator
+            <i class="fas fa-fw fa-chevron-right"></i>
+          </a>
+        </nav>
+      </div>
+      <footer class="foot"></footer>
+    </panel-main>
+  </body>
+</html>

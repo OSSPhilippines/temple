@@ -4,7 +4,7 @@ import type { TempleEvent, DocumentBuilder } from '@ossph/temple/compiler';
 
 import path from 'path';
 import express from 'express';
-import temple, { withCache } from '@ossph/temple/compiler';
+import temple from '@ossph/temple/compiler';
 import { view, dev } from '@ossph/temple-express';
 
 type Next = () => void;
@@ -13,12 +13,14 @@ const docs = path.join(__dirname, '../../../docs');
 
 //create temple compiler
 const compiler = temple({ 
+  brand: '',
   cwd: __dirname,
   minify: false
+//enable cache
+}).withCache({ 
+  environment: process.env.NODE_ENV,
+  buildPath: path.join(docs, 'build') 
 });
-
-withCache(compiler, { buildPath: path.join(docs, 'build') });
-
 //on post markup build, cache (dev and live)
 compiler.emitter.on('rendered', (event: TempleEvent<string>) => {
   //extract builder and sourcecode from params
@@ -65,18 +67,6 @@ if (process.env.NODE_ENV === 'production') {
   app.engine('dtml', view(compiler));
 }
 
-//open public folder
-app.use('/temple', express.static(docs));
-//error handling
-app.use((error: Error, req: Request, res: Response, next: Next) => {
-  if (error) {
-    res.status(500);
-    res.render('500', { error: error.message });
-    return;
-  }
-  next();
-});
-
 //routes
 app.get('/temple/build/:build', async (req, res) => {
   //get filename ie. abc123.js
@@ -87,7 +77,13 @@ app.get('/temple/build/:build', async (req, res) => {
   res.type(type).send(content);
 });
 
+app.get('/temple/', (req, res) => {
+  const props = { title: 'Temple Documentation' };
+  return res.type('text/html').render('index', props);
+});
+
 app.get('/temple/**', (req, res) => {
+  const { fs } = compiler;
   const props = { title: 'Temple Documentation' };
   // from /temple/index.html to index
   const route = (() => {
@@ -98,11 +94,26 @@ app.get('/temple/**', (req, res) => {
   })();
   //try /path/to/pages/[route].dtml
   const template = path.join(__dirname, 'pages', route + '.dtml');
-  if (compiler.fs.existsSync(template)) {
-    res.type('text/html');
-    return res.render(route, props);
+  if (fs.existsSync(template)) {
+    return res.type('text/html').render(route, props);
   }
-  res.status(404).send('Not Found');
+  //else if static file
+  const resource = (req.url || '').substring(8).replace(/\/\//, '/'); 
+  const file = path.join(docs, resource); 
+  if (fs.existsSync(file)) {
+    return res.status(200).sendFile(file);
+  }
+  res.status(404).end('Not Found');
+});
+
+//error handling
+app.use((error: Error, req: Request, res: Response, next: Next) => {
+  if (error) {
+    res.status(500);
+    res.render('500', { error: error.message });
+    return;
+  }
+  next();
 });
 
 //listen

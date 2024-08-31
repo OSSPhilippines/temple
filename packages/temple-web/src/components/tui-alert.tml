@@ -1,0 +1,205 @@
+<link rel="stylesheet" type="text/css" href="/temple/styles/fontawesome/all.css" />
+<style>
+  :host {
+    --black: #222222;
+    --white: #FCFCFC;
+    --info: #1474FC;
+    --error: #DC3545;
+    --warning: #FF7B07;
+    --success: #28A745;
+    --muted: #999999;
+    --primary: #E49F1A;
+    --secondary: #DA532C;
+  }
+
+  /* Text Colors
+  ---------------------------------*/
+  .tx-white, .tx-white a {
+    color: var(--info);
+  }
+  .tx-white, .tx-white a {
+    color: var(--white);
+  }
+  .tx-error, .tx-error a {
+    color: var(--error);
+  }
+  .tx-warning, .tx-warning a {
+    color: var(--warning);
+  }
+  .tx-success, .tx-success a {
+    color: var(--success);
+  }
+  .tx-muted, .tx-muted a {
+    color: var(--muted);
+  }
+  .tx-primary, .tx-primary a {
+    color: var(--primary);
+  }
+  .tx-secondary, .tx-secondary a {
+    color: var(--secondary);
+  }
+
+  /* Borders
+  ---------------------------------*/
+  .curved {
+    border-radius: 5px;
+  }
+  .rounded {
+    border-radius:12px;
+  }
+  .pill {
+    border-radius: 10000px;
+  }
+  .solid {
+    border-style: solid;
+  }
+  .thin {
+    border-width: 1px;
+  }
+
+  .bd-info {
+    border-color: var(--info);
+  }
+  .bd-error {
+    border-color: var(--error);
+  }
+  .bd-warning {
+    border-color: var(--warning);
+  }
+  .bd-success {
+    border-color: var(--success);
+  }
+  .bd-muted {
+    border-color: var(--muted);
+  }
+  .bd-primary {
+    border-color: var(--primary);
+  }
+  .bd-secondary {
+    border-color: var(--secondary);
+  }
+
+  /* Backgrounds
+  ---------------------------------*/
+  .bg-white {
+    background-color: var(--white);
+  }
+  .bg-info {
+    background-color: var(--info);
+  }
+  .bg-error {
+    background-color: var(--error);
+  }
+  .bg-warning {
+    background-color: var(--warning);
+  }
+  .bg-success {
+    background-color: var(--success);
+  }
+  .bg-muted {
+    background-color: var(--muted);
+  }
+  .bg-primary {
+    background-color: var(--primary);
+  }
+  .bg-secondary {
+    background-color: var(--secondary);
+  }
+
+  /* Alert
+  ---------------------------------*/
+  .alert {
+    padding: 16px;
+  }
+</style>
+<script>
+  import { props, classnames, children } from '@ossph/temple';
+  // Separate component related props from field attributes
+  const { 
+    color,  info,    warning, success,     
+    error,  muted,   primary, secondary,
+    solid,  outline, curved,  rounded, 
+    pill,   style
+  } = props<{
+    color?: string,
+    info?: boolean, 
+    warning?: boolean, 
+    success?: boolean, 
+    error?: boolean, 
+    muted?: boolean, 
+    primary?: boolean, 
+    secondary?: boolean, 
+    solid?: boolean, 
+    outline?: boolean,
+    curved?: boolean,
+    rounded?: boolean, 
+    pill?: boolean,
+    style?: string
+  }>();
+
+  const config = {
+    classes: [ 'alert' ],
+    styles: ''
+  }
+
+  const layout = outline ? 'outline' 
+    : solid ? 'solid'
+    : 'solid';
+
+  if (curved) {
+    config.classes.push('curved');
+  } else if (rounded) {
+    config.classes.push('rounded');
+  } else if (pill) {
+    config.classes.push('pill');
+  }
+
+  if (layout === 'outline') {
+    config.classes.push('solid', 'thin');
+    if (color) {
+      config.styles += `border-color: ${color};`;
+      config.styles += `color: ${color};`;
+    } else if (info) {
+      config.classes.push('bd-info', 'tx-info');
+    } else if (warning) {
+      config.classes.push('bd-warning', 'tx-warning');
+    } else if (success) {
+      config.classes.push('bd-success', 'tx-success');
+    } else if (error) {
+      config.classes.push('bd-error', 'tx-error');
+    } else if (muted) {
+      config.classes.push('bd-muted', 'tx-muted');
+    } else if (primary) {
+      config.classes.push('bd-primary', 'tx-primary');
+    } else if (secondary) {
+      config.classes.push('bd-secondary', 'tx-secondary');
+    }
+  } else {
+    config.classes.push('tx-white');
+    if (color) {
+      config.styles += `background-color: ${color};`;
+    } else if (info) {
+      config.classes.push('bg-info');
+    } else if (warning) {
+      config.classes.push('bg-warning');
+    } else if (success) {
+      config.classes.push('bg-success');
+    } else if (error) {
+      config.classes.push('bg-error');
+    } else if (muted) {
+      config.classes.push('bg-muted');
+    } else if (primary) {
+      config.classes.push('bg-primary');
+    } else if (secondary) {
+      config.classes.push('bg-secondary');
+    }
+  } 
+
+  const map = {
+    classes: [ ...config.classes, classnames() ].join(' '),
+    styles: { ...config.styles, ...style }
+  };
+</script>
+<div class={map.classes} style={map.styles}>
+  {children()}
+</div>

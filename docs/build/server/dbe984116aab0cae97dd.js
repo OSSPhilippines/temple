@@ -239,9 +239,6 @@ var TempleBundle = (() => {
       var TempleElement_1 = __importDefault(require_TempleElement());
       var TempleRegistry_1 = __importDefault(require_TempleRegistry());
       var TempleDocument2 = class {
-        data() {
-          return `<script type="text/json">${JSON.stringify(Object.fromEntries(data_1.default.entries()))}</script>`;
-        }
         render(props = {}) {
           data_1.default.set("props", props || {});
           data_1.default.set("env", Object.assign(Object.assign({}, process.env || {}), { BUILD_ID: this.id(), APP_DATA: btoa(JSON.stringify(Object.assign(Object.assign({}, Object.fromEntries(data_1.default.entries())), { env: Object.assign(Object.assign({}, Object.fromEntries(Object.entries(process.env || {}).filter((entry) => entry[0].startsWith("PUBLIC_")))), { BUILD_ID: this.id() }) }))) }));
@@ -467,47 +464,7 @@ ${document2}`;
       return "dbe984116aab0cae97dd";
     }
     styles() {
-      return `body {
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  h1, h2, h3, h4, h5, h6, p {
-    margin: 0;
-    padding: 0;
-  }
-  h1 { text-transform: uppercase; }
-  a, a:link, a:hover, a:active, a:visited {
-    color: var(--fg-primary);
-    text-decoration: none;
-  }
-  p, li {
-    line-height: 24px;
-  }
-  p {
-    margin-bottom: 20px;
-  }
-  th {
-    padding: 10px;
-    text-align: left;
-    text-transform: uppercase;
-  }
-  td {
-    border-color: var(--muted);
-    border-top-style: solid;
-    border-top-width: 1px;
-    padding: 10px;
-  }
-  .fab, .fas, .fa {
-    line-height: 16px;
-  }
-  h1 {
-    margin: 20px 0;
-  }
-  .container {
-    padding: 10px 20px;
-  }
-  .tbl-container {
-    margin-bottom: 20px;
-  }`;
+      return ``;
     }
     template() {
       const url = "/docs/";
@@ -517,42 +474,6 @@ ${document2}`;
         document.body.classList.toggle("panel-left-open");
       };
       const examples = "https://github.com/OSSPhilippines/temple/tree/main/examples";
-      const tagname = {
-        script: "script",
-        style: "style",
-        head: "head",
-        body: "body"
-      };
-      const snippet1 = `//on server:
-    import temple from '@ossph/temple/compiler';
-    //make a temple compiler
-    const compiler = temple();
-    //import a temple document file
-    const { document } = await compiler.import('./page.dtml');
-    //render final HTML
-    const results = document.render();
-    //show final HTML
-    console.log(results);
-  `.trim().replace(/\n\s{4}/g, "\n");
-      const snippet2 = `<${tagname.style}>
-          body { 
-            background-color: #DA532C; 
-            color: #EFEFEF; 
-          }
-          .title { text-align: center; }
-        </${tagname.style}>
-        <${tagname.script}>
-          const title = 'Hello World';
-        </${tagname.script}>
-        <html>
-          <${tagname.head}>
-            <title>{title}</title>
-          </${tagname.head}>
-          <${tagname.body}>
-            <h1 class="title">{title}</h1>
-          </${tagname.body}>
-        </html>
-      `.trim().replace(/\n\s{8}/g, "\n");
       return [
         import_server.TempleRegistry.createText(`
 `, false),
@@ -863,7 +784,7 @@ ${document2}`;
             import_server.TempleRegistry.createElement("panel-main", { "class": `panel-main` }, [
               import_server.TempleRegistry.createText(`
       `, false),
-              import_server.TempleRegistry.createElement("div", { "class": `container` }, [
+              import_server.TempleRegistry.createElement("div", { "class": `docs container` }, [
                 import_server.TempleRegistry.createText(`
         `, false),
                 import_server.TempleRegistry.createElement("h1", {}, [
@@ -891,6 +812,21 @@ ${document2}`;
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
+                import_server.TempleRegistry.createElement("tui-alert", { "solid": true, "curved": true, "info": true }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("i", { "class": `fas fa-info-circle` }, []),
+                  import_server.TempleRegistry.createText(`
+          &nbsp;
+          Download the Temple editor plugin at the `, false),
+                  import_server.TempleRegistry.createElement("a", { "target": `_blank`, "href": `https://marketplace.visualstudio.com/items?itemName=ossph.temple-language` }, [
+                    import_server.TempleRegistry.createText(`Visual Studio Marketplace`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
                 import_server.TempleRegistry.createElement("p", {}, [
                   import_server.TempleRegistry.createText(`
           Create a server file called
@@ -907,8 +843,17 @@ ${document2}`;
                 import_server.TempleRegistry.createElement("window-app", { "title": `src/index.ts` }, [
                   import_server.TempleRegistry.createText(`
           `, false),
-                  import_server.TempleRegistry.createElement("code-snippet", { "lang": `js` }, [
-                    ...this._toNodeList(snippet1)
+                  import_server.TempleRegistry.createElement("code-snippet", { "lang": `js`, "numbers": true, "trim": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            //on server:
+            import temple from '@ossph/temple/compiler';
+            //make a temple compiler
+            const compiler = temple();
+            //render HTML
+            const results = compiler.render('./page.dtml');
+            //show HTML
+            console.log(results);
+          `)
                   ]),
                   import_server.TempleRegistry.createText(`
         `, false)
@@ -931,8 +876,23 @@ ${document2}`;
                 import_server.TempleRegistry.createElement("window-app", { "title": `src/page.dtml` }, [
                   import_server.TempleRegistry.createText(`
           `, false),
-                  import_server.TempleRegistry.createElement("code-snippet", {}, [
-                    ...this._toNodeList(snippet2)
+                  import_server.TempleRegistry.createElement("code-snippet", { "numbers": true, "trim": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            <style>
+              .title { text-align: center; }
+            </style>
+            <script>
+              const title = 'Hello World';
+            </script>
+            <html>
+              <head>
+                <title>{title}</title>
+              </head>
+              <body>
+                <h1 class="title">{title}</h1>
+              </body>
+            </html>
+          `)
                   ]),
                   import_server.TempleRegistry.createText(`
         `, false)
@@ -1136,6 +1096,32 @@ ${document2}`;
               Web Component Publisher
             `, false)
                     ]),
+                    import_server.TempleRegistry.createText(`
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("nav", { "class": `pager` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("a", { "class": `prev`, "href": `/temple/docs/index.html` }, [
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-chevron-left` }, []),
+                    import_server.TempleRegistry.createText(`
+            Documentation
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("a", { "class": `next`, "href": `/temple/docs/questions.html` }, [
+                    import_server.TempleRegistry.createText(`
+            Questions &amp; Answers
+            `, false),
+                    import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-chevron-right` }, []),
                     import_server.TempleRegistry.createText(`
           `, false)
                   ]),

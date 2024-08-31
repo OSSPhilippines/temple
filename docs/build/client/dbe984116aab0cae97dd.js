@@ -225,11 +225,11 @@ var TempleBundle = (() => {
       };
       Object.defineProperty(exports, "__esModule", { value: true });
       var TempleElement_1 = __importDefault(require_TempleElement());
-      var TempleRegistry7 = class {
+      var TempleRegistry8 = class {
         static get elements() {
           return this._elements;
         }
-        static createComponent(definition, attributes, children5 = []) {
+        static createComponent(definition, attributes, children6 = []) {
           const tagname = definition.component[0];
           const template = document.createElement("template");
           template.innerHTML = `<${tagname}></${tagname}>`;
@@ -241,21 +241,26 @@ var TempleBundle = (() => {
           for (const [key, value] of Object.entries(attributes)) {
             if (typeof value === "string") {
               component.setAttribute(key, value);
+            } else if (value === true) {
+              component.setAttribute(key, key);
             }
           }
-          children5.forEach((child) => component.appendChild(child));
-          component.init(attributes);
-          component.wait();
-          return component.element;
+          component._TempleAttributes = attributes;
+          component.props = attributes;
+          children6.forEach((child) => component.appendChild(child));
+          component.register();
+          return this.register(component, attributes);
         }
-        static createElement(name, attributes, children5 = []) {
+        static createElement(name, attributes, children6 = []) {
           const element = document.createElement(name);
           for (const [key, value] of Object.entries(attributes)) {
             if (typeof value === "string") {
               element.setAttribute(key, value);
+            } else if (value === true) {
+              element.setAttribute(key, key);
             }
           }
-          children5.forEach((child) => element.appendChild(child));
+          children6.filter((child) => typeof child !== "undefined").forEach((child) => element.appendChild(child));
           return this.register(element, attributes);
         }
         static createText(value, escape = false) {
@@ -273,6 +278,9 @@ var TempleBundle = (() => {
         static get(element) {
           return this._elements.get(element) || null;
         }
+        static has(element) {
+          return this._elements.has(element);
+        }
         static map(callback) {
           const elements = [];
           this._elements.forEach((temple, html) => {
@@ -281,7 +289,7 @@ var TempleBundle = (() => {
           return elements;
         }
         static register(element, attributes) {
-          if (this._elements.has(element)) {
+          if (this.has(element)) {
             return this.get(element);
           }
           const node = new TempleElement_1.default(element, attributes || {});
@@ -289,8 +297,8 @@ var TempleBundle = (() => {
           return node;
         }
       };
-      TempleRegistry7._elements = /* @__PURE__ */ new Map();
-      exports.default = TempleRegistry7;
+      TempleRegistry8._elements = /* @__PURE__ */ new Map();
+      exports.default = TempleRegistry8;
     }
   });
 
@@ -299,7 +307,46 @@ var TempleBundle = (() => {
     "../temple/dist/client/data.js"(exports) {
       "use strict";
       Object.defineProperty(exports, "__esModule", { value: true });
-      var data2 = new Map(Object.entries(window.__APP_DATA__ || {}));
+      exports.TempleDataMap = void 0;
+      var TempleDataMap = class {
+        constructor() {
+          if (!window.__APP_DATA__) {
+            window.__APP_DATA__ = {};
+          }
+        }
+        clear() {
+          window.__APP_DATA__ = {};
+          return this;
+        }
+        delete(key) {
+          if (this.has(key)) {
+            delete window.__APP_DATA__[key];
+            return true;
+          }
+          return false;
+        }
+        entries() {
+          return Object.entries(window.__APP_DATA__);
+        }
+        has(key) {
+          return key in window.__APP_DATA__;
+        }
+        get(key) {
+          return window.__APP_DATA__[key];
+        }
+        keys() {
+          return Object.keys(window.__APP_DATA__);
+        }
+        set(key, value) {
+          window.__APP_DATA__[key] = value;
+          return this;
+        }
+        values() {
+          return Object.values(window.__APP_DATA__);
+        }
+      };
+      exports.TempleDataMap = TempleDataMap;
+      var data2 = new TempleDataMap();
       exports.default = data2;
     }
   });
@@ -315,9 +362,26 @@ var TempleBundle = (() => {
       var TempleRegistry_1 = __importDefault(require_TempleRegistry());
       var TempleEmitter_1 = __importDefault(require_TempleEmitter());
       var data_1 = __importDefault(require_data());
-      var TempleComponent6 = class _TempleComponent extends HTMLElement {
+      var TempleComponent7 = class _TempleComponent extends HTMLElement {
+        constructor() {
+          super(...arguments);
+          this._initiated = false;
+          this._template = null;
+          this._attributes = {};
+          this._props = {};
+          this._children = void 0;
+        }
         static register() {
           customElements.define(this.component[0], this);
+        }
+        get attr() {
+          return this._attributes;
+        }
+        get element() {
+          if (!TempleRegistry_1.default.has(this)) {
+            return TempleRegistry_1.default.register(this, this._TempleAttributes || {});
+          }
+          return TempleRegistry_1.default.get(this);
         }
         get metadata() {
           const [tagname, classname] = this.constructor.component;
@@ -326,31 +390,22 @@ var TempleBundle = (() => {
         get originalChildren() {
           return this._children;
         }
-        get element() {
-          return TempleRegistry_1.default.get(this);
-        }
-        get props() {
-          return Object.assign({}, this.element.attributes);
-        }
         get initiated() {
           return this._initiated;
         }
-        set props(props5) {
-          this.element.setAttributes(Object.assign({}, props5));
-          this.render();
+        get props() {
+          return this._props;
         }
-        constructor() {
-          super();
-          this._initiated = false;
-          this._template = null;
-          this._children = void 0;
-          this.init();
+        set props(props6) {
+          this._props = Object.assign({}, props6);
+          this._attributes = Object.fromEntries(Object.entries(props6).filter((entry) => typeof entry[1] === "string" || entry[1] === true));
         }
         adoptedCallback() {
           this.render();
         }
         attributeChangedCallback(name, previous, value) {
           this.props = Object.assign(Object.assign({}, this.props), { [name]: value });
+          this.render();
         }
         connectedCallback() {
           this.wait();
@@ -367,8 +422,8 @@ var TempleBundle = (() => {
           }
           return null;
         }
-        init(attributes = {}) {
-          TempleRegistry_1.default.register(this, attributes);
+        register() {
+          TempleRegistry_1.default.register(this, this._props);
         }
         render() {
           const parent = this.getParentComponent();
@@ -382,10 +437,10 @@ var TempleBundle = (() => {
           } else {
             TempleEmitter_1.default.emit("unmounted", this);
           }
-          const children5 = this._template().filter(Boolean);
+          const children6 = this._template().filter(Boolean);
           if (styles.length === 0) {
             this.textContent = "";
-            children5.forEach((child) => this.appendChild(child));
+            children6.forEach((child) => this.appendChild(child));
           } else {
             if (!this.shadowRoot) {
               this.attachShadow({ mode: "open" });
@@ -396,7 +451,7 @@ var TempleBundle = (() => {
             const style = document.createElement("style");
             style.innerText = styles;
             shadowRoot.appendChild(style);
-            children5.forEach((child) => {
+            children6.forEach((child) => {
               var _a;
               return (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(child);
             });
@@ -417,15 +472,6 @@ var TempleBundle = (() => {
             TempleEmitter_1.default.on("ready", next);
           }
         }
-        _update() {
-          if (typeof this._children === "undefined") {
-            this._children = Array.from(this.childNodes || []);
-          }
-          this.props = Object.assign({}, this.element.attributes);
-          if (!this._initiated) {
-            this.render();
-          }
-        }
         _toNodeList(value) {
           if (value instanceof Node) {
             return [value];
@@ -437,8 +483,21 @@ var TempleBundle = (() => {
           }
           return [TempleRegistry_1.default.createText(String(value))];
         }
+        _update() {
+          if (typeof this._children === "undefined") {
+            this._children = Array.from(this.childNodes || []);
+          }
+          const element = this.element;
+          if (element) {
+            this.props = Object.assign({}, element.attributes);
+            this.render();
+          }
+          if (!this._initiated) {
+            this.render();
+          }
+        }
       };
-      exports.default = TempleComponent6;
+      exports.default = TempleComponent7;
     }
   });
 
@@ -470,9 +529,9 @@ var TempleBundle = (() => {
         return mod && mod.__esModule ? mod : { "default": mod };
       };
       Object.defineProperty(exports, "__esModule", { value: true });
-      exports.default = props5;
+      exports.default = props6;
       var data_1 = __importDefault(require_data());
-      function props5(component = null) {
+      function props6(component = null) {
         if (!component) {
           component = data_1.default.get("current") || null;
         }
@@ -495,9 +554,9 @@ var TempleBundle = (() => {
         return mod && mod.__esModule ? mod : { "default": mod };
       };
       Object.defineProperty(exports, "__esModule", { value: true });
-      exports.default = classnames;
+      exports.default = classnames2;
       var props_1 = __importDefault(require_props());
-      function classnames(component = null) {
+      function classnames2(component = null) {
         return (0, props_1.default)(component)["class"];
       }
     }
@@ -512,15 +571,15 @@ var TempleBundle = (() => {
       };
       Object.defineProperty(exports, "__esModule", { value: true });
       exports.innerHTML = innerHTML;
-      exports.default = children5;
+      exports.default = children6;
       var data_1 = __importDefault(require_data());
       function innerHTML(component = null) {
-        const inner = children5(component);
+        const inner = children6(component);
         const wrapper = document.createElement("template");
         wrapper.append(...inner);
         return wrapper.innerHTML;
       }
-      function children5(component = null) {
+      function children6(component = null) {
         if (!component) {
           component = data_1.default.get("current") || null;
         }
@@ -777,7 +836,7 @@ var TempleBundle = (() => {
         return mod && mod.__esModule ? mod : { "default": mod };
       };
       Object.defineProperty(exports, "__esModule", { value: true });
-      exports.SignalRegistry = exports.TempleException = exports.TempleEmitter = exports.TempleElement = exports.TempleRegistry = exports.TempleComponent = exports.emitter = exports.signal = exports.innerHTML = exports.children = exports.classnames = exports.props = exports.env = exports.data = void 0;
+      exports.SignalRegistry = exports.TempleException = exports.TempleEmitter = exports.TempleElement = exports.TempleRegistry = exports.TempleComponent = exports.TempleDataMap = exports.emitter = exports.signal = exports.innerHTML = exports.children = exports.classnames = exports.props = exports.env = exports.data = void 0;
       var Exception_1 = __importDefault(require_Exception());
       exports.TempleException = Exception_1.default;
       var TempleComponent_1 = __importDefault(require_TempleComponent());
@@ -791,8 +850,11 @@ var TempleBundle = (() => {
       Object.defineProperty(exports, "TempleEmitter", { enumerable: true, get: function() {
         return TempleEmitter_1.TempleEmitter;
       } });
-      var data_1 = __importDefault(require_data());
+      var data_1 = __importStar(require_data());
       exports.data = data_1.default;
+      Object.defineProperty(exports, "TempleDataMap", { enumerable: true, get: function() {
+        return data_1.TempleDataMap;
+      } });
       var env_1 = __importDefault(require_env());
       exports.env = env_1.default;
       var props_1 = __importDefault(require_props());
@@ -2280,19 +2342,19 @@ var TempleBundle = (() => {
   var started_exports = {};
   __export(started_exports, {
     BUILD_ID: () => BUILD_ID,
-    TempleComponent: () => import_client6.TempleComponent,
-    TempleElement: () => import_client6.TempleElement,
-    TempleEmitter: () => import_client6.TempleEmitter,
-    TempleException: () => import_client6.TempleException,
-    TempleRegistry: () => import_client6.TempleRegistry,
-    children: () => import_client6.children,
+    TempleComponent: () => import_client7.TempleComponent,
+    TempleElement: () => import_client7.TempleElement,
+    TempleEmitter: () => import_client7.TempleEmitter,
+    TempleException: () => import_client7.TempleException,
+    TempleRegistry: () => import_client7.TempleRegistry,
+    children: () => import_client7.children,
     components: () => components,
-    data: () => import_client6.data,
-    emitter: () => import_client6.emitter,
-    props: () => import_client6.props,
-    signal: () => import_client6.signal
+    data: () => import_client7.data,
+    emitter: () => import_client7.emitter,
+    props: () => import_client7.props,
+    signal: () => import_client7.signal
   });
-  var import_client5 = __toESM(require_client2());
+  var import_client6 = __toESM(require_client2());
 
   // temple-component-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/components/panel-main.tml
   var import_client = __toESM(require_client2());
@@ -2302,11 +2364,11 @@ var TempleBundle = (() => {
       return ``;
     }
     template() {
-      const props5 = this.props;
-      const children5 = () => this.originalChildren;
+      const props6 = this.props;
+      const children6 = () => this.originalChildren;
       return () => [
         import_client.TempleRegistry.createElement("main", {}, [
-          ...this._toNodeList(children5())
+          ...this._toNodeList(children6())
         ]).element
       ];
     }
@@ -2318,78 +2380,11 @@ var TempleBundle = (() => {
   var WindowApp_05952304bd7774a5f83e = class extends import_client2.TempleComponent {
     static component = ["window-app", "WindowApp_05952304bd7774a5f83e"];
     styles() {
-      return `:host {
-    display: block;
-  }
-  .window {
-    background-color: #212121;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    margin-bottom: 20px;
-    overflow: hidden;
-  }
-
-  .window .head {
-    align-items: center;
-    background: #1A1A1A;
-    border-bottom: 1px solid #29252A;
-    color: #999999;
-    gap: 10px;
-    padding: 10px;
-    font-size: 16px;
-    display: flex;
-    position: relative;
-  }
-
-  .window .head .dot {
-    background-color: #999999;
-    border-radius: 50%;
-    height: 10px;
-    width: 10px;
-  }
-
-  .window .head .title {
-    align-items: center;
-    display: flex;
-    height: 100%;
-    left: 0;
-    justify-content: center;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-
-  .window .body {
-    background-color: #101113;
-    color: #ABB2BF;
-    margin: 0;
-    padding: 0;
-  }
-  .snippet-preview {
-    display: flex;
-  }
-  .snippet-preview code-snippet {
-    background-color: #101113;
-    flex-basis: 50%;
-  }
-  .snippet-preview code-preview {
-    background-color: #EFEFEF;
-    flex-basis: 50%;
-  }
-  @media (max-width: 767px) {
-    .snippet-preview {
-      display: block;
-    }
-
-    .snippet-preview code-snippet {
-      padding-bottom: 10px;
-    }
-  }`;
+      return ``;
     }
     template() {
       const { title } = (0, import_temple.props)();
       return () => [
-        import_client2.TempleRegistry.createElement("link", { "rel": `stylesheet`, "href": `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css` }).element,
         import_client2.TempleRegistry.createText(`
 `, false),
         import_client2.TempleRegistry.createElement("div", { "class": `window` }, [
@@ -2436,7 +2431,6 @@ var TempleBundle = (() => {
     display: block;
     font-size: 14px;
     line-height: 20px;
-    overflow: auto;
   }
   :host([inline]) {
     display: inline;
@@ -2447,7 +2441,7 @@ var TempleBundle = (() => {
     display: inline;
   }
   .snippet {
-    background-color: #101113;
+    background-color: #000000;
     color: #ABB2BF;
     margin: 0;
     padding: 0;
@@ -2501,6 +2495,9 @@ var TempleBundle = (() => {
     padding-right: 0.8em;
     text-align: right;
   }
+  .pad {
+    padding: 5px;
+  }
 
   .terminal {
     background-color: #000000;
@@ -2512,23 +2509,44 @@ var TempleBundle = (() => {
   }`;
     }
     template() {
-      const { lang = "markup", inline = false } = (0, import_temple2.props)();
-      const snippet = (0, import_temple2.children)()[0];
-      const highlight = (event) => {
-        const code = import_prismjs.default.highlight(
-          snippet.textContent,
-          import_prismjs.default.languages[lang],
-          lang
+      const {
+        lang = "markup",
+        numbers = false,
+        inline = false,
+        trim = false,
+        ltrim = false,
+        rtrim = false,
+        detab = 0
+      } = (0, import_temple2.props)();
+      const childlist = (0, import_temple2.children)();
+      let snippet = childlist[0]?.textContent || "";
+      if (detab) {
+        snippet = snippet.replace(
+          new RegExp(`\\n {${detab}}`, "g"),
+          "\n"
         );
-        const match = code.match(/\n(?!$)/g);
-        const total = match ? match.length + 1 : 1;
-        const lines = new Array(total + 1).join("<span></span>");
-        const wrapper = document.createElement("span");
-        wrapper.setAttribute("aria-hidden", "true");
-        wrapper.className = "line-numbers-rows";
-        wrapper.innerHTML = lines;
+      }
+      if (trim) {
+        snippet = snippet.trim();
+      } else if (ltrim) {
+        snippet = snippet.replace(/^\s+/, "");
+      } else if (rtrim) {
+        snippet = snippet.replace(/\s+$/, "");
+      }
+      const highlight = (event) => {
+        if (!snippet) {
+          return;
+        }
+        const code = import_prismjs.default.highlight(snippet, import_prismjs.default.languages[lang], lang);
         event.detail.target.innerHTML = code;
-        if (!inline) {
+        if (numbers) {
+          const match = code.match(/\n(?!$)/g);
+          const total = match ? match.length + 1 : 1;
+          const lines = new Array(total + 1).join("<span></span>");
+          const wrapper = document.createElement("span");
+          wrapper.setAttribute("aria-hidden", "true");
+          wrapper.className = "line-numbers-rows";
+          wrapper.innerHTML = lines;
           event.detail.target.appendChild(wrapper);
         }
       };
@@ -2547,17 +2565,32 @@ var TempleBundle = (() => {
               import_client3.TempleRegistry.createText(`$`, false)
             ]).element,
             import_client3.TempleRegistry.createText(` `, false),
-            ...this._toNodeList((0, import_temple2.children)())
+            ...this._toNodeList(childlist)
           ]).element,
           import_client3.TempleRegistry.createText(`
 `, false)
-        ] : true ? [
+        ] : !!snippet ? [
           ,
           import_client3.TempleRegistry.createText(`
   `, false),
-          import_client3.TempleRegistry.createElement("pre", { "class": `snippet line-numbers` }, [
-            import_client3.TempleRegistry.createElement("code", { "mount": highlight }, []).element
-          ]).element,
+          ...!!numbers ? [
+            import_client3.TempleRegistry.createText(`
+    `, false),
+            import_client3.TempleRegistry.createElement("pre", { "class": `snippet line-numbers` }, [
+              import_client3.TempleRegistry.createElement("code", { "mount": highlight }, []).element
+            ]).element,
+            import_client3.TempleRegistry.createText(`
+  `, false)
+          ] : true ? [
+            ,
+            import_client3.TempleRegistry.createText(`
+    `, false),
+            import_client3.TempleRegistry.createElement("pre", { "class": `snippet pad` }, [
+              import_client3.TempleRegistry.createElement("code", { "mount": highlight }, []).element
+            ]).element,
+            import_client3.TempleRegistry.createText(`
+  `, false)
+          ] : [],
           import_client3.TempleRegistry.createText(`
 `, false)
         ] : []
@@ -2615,23 +2648,229 @@ var TempleBundle = (() => {
     }
   };
 
+  // temple-component-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/components/tui-alert.tml
+  var import_client5 = __toESM(require_client2());
+  var import_temple4 = __toESM(require_temple());
+  var TuiAlert_94c0b2374cdf7e28675a = class extends import_client5.TempleComponent {
+    static component = ["tui-alert", "TuiAlert_94c0b2374cdf7e28675a"];
+    styles() {
+      return `:host {
+    --black: #222222;
+    --white: #FCFCFC;
+    --info: #1474FC;
+    --error: #DC3545;
+    --warning: #FF7B07;
+    --success: #28A745;
+    --muted: #999999;
+    --primary: #E49F1A;
+    --secondary: #DA532C;
+  }
+
+  /* Text Colors
+  ---------------------------------*/
+  .tx-white, .tx-white a {
+    color: var(--info);
+  }
+  .tx-white, .tx-white a {
+    color: var(--white);
+  }
+  .tx-error, .tx-error a {
+    color: var(--error);
+  }
+  .tx-warning, .tx-warning a {
+    color: var(--warning);
+  }
+  .tx-success, .tx-success a {
+    color: var(--success);
+  }
+  .tx-muted, .tx-muted a {
+    color: var(--muted);
+  }
+  .tx-primary, .tx-primary a {
+    color: var(--primary);
+  }
+  .tx-secondary, .tx-secondary a {
+    color: var(--secondary);
+  }
+
+  /* Borders
+  ---------------------------------*/
+  .curved {
+    border-radius: 5px;
+  }
+  .rounded {
+    border-radius:12px;
+  }
+  .pill {
+    border-radius: 10000px;
+  }
+  .solid {
+    border-style: solid;
+  }
+  .thin {
+    border-width: 1px;
+  }
+
+  .bd-info {
+    border-color: var(--info);
+  }
+  .bd-error {
+    border-color: var(--error);
+  }
+  .bd-warning {
+    border-color: var(--warning);
+  }
+  .bd-success {
+    border-color: var(--success);
+  }
+  .bd-muted {
+    border-color: var(--muted);
+  }
+  .bd-primary {
+    border-color: var(--primary);
+  }
+  .bd-secondary {
+    border-color: var(--secondary);
+  }
+
+  /* Backgrounds
+  ---------------------------------*/
+  .bg-white {
+    background-color: var(--white);
+  }
+  .bg-info {
+    background-color: var(--info);
+  }
+  .bg-error {
+    background-color: var(--error);
+  }
+  .bg-warning {
+    background-color: var(--warning);
+  }
+  .bg-success {
+    background-color: var(--success);
+  }
+  .bg-muted {
+    background-color: var(--muted);
+  }
+  .bg-primary {
+    background-color: var(--primary);
+  }
+  .bg-secondary {
+    background-color: var(--secondary);
+  }
+
+  /* Alert
+  ---------------------------------*/
+  .alert {
+    padding: 16px;
+  }`;
+    }
+    template() {
+      const {
+        color,
+        info,
+        warning,
+        success,
+        error,
+        muted,
+        primary,
+        secondary,
+        solid,
+        outline,
+        curved,
+        rounded,
+        pill,
+        style
+      } = (0, import_temple4.props)();
+      const config = {
+        classes: ["alert"],
+        styles: ""
+      };
+      const layout = outline ? "outline" : solid ? "solid" : "solid";
+      if (curved) {
+        config.classes.push("curved");
+      } else if (rounded) {
+        config.classes.push("rounded");
+      } else if (pill) {
+        config.classes.push("pill");
+      }
+      if (layout === "outline") {
+        config.classes.push("solid", "thin");
+        if (color) {
+          config.styles += `border-color: ${color};`;
+          config.styles += `color: ${color};`;
+        } else if (info) {
+          config.classes.push("bd-info", "tx-info");
+        } else if (warning) {
+          config.classes.push("bd-warning", "tx-warning");
+        } else if (success) {
+          config.classes.push("bd-success", "tx-success");
+        } else if (error) {
+          config.classes.push("bd-error", "tx-error");
+        } else if (muted) {
+          config.classes.push("bd-muted", "tx-muted");
+        } else if (primary) {
+          config.classes.push("bd-primary", "tx-primary");
+        } else if (secondary) {
+          config.classes.push("bd-secondary", "tx-secondary");
+        }
+      } else {
+        config.classes.push("tx-white");
+        if (color) {
+          config.styles += `background-color: ${color};`;
+        } else if (info) {
+          config.classes.push("bg-info");
+        } else if (warning) {
+          config.classes.push("bg-warning");
+        } else if (success) {
+          config.classes.push("bg-success");
+        } else if (error) {
+          config.classes.push("bg-error");
+        } else if (muted) {
+          config.classes.push("bg-muted");
+        } else if (primary) {
+          config.classes.push("bg-primary");
+        } else if (secondary) {
+          config.classes.push("bg-secondary");
+        }
+      }
+      const map = {
+        classes: [...config.classes, (0, import_temple4.classnames)()].join(" "),
+        styles: { ...config.styles, ...style }
+      };
+      return () => [
+        import_client5.TempleRegistry.createElement("link", { "rel": `stylesheet`, "type": `text/css`, "href": `/temple/styles/fontawesome/all.css` }).element,
+        import_client5.TempleRegistry.createText(`
+`, false),
+        import_client5.TempleRegistry.createElement("div", { "class": map.classes, "style": map.styles }, [
+          import_client5.TempleRegistry.createText(`
+  `, false),
+          ...this._toNodeList((0, import_temple4.children)()),
+          import_client5.TempleRegistry.createText(`
+`, false)
+        ]).element
+      ];
+    }
+  };
+
   // temple-document-client-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/docs/started.dtml
-  var import_client6 = __toESM(require_client2());
-  import_client5.emitter.once("ready", () => {
+  var import_client7 = __toESM(require_client2());
+  import_client6.emitter.once("ready", () => {
     const script = document.querySelector("script[data-app]");
     if (!script) {
-      throw import_client5.TempleException.for("APP_DATA not found");
+      throw import_client6.TempleException.for("APP_DATA not found");
     }
     try {
       const data2 = atob(script.getAttribute("data-app"));
       window.__APP_DATA__ = JSON.parse(data2);
       Object.entries(window.__APP_DATA__).forEach(([key, value]) => {
-        import_client5.data.set(key, value);
+        import_client6.data.set(key, value);
       });
     } catch (error) {
-      throw import_client5.TempleException.for("APP_DATA is not a valid JSON");
+      throw import_client6.TempleException.for("APP_DATA is not a valid JSON");
     }
-    import_client5.data.set("current", "document");
+    import_client6.data.set("current", "document");
     const url = "/docs/";
     const title = "Getting Started - Temple reactive web component template engine.";
     const description = "Temple is a template engine hat generates web components and support reactivity.";
@@ -2639,67 +2878,35 @@ var TempleBundle = (() => {
       document.body.classList.toggle("panel-left-open");
     };
     const examples = "https://github.com/OSSPhilippines/temple/tree/main/examples";
-    const tagname = {
-      script: "script",
-      style: "style",
-      head: "head",
-      body: "body"
-    };
-    const snippet1 = `//on server:
-    import temple from '@ossph/temple/compiler';
-    //make a temple compiler
-    const compiler = temple();
-    //import a temple document file
-    const { document } = await compiler.import('./page.dtml');
-    //render final HTML
-    const results = document.render();
-    //show final HTML
-    console.log(results);
-  `.trim().replace(/\n\s{4}/g, "\n");
-    const snippet2 = `<${tagname.style}>
-      body { 
-        background-color: #DA532C; 
-        color: #EFEFEF; 
-      }
-      .title { text-align: center; }
-    </${tagname.style}>
-    <${tagname.script}>
-      const title = 'Hello World';
-    </${tagname.script}>
-    <html>
-      <${tagname.head}>
-        <title>{title}</title>
-      </${tagname.head}>
-      <${tagname.body}>
-        <h1 class="title">{title}</h1>
-      </${tagname.body}>
-    </html>
-  `.trim().replace(/\n\s{8}/g, "\n");
-    import_client5.data.delete("current");
-    const __BINDINGS__ = { "0": { "class": `head panel-head` }, "1": { "class": `menu fas fa-fw fa-bars`, "click": toggle }, "2": { "href": `/temple` }, "3": { "src": `/temple/temple-icon.png`, "alt": `Temple Logo` }, "5": { "class": `tx-white`, "href": `/temple` }, "7": { "href": `/temple/docs` }, "8": { "class": `github`, "href": `https://github.com/ossPhilippines/frui`, "target": `_blank` }, "9": { "class": `fab fa-github` }, "10": { "class": `npm`, "href": `https://www.npmjs.com/package/frui`, "target": `_blank` }, "11": { "class": `fab fa-npm text-white` }, "12": { "class": `discord`, "href": `https://discord.gg/open-source-software-ph-905496362982981723`, "target": `_blank` }, "13": { "class": `fab fa-discord text-white` }, "14": { "class": `left panel-left` }, "16": { "href": `/temple` }, "17": { "src": `/temple/temple-icon.png`, "alt": `Temple Logo` }, "19": { "class": `tx-white`, "href": `/temple` }, "20": { "class": `toggle fas fa-fw fa-chevron-left`, "click": toggle }, "23": { "href": `/temple/docs/index.html` }, "24": { "href": `/temple/docs/started.html` }, "25": { "href": `/temple/docs/questions.html` }, "27": { "href": `/temple/docs/engine.html` }, "28": { "href": `/temple/docs/static-sites.html` }, "29": { "href": `/temple/docs/publisher.html` }, "31": { "href": `/temple/docs/attributes.html` }, "32": { "href": `/temple/docs/conditionals.html` }, "33": { "href": `/temple/docs/iterations.html` }, "34": { "href": `/temple/docs/trycatch.html` }, "35": { "href": `/temple/docs/directives.html` }, "37": { "href": `/temple/docs/props.html` }, "38": { "href": `/temple/docs/signals.html` }, "39": { "href": `/temple/docs/shared.html` }, "40": { "href": `/temple/docs/events.html` }, "42": { "href": `/temple/docs/templates.html` }, "43": { "href": `/temple/docs/components.html` }, "44": { "class": `panel-main` }, "45": { "class": `container` }, "48": { "title": `Terminal` }, "49": { "lang": `bash` }, "51": { "lang": `js`, "inline": true }, "52": { "title": `src/index.ts` }, "53": { "lang": `js` }, "55": { "lang": `js`, "inline": true }, "56": { "title": `src/page.dtml` }, "59": { "title": `Terminal` }, "60": { "lang": `bash` }, "64": { "target": `_blank`, "href": `${examples}/with-http` }, "66": { "target": `_blank`, "href": `${examples}/with-express` }, "68": { "target": `_blank`, "href": `${examples}/with-fastify` }, "70": { "target": `_blank`, "href": `${examples}/with-hapi` }, "72": { "target": `_blank`, "href": `${examples}/with-koa` }, "74": { "target": `_blank`, "href": `${examples}/with-nest` }, "76": { "target": `_blank`, "href": `${examples}/with-restify` }, "78": { "target": `_blank`, "href": `${examples}/with-webpack` }, "82": { "href": `/temple/docs/engine.html` }, "84": { "href": `/temple/docs/spa.html` }, "86": { "href": `/temple/docs/static-sites.html` }, "88": { "href": `/temple/docs/publisher.html` }, "89": { "class": `foot` } };
+    import_client6.data.delete("current");
+    const __BINDINGS__ = { "0": { "class": `head panel-head` }, "1": { "class": `menu fas fa-fw fa-bars`, "click": toggle }, "2": { "href": `/temple` }, "3": { "src": `/temple/temple-icon.png`, "alt": `Temple Logo` }, "5": { "class": `tx-white`, "href": `/temple` }, "7": { "href": `/temple/docs` }, "8": { "class": `github`, "href": `https://github.com/ossPhilippines/frui`, "target": `_blank` }, "9": { "class": `fab fa-github` }, "10": { "class": `npm`, "href": `https://www.npmjs.com/package/frui`, "target": `_blank` }, "11": { "class": `fab fa-npm text-white` }, "12": { "class": `discord`, "href": `https://discord.gg/open-source-software-ph-905496362982981723`, "target": `_blank` }, "13": { "class": `fab fa-discord text-white` }, "14": { "class": `left panel-left` }, "16": { "href": `/temple` }, "17": { "src": `/temple/temple-icon.png`, "alt": `Temple Logo` }, "19": { "class": `tx-white`, "href": `/temple` }, "20": { "class": `toggle fas fa-fw fa-chevron-left`, "click": toggle }, "23": { "href": `/temple/docs/index.html` }, "24": { "href": `/temple/docs/started.html` }, "25": { "href": `/temple/docs/questions.html` }, "27": { "href": `/temple/docs/engine.html` }, "28": { "href": `/temple/docs/static-sites.html` }, "29": { "href": `/temple/docs/publisher.html` }, "31": { "href": `/temple/docs/attributes.html` }, "32": { "href": `/temple/docs/conditionals.html` }, "33": { "href": `/temple/docs/iterations.html` }, "34": { "href": `/temple/docs/trycatch.html` }, "35": { "href": `/temple/docs/directives.html` }, "37": { "href": `/temple/docs/props.html` }, "38": { "href": `/temple/docs/signals.html` }, "39": { "href": `/temple/docs/shared.html` }, "40": { "href": `/temple/docs/events.html` }, "42": { "href": `/temple/docs/templates.html` }, "43": { "href": `/temple/docs/components.html` }, "44": { "class": `panel-main` }, "45": { "class": `docs container` }, "48": { "title": `Terminal` }, "49": { "lang": `bash` }, "50": { "solid": true, "curved": true, "info": true }, "51": { "class": `fas fa-info-circle` }, "52": { "target": `_blank`, "href": `https://marketplace.visualstudio.com/items?itemName=ossph.temple-language` }, "54": { "lang": `js`, "inline": true }, "55": { "title": `src/index.ts` }, "56": { "lang": `js`, "numbers": true, "trim": true, "detab": 12 }, "58": { "lang": `js`, "inline": true }, "59": { "title": `src/page.dtml` }, "60": { "numbers": true, "trim": true, "detab": 12 }, "62": { "title": `Terminal` }, "63": { "lang": `bash` }, "67": { "target": `_blank`, "href": `${examples}/with-http` }, "69": { "target": `_blank`, "href": `${examples}/with-express` }, "71": { "target": `_blank`, "href": `${examples}/with-fastify` }, "73": { "target": `_blank`, "href": `${examples}/with-hapi` }, "75": { "target": `_blank`, "href": `${examples}/with-koa` }, "77": { "target": `_blank`, "href": `${examples}/with-nest` }, "79": { "target": `_blank`, "href": `${examples}/with-restify` }, "81": { "target": `_blank`, "href": `${examples}/with-webpack` }, "85": { "href": `/temple/docs/engine.html` }, "87": { "href": `/temple/docs/spa.html` }, "89": { "href": `/temple/docs/static-sites.html` }, "91": { "href": `/temple/docs/publisher.html` }, "92": { "class": `pager` }, "93": { "class": `prev`, "href": `/temple/docs/index.html` }, "94": { "class": `fas fa-fw fa-chevron-left` }, "95": { "class": `next`, "href": `/temple/docs/questions.html` }, "96": { "class": `fas fa-fw fa-chevron-right` }, "97": { "class": `foot` } };
     for (const element of document.body.querySelectorAll("*")) {
       const attributes = Object.fromEntries(
-        Array.from(element.attributes).map(
-          (attribute) => [attribute.nodeName, attribute.nodeValue]
-        )
+        Array.from(element.attributes).map((attribute) => [
+          attribute.nodeName,
+          attribute.nodeValue.length > 0 ? attribute.nodeValue : true
+        ])
       );
-      const id = String(import_client5.TempleRegistry.elements.size);
+      const id = String(import_client6.TempleRegistry.elements.size);
       if (__BINDINGS__[id]) {
         Object.assign(attributes, __BINDINGS__[id]);
+        element.TempleAttributes = __BINDINGS__[id];
       }
-      import_client5.TempleRegistry.register(element, attributes);
+      import_client6.TempleRegistry.register(element, attributes);
     }
     customElements.define("panel-main", PanelMain_b21c6a1d888781a72a3e);
     customElements.define("window-app", WindowApp_05952304bd7774a5f83e);
     customElements.define("code-snippet", CodeSnippet_1f2900d78698832785d0);
     customElements.define("tui-tab", TuiTab_30672d032d454a571b45);
-    import_client5.emitter.emit("mounted", document.body);
+    customElements.define("tui-alert", TuiAlert_94c0b2374cdf7e28675a);
+    import_client6.emitter.emit("mounted", document.body);
   });
   var components = {
     "PanelMain_b21c6a1d888781a72a3e": PanelMain_b21c6a1d888781a72a3e,
     "WindowApp_05952304bd7774a5f83e": WindowApp_05952304bd7774a5f83e,
     "CodeSnippet_1f2900d78698832785d0": CodeSnippet_1f2900d78698832785d0,
-    "TuiTab_30672d032d454a571b45": TuiTab_30672d032d454a571b45
+    "TuiTab_30672d032d454a571b45": TuiTab_30672d032d454a571b45,
+    "TuiAlert_94c0b2374cdf7e28675a": TuiAlert_94c0b2374cdf7e28675a
   };
   var BUILD_ID = "dbe984116aab0cae97dd";
   return __toCommonJS(started_exports);

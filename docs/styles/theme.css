@@ -495,6 +495,7 @@ a, a:link a:hover, a:active, a:visited {
 }
 .left header h3 {
   flex-grow: 1;
+  margin: 0;
   text-transform: uppercase;
 }
 .left header .toggle {
@@ -513,6 +514,7 @@ a, a:link a:hover, a:active, a:visited {
   border-top: 1px solid #121212;
   color: #999999;
   font-size: 14px;
+  margin-bottom: 0;
   margin-top: 20px;
   padding: 20px 0 10px 10px;
   text-transform: uppercase;
@@ -532,5 +534,157 @@ a, a:link a:hover, a:active, a:visited {
 @media (max-width: 767px) {
   .left header .toggle {
     display: block;
+  }
+}
+
+/* Docs
+---------------------------------*/
+.docs {
+  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+  overflow: auto;
+}
+.docs.container {
+  height: calc(100% - 20px);
+  padding: 10px 20px;
+}
+.docs h2, 
+.docs h3, 
+.docs h4, 
+.docs h5, 
+.docs h6 {
+  margin: 0;
+  padding: 0;
+}
+.docs p {
+  margin: 0 0 20px;
+  padding: 0;
+}
+.docs h1 {
+  color: var(--fg-primary);
+  margin: 20px 0;
+  text-transform: uppercase; 
+}
+.docs h2 { 
+  color: var(--fg-primary);
+  text-transform: uppercase; 
+}
+.docs a, 
+.docs a:link, 
+.docs a:hover, 
+.docs a:active, 
+.docs a:visited {
+  color: var(--fg-primary);
+  text-decoration: none;
+}
+.docs p, .docs li {
+  line-height: 36px;
+}
+.docs tui-alert {
+  display: block;
+  margin-bottom: 20px;
+}
+.docs .tbl-container {
+  margin-bottom: 20px;
+}
+.docs .tbl th {
+  padding: 10px;
+  text-align: left;
+  text-transform: uppercase;
+}
+.docs .tbl td {
+  border-color: var(--muted);
+  border-top-style: solid;
+  border-top-width: 1px;
+  padding: 10px;
+}
+.docs .fab, .docs .fas, .docs .fa {
+  line-height: 16px;
+}
+
+.docs .pager {
+  align-items: center;
+  display: flex;
+  padding: 20px 0 40px;
+}
+
+.docs .pager a {
+  display: block;
+  width: 100%;
+}
+
+.docs .pager .next {
+  text-align: right;
+}
+
+/* Window App
+---------------------------------*/
+window-app {
+  display: block;
+}
+
+window-app .window {
+  background-color: #212121;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+window-app .window .head {
+  align-items: center;
+  background: #1A1A1A;
+  border-bottom: 1px solid #29252A;
+  color: #999999;
+  gap: 10px;
+  padding: 10px;
+  font-size: 16px;
+  display: flex;
+  position: relative;
+}
+
+window-app .window .head .dot {
+  background-color: #999999;
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+}
+
+window-app .window .head .title {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  left: 0;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+window-app .window .body {
+  background-color: #101113;
+  color: #ABB2BF;
+  margin: 0;
+  padding: 0;
+}
+
+window-app .snippet-preview {
+  background-color: #000000;
+  display: flex;
+}
+window-app .snippet-preview code-snippet {
+  flex-basis: 50%;
+  height: 100%;
+}
+window-app .snippet-preview code-preview {
+  background-color: #EFEFEF;
+  flex-basis: 50%;
+}
+@media (max-width: 767px) {
+  window-app .snippet-preview {
+    display: block;
+  }
+  window-app .snippet-preview code-snippet {
+    padding-bottom: 10px;
   }
 }

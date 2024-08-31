@@ -1,18 +1,26 @@
 import path from 'path';
 import http from 'http';
 import temple from '@ossph/temple/compiler';
+import { dev } from '@ossph/temple-dev';
 
 const assets = path.resolve(__dirname, '../public');
 
 //create temple compiler
 const compiler = temple({ cwd: __dirname });
-const fs = compiler.config.fs;
+const { router, refresh } = dev({ cwd: __dirname });
 
 const server = http.createServer(async (req, res) => {
+  //if development route
+  if (router(req, res)) return;
   //if home page
   if (req.url === '/') {
+    //determine template file
+    const template = './pages/index.dtml';
+    //sync builder with refresh server
+    refresh.sync(compiler.fromSource(template));
+    //prepare response
     res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.end(await compiler.render('./pages/index.dtml', {
+    res.end(await compiler.render(template, {
       title: 'Temple',
       description: 'Edit this file to change the content of the page.',
       start: 0,
@@ -39,6 +47,7 @@ const server = http.createServer(async (req, res) => {
   }
   
   //else if static file
+  const { fs } = compiler;
   const resource = (req.url || '').substring(1).replace(/\/\//, '/'); 
   const file = path.join(assets, resource); 
   if (fs.existsSync(file)) {
