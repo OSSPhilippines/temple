@@ -7,10 +7,10 @@ import { Project, IndentationText } from 'ts-morph';
 import { 
   Component, 
   ComponentTranspiler,
-  DocumentBuilder, 
   esAliasPlugin,
   esComponentPlugin,
   esWorkspacePlugin,
+  build,
   toTS
 } from '@ossph/temple/compiler';
 
@@ -149,24 +149,26 @@ export function transpile(component: Component) {
         Component.prototype.template = template;
         
         //get elements and components from registry
-        const components = Array.from(TempleRegistry.elements.keys());
+        const components = Array
+          .from(TempleRegistry.elements.keys())
+          //if the component is an instance of Counter
+          .filter(element => element instanceof Component)
+          //if the component part of the dom
+          .filter(element => !!element.parentNode);
         //for each component
         components.forEach(component => {
-          //if the component is an instance of Counter
-          if (component instanceof Component) {
-            //replace styles() and template()
-            component.styles = styles;  
-            component.template = template;
-            //set the current component
-            data.set('current', component);
-            //reset initiated
-            component._initiated = false;
-            //cache the template
-            component._template = template.call(component);
-            //then re-render
-            component.render();
-            data.delete('current');
-          }
+          //replace styles() and template()
+          component.styles = styles;  
+          component.template = template;
+          //reset initiated
+          component._initiated = false;
+          //set the current component
+          data.set('current', component);
+          //cache the template
+          component._template = template.call(component);
+          data.delete('current');
+          //then re-render
+          component.render();
         });
       }
     `)
@@ -179,7 +181,7 @@ export function transpile(component: Component) {
 };
 
 export async function update(component: Component) {
-  return await DocumentBuilder.build('__REFRESH__', {
+  return await build('__REFRESH__', {
     minify: false,
     plugins: [ 
       esAliasPlugin({
@@ -188,6 +190,7 @@ export async function update(component: Component) {
       }),
       esRefreshPlugin(component),
       esComponentPlugin({
+        brand: component.brand,
         cwd: component.cwd,
         fs: component.fs
       }),

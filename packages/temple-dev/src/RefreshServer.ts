@@ -126,6 +126,7 @@ export default class RefreshServer {
         if (dependant.type === 'component') {
           //update the imported component
           const component = new Component(absolute, { 
+            brand: document.brand,
             cwd: document.cwd,
             fs: document.fs
           });
