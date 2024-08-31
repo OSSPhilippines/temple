@@ -1,5 +1,5 @@
 import type { TempleComponentClass, RegistryIterator } from '../types';
-import type TempleComponent from './TempleComponent';
+import TempleComponent from './TempleComponent';
 
 import TempleElement from './TempleElement';
 
@@ -52,18 +52,25 @@ export default class TempleRegistry {
     for (const [ key, value ] of Object.entries(attributes)) {
       if (typeof value === 'string') {
         component.setAttribute(key, value);
+      } else if (value === true) {
+        component.setAttribute(key, key);
       }
     }
+    //@ts-ignore - if the component is registered via 
+    //customElements.define() then it will instantiate a new component 
+    //and not use the one we created here. We need a way map this 
+    //component with the one instantiated by customElements. 
+    component._TempleAttributes = attributes;
+    //also set props normally...
+    component.props = attributes;
     //append children
     children.forEach(child => component.appendChild(child));
     //normally an instantiated component would self register,
     //but since we manually instantiated it to produce web component
     //encapsulation, we need to manually register this component as well
-    component.init(attributes);
-    //wait for the component to be ready, 
-    //then set props, children and render
-    component.wait();
-    return component.element;
+    component.register();
+    //last manually register the element
+    return this.register(component, attributes);
   }
 
   /**
@@ -80,11 +87,15 @@ export default class TempleRegistry {
     for (const [ key, value ] of Object.entries(attributes)) {
       if (typeof value === 'string') {
         element.setAttribute(key, value);
+      } else if (value === true) {
+        element.setAttribute(key, key);
       }
     }
     //append children
-    children.forEach(child => element.appendChild(child));
-    //we need to manually register the element
+    children
+      .filter(child => typeof child !== 'undefined')
+      .forEach(child => element.appendChild(child));
+    //last manually register the element
     return this.register(element, attributes);
   }
 
@@ -117,6 +128,13 @@ export default class TempleRegistry {
   }
 
   /**
+   * Returns whether the element is registered
+   */
+  public static has(element: Element) {
+    return this._elements.has(element);
+  }
+
+  /**
    * Like array map for registry
    */
   public static map<T = any>(callback: RegistryIterator<T>) {
@@ -131,8 +149,8 @@ export default class TempleRegistry {
    * Registers a new TempleElement instance
    */
   public static register(element: Element, attributes?: Record<string, any>) {
-    if (this._elements.has(element)) {
-      return this.get(element);
+    if (this.has(element)) {
+      return this.get(element) as TempleElement;
     }
     const node = new TempleElement(element, attributes || {});
     this._elements.set(element, node);

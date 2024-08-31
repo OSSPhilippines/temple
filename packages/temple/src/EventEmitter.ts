@@ -1,4 +1,4 @@
-import type { TempleEventMap } from '../types';
+import type { TempleEventMap } from './types';
 import EventEmitter from 'events';
 
 export class Event<T> {

@@ -34,13 +34,11 @@ import {
   serialize,
   toJS,
   toTS,
-  load
+  load,
+  build
 } from './helpers';
 
 import DocumentBuilder from './document/Builder';
-import EventEmitter, { 
-  Event as TempleEvent 
-} from './document/EventEmitter';
 import DocumentManifest from './document/Manifest';
 import DocumentTranspiler from './document/Transpiler';
 import { 
@@ -48,11 +46,12 @@ import {
   esComponentPlugin, 
   esDocumentPlugin,
   esWorkspacePlugin
-} from './document/plugins';
+} from './plugins';
 import FileSystem from './filesystem/FileSystem';
 import FileLoader from './filesystem/FileLoader';
 import NodeFS from './filesystem/NodeFS';
 
+import EventEmitter, { Event as TempleEvent } from './EventEmitter';
 import Exception from './Exception';
 import withCache from './cache';
 import temple from './temple';
@@ -93,6 +92,7 @@ export {
   toJS,
   toTS,
   load,
+  build,
   esAliasPlugin, 
   esComponentPlugin, 
   esDocumentPlugin,

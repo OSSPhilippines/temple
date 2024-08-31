@@ -1,6 +1,6 @@
 import type { ManifestOptions } from '../types';
 
-import EventEmitter from './EventEmitter';
+import EventEmitter from '../EventEmitter';
 import Component from '../compiler/Component';
 import Builder from './Builder';
 import Exception from '../Exception';
@@ -56,8 +56,9 @@ export default class Manifest {
    * Deletes a path from the manifest
    */
   public delete(id: string) {
+    const path = this._registry.get(id);
     const results = this._registry.delete(id);
-    this._emitter.trigger('manifest-unresolved', { id, manifest: this });
+    this._emitter.trigger('manifest-unresolved', { id, path, manifest: this });
     return results;
   }
 

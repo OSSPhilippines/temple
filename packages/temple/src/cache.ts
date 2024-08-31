@@ -3,7 +3,7 @@ import type {
   TempleCompiler,
   CacheOptions
 } from './types';
-import type { Event } from './document/EventEmitter';
+import type { Event } from './EventEmitter';
 import type Builder from './document/Builder';
 import type Manifest from './document/Manifest';
 
@@ -14,6 +14,8 @@ export default function withCache(
   options: CacheOptions
 ) {
   const { fs, emitter } = compiler;
+
+  const environment = options.environment;
 
   const paths = {
     build: options.buildPath,
@@ -41,7 +43,7 @@ export default function withCache(
   //on pre render, try to use cache if live
   emitter.on('render', (event: Event<string>) => {
     //if not live, dont retrieve from cache
-    if (process.env.NODE_ENV !== 'production') {
+    if (environment !== 'production') {
       return;
     }
     //extract props and builder from params
@@ -78,7 +80,7 @@ export default function withCache(
   //on pre client build, try to use cache if live
   emitter.on('build-client', (event: Event<string>) => {
     //if not live, dont retrieve from cache
-    if (process.env.NODE_ENV !== 'production') {
+    if (environment !== 'production') {
       return;
     }
     //extract builder from params
@@ -109,7 +111,7 @@ export default function withCache(
   //on pre markup build, try to use cache if live
   emitter.on('build-markup', (event: Event<string>) => {
     //if not live, dont retrieve from cache
-    if (process.env.NODE_ENV !== 'production') {
+    if (environment !== 'production') {
       return;
     }
     //extract builder from params
@@ -140,7 +142,7 @@ export default function withCache(
   //on pre server build, try to use cache if live
   emitter.on('build-server', (event: Event<string>) => {
     //if not live, dont retrieve from cache
-    if (process.env.NODE_ENV !== 'production') {
+    if (environment !== 'production') {
       return;
     }
     //extract builder from params
@@ -171,7 +173,7 @@ export default function withCache(
   //on pre styles build, try to use cache if live
   emitter.on('build-styles', (event: Event<string>) => {
     //if not live, dont retrieve from cache
-    if (process.env.NODE_ENV !== 'production') {
+    if (environment !== 'production') {
       return;
     }
     //extract builder from params

@@ -1,7 +1,6 @@
 import type { Hash } from '../types';
 
 import TempleRegistry from './TempleRegistry';
-import TempleElement from './TempleElement';
 import emitter from './TempleEmitter';
 import __APP_DATA__ from './data';
 
@@ -30,6 +29,10 @@ export default abstract class TempleComponent extends HTMLElement {
   //the callback to render just the children 
   //(wo initializing the variables again)
   protected _template: (() => (Element|false)[])|null = null;
+  //the initial attributes (string and true values)
+  protected _attributes: Record<string, string|true> = {};
+  //the initial props (all values)
+  protected _props: Hash = {};
   //the initial children
   protected _children: ChildNode[]|undefined = undefined;
 
@@ -42,6 +45,28 @@ export default abstract class TempleComponent extends HTMLElement {
    * Returns the component template
    */
   public abstract template(): () => (Element|false)[];
+
+  /**
+   * Returns the component attributes
+   */
+  public get attr() {
+    return this._attributes;
+  }
+
+  /**
+   * Returns the component's element registry
+   */
+  public get element() {
+    if (!TempleRegistry.has(this)) {
+      //@ts-ignore - This constructor is called when the component is 
+      //registered via customElements.define() and technically a new 
+      //instance from the virtual instantiation made in 
+      //TempleRegistry.createComponent(). We need a way map this component 
+      //with the virtually created in TempleRegistry.createComponent().
+      return TempleRegistry.register(this, this._TempleAttributes || {});
+    }
+    return TempleRegistry.get(this);
+  }
 
   /**
    * Returns the component's metadata
@@ -62,20 +87,6 @@ export default abstract class TempleComponent extends HTMLElement {
   }
 
   /**
-   * Returns the component's element registry
-   */
-  public get element() {
-    return TempleRegistry.get(this) as TempleElement;
-  }
-
-  /**
-   * Returns the component properties
-   */
-  public get props() {
-    return Object.assign({}, this.element.attributes);
-  }
-
-  /**
    * Returns whether the component has initiated
    */
   public get initiated() {
@@ -83,19 +94,24 @@ export default abstract class TempleComponent extends HTMLElement {
   }
 
   /**
-   * Sets the component properties
+   * Returns the component properties
    */
-  public set props(props: Hash) {
-    this.element.setAttributes(Object.assign({}, props));
-    this.render();
+  public get props() {
+    return this._props;
   }
 
   /**
-   * Add this component to the overall registry
+   * Sets the component properties
    */
-  public constructor() {
-    super();
-    this.init();
+  public set props(props: Hash) {
+    //shallow copy the props
+    this._props = Object.assign({}, props);
+    //only set the attributes that are strings or true
+    this._attributes = Object.fromEntries(
+      Object.entries(props).filter(
+        entry => typeof entry[1] === 'string' || entry[1] === true
+      )
+    );
   }
 
   /**
@@ -116,6 +132,7 @@ export default abstract class TempleComponent extends HTMLElement {
     value: string
   ) {
     this.props = { ...this.props, [name]: value };
+    this.render();
   }
 
   /**
@@ -147,8 +164,11 @@ export default abstract class TempleComponent extends HTMLElement {
     return null;
   }
 
-  public init(attributes: Hash = {}) {
-    TempleRegistry.register(this, attributes);
+  /**
+   * Registers this component to the global registry and caches the element
+   */
+  public register() {
+    TempleRegistry.register(this, this._props);
   }
 
   /**
@@ -220,24 +240,8 @@ export default abstract class TempleComponent extends HTMLElement {
       const next = () => {
         this._update();
         emitter.unbind('ready', next);
-      }
+      };
       emitter.on('ready', next);
-    }
-  }
-
-  /**
-   * Sets the initial properties and children
-   */
-  protected _update() { 
-    //if children are not set
-    if (typeof this._children === 'undefined') {
-      this._children = Array.from(this.childNodes || []);
-    }
-    //settings props will try to trigger a render
-    this.props = Object.assign({}, this.element.attributes);
-    //only render if not initiated
-    if (!this._initiated) {
-      this.render();
     }
   }
 
@@ -258,5 +262,25 @@ export default abstract class TempleComponent extends HTMLElement {
     }
 
     return [ TempleRegistry.createText(String(value)) ];
+  }
+
+  /**
+   * Sets the initial properties and children
+   */
+  protected _update() { 
+    //if children are not set
+    if (typeof this._children === 'undefined') {
+      this._children = Array.from(this.childNodes || []);
+    }
+    //settings props will try to trigger a render
+    const element = this.element;
+    if (element) {
+      this.props = Object.assign({}, element.attributes);
+      this.render();
+    }
+    //only render if not initiated
+    if (!this._initiated) {
+      this.render();
+    }
   }
 }

@@ -2,17 +2,19 @@ import type {
   Hash,
   ComponentType, 
   TempleOptions, 
-  TempleCompiler 
+  TempleCompiler,
+  CacheOptions
 } from './types';
 
 import path from 'path';
 import Component from './compiler/Component';
 import DocumentBuilder from './document/Builder';
-import EventEmitter from './document/EventEmitter';
+import EventEmitter from './EventEmitter';
 import DocumentManifest from './document/Manifest';
 import FileSystem from './filesystem/FileSystem';
 import NodeFS from './filesystem/NodeFS';
 import Exception from './Exception';
+import cache from './cache';
 
 /**
  * Returns a server version of TempleComponent 
@@ -34,33 +36,22 @@ export default function temple(options: TempleOptions = {}) {
   options.brand = typeof options.brand === 'string' 
     ? options.brand 
     : 'temple';
-  //format the build route
-  if (typeof options.buildRoute === 'string') {
-    //if the build route does not start with a slash
-    if (!options.buildRoute.startsWith('/')) {
-      //add a slash
-      options.buildRoute = `/${options.buildRoute}`;
-    }
-    //if the build route ends with a slash
-    if (options.buildRoute.endsWith('/')) {
-      //remove the slash
-      options.buildRoute = options.buildRoute.substring(
-        0, 
-        options.buildRoute.length - 1
-      );
-    }
-  }
+
   const compiler: TempleCompiler = {
     config: {
       ...options,
       brand: options.brand as string,
       cwd: options.cwd as string,
+      emitter: options.emitter as EventEmitter,
       fs: options.fs as FileSystem,
       type: options.type as ComponentType
     },
     emitter: options.emitter,
     fs: options.fs as FileSystem,
     manifest: new DocumentManifest(options),
+    component(sourceFile: string) {
+      return new Component(sourceFile, compiler.config);
+    },
     fromId(id: string) {
       return compiler.manifest.builder(id);
     },
@@ -73,6 +64,9 @@ export default function temple(options: TempleOptions = {}) {
       const document = new Component(sourceFile, options);
       //return builder
       return new DocumentBuilder(document, options);
+    },
+    withCache(options: CacheOptions) {
+      return cache(compiler, options)
     },
     async asset(filename: string) {
       //get extension ie. .js
@@ -94,11 +88,7 @@ export default function temple(options: TempleOptions = {}) {
         ? await builder.styles()
         : extname === '.js'
         ? await builder.client()
-        : undefined;
-      
-      if (!content) {
-        throw Exception.for('%s has an unrecogized extension', filename);
-      }
+        : '';
 
       const type = extname === '.html' 
         ? 'text/html'

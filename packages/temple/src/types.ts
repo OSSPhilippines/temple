@@ -1,6 +1,6 @@
 import type http from 'http';
-import type EventEmitter from './document/EventEmitter';
-import type { Event as TempleEvent } from './document/EventEmitter';
+import type EventEmitter from './EventEmitter';
+import type { Event as TempleEvent } from './EventEmitter';
 import type { PluginBuild } from 'esbuild';
 
 import type FileSystem from './filesystem/FileSystem';
@@ -30,6 +30,8 @@ export type Response = http.ServerResponse<Request> & {
 //--------------------------------------------------------------------//
 // Event Types
 
+//render
+//rendered
 //build
 //built
 //build-client
@@ -48,9 +50,6 @@ export type Response = http.ServerResponse<Request> & {
 //dev-file-changed
 //dev-update-document
 //dev-update-component
-
-//express-render
-//express-rendered
 
 export type TempleEventMap = Record<string, [ TempleEvent<any> ]>;
 
@@ -295,14 +294,13 @@ export type ComponentOptions = FileOptions & {
 export type BuilderOptions = { 
   minify?: boolean,
   tsconfig?: string,
-  buildRoute?: string,
   emitter?: EventEmitter
   component_extname?: string,
   document_extname?: string
 };
 
 //options for static Builder.build()
-export type BuilderBuildOptions = {
+export type BuildOptions = {
   cache?: string,
   minify?: boolean,
   bundle?: boolean,
@@ -323,7 +321,8 @@ export type TempleOptions = ManifestOptions;
 
 export type CacheOptions = {
   buildPath: string,
-  manifestFile?: string
+  manifestFile?: string,
+  environment?: string
 };
 
 //--------------------------------------------------------------------//
@@ -340,9 +339,11 @@ export type TempleCompiler = {
   fs: FileSystem
   emitter: EventEmitter,
   manifest: DocumentManifest,
+  component(sourceFile: string): Component,
   fromId: (id: string) => DocumentBuilder,
   fromCache: (cacheFile: string) => BuildResults,
   fromSource: (sourceFile: string) => DocumentBuilder,
+  withCache: (options: CacheOptions) => TempleCompiler,
   asset: (assetFile: string) => Promise<{ type: AssetType, content: string }>,
   client: (sourceFile: string) => Promise<string>,
   import: (sourceFile: string) => Promise<BuildResults>,

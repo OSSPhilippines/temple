@@ -1,62 +1,23 @@
 //types
 import type { 
   BuilderOptions, 
-  BuilderBuildOptions,
   ServerDocumentClass, 
   BuildResults
 } from '../types';
 
 import path from 'path';
-import EventEmitter from './EventEmitter';
-import esbuild from 'esbuild';
+import EventEmitter from '../EventEmitter';
 import Component from '../compiler/Component';
-import DocumentTranspiler from '../document/Transpiler';
-import { load } from '../helpers';
+import Transpiler from './Transpiler';
+import { load, build } from '../helpers';
 import {
   esAliasPlugin,
   esComponentPlugin,
   esDocumentPlugin,
   esWorkspacePlugin
-} from './plugins';
+} from '../plugins';
 
 export default class Builder {
-  /**
-   * Static method to build a single file
-   */
-  public static async build(
-    entry: string, 
-    options: BuilderBuildOptions = {}
-  ) {
-    const { 
-      format = 'iife',
-      minify = true, 
-      bundle = true,
-      platform = 'browser',
-      globalName,
-      plugins = []
-    } = options;
-
-    // Bundle with esbuild
-    const results = await esbuild.build({
-      entryPoints: [ entry ],
-      bundle: bundle,
-      minifyWhitespace: minify,
-      minifyIdentifiers: minify,
-      minifySyntax: minify,
-      //Immediately Invoked Function Expression format 
-      //for browser compatibility
-      format, 
-      globalName,
-      plugins,
-      platform,
-      preserveSymlinks: true,
-      // Do not write to disk
-      write: false
-    });
-
-    return results.outputFiles[0].text;
-  }
-
   /**
    * Loads a source code string into the runtime
    */
@@ -73,7 +34,6 @@ export default class Builder {
     };
   }
 
-  protected _buildRoute: string|undefined;
   //document component
   protected _document: Component;
   //emitter
@@ -83,7 +43,7 @@ export default class Builder {
   //whether to minify the code
   protected _minify: boolean;
   //transpiler
-  protected _transpiler: DocumentTranspiler;
+  protected _transpiler: Transpiler;
   //the file loader
   //the location of the tsconfig file
   protected _tsconfig: string;
@@ -128,7 +88,6 @@ export default class Builder {
    */
   public constructor(document: Component, options: BuilderOptions = {}) {
     const { 
-      buildRoute,
       emitter = new EventEmitter(),
       minify = true, 
       component_extname = 'tml',
@@ -136,7 +95,6 @@ export default class Builder {
       tsconfig = path.resolve(__dirname, '../../tsconfig.json')
     } = options;
 
-    this._buildRoute = buildRoute;
     this._emitter = emitter;
     this._minify = minify;
     this._extnames = [ component_extname, document_extname ];
@@ -145,7 +103,7 @@ export default class Builder {
     this._tsconfig = tsconfig;
     this._document = document;
 
-    this._transpiler = new DocumentTranspiler(
+    this._transpiler = new Transpiler(
       this._document, 
       this._tsconfig
     );
@@ -154,7 +112,8 @@ export default class Builder {
   /**
    * Builds the document
    */
-  public async build() {//emit build event
+  public async build() {
+    //emit build event
     const pre = this._emitter.trigger<string>('build', { 
       builder: this
     });
@@ -170,7 +129,7 @@ export default class Builder {
   }
 
   /**
-   * Sets the source code to compile
+   * Returns the client js
    */
   public async client() {
     //emit build-client event
@@ -178,7 +137,7 @@ export default class Builder {
       builder: this 
     });
     // Bundle with esbuild
-    const sourceCode = pre.data || await Builder.build(
+    const sourceCode = pre.data || await build(
       this._document.absolute, 
       {
         bundle: true,
@@ -217,6 +176,38 @@ export default class Builder {
   }
 
   /**
+   * Returns a single bundled component
+   */
+  public async component() {
+    const { tagname, classname } = this._document;
+    const code = build(
+      this._document.absolute,
+      {
+        bundle: true,
+        minify: this._minify,
+        globalName: classname,
+        platform: 'browser',
+        plugins: [ 
+          esAliasPlugin({
+            cwd: this._document.cwd,
+            fs: this._document.fs
+          }),
+          esComponentPlugin({
+            brand: this._document.brand,
+            cwd: this._document.cwd,
+            fs: this._document.fs,
+            tsconfig: this._tsconfig,
+            extname: this._extnames[0]
+          }),
+          esWorkspacePlugin()
+        ]
+      }
+    );
+
+    return `${code};customElements.define('${tagname}', ${classname})`;
+  }
+
+  /**
    * Returns the markup
    */
   public async markup() {
@@ -245,7 +236,7 @@ export default class Builder {
       builder: this 
     });
     // Bundle with esbuild
-    const sourceCode = pre.data || await Builder.build(
+    const sourceCode = pre.data || await build(
       this._document.absolute, 
       {
         minify: this._minify,

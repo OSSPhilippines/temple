@@ -20,15 +20,6 @@ export default abstract class TempleDocument {
   public abstract template(): TempleElement[];
 
   /**
-   * Returns the document props
-   */
-  public data() {
-    return `<script type="text/json">${JSON.stringify(
-      Object.fromEntries(data.entries())
-    )}</script>`
-  }
-
-  /**
    * Renders the redered document without injections
    */
   public render(props: Record<string, any> = {}) {

@@ -4,14 +4,14 @@ import type {
   AliasPluginOptions,
   ComponentPluginOptions,
   DocumentPluginOptions
-} from '../types';
+} from './types';
 
 import path from 'path';
-import FileSystem from '../filesystem/NodeFS';
-import Component from '../compiler/Component';
-import ComponentTranspiler from '../compiler/Transpiler';
-import DocumentTranspiler from '../document/Transpiler';
-import { toTS } from '../helpers';
+import FileSystem from './filesystem/NodeFS';
+import Component from './compiler/Component';
+import ComponentTranspiler from './compiler/Transpiler';
+import DocumentTranspiler from './document/Transpiler';
+import { toTS } from './helpers';
 
 export function esAliasPlugin(options: AliasPluginOptions) {
   const { cwd = process.cwd(), fs = new FileSystem() } = options;

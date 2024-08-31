@@ -204,9 +204,12 @@ export default class Transpiler extends ComponentTranspiler {
       for (const element of document.body.querySelectorAll('*')) {
         //pull the attributes from the rendered HTML
         const attributes: Hash = Object.fromEntries(
-          Array.from(element.attributes).map(
-            attribute => [ attribute.nodeName, attribute.nodeValue ]
-          )
+          Array.from(element.attributes).map(attribute => [ 
+            attribute.nodeName, 
+            attribute.nodeValue.length > 0
+              ? attribute.nodeValue
+              : true
+          ])
         );
         //determine the id of the element by its index in the registry
         const id = String(TempleRegistry.elements.size);
@@ -214,6 +217,7 @@ export default class Transpiler extends ComponentTranspiler {
         if (__BINDINGS__[id]) {
           //this is where we need to add the bindings to the attributes
           Object.assign(attributes, __BINDINGS__[id]);
+          element.TempleAttributes = __BINDINGS__[id];
         }
         //finally add the element to the registry
         TempleRegistry.register(element, attributes);
