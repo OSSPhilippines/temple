@@ -396,9 +396,9 @@ var TempleBundle = (() => {
         get props() {
           return this._props;
         }
-        set props(props2) {
-          this._props = Object.assign({}, props2);
-          this._attributes = Object.fromEntries(Object.entries(props2).filter((entry) => typeof entry[1] === "string" || entry[1] === true));
+        set props(props3) {
+          this._props = Object.assign({}, props3);
+          this._attributes = Object.fromEntries(Object.entries(props3).filter((entry) => typeof entry[1] === "string" || entry[1] === true));
         }
         adoptedCallback() {
           this.render();
@@ -529,9 +529,9 @@ var TempleBundle = (() => {
         return mod && mod.__esModule ? mod : { "default": mod };
       };
       Object.defineProperty(exports, "__esModule", { value: true });
-      exports.default = props2;
+      exports.default = props3;
       var data_1 = __importDefault(require_data());
-      function props2(component = null) {
+      function props3(component = null) {
         if (!component) {
           component = data_1.default.get("current") || null;
         }
@@ -915,7 +915,7 @@ var TempleBundle = (() => {
       return ``;
     }
     template() {
-      const props2 = this.props;
+      const props3 = this.props;
       const children3 = () => this.originalChildren;
       return () => [
         import_client.TempleRegistry.createElement("main", {}, [
@@ -948,10 +948,11 @@ var TempleBundle = (() => {
       return ``;
     }
     template() {
+      const { trim = false, p = false, div = false } = (0, import_temple.props)();
       const childlist = (0, import_temple.children)();
       const phrase = [];
       const variables = [];
-      for (const child of childlist.length) {
+      for (const child of childlist) {
         if (typeof child === "string") {
           phrase.push(child);
         } else if (child instanceof Node && child.textContent) {
@@ -961,7 +962,11 @@ var TempleBundle = (() => {
           variables.push(child);
         }
       }
-      const chunks = translate(phrase.join("")).split("%s");
+      let words = phrase.join("");
+      if (trim) {
+        words = words.replace(/\s+/, " ").trim();
+      }
+      const chunks = translate(words).split("%s");
       const translations = [];
       for (let i = 0; i < chunks.length; i++) {
         translations.push(document.createTextNode(chunks[i]));
@@ -969,7 +974,35 @@ var TempleBundle = (() => {
           translations.push(variables[i]);
         }
       }
-      return () => [];
+      return () => [
+        import_client2.TempleRegistry.createText(`
+    `, false),
+        ...!!p ? [
+          import_client2.TempleRegistry.createText(`
+      `, false),
+          import_client2.TempleRegistry.createElement("p", {}, [
+            ...this._toNodeList(translations)
+          ]).element,
+          import_client2.TempleRegistry.createText(`
+    `, false)
+        ] : !!div ? [
+          ,
+          import_client2.TempleRegistry.createText(`
+      `, false),
+          import_client2.TempleRegistry.createElement("div", {}, [
+            ...this._toNodeList(translations)
+          ]).element,
+          import_client2.TempleRegistry.createText(`
+    `, false)
+        ] : true ? [
+          ,
+          import_client2.TempleRegistry.createText(`
+      `, false),
+          ...this._toNodeList(translations),
+          import_client2.TempleRegistry.createText(`
+    `, false)
+        ] : []
+      ];
     }
   };
 

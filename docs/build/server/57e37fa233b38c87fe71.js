@@ -793,7 +793,1149 @@ ${document2}`;
                   ...this._toNodeList(_("Markup Syntax"))
                 ]),
                 import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `TL;DR` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            <link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+            
+            <style>
+              host: a {
+                color: #333;
+              }
+            </style>
+
+            <script>
+              import { getTitle, getDetail, getLink } from '@/data/article';
+              const title = getTitle();
+              const href = getLink();
+              const attributes = { target: '_blank' };
+            </script>
+
+            <a title={title} {href} {...attributes}>
+              {title}
+            </a>
+
+            <i18n-translate title=title>
+              {getDetail()}
+            </i18n-translate>
+          `)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Components are the building blocks of Temple files. Documents 
+          and page level markup are written in 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    import_server.TempleRegistry.createText(`.dtml`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` files. Components 
+          and templates are written in 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    import_server.TempleRegistry.createText(`.tml`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` files. In both 
+          cases, the code is written in a superset of HTML.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          The four sections that make up a temple file \u2014 imports, 
+          script, styles and markup \u2014 are all optional and can be 
+          used in any order.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Code Structure` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            <!-- imports go here -->
+
+            <style>
+              /* styles go here */
+            </style>
+
+            <script>
+              // logic goes here
+            </script>
+            
+            <!-- HTML goes here -->
+          `)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("h2", {}, [
+                  ...this._toNodeList(_("Imports"))
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Imports are used to include additional components, templates 
+          and stylesheets in the current component. Components can 
+          be imported as a `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    import_server.TempleRegistry.createText(`template`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` or 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    import_server.TempleRegistry.createText(`component`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` type.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Import Examples` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/prism.min.css" />
+            <link rel="stylesheet" type="text/css" href="/styles/layout.css" />
+            <link rel="import" type="template" href="@/modules/html-head.tml" />
+            <link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+
+            <style>
+              /* styles go here */
+            </style>
+
+            <script>
+              // logic goes here
+            </script>
+            
+            <!-- HTML goes here -->
+          `)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
         
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          The `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    import_server.TempleRegistry.createText(`rel`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` attribute 
+          specifies the relationship between the current document and 
+          the linked resource. 
+          
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    import_server.TempleRegistry.createText(`rel="import"`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` denotes
+          that the imported resource is a component or template.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          The `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    import_server.TempleRegistry.createText(`type`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` 
+          attribute specifies the type of the linked resource. 
+          
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    import_server.TempleRegistry.createText(`type="component"`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` 
+          imports a web component that can be used as regular markup
+          with attributes and children. 
+          
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    import_server.TempleRegistry.createText(`type="template"`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` 
+          imports a template partial that can be included in the current 
+          markup. Template partials do not process attributes or children
+          if given.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          The 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    import_server.TempleRegistry.createText(`href`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` attribute specifies
+          the URL of the linked resource. The 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    import_server.TempleRegistry.createText(`name`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          attribute specifies the tag name of the imported component or template.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("h2", {}, [
+                  ...this._toNodeList(_("Styles"))
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          CSS styles inside a `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`<style>`)
+                  ]),
+                  import_server.TempleRegistry.createText(` 
+          block enables the native `, false),
+                  import_server.TempleRegistry.createElement("a", { "target": `_blank`, "href": `https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM` }, [
+                    import_server.TempleRegistry.createText(`shadow DOM`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` and will be scoped only to that component. 
+          Additionally styles defined outside of the component such as 
+          global styles will not affect the component.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          External stylesheets can be imported using the 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`<link>`)
+                  ]),
+                  import_server.TempleRegistry.createText(` tag or using 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`@import()`)
+                  ]),
+                  import_server.TempleRegistry.createText(` CSS directive. 
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          You can use host selectors to style an element from within 
+          a component. The `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`:host`)
+                  ]),
+                  import_server.TempleRegistry.createText(` 
+          pseudo-class always applies styles to the root element of the 
+          web component.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Using :host` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            <style>
+              :host {
+                display: block;
+              }
+            </style>
+          `)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          You can also add conditional styles using the 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`:host`)
+                  ]),
+                  import_server.TempleRegistry.createText(` selector function. 
+          This can be used to style the host so long as it matches the 
+          given selector. For example, it can be used to select for 
+          hosts that have a given attribute or class.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `:host Conditionals` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            <style>
+              :host([active]) {
+                background-color: #333;
+                color: #FFF;
+              }
+              :host(.active) {
+                background-color: #333;
+                color: #FFF;
+              }
+            </style>
+          `)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("h2", {}, [
+                  ...this._toNodeList(_("Scripts"))
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          The `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`<script>`)
+                  ]),
+                  import_server.TempleRegistry.createText(` block is used 
+          to write TypeScript logic for the component. The script block 
+          can be used to define variables, functions, and event listeners.
+          Variables declared (or imported) at the top level are 
+          'visible' from the component's markup. 
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Top-Level Variables` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            <script>
+              const title = 'Hello World';
+            </script>
+
+            <h1>{title}</h1>
+          `)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          The `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`<script>`)
+                  ]),
+                  import_server.TempleRegistry.createText(` block can also 
+          be used to import variables from other components to be used
+          in the markup.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Importing Files` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            <script>
+              import getTitle from './getTitle';
+              const title = getTitle();
+            </script>
+
+            <h1 title={title}>{title}</h1>
+          `)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          You can use `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`@/`)
+                  ]),
+                  import_server.TempleRegistry.createText(` to prefix the 
+          current working directory. This is useful when importing
+          files completely in a separate directory in your project
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `@ Imports` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            <script>
+              import getTitle from '@/data/getTitle';
+              const title = getTitle();
+            </script>
+
+            <h1 title={title}>{title}</h1>
+          `)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("h2", {}, [
+                  ...this._toNodeList(_("Markup"))
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          In order to be closer to the native, Temple follows the same 
+          standards and conventions as HTML5 web components. Temple 
+          components are compiled to native web components that possibly 
+          can be used in other projects any modern browser.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("h3", {}, [
+                  ...this._toNodeList(_("Tag Names"))
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Tag names must have at least one dash (-) in them. As such 
+          you probably want to name your element with two distinct words 
+          like `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`i18n-translate`)
+                  ]),
+                  import_server.TempleRegistry.createText(`. You can 
+          use as many dashes as you want, you're not limited to one. 
+          Some specific rules to follow in order to make a valid tag 
+          name:
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ul", {}, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("i18n-translate", { "li": true, "trim": true }, [
+                    import_server.TempleRegistry.createText(`
+            It must use all lowercase characters of the alphabet (a-z).
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("i18n-translate", { "li": true, "trim": true }, [
+                    import_server.TempleRegistry.createText(`
+            t must contain at least one dash (-).
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("i18n-translate", { "li": true, "trim": true }, [
+                    import_server.TempleRegistry.createText(`
+            It must not be an already reserved tag name including 
+            `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      import_server.TempleRegistry.createText(`annotation-xml`, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`,
+            `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      import_server.TempleRegistry.createText(`color-profile`, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`,
+            `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      import_server.TempleRegistry.createText(`font-face`, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`,
+            `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      import_server.TempleRegistry.createText(`font-face-src`, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`,
+            `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      import_server.TempleRegistry.createText(`font-face-uri`, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`,
+            `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      import_server.TempleRegistry.createText(`font-face-format`, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`,
+            `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      import_server.TempleRegistry.createText(`font-face-name`, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`, and 
+            `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      import_server.TempleRegistry.createText(`missing-glyph`, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`.
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("i18n-translate", { "li": true, "trim": true }, [
+                    import_server.TempleRegistry.createText(`
+            It must not contain symbols, like =, @, $.
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("i18n-translate", { "li": true, "trim": true }, [
+                    import_server.TempleRegistry.createText(`
+            It can contain underscores, and numbers.
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("i18n-translate", { "li": true, "trim": true }, [
+                    import_server.TempleRegistry.createText(`
+            It can contain characters from different alphabets, 
+            such as \xE9, \xF0, \xF6, \u7231.
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Additionally, Temple works best with correct markup. The 
+          following standards should be followed:
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ul", {}, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("i18n-translate", { "li": true, "trim": true }, [
+                    import_server.TempleRegistry.createText(`
+            Self closing tags like 
+            `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      ...this._toNodeList(`<img />`)
+                    ]),
+                    import_server.TempleRegistry.createText(`,
+            `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      ...this._toNodeList(`<link />`)
+                    ]),
+                    import_server.TempleRegistry.createText(`,
+            `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      ...this._toNodeList(`<meta />`)
+                    ]),
+                    import_server.TempleRegistry.createText(`,
+            `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      ...this._toNodeList(`<input />`)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+            must have a slash before the closing.
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("i18n-translate", { "li": true, "trim": true }, [
+                    import_server.TempleRegistry.createText(`
+            When using tables, rows should be wrapped in a 
+            `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      ...this._toNodeList(`<tbody>`)
+                    ]),
+                    import_server.TempleRegistry.createText(` tag and cells
+            should be wrapped in a `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      ...this._toNodeList(`<tr>`)
+                    ]),
+                    import_server.TempleRegistry.createText(` 
+            tag. ie. `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      ...this._toNodeList(`<table><tbody><tr><td>`)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("i18n-translate", { "li": true, "trim": true }, [
+                    import_server.TempleRegistry.createText(`
+            When using lists, items should be wrapped in a 
+            `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      ...this._toNodeList(`<ul>`)
+                    ]),
+                    import_server.TempleRegistry.createText(` or 
+            `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      ...this._toNodeList(`<ol>`)
+                    ]),
+                    import_server.TempleRegistry.createText(` tags.
+            ie. `, false),
+                    import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                      ...this._toNodeList(`<ul><li>`)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("tui-alert", { "solid": true, "curved": true, "info": true }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("i", { "class": `fas fa-info-circle` }, []),
+                  import_server.TempleRegistry.createText(`
+          &nbsp;
+          Any markup auto corrected by browser will cause data syncing 
+          issues with Temple.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Temple components can loosely be self closing
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`<i18n-translate />`)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          or expressed as a block
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`<i18n-translate></i18n-translate>`)
+                  ]),
+                  import_server.TempleRegistry.createText(`.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("h3", {}, [
+                  ...this._toNodeList(_("Attributes"))
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Markup Expressions` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            <a title={title} {href} {...attributes}>
+              {title}
+            </a>
+            <i18n-translate title=title>
+              {detail}
+            </i18n-translate>
+          `)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Attributes can be bound to expressions using the 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`{}`)
+                  ]),
+                  import_server.TempleRegistry.createText(` syntax. 
+          Expressions can be variables, functions, or any valid 
+          JavaScript expression. By default, attributes work exactly 
+          like their HTML counterparts.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "trim": true, "detab": 10 }, [
+                  ...this._toNodeList(`
+          <button type="button" disabled>Submit</button>
+        `)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Traditional HTML attributes can be assigned string values or 
+          no value evaluates as `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`true`)
+                  ]),
+                  import_server.TempleRegistry.createText(`.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "trim": true, "detab": 10 }, [
+                  ...this._toNodeList(`
+          <a title={title}>Click</a>
+        `)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Attributes can be assigned variable names.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "trim": true, "detab": 10 }, [
+                  ...this._toNodeList(`
+          <a title=title>Click</a>
+        `)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Variable names do not need to be wrapped in curly braces
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`{}`)
+                  ]),
+                  import_server.TempleRegistry.createText(`.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "trim": true, "detab": 10 }, [
+                  ...this._toNodeList(`
+          <a {title}>Click</a>
+        `)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Attributes with the same name as a variable can be assigned
+          by just wrapping curly braces. ie. 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`{title}`)
+                  ]),
+                  import_server.TempleRegistry.createText(`.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "trim": true, "detab": 10 }, [
+                  ...this._toNodeList(`
+          <script>
+            const attributes = { target: '_blank' };
+          </script>
+          <a {...attributes}>Click</a>
+        `)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Spread operators can be used to assign multiple attributes.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 10 }, [
+                  ...this._toNodeList(`
+          <script>
+            let count = 10
+            const metadata = { foo: 'bar', baz: 1, qux: true };
+            const data = () => metadata
+          </script>
+          <a {count} get={data} data-meta={metadata} disable={count < 10}>
+            Click
+          </a>
+        `)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          You can assign any valid JavaScript expression to an attribute.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("h3", {}, [
+                  ...this._toNodeList(_("Conditionals"))
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Conditionals` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            <if true={count > 10}>
+              <p>Count is greater than 10</p>
+            <elif true={count < 5} />
+              <p>Count is less than 5</p>
+            <else />
+              <p>Count is between 5 and 10</p>
+            </if>
+          `)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Conditionals can be used to show or hide elements based on 
+          the value of a variable.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                  ...this._toNodeList(`
+          <if true={count > 10}>
+            <p>Count is greater than 10</p>
+          </if>
+        `)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          The basic syntax for an if statement looks like this and can be 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`truesy`)
+                  ]),
+                  import_server.TempleRegistry.createText(` or 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`falsey`)
+                  ]),
+                  import_server.TempleRegistry.createText(`.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                  ...this._toNodeList(`
+          <if false={count > 10}>
+            <p>Count is not greater than 10</p>
+          </if>
+        `)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          You can also use the `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`false`)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          attribute to negate the condition.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                  ...this._toNodeList(`
+          <if true={count > 10}>
+            <p>Count is greater than 10</p>
+          <else />
+            <p>Count is less than or equal to 10</p>
+          </if>
+        `)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          You can use the `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`else`)
+                  ]),
+                  import_server.TempleRegistry.createText(` block to 
+          show content when the condition is false.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                  ...this._toNodeList(`
+          <if true={count > 10}>
+            <p>Count is greater than 10</p>
+          <elif true={count < 5} />
+            <p>Count is less than 5</p>
+          </if>
+        `)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          You can use the `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`elif`)
+                  ]),
+                  import_server.TempleRegistry.createText(` block to 
+          show content when the previous condition is false.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("h3", {}, [
+                  ...this._toNodeList(_("Iterations"))
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Each` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            <each key=index value=article from=articles>
+              <h1>#{index + 1} {article.title}</h1>
+              <p>{article.body}</p>
+            </each>
+          `)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          The `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`<each>`)
+                  ]),
+                  import_server.TempleRegistry.createText(` block can be used 
+          to iterate over an array of items or objects.
+          The `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`from`)
+                  ]),
+                  import_server.TempleRegistry.createText(` attribute value is 
+          required and can be an array, object or JavaScript expression 
+          that evaluates to an array or object. Both the 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`key`)
+                  ]),
+                  import_server.TempleRegistry.createText(` and 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`value`)
+                  ]),
+                  import_server.TempleRegistry.createText(` attributes are optional.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                  ...this._toNodeList(`
+          <each value={article} from={articles}>
+            <h1>{article.title}</h1>
+            <p>{article.body}</p>
+          </each>
+        `)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          The value of `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`value`)
+                  ]),
+                  import_server.TempleRegistry.createText(`, in this 
+          case `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`article`)
+                  ]),
+                  import_server.TempleRegistry.createText(` can be used 
+          only with in the block. This can be any valid JavaScript 
+          variable name.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                  ...this._toNodeList(`
+          <each key={index} from={[1, 2, 3]}>
+            <h1>#{index} ???</h1>
+          </each>
+        `)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          The value of `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`key`)
+                  ]),
+                  import_server.TempleRegistry.createText(`, in this 
+          case `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`index`)
+                  ]),
+                  import_server.TempleRegistry.createText(` can be used 
+          only with in the block. This can be any valid JavaScript 
+          variable name.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("h3", {}, [
+                  ...this._toNodeList(_("Try/Catch"))
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Try/Catch Example` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            <try>
+              <p>{mayCauseError()}</p>
+            <catch error={e} />
+              <p>Error: {e.message}</p>
+            </try>
+          `)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          The `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`<try><catch>`)
+                  ]),
+                  import_server.TempleRegistry.createText(` block can 
+          be used to catch errors that occur in the block. The 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`<catch>`)
+                  ]),
+                  import_server.TempleRegistry.createText(` block is required and 
+          can be used to handle the error.
+
+          The value of `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`error`)
+                  ]),
+                  import_server.TempleRegistry.createText(`, in the  
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`<catch>`)
+                  ]),
+                  import_server.TempleRegistry.createText(` block in this case
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`e`)
+                  ]),
+                  import_server.TempleRegistry.createText(` is an 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "inline": true }, [
+                    ...this._toNodeList(`Error`)
+                  ]),
+                  import_server.TempleRegistry.createText(` object
+          that can only be used with in the block. 
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
         `, false),
                 import_server.TempleRegistry.createElement("nav", { "class": `pager` }, [
                   import_server.TempleRegistry.createText(`

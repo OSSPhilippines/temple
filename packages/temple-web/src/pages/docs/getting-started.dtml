@@ -3,7 +3,6 @@
 <link rel="import" type="template" href="@/modules/panel/left.tml" name="panel-left" />
 <link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
 <link rel="import" type="component" href="@/modules/ide/code.tml" name="ide-code" />
-<link rel="import" type="component" href="@/modules/ide/preview.tml" name="ide-preview" />
 <link rel="import" type="component" href="@/modules/ide/app.tml" name="ide-app" />
 <link rel="import" type="component" href="@/modules/tui/alert.tml" name="tui-alert" />
 <link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
@@ -28,9 +27,9 @@
       <div class="docs container">
         <h1>{_('Getting Started')}</h1>
 
-        <p>
+        <i18n-translate p trim>
           To use Temple in a project, run the following commands in terminal: 
-        </p>
+        </i18n-translate>
         <ide-app title="Terminal">
           <ide-code lang="bash">
             npm install --save @ossph/temple && npm install --save-dev ts-node typescript
@@ -44,11 +43,11 @@
             href="https://marketplace.visualstudio.com/items?itemName=ossph.temple-language"
           >Visual Studio Marketplace</a>.
         </tui-alert>
-        <p>
+        <i18n-translate p trim>
           Create a server file called
-          <ide-code lang="js" inline>'src/index.ts'</ide-code> 
+          <ide-code inline>src/index.ts</ide-code> 
           with the following code that uses the compiler.
-        </p>
+        </i18n-translate>
         <ide-app title="src/index.ts">
           <ide-code lang="js" numbers trim detab={12}>{`
             //on server:
@@ -61,11 +60,11 @@
             console.log(results);
           `}</ide-code>
         </ide-app>
-        <p>
+        <i18n-translate p trim>
           Next, create a document file called
-          <ide-code lang="js" inline>'src/page.dtml'</ide-code> 
+          <ide-code inline>src/page.dtml</ide-code> 
           with the following template code.
-        </p>
+        </i18n-translate>
         <ide-app title="src/page.dtml">
           <ide-code numbers trim detab={12}>{`
             <style>
@@ -84,19 +83,19 @@
             </html>
           `}</ide-code>
         </ide-app>
-        <p>
+        <i18n-translate p trim>
           To test the script and see the results, run the following 
           command in terminal.
-        </p>
+        </i18n-translate>
         <ide-app title="Terminal">
           <ide-code lang="bash">
             npx ts-node src/index.ts
           </ide-code>
         </ide-app>
-        <p>
+        <i18n-translate p trim>
           To see other getting started examples with various frameworks,
           you can check out the following links.
-        </p>
+        </i18n-translate>
         <ul>
           <li>
             <a target="_blank" href={`${examples}/with-http`}>
@@ -139,28 +138,28 @@
             </a>
           </li>
         </ul> 
-        <p>
+        <i18n-translate p trim>
           Depending on how you plan to use Temple, you can also look at 
           the following project modes.
-        </p>
+        </i18n-translate>
         <ul>
           <li>
-            <a href="/temple/docs/engine.html">
+            <a href="/temple/docs/template-engine.html">
               Template Engine
             </a>
           </li>
           <li>
-            <a href="/temple/docs/spa.html">
+            <a href="/temple/docs/single-page.html">
               Single Page App
             </a>
           </li>
           <li>
-            <a href="/temple/docs/static-sites.html">
+            <a href="/temple/docs/static-site.html">
               Static Site Generator
             </a>
           </li>
           <li>
-            <a href="/temple/docs/publisher.html">
+            <a href="/temple/docs/component-publisher.html">
               Web Component Publisher
             </a>
           </li>

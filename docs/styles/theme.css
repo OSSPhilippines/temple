@@ -562,12 +562,18 @@ a, a:link a:hover, a:active, a:visited {
 }
 .docs h1 {
   color: var(--fg-primary);
-  margin: 20px 0;
+  margin: 40px 0;
   text-transform: uppercase; 
 }
 .docs h2 { 
+  border-bottom: 1px solid #333333;
   color: var(--fg-primary);
+  margin: 40px 0 20px;
+  padding-bottom: 10px;
   text-transform: uppercase; 
+}
+.docs h3 { 
+  margin: 20px 0;
 }
 .docs a, 
 .docs a:link, 
@@ -708,17 +714,17 @@ ide-app .window .head .title {
 }
 
 ide-app .window .body {
-  background-color: #101113;
+  background-color: #000000;
   color: #ABB2BF;
   margin: 0;
   padding: 0;
   position: relative;
+  overflow: auto;
 }
 
 ide-app .split-view {
   background-color: #000000;
   display: flex;
-  overflow: auto;
 }
 ide-app .split-view ide-code {
   flex-basis: 50%;

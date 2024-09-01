@@ -793,6 +793,167 @@ ${document2}`;
                   ...this._toNodeList(_("Developer Tools"))
                 ]),
                 import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Temple provides a separate package for a better development 
+          experience when working with server frameworks that utilize 
+          the native http module. Start by installing adding 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "inline": true }, [
+                    ...this._toNodeList(`'@ossph/temple-dev'`)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          to your project.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Terminal` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "lang": `bash` }, [
+                    import_server.TempleRegistry.createText(`
+            npm install --save-dev @ossph/temple-dev
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Next, import the `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "inline": true }, [
+                    ...this._toNodeList(`dev()`)
+                  ]),
+                  import_server.TempleRegistry.createText(` 
+          function from the package and use it in your existing 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "inline": true }, [
+                    ...this._toNodeList(`'src/index.ts'`)
+                  ]),
+                  import_server.TempleRegistry.createText(` 
+          file to create a development server as shown in the example below.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `src/index.ts` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "numbers": true, "trim": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            import http from 'http';
+            import temple from '@ossph/temple/compiler';
+            import { dev } from '@ossph/temple-dev';
+
+            //create temple compiler
+            const compiler = temple({ cwd: __dirname });
+            //1. create dev tools
+            const { router, refresh } = dev({ cwd: __dirname });
+
+            //create http server
+            const server = http.createServer(async (req, res) => {
+              //2. Add dev router
+              if (router(req, res)) return;
+              //if home page
+              if (req.url === '/') {
+                //3. sync builder with refresh server
+                refresh.sync(compiler.fromSource('./page.dtml'));
+                //compile the document
+                const html = await compiler.render('./page.dtml');
+                //... send response ...
+              }
+              //... other routes ...
+            });
+            //listen on port 3000
+            server.listen(3000);
+          `)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Lastly, update the document file 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "inline": true }, [
+                    ...this._toNodeList(`'src/page.dtml'`)
+                  ]),
+                  import_server.TempleRegistry.createText(` 
+          to include the development script 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    ...this._toNodeList(`<script src="/dev.js"></script>`)
+                  ]),
+                  import_server.TempleRegistry.createText(` 
+          as shown below.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `src/page.dtml` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 12 }, [
+                    ...this._toNodeList(`
+            <script>
+              //... 
+            </script>
+            <html>
+              <head>
+                <!-- ... -->
+                <!-- 4. include dev script -->
+                <script src="/dev.js"></script>
+              </head>
+              <body>
+                <!-- ... -->
+              </body>
+            </html>
+          `)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Run the following command in terminal.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Terminal` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "lang": `bash` }, [
+                    import_server.TempleRegistry.createText(`
+            npx ts-node src/index.ts
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Whenever `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "inline": true }, [
+                    ...this._toNodeList(`'src/page.dtml'`)
+                  ]),
+                  import_server.TempleRegistry.createText(` 
+          is updated, the development server will automatically refresh 
+          the page. Components will also be updated in real-time.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
         
         `, false),
                 import_server.TempleRegistry.createElement("nav", { "class": `pager` }, [

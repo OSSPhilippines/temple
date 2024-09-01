@@ -2,7 +2,7 @@
   import { translate } from './index';
   import { props, children } from '@ossph/temple';
 
-  const { trim = false, p = false, div = false } = props();
+  const { trim = false, p = false, li = false, div = false } = props();
   const childlist = children();
   const phrase: string = [];
   const variables: Node = [];
@@ -31,6 +31,8 @@
 </script>
 <if true={p}>
   <p>{translations}</p>
+<elif true={li} />
+  <li>{translations}</li>
 <elif true={div} />
   <div>{translations}</div>
 <else />

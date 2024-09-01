@@ -796,7 +796,7 @@ ${document2}`;
                 import_server.TempleRegistry.createText(`
 
         `, false),
-                import_server.TempleRegistry.createElement("p", {}, [
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
                   import_server.TempleRegistry.createText(`
           To use Temple in a project, run the following commands in terminal: 
         `, false)
@@ -831,12 +831,12 @@ ${document2}`;
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("p", {}, [
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
                   import_server.TempleRegistry.createText(`
           Create a server file called
           `, false),
-                  import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "inline": true }, [
-                    import_server.TempleRegistry.createText(`'src/index.ts'`, false)
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    import_server.TempleRegistry.createText(`src/index.ts`, false)
                   ]),
                   import_server.TempleRegistry.createText(` 
           with the following code that uses the compiler.
@@ -864,12 +864,12 @@ ${document2}`;
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("p", {}, [
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
                   import_server.TempleRegistry.createText(`
           Next, create a document file called
           `, false),
-                  import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "inline": true }, [
-                    import_server.TempleRegistry.createText(`'src/page.dtml'`, false)
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    import_server.TempleRegistry.createText(`src/page.dtml`, false)
                   ]),
                   import_server.TempleRegistry.createText(` 
           with the following template code.
@@ -903,7 +903,7 @@ ${document2}`;
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("p", {}, [
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
                   import_server.TempleRegistry.createText(`
           To test the script and see the results, run the following 
           command in terminal.
@@ -924,7 +924,7 @@ ${document2}`;
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("p", {}, [
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
                   import_server.TempleRegistry.createText(`
           To see other getting started examples with various frameworks,
           you can check out the following links.
@@ -1042,7 +1042,7 @@ ${document2}`;
                 ]),
                 import_server.TempleRegistry.createText(` 
         `, false),
-                import_server.TempleRegistry.createElement("p", {}, [
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
                   import_server.TempleRegistry.createText(`
           Depending on how you plan to use Temple, you can also look at 
           the following project modes.
@@ -1056,7 +1056,7 @@ ${document2}`;
                   import_server.TempleRegistry.createElement("li", {}, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/engine.html` }, [
+                    import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/template-engine.html` }, [
                       import_server.TempleRegistry.createText(`
               Template Engine
             `, false)
@@ -1069,7 +1069,7 @@ ${document2}`;
                   import_server.TempleRegistry.createElement("li", {}, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/spa.html` }, [
+                    import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/single-page.html` }, [
                       import_server.TempleRegistry.createText(`
               Single Page App
             `, false)
@@ -1082,7 +1082,7 @@ ${document2}`;
                   import_server.TempleRegistry.createElement("li", {}, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/static-sites.html` }, [
+                    import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/static-site.html` }, [
                       import_server.TempleRegistry.createText(`
               Static Site Generator
             `, false)
@@ -1095,7 +1095,7 @@ ${document2}`;
                   import_server.TempleRegistry.createElement("li", {}, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/publisher.html` }, [
+                    import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/component-publisher.html` }, [
                       import_server.TempleRegistry.createText(`
               Web Component Publisher
             `, false)
