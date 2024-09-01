@@ -1,0 +1,15 @@
+<script>
+  import { props, children } from '@ossph/temple';
+  const { title, panel } = props();
+  const classname = `body ${panel?'panel':''}`;
+  const style = panel ? `height:${panel}px` : '';
+</script>
+<div class="window">
+  <div class="head">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="title">{title}</span>
+  </div>
+  <div class={classname} {style}>{children()}</div>
+</div>

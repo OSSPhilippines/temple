@@ -14,15 +14,20 @@ import DocumentTranspiler from './document/Transpiler';
 import { toTS } from './helpers';
 
 export function esAliasPlugin(options: AliasPluginOptions) {
-  const { cwd = process.cwd(), fs = new FileSystem() } = options;
+  const { 
+    cwd = process.cwd(), 
+    fs = new FileSystem() 
+  } = options;
   const name = 'temple-alias-plugin';
   return {
     name: name,
     setup: (build: PluginBuild) => {
       build.onResolve({ filter: /^@\// }, args => {
         const absolute = path.resolve(cwd, args.path.replace('@/', ''));
-
-        if (fs.existsSync(absolute)) {
+        
+        if (fs.existsSync(absolute) 
+          && fs.lstatSync(absolute).isFile()
+        ) {
           if (absolute.endsWith('.tml')) {
             return { 
               path: absolute, 
@@ -33,10 +38,17 @@ export function esAliasPlugin(options: AliasPluginOptions) {
           }
           return { path: absolute };
         }
-
+        
         for (const extname of ['.ts', '.js', '.json']) {
-          const file = absolute + extname;
-          if (fs.existsSync(file)) {
+          let file = absolute + extname;
+          if (fs.existsSync(file) && fs.lstatSync(file).isFile()) {
+            if (absolute.endsWith('.ts')) {
+              return { path: file, loader: 'ts' };
+            }
+            return { path: file };
+          }
+          file = path.resolve(absolute, 'index' + extname);
+          if (fs.existsSync(file) && fs.lstatSync(file).isFile()) {
             if (absolute.endsWith('.ts')) {
               return { path: file, loader: 'ts' };
             }
@@ -90,6 +102,7 @@ export function esComponentPlugin(options: ComponentPluginOptions) {
         const transpiler = new ComponentTranspiler(component, tsconfig);
         return {
           contents: toTS(transpiler.transpile()),
+          resolveDir: path.dirname(args.path),
           loader: 'ts'
         };
       });
@@ -127,7 +140,7 @@ export function esDocumentPlugin(options: DocumentPluginOptions) {
             ? path.resolve(path.dirname(args.importer), args.path)
             //node_modules?
             : require.resolve(args.path, { paths: [ args.resolveDir ] });
-        
+    
           return fs.existsSync(absolute) 
             ? { path: absolute, namespace: names[0] } 
             : undefined;

@@ -1,0 +1,40 @@
+<link rel="import" type="template" href="@/modules/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
+<link rel="import" type="template" href="@/modules/panel/left.tml" name="panel-left" />
+<link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+<script>
+  import { env } from '@ossph/temple';
+  import { _ } from '@/modules/i18n';
+
+  const url = '/docs/markup-syntax.html';
+  const title = _('Markup Syntax - Temple reactive web component template engine.');
+  const description = _('Learn how to write markup in Temple.');
+  const toggle = _ => {
+    document.body.classList.toggle('panel-left-open');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark panel with-head with-left">
+    <panel-head />
+    <panel-left />
+    <panel-main class="panel-main">
+      <div class="docs container">
+        <h1>{_('Markup Syntax')}</h1>
+        
+        <nav class="pager">
+          <a class="prev" href="/temple/docs/frequent-questions.html">
+            <i class="fas fa-fw fa-chevron-left"></i>
+            {_('Frequent Questions')}
+          </a>
+          <a class="next" href="/temple/docs/state-management.html">
+            {_('State Management')}
+            <i class="fas fa-fw fa-chevron-right"></i>
+          </a>
+        </nav>
+      </div>
+      <footer class="foot"></footer>
+    </panel-main>
+  </body>
+</html>

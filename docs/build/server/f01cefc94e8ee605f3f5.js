@@ -459,6 +459,20 @@ ${document2}`;
   });
   var import_server = __toESM(require_server2());
   var import_server2 = __toESM(require_server2());
+
+  // src/modules/i18n/index.ts
+  var _ = function(phrase, ...variables) {
+    let translation = translate(phrase);
+    for (let i = 0; i < variables.length; i++) {
+      translation = translation.replace("%s", String(variables[i]));
+    }
+    return translation;
+  };
+  var translate = function(phrase) {
+    return phrase;
+  };
+
+  // temple-document-server-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/index.dtml
   var Index_f01cefc94e8ee605f3f5 = class extends import_server.TempleDocument {
     id() {
       return "f01cefc94e8ee605f3f5";
@@ -632,9 +646,9 @@ ${document2}`;
     }
     template() {
       const url = "/";
-      const title = "Temple - The reactive web component template engine.";
-      const description = "Temple is a template engine hat generates web components and support reactivity.";
-      const toggle = (_) => {
+      const title = _("Temple - The reactive web component template engine.");
+      const description = _("Temple is a template engine hat generates web components and support reactivity.");
+      const toggle = (_2) => {
         document.body.classList.toggle("panel-left-open");
       };
       return [
@@ -752,12 +766,12 @@ ${document2}`;
                 import_server.TempleRegistry.createElement("nav", {}, [
                   import_server.TempleRegistry.createText(`
     `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs` }, [
+                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/index.html` }, [
                     import_server.TempleRegistry.createText(`Docs`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
     `, false),
-                  import_server.TempleRegistry.createElement("a", { "class": `github`, "href": `https://github.com/ossPhilippines/frui`, "target": `_blank` }, [
+                  import_server.TempleRegistry.createElement("a", { "class": `github`, "href": `https://github.com/ossPhilippines/temple`, "target": `_blank` }, [
                     import_server.TempleRegistry.createText(`
       `, false),
                     import_server.TempleRegistry.createElement("i", { "class": `fab fa-github` }, []),
@@ -766,7 +780,7 @@ ${document2}`;
                   ]),
                   import_server.TempleRegistry.createText(`
     `, false),
-                  import_server.TempleRegistry.createElement("a", { "class": `npm`, "href": `https://www.npmjs.com/package/frui`, "target": `_blank` }, [
+                  import_server.TempleRegistry.createElement("a", { "class": `npm`, "href": `https://www.npmjs.com/package/temple`, "target": `_blank` }, [
                     import_server.TempleRegistry.createText(`
       `, false),
                     import_server.TempleRegistry.createElement("i", { "class": `fab fa-npm text-white` }, []),
@@ -801,25 +815,31 @@ ${document2}`;
                 import_server.TempleRegistry.createText(`
         `, false),
                 import_server.TempleRegistry.createElement("h1", {}, [
-                  import_server.TempleRegistry.createText(`Temple`, false)
+                  ...this._toNodeList(_("Temple"))
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("p", {}, [
-                  import_server.TempleRegistry.createText(`The reactive web component template engine.`, false)
-                ]),
-                import_server.TempleRegistry.createText(`
-        `, false),
-                import_server.TempleRegistry.createElement("tui-button", { "primary": true, "xl": true, "rounded": true, "style": `margin-right:10px;`, "href": `/temple/docs/started.html` }, [
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
                   import_server.TempleRegistry.createText(`
-          Get Started
+          The reactive web component template engine.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("tui-button", { "primary": true, "xl": true, "rounded": true, "style": `margin-right:10px;`, "href": `/temple/docs/getting-started.html` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  ...this._toNodeList(_("Get Started")),
+                  import_server.TempleRegistry.createText(`
         `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
                 import_server.TempleRegistry.createElement("tui-button", { "secondary": true, "xl": true, "rounded": true, "href": `/temple/docs/index.html` }, [
                   import_server.TempleRegistry.createText(`
-          Read the Docs
+          `, false),
+                  ...this._toNodeList(_("Read the Docs")),
+                  import_server.TempleRegistry.createText(`
         `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
@@ -830,7 +850,7 @@ ${document2}`;
               import_server.TempleRegistry.createElement("section", { "class": `section-sample` }, [
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("p", {}, [
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
                   import_server.TempleRegistry.createText(`
           Temple is a modern HTML markup language and a server first 
           template engine with a built-in parser/compiler that 
@@ -839,13 +859,13 @@ ${document2}`;
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("window-app", { "title": `Basic Example` }, [
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Basic Example` }, [
                   import_server.TempleRegistry.createText(`
           `, false),
-                  import_server.TempleRegistry.createElement("div", { "class": `snippet-preview` }, [
+                  import_server.TempleRegistry.createElement("div", { "class": `split-view` }, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-snippet", { "numbers": true, "trim": true, "detab": 14 }, [
+                    import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 14 }, [
                       ...this._toNodeList(`
               <style>
                 h1 { font-weight: bold; }
@@ -858,14 +878,14 @@ ${document2}`;
                     ]),
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-preview", {}, [
+                    import_server.TempleRegistry.createElement("ide-preview", {}, [
                       import_server.TempleRegistry.createText(`
               `, false),
                       import_server.TempleRegistry.createElement("div", {}, [
                         import_server.TempleRegistry.createText(`
                 `, false),
                         import_server.TempleRegistry.createElement("h1", {}, [
-                          import_server.TempleRegistry.createText(`Hello world!`, false)
+                          ...this._toNodeList(_("Hello world!"))
                         ]),
                         import_server.TempleRegistry.createText(`
               `, false)
@@ -894,11 +914,11 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`
             `, false),
                     import_server.TempleRegistry.createElement("h3", {}, [
-                      import_server.TempleRegistry.createText(`Expressive Markup`, false)
+                      ...this._toNodeList(_("Expressive Markup"))
                     ]),
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("p", {}, [
+                    import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
                       import_server.TempleRegistry.createText(`
               Any data type as attributes. Easily express logic with 
               markup directives like if, each, and try catch. 
@@ -913,11 +933,11 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`
             `, false),
                     import_server.TempleRegistry.createElement("h3", {}, [
-                      import_server.TempleRegistry.createText(`Reactive Signals`, false)
+                      ...this._toNodeList(_("Reactive Signals"))
                     ]),
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("p", {}, [
+                    import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
                       import_server.TempleRegistry.createText(`
               Easily transition from backend logic to reactive states.
               No Hydration and no memoization needed.
@@ -932,11 +952,11 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`
             `, false),
                     import_server.TempleRegistry.createElement("h3", {}, [
-                      import_server.TempleRegistry.createText(`Bare Metal`, false)
+                      ...this._toNodeList(_("Bare Metal"))
                     ]),
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("p", {}, [
+                    import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
                       import_server.TempleRegistry.createText(`
               Work with the DOM directly. Import any web components 
               from any source. Works with Lit, HTMX.
@@ -957,11 +977,11 @@ ${document2}`;
                 import_server.TempleRegistry.createText(`
         `, false),
                 import_server.TempleRegistry.createElement("h3", {}, [
-                  import_server.TempleRegistry.createText(`Server Setup`, false)
+                  ...this._toNodeList(_("Server Setup"))
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("p", {}, [
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
                   import_server.TempleRegistry.createText(`
           Temple can be used with popular server 
           frameworks in just a few lines of code.
@@ -969,10 +989,10 @@ ${document2}`;
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("window-app", { "title": `Server Example` }, [
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Server Example` }, [
                   import_server.TempleRegistry.createText(`
           `, false),
-                  import_server.TempleRegistry.createElement("code-snippet", { "lang": `js`, "numbers": true, "trim": true, "detab": 12 }, [
+                  import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "numbers": true, "trim": true, "detab": 12 }, [
                     ...this._toNodeList(`
             import temple from '@ossph/temple/server';
             //make a template engine
@@ -990,22 +1010,24 @@ ${document2}`;
 
         `, false),
                 import_server.TempleRegistry.createElement("h3", {}, [
-                  import_server.TempleRegistry.createText(`Props`, false)
+                  ...this._toNodeList(_("Props"))
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("p", {}, [
-                  import_server.TempleRegistry.createText(`Import your component props and use immediately`, false)
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Import your component props and use immediately
+        `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("window-app", { "title": `Props Example` }, [
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Props Example` }, [
                   import_server.TempleRegistry.createText(`
           `, false),
-                  import_server.TempleRegistry.createElement("div", { "class": `snippet-preview` }, [
+                  import_server.TempleRegistry.createElement("div", { "class": `split-view` }, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-snippet", { "numbers": true, "trim": true, "detab": 14 }, [
+                    import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 14 }, [
                       ...this._toNodeList(`
               <style>
                 h1 { font-weight: bold; }
@@ -1019,14 +1041,14 @@ ${document2}`;
                     ]),
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-preview", {}, [
+                    import_server.TempleRegistry.createElement("ide-preview", {}, [
                       import_server.TempleRegistry.createText(`
               `, false),
                       import_server.TempleRegistry.createElement("div", {}, [
                         import_server.TempleRegistry.createText(`
                 `, false),
                         import_server.TempleRegistry.createElement("h1", {}, [
-                          import_server.TempleRegistry.createText(`Hello world!`, false)
+                          ...this._toNodeList(_("Hello world!"))
                         ]),
                         import_server.TempleRegistry.createText(`
               `, false)
@@ -1044,22 +1066,24 @@ ${document2}`;
 
         `, false),
                 import_server.TempleRegistry.createElement("h3", {}, [
-                  import_server.TempleRegistry.createText(`Reactive Signals`, false)
+                  ...this._toNodeList(_("Reactive Signals"))
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("p", {}, [
-                  import_server.TempleRegistry.createText(`Use signals to manage state changes and re-renders.`, false)
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Use signals to manage state changes and re-renders.
+        `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("window-app", { "title": `Signal Example` }, [
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Signal Example` }, [
                   import_server.TempleRegistry.createText(`
           `, false),
-                  import_server.TempleRegistry.createElement("div", { "class": `snippet-preview` }, [
+                  import_server.TempleRegistry.createElement("div", { "class": `split-view` }, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-snippet", { "numbers": true, "trim": true, "detab": 14 }, [
+                    import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 14 }, [
                       ...this._toNodeList(`
               <style>
                 h1 { font-weight: bold; }
@@ -1074,14 +1098,14 @@ ${document2}`;
                     ]),
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-preview", {}, [
+                    import_server.TempleRegistry.createElement("ide-preview", {}, [
                       import_server.TempleRegistry.createText(`
               `, false),
                       import_server.TempleRegistry.createElement("div", {}, [
                         import_server.TempleRegistry.createText(`
                 `, false),
                         import_server.TempleRegistry.createElement("h1", {}, [
-                          import_server.TempleRegistry.createText(`Hello world!`, false)
+                          ...this._toNodeList(_("Hello world!"))
                         ]),
                         import_server.TempleRegistry.createText(`
               `, false)
@@ -1099,22 +1123,24 @@ ${document2}`;
 
         `, false),
                 import_server.TempleRegistry.createElement("h3", {}, [
-                  import_server.TempleRegistry.createText(`Components and Templates`, false)
+                  ...this._toNodeList(_("Components and Templates"))
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("p", {}, [
-                  import_server.TempleRegistry.createText(`Import components and templates for reusability.`, false)
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Import components and templates for reusability.
+        `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("window-app", { "title": `Import Example` }, [
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Import Example` }, [
                   import_server.TempleRegistry.createText(`
           `, false),
-                  import_server.TempleRegistry.createElement("div", { "class": `snippet-preview` }, [
+                  import_server.TempleRegistry.createElement("div", { "class": `split-view` }, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-snippet", { "numbers": true, "trim": true, "detab": 14 }, [
+                    import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 14 }, [
                       ...this._toNodeList(`
               <!-- page.html -->
               <link rel="import" href="./my-heading.html" />
@@ -1126,7 +1152,7 @@ ${document2}`;
                     ]),
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-snippet", { "trim": true, "detab": 14 }, [
+                    import_server.TempleRegistry.createElement("ide-code", { "class": `div`, "trim": true, "detab": 14 }, [
                       ...this._toNodeList(`
               <!-- my-heading.html -->
               <script>
@@ -1146,24 +1172,24 @@ ${document2}`;
 
         `, false),
                 import_server.TempleRegistry.createElement("h3", {}, [
-                  import_server.TempleRegistry.createText(`Conditionals and Iterations`, false)
+                  ...this._toNodeList(_("Conditionals and Iterations"))
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("p", {}, [
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
                   import_server.TempleRegistry.createText(`
           Case for conditions and iterations in an expressive way.
         `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("window-app", { "title": `Conditional + Iteration Example` }, [
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Conditional + Iteration Example` }, [
                   import_server.TempleRegistry.createText(`
           `, false),
-                  import_server.TempleRegistry.createElement("div", { "class": `snippet-preview` }, [
+                  import_server.TempleRegistry.createElement("div", { "class": `split-view` }, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-snippet", { "numbers": true, "trim": true, "detab": 14 }, [
+                    import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "trim": true, "detab": 14 }, [
                       ...this._toNodeList(`
               <script>
                 const name = 'world';
@@ -1177,7 +1203,7 @@ ${document2}`;
                     ]),
                     import_server.TempleRegistry.createText(`
             `, false),
-                    import_server.TempleRegistry.createElement("code-snippet", { "trim": true, "detab": 14 }, [
+                    import_server.TempleRegistry.createElement("ide-code", { "class": `div`, "trim": true, "detab": 14 }, [
                       ...this._toNodeList(`
               <script>
                 const list = [ 'a', 'b', 'c' ];
@@ -1204,7 +1230,7 @@ ${document2}`;
                 import_server.TempleRegistry.createText(`
         `, false),
                 import_server.TempleRegistry.createElement("h3", {}, [
-                  import_server.TempleRegistry.createText(`Works With Popular Server Frameworks`, false)
+                  ...this._toNodeList(_("Works With Popular Server Frameworks"))
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
@@ -1275,7 +1301,7 @@ ${document2}`;
                 import_server.TempleRegistry.createText(`
         `, false),
                 import_server.TempleRegistry.createElement("h3", {}, [
-                  import_server.TempleRegistry.createText(`Temple Loves Developers!`, false)
+                  ...this._toNodeList(_("Temple Loves Developers!"))
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
@@ -1286,9 +1312,7 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`
             `, false),
                     import_server.TempleRegistry.createElement("p", {}, [
-                      import_server.TempleRegistry.createText(`
-              Im a vue developer. No need for this. OSSPH does not support this project.
-            `, false)
+                      import_server.TempleRegistry.createText(`Im a vue developer. No need for this. OSSPH does not support this project.`, false)
                     ]),
                     import_server.TempleRegistry.createText(`
           `, false)
@@ -1312,9 +1336,7 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`
             `, false),
                     import_server.TempleRegistry.createElement("p", {}, [
-                      import_server.TempleRegistry.createText(`
-              Temple is good news for Node developers. I'm a rust developer so it don't matter to me.
-            `, false)
+                      import_server.TempleRegistry.createText(`Temple is good news for Node developers. I'm a rust developer so it don't matter to me.`, false)
                     ]),
                     import_server.TempleRegistry.createText(`
           `, false)
@@ -1325,9 +1347,7 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`
             `, false),
                     import_server.TempleRegistry.createElement("p", {}, [
-                      import_server.TempleRegistry.createText(`
-              Temple copied this section from us. We are the original.
-            `, false)
+                      import_server.TempleRegistry.createText(`Temple copied this section from us. We are the original.`, false)
                     ]),
                     import_server.TempleRegistry.createText(`
           `, false)
@@ -1338,9 +1358,7 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`
             `, false),
                     import_server.TempleRegistry.createElement("p", {}, [
-                      import_server.TempleRegistry.createText(`
-              After creating the Temple project, I am really excited to get back to ReactJS.
-            `, false)
+                      import_server.TempleRegistry.createText(`After creating the Temple project, I am really excited to get back to ReactJS.`, false)
                     ]),
                     import_server.TempleRegistry.createText(`
           `, false)
@@ -1351,9 +1369,7 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`
             `, false),
                     import_server.TempleRegistry.createElement("p", {}, [
-                      import_server.TempleRegistry.createText(`
-              Temple? no thanks. Keep your stack front end. App router for life.
-            `, false)
+                      import_server.TempleRegistry.createText(`Temple? no thanks. Keep your stack front end. App router for life.`, false)
                     ]),
                     import_server.TempleRegistry.createText(`
           `, false)
@@ -1370,20 +1386,24 @@ ${document2}`;
                 import_server.TempleRegistry.createText(`
         `, false),
                 import_server.TempleRegistry.createElement("h3", {}, [
-                  import_server.TempleRegistry.createText(`What are you waiting for?`, false)
+                  ...this._toNodeList(_("What are you waiting for?"))
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("tui-button", { "primary": true, "xl": true, "rounded": true, "style": `margin-right:10px;`, "href": `/temple/docs/get-started` }, [
+                import_server.TempleRegistry.createElement("tui-button", { "primary": true, "xl": true, "rounded": true, "style": `margin-right:10px;`, "href": `/temple/docs/getting-started.html` }, [
                   import_server.TempleRegistry.createText(`
-          Get Started
+          `, false),
+                  ...this._toNodeList(_("Get Started")),
+                  import_server.TempleRegistry.createText(`
         `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("tui-button", { "secondary": true, "xl": true, "rounded": true, "href": `/temple/docs` }, [
+                import_server.TempleRegistry.createElement("tui-button", { "secondary": true, "xl": true, "rounded": true, "href": `/temple/docs/index.html` }, [
                   import_server.TempleRegistry.createText(`
-          Read the Docs
+          `, false),
+                  ...this._toNodeList(_("Read the Docs")),
+                  import_server.TempleRegistry.createText(`
         `, false)
                 ]),
                 import_server.TempleRegistry.createText(`

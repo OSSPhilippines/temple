@@ -1,0 +1,34 @@
+<aside class="left panel-left">
+  <header>
+    <a href="/temple">
+      <img src="/temple/temple-icon.png" alt="Temple Logo" />
+    </a>
+    <h3><a class="tx-white" href="/temple">Temple</a></h3>
+    <i class="toggle fas fa-fw fa-chevron-left" click=toggle></i>
+  </header>
+  <nav>
+    <h6>Introduction</h6>
+    <a href="/temple/docs/index.html">Documentation</a>
+    <a href="/temple/docs/getting-started.html">Getting Started</a>
+    <a href="/temple/docs/frequent-questions.html">Frequent Questions</a>
+
+    <h6>Features</h6>
+    <a href="/temple/docs/markup-syntax.html">Markup Syntax</a>
+    <a href="/temple/docs/state-management.html">State Management</a>
+    <a href="/temple/docs/component-strategy.html">Component Strategy</a>
+    <a href="/temple/docs/compiler-api.html">Compiler API</a>
+    <a href="/temple/docs/client-api.html">Client API</a>
+
+    <h6>Usage</h6>
+    <a href="/temple/docs/template-engine.html">Template Engine</a>
+    <a href="/temple/docs/single-page.html">Single Page App</a>
+    <a href="/temple/docs/static-site.html">Static Site Generator</a>
+    <a href="/temple/docs/component-publisher.html">Component Publisher</a>
+    <a href="/temple/docs/developer-tools.html">Developer Tools</a>
+
+    <h6>Contributing</h6>
+    <a href="/temple/docs/latest-updates.html">Latest Updates</a>
+    <a href="/temple/docs/contributing-guide.html">Contribution Guide</a>
+    <a href="/temple/docs/known-issues.html">Known Issues</a>
+  </nav>
+</aside>

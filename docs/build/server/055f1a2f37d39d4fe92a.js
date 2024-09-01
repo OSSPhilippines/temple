@@ -459,6 +459,20 @@ ${document2}`;
   });
   var import_server = __toESM(require_server2());
   var import_server2 = __toESM(require_server2());
+
+  // src/modules/i18n/index.ts
+  var _ = function(phrase, ...variables) {
+    let translation = translate(phrase);
+    for (let i = 0; i < variables.length; i++) {
+      translation = translation.replace("%s", String(variables[i]));
+    }
+    return translation;
+  };
+  var translate = function(phrase) {
+    return phrase;
+  };
+
+  // temple-document-server-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/500.dtml
   var N500_055f1a2f37d39d4fe92a = class extends import_server.TempleDocument {
     id() {
       return "055f1a2f37d39d4fe92a";
@@ -476,10 +490,10 @@ ${document2}`;
     }
     template() {
       const url = "/temple/500.html";
-      const title = "Oops... - Temple - The reactive web component template engine.";
-      const description = "Temple is a template engine hat generates web components and support reactivity.";
+      const title = _("Oops... - Temple - The reactive web component template engine.");
+      const description = _("Temple is a template engine hat generates web components and support reactivity.");
       const { error } = (0, import_server2.props)();
-      const toggle = (_) => {
+      const toggle = (_2) => {
         document.body.classList.toggle("panel-left-open");
       };
       return [
@@ -597,12 +611,12 @@ ${document2}`;
                 import_server.TempleRegistry.createElement("nav", {}, [
                   import_server.TempleRegistry.createText(`
     `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs` }, [
+                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/index.html` }, [
                     import_server.TempleRegistry.createText(`Docs`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
     `, false),
-                  import_server.TempleRegistry.createElement("a", { "class": `github`, "href": `https://github.com/ossPhilippines/frui`, "target": `_blank` }, [
+                  import_server.TempleRegistry.createElement("a", { "class": `github`, "href": `https://github.com/ossPhilippines/temple`, "target": `_blank` }, [
                     import_server.TempleRegistry.createText(`
       `, false),
                     import_server.TempleRegistry.createElement("i", { "class": `fab fa-github` }, []),
@@ -611,7 +625,7 @@ ${document2}`;
                   ]),
                   import_server.TempleRegistry.createText(`
     `, false),
-                  import_server.TempleRegistry.createElement("a", { "class": `npm`, "href": `https://www.npmjs.com/package/frui`, "target": `_blank` }, [
+                  import_server.TempleRegistry.createElement("a", { "class": `npm`, "href": `https://www.npmjs.com/package/temple`, "target": `_blank` }, [
                     import_server.TempleRegistry.createText(`
       `, false),
                     import_server.TempleRegistry.createElement("i", { "class": `fab fa-npm text-white` }, []),
@@ -643,12 +657,20 @@ ${document2}`;
                 import_server.TempleRegistry.createText(`
         `, false),
                 import_server.TempleRegistry.createElement("h1", {}, [
-                  import_server.TempleRegistry.createText(`Oops...`, false)
+                  ...this._toNodeList(_("Oops..."))
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
                 import_server.TempleRegistry.createElement("p", {}, [
-                  import_server.TempleRegistry.createText(`Something went wrong. Please try again later.`, false)
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("i18n-translate", {}, [
+                    import_server.TempleRegistry.createText(`
+            Something went wrong. Please try again later.
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),

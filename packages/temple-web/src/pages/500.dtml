@@ -1,6 +1,7 @@
-<link rel="import" type="template" href="@/templates/html-head.tml" />
-<link rel="import" type="template" href="@/templates/panel-head.tml" />
-<link rel="import" type="component" href="@/components/panel-main.tml" />
+<link rel="import" type="template" href="@/modules/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
+<link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
 <style>
   .container { padding: 20px; }
   .error pre {
@@ -13,18 +14,12 @@
   }
 </style>
 <script>
-  //This is ran on both the server and the browser
-  //There is no signal, children prop here because 
-  //this is not a component.
-  //
-  //We also need to becareful with importing browser 
-  //scripts here. You should do that in the <head>
-  //instead.
   import { env, props } from '@ossph/temple';
+  import { _ } from '@/modules/i18n';
 
   const url = '/temple/500.html';
-  const title = 'Oops... - Temple - The reactive web component template engine.';
-  const description = 'Temple is a template engine hat generates web components and support reactivity.';
+  const title = _('Oops... - Temple - The reactive web component template engine.');
+  const description = _('Temple is a template engine hat generates web components and support reactivity.');
 
   const { error } = props();
 
@@ -38,8 +33,12 @@
     <panel-head />
     <panel-main class="panel-main">
       <div class="container">
-        <h1>Oops...</h1>
-        <p>Something went wrong. Please try again later.</p>
+        <h1>{_('Oops...')}</h1>
+        <p>
+          <i18n-translate>
+            Something went wrong. Please try again later.
+          </i18n-translate>
+        </p>
         <div class="error"><pre>{error || ''}</pre></div>
       </div>
     </panel-main>

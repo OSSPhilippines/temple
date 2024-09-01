@@ -225,11 +225,11 @@ var TempleBundle = (() => {
       };
       Object.defineProperty(exports, "__esModule", { value: true });
       var TempleElement_1 = __importDefault(require_TempleElement());
-      var TempleRegistry7 = class {
+      var TempleRegistry8 = class {
         static get elements() {
           return this._elements;
         }
-        static createComponent(definition, attributes, children4 = []) {
+        static createComponent(definition, attributes, children6 = []) {
           const tagname = definition.component[0];
           const template = document.createElement("template");
           template.innerHTML = `<${tagname}></${tagname}>`;
@@ -247,11 +247,11 @@ var TempleBundle = (() => {
           }
           component._TempleAttributes = attributes;
           component.props = attributes;
-          children4.forEach((child) => component.appendChild(child));
+          children6.forEach((child) => component.appendChild(child));
           component.register();
           return this.register(component, attributes);
         }
-        static createElement(name, attributes, children4 = []) {
+        static createElement(name, attributes, children6 = []) {
           const element = document.createElement(name);
           for (const [key, value] of Object.entries(attributes)) {
             if (typeof value === "string") {
@@ -260,7 +260,7 @@ var TempleBundle = (() => {
               element.setAttribute(key, key);
             }
           }
-          children4.filter((child) => typeof child !== "undefined").forEach((child) => element.appendChild(child));
+          children6.filter((child) => typeof child !== "undefined").forEach((child) => element.appendChild(child));
           return this.register(element, attributes);
         }
         static createText(value, escape = false) {
@@ -297,8 +297,8 @@ var TempleBundle = (() => {
           return node;
         }
       };
-      TempleRegistry7._elements = /* @__PURE__ */ new Map();
-      exports.default = TempleRegistry7;
+      TempleRegistry8._elements = /* @__PURE__ */ new Map();
+      exports.default = TempleRegistry8;
     }
   });
 
@@ -362,7 +362,7 @@ var TempleBundle = (() => {
       var TempleRegistry_1 = __importDefault(require_TempleRegistry());
       var TempleEmitter_1 = __importDefault(require_TempleEmitter());
       var data_1 = __importDefault(require_data());
-      var TempleComponent6 = class _TempleComponent extends HTMLElement {
+      var TempleComponent7 = class _TempleComponent extends HTMLElement {
         constructor() {
           super(...arguments);
           this._initiated = false;
@@ -437,10 +437,10 @@ var TempleBundle = (() => {
           } else {
             TempleEmitter_1.default.emit("unmounted", this);
           }
-          const children4 = this._template().filter(Boolean);
+          const children6 = this._template().filter(Boolean);
           if (styles.length === 0) {
             this.textContent = "";
-            children4.forEach((child) => this.appendChild(child));
+            children6.forEach((child) => this.appendChild(child));
           } else {
             if (!this.shadowRoot) {
               this.attachShadow({ mode: "open" });
@@ -451,7 +451,7 @@ var TempleBundle = (() => {
             const style = document.createElement("style");
             style.innerText = styles;
             shadowRoot.appendChild(style);
-            children4.forEach((child) => {
+            children6.forEach((child) => {
               var _a;
               return (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(child);
             });
@@ -497,7 +497,7 @@ var TempleBundle = (() => {
           }
         }
       };
-      exports.default = TempleComponent6;
+      exports.default = TempleComponent7;
     }
   });
 
@@ -571,15 +571,15 @@ var TempleBundle = (() => {
       };
       Object.defineProperty(exports, "__esModule", { value: true });
       exports.innerHTML = innerHTML;
-      exports.default = children4;
+      exports.default = children6;
       var data_1 = __importDefault(require_data());
       function innerHTML(component = null) {
-        const inner = children4(component);
+        const inner = children6(component);
         const wrapper = document.createElement("template");
         wrapper.append(...inner);
         return wrapper.innerHTML;
       }
-      function children4(component = null) {
+      function children6(component = null) {
         if (!component) {
           component = data_1.default.get("current") || null;
         }
@@ -597,7 +597,7 @@ var TempleBundle = (() => {
       };
       Object.defineProperty(exports, "__esModule", { value: true });
       exports.SignalRegistry = void 0;
-      exports.default = signal3;
+      exports.default = signal2;
       var Exception_1 = __importDefault(require_Exception());
       var data_1 = __importDefault(require_data());
       var SignalRegistry = class _SignalRegistry {
@@ -651,7 +651,7 @@ var TempleBundle = (() => {
       };
       exports.SignalRegistry = SignalRegistry;
       SignalRegistry._observers = /* @__PURE__ */ new Map();
-      function signal3(value, component = null) {
+      function signal2(value, component = null) {
         if (!component) {
           component = data_1.default.get("current") || null;
         }
@@ -882,13 +882,6 @@ var TempleBundle = (() => {
     }
   });
 
-  // ../temple/index.js
-  var require_temple = __commonJS({
-    "../temple/index.js"(exports, module) {
-      module.exports = { ...require_client() };
-    }
-  });
-
   // ../../node_modules/prismjs/prism.js
   var require_prism = __commonJS({
     "../../node_modules/prismjs/prism.js"(exports, module) {
@@ -897,7 +890,7 @@ var TempleBundle = (() => {
         var lang = /(?:^|\s)lang(?:uage)?-([\w-]+)(?=\s|$)/i;
         var uniqueId = 0;
         var plainTextGrammar = {};
-        var _ = {
+        var _2 = {
           /**
            * By default, Prism will attempt to highlight all code elements (by calling {@link Prism.highlightAll}) on the
            * current page after the page finished loading. This might be a problem if e.g. you wanted to asynchronously load
@@ -1006,9 +999,9 @@ var TempleBundle = (() => {
               visited = visited || {};
               var clone;
               var id;
-              switch (_.util.type(o)) {
+              switch (_2.util.type(o)) {
                 case "Object":
-                  id = _.util.objId(o);
+                  id = _2.util.objId(o);
                   if (visited[id]) {
                     return visited[id];
                   }
@@ -1025,7 +1018,7 @@ var TempleBundle = (() => {
                     clone
                   );
                 case "Array":
-                  id = _.util.objId(o);
+                  id = _2.util.objId(o);
                   if (visited[id]) {
                     return visited[id];
                   }
@@ -1183,7 +1176,7 @@ var TempleBundle = (() => {
              * });
              */
             extend: function(id, redef) {
-              var lang2 = _.util.clone(_.languages[id]);
+              var lang2 = _2.util.clone(_2.languages[id]);
               for (var key in redef) {
                 lang2[key] = redef[key];
               }
@@ -1266,7 +1259,7 @@ var TempleBundle = (() => {
              */
             insertBefore: function(inside, before, insert, root) {
               root = root || /** @type {any} */
-              _.languages;
+              _2.languages;
               var grammar = root[inside];
               var ret = {};
               for (var token in grammar) {
@@ -1285,7 +1278,7 @@ var TempleBundle = (() => {
               }
               var old = root[inside];
               root[inside] = ret;
-              _.languages.DFS(_.languages, function(key, value) {
+              _2.languages.DFS(_2.languages, function(key, value) {
                 if (value === old && key != inside) {
                   this[key] = ret;
                 }
@@ -1295,12 +1288,12 @@ var TempleBundle = (() => {
             // Traverse a language definition with Depth First Search
             DFS: function DFS(o, callback, type, visited) {
               visited = visited || {};
-              var objId = _.util.objId;
+              var objId = _2.util.objId;
               for (var i in o) {
                 if (o.hasOwnProperty(i)) {
                   callback.call(o, i, o[i], type || i);
                   var property = o[i];
-                  var propertyType = _.util.type(property);
+                  var propertyType = _2.util.type(property);
                   if (propertyType === "Object" && !visited[objId(property)]) {
                     visited[objId(property)] = true;
                     DFS(property, callback, null, visited);
@@ -1326,7 +1319,7 @@ var TempleBundle = (() => {
            * @public
            */
           highlightAll: function(async, callback) {
-            _.highlightAllUnder(document, async, callback);
+            _2.highlightAllUnder(document, async, callback);
           },
           /**
            * Fetches all the descendants of `container` that have a `.language-xxxx` class and then calls
@@ -1349,11 +1342,11 @@ var TempleBundle = (() => {
               container,
               selector: 'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'
             };
-            _.hooks.run("before-highlightall", env);
+            _2.hooks.run("before-highlightall", env);
             env.elements = Array.prototype.slice.apply(env.container.querySelectorAll(env.selector));
-            _.hooks.run("before-all-elements-highlight", env);
+            _2.hooks.run("before-all-elements-highlight", env);
             for (var i = 0, element; element = env.elements[i++]; ) {
-              _.highlightElement(element, async === true, env.callback);
+              _2.highlightElement(element, async === true, env.callback);
             }
           },
           /**
@@ -1385,12 +1378,12 @@ var TempleBundle = (() => {
            * @public
            */
           highlightElement: function(element, async, callback) {
-            var language = _.util.getLanguage(element);
-            var grammar = _.languages[language];
-            _.util.setLanguage(element, language);
+            var language = _2.util.getLanguage(element);
+            var grammar = _2.languages[language];
+            _2.util.setLanguage(element, language);
             var parent = element.parentElement;
             if (parent && parent.nodeName.toLowerCase() === "pre") {
-              _.util.setLanguage(parent, language);
+              _2.util.setLanguage(parent, language);
             }
             var code = element.textContent;
             var env = {
@@ -1401,29 +1394,29 @@ var TempleBundle = (() => {
             };
             function insertHighlightedCode(highlightedCode) {
               env.highlightedCode = highlightedCode;
-              _.hooks.run("before-insert", env);
+              _2.hooks.run("before-insert", env);
               env.element.innerHTML = env.highlightedCode;
-              _.hooks.run("after-highlight", env);
-              _.hooks.run("complete", env);
+              _2.hooks.run("after-highlight", env);
+              _2.hooks.run("complete", env);
               callback && callback.call(env.element);
             }
-            _.hooks.run("before-sanity-check", env);
+            _2.hooks.run("before-sanity-check", env);
             parent = env.element.parentElement;
             if (parent && parent.nodeName.toLowerCase() === "pre" && !parent.hasAttribute("tabindex")) {
               parent.setAttribute("tabindex", "0");
             }
             if (!env.code) {
-              _.hooks.run("complete", env);
+              _2.hooks.run("complete", env);
               callback && callback.call(env.element);
               return;
             }
-            _.hooks.run("before-highlight", env);
+            _2.hooks.run("before-highlight", env);
             if (!env.grammar) {
-              insertHighlightedCode(_.util.encode(env.code));
+              insertHighlightedCode(_2.util.encode(env.code));
               return;
             }
             if (async && _self2.Worker) {
-              var worker = new Worker(_.filename);
+              var worker = new Worker(_2.filename);
               worker.onmessage = function(evt) {
                 insertHighlightedCode(evt.data);
               };
@@ -1433,7 +1426,7 @@ var TempleBundle = (() => {
                 immediateClose: true
               }));
             } else {
-              insertHighlightedCode(_.highlight(env.code, env.grammar, env.language));
+              insertHighlightedCode(_2.highlight(env.code, env.grammar, env.language));
             }
           },
           /**
@@ -1462,13 +1455,13 @@ var TempleBundle = (() => {
               grammar,
               language
             };
-            _.hooks.run("before-tokenize", env);
+            _2.hooks.run("before-tokenize", env);
             if (!env.grammar) {
               throw new Error('The language "' + env.language + '" has no grammar.');
             }
-            env.tokens = _.tokenize(env.code, env.grammar);
-            _.hooks.run("after-tokenize", env);
-            return Token.stringify(_.util.encode(env.tokens), env.language);
+            env.tokens = _2.tokenize(env.code, env.grammar);
+            _2.hooks.run("after-tokenize", env);
+            return Token.stringify(_2.util.encode(env.tokens), env.language);
           },
           /**
            * This is the heart of Prism, and the most low-level function you can use. It accepts a string of text as input
@@ -1527,7 +1520,7 @@ var TempleBundle = (() => {
              * @public
              */
             add: function(name, callback) {
-              var hooks = _.hooks.all;
+              var hooks = _2.hooks.all;
               hooks[name] = hooks[name] || [];
               hooks[name].push(callback);
             },
@@ -1541,7 +1534,7 @@ var TempleBundle = (() => {
              * @public
              */
             run: function(name, env) {
-              var callbacks = _.hooks.all[name];
+              var callbacks = _2.hooks.all[name];
               if (!callbacks || !callbacks.length) {
                 return;
               }
@@ -1552,7 +1545,7 @@ var TempleBundle = (() => {
           },
           Token
         };
-        _self2.Prism = _;
+        _self2.Prism = _2;
         function Token(type, content, alias, matchedStr) {
           this.type = type;
           this.content = content;
@@ -1586,7 +1579,7 @@ var TempleBundle = (() => {
               env.classes.push(aliases);
             }
           }
-          _.hooks.run("wrap", env);
+          _2.hooks.run("wrap", env);
           var attributes = "";
           for (var name in env.attributes) {
             attributes += " " + name + '="' + (env.attributes[name] || "").replace(/"/g, "&quot;") + '"';
@@ -1682,7 +1675,7 @@ var TempleBundle = (() => {
                   pos += before.length;
                 }
                 removeRange(tokenList, removeFrom, removeCount);
-                var wrapped = new Token(token, inside ? _.tokenize(matchStr, inside) : matchStr, alias, matchStr);
+                var wrapped = new Token(token, inside ? _2.tokenize(matchStr, inside) : matchStr, alias, matchStr);
                 currentNode = addAfter(tokenList, removeFrom, wrapped);
                 if (after) {
                   addAfter(tokenList, currentNode, after);
@@ -1737,35 +1730,35 @@ var TempleBundle = (() => {
         }
         if (!_self2.document) {
           if (!_self2.addEventListener) {
-            return _;
+            return _2;
           }
-          if (!_.disableWorkerMessageHandler) {
+          if (!_2.disableWorkerMessageHandler) {
             _self2.addEventListener("message", function(evt) {
               var message = JSON.parse(evt.data);
               var lang2 = message.language;
               var code = message.code;
               var immediateClose = message.immediateClose;
-              _self2.postMessage(_.highlight(code, _.languages[lang2], lang2));
+              _self2.postMessage(_2.highlight(code, _2.languages[lang2], lang2));
               if (immediateClose) {
                 _self2.close();
               }
             }, false);
           }
-          return _;
+          return _2;
         }
-        var script = _.util.currentScript();
+        var script = _2.util.currentScript();
         if (script) {
-          _.filename = script.src;
+          _2.filename = script.src;
           if (script.hasAttribute("data-manual")) {
-            _.manual = true;
+            _2.manual = true;
           }
         }
         function highlightAutomaticallyCallback() {
-          if (!_.manual) {
-            _.highlightAll();
+          if (!_2.manual) {
+            _2.highlightAll();
           }
         }
-        if (!_.manual) {
+        if (!_2.manual) {
           var readyState = document.readyState;
           if (readyState === "loading" || readyState === "interactive" && script && script.defer) {
             document.addEventListener("DOMContentLoaded", highlightAutomaticallyCallback);
@@ -1777,7 +1770,7 @@ var TempleBundle = (() => {
             }
           }
         }
-        return _;
+        return _2;
       }(_self);
       if (typeof module !== "undefined" && module.exports) {
         module.exports = Prism2;
@@ -2338,94 +2331,55 @@ var TempleBundle = (() => {
     }
   });
 
+  // ../temple/index.js
+  var require_temple = __commonJS({
+    "../temple/index.js"(exports, module) {
+      module.exports = { ...require_client() };
+    }
+  });
+
   // temple-document-client-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/docs/index.dtml
   var docs_exports = {};
   __export(docs_exports, {
     BUILD_ID: () => BUILD_ID,
-    TempleComponent: () => import_client6.TempleComponent,
-    TempleElement: () => import_client6.TempleElement,
-    TempleEmitter: () => import_client6.TempleEmitter,
-    TempleException: () => import_client6.TempleException,
-    TempleRegistry: () => import_client6.TempleRegistry,
-    children: () => import_client6.children,
+    TempleComponent: () => import_client7.TempleComponent,
+    TempleElement: () => import_client7.TempleElement,
+    TempleEmitter: () => import_client7.TempleEmitter,
+    TempleException: () => import_client7.TempleException,
+    TempleRegistry: () => import_client7.TempleRegistry,
+    children: () => import_client7.children,
     components: () => components,
-    data: () => import_client6.data,
-    emitter: () => import_client6.emitter,
-    props: () => import_client6.props,
-    signal: () => import_client6.signal
+    data: () => import_client7.data,
+    emitter: () => import_client7.emitter,
+    props: () => import_client7.props,
+    signal: () => import_client7.signal
   });
-  var import_client5 = __toESM(require_client2());
+  var import_client6 = __toESM(require_client2());
 
-  // temple-component-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/components/panel-main.tml
+  // temple-component-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/modules/panel/main.tml
   var import_client = __toESM(require_client2());
-  var PanelMain_b21c6a1d888781a72a3e = class extends import_client.TempleComponent {
-    static component = ["panel-main", "PanelMain_b21c6a1d888781a72a3e"];
+  var Main_fd7f1af6410c5b5c8e1f = class extends import_client.TempleComponent {
+    static component = ["main", "Main_fd7f1af6410c5b5c8e1f"];
     styles() {
       return ``;
     }
     template() {
       const props5 = this.props;
-      const children4 = () => this.originalChildren;
+      const children6 = () => this.originalChildren;
       return () => [
         import_client.TempleRegistry.createElement("main", {}, [
-          ...this._toNodeList(children4())
+          ...this._toNodeList(children6())
         ]).element
       ];
     }
   };
 
-  // temple-component-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/components/window-app.tml
+  // temple-component-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/modules/ide/code.tml
   var import_client2 = __toESM(require_client2());
-  var import_temple = __toESM(require_temple());
-  var WindowApp_05952304bd7774a5f83e = class extends import_client2.TempleComponent {
-    static component = ["window-app", "WindowApp_05952304bd7774a5f83e"];
-    styles() {
-      return ``;
-    }
-    template() {
-      const { title } = (0, import_temple.props)();
-      return () => [
-        import_client2.TempleRegistry.createText(`
-`, false),
-        import_client2.TempleRegistry.createElement("div", { "class": `window` }, [
-          import_client2.TempleRegistry.createText(`
-  `, false),
-          import_client2.TempleRegistry.createElement("div", { "class": `head` }, [
-            import_client2.TempleRegistry.createText(`
-    `, false),
-            import_client2.TempleRegistry.createElement("span", { "class": `dot` }, []).element,
-            import_client2.TempleRegistry.createText(`
-    `, false),
-            import_client2.TempleRegistry.createElement("span", { "class": `dot` }, []).element,
-            import_client2.TempleRegistry.createText(`
-    `, false),
-            import_client2.TempleRegistry.createElement("span", { "class": `dot` }, []).element,
-            import_client2.TempleRegistry.createText(`
-    `, false),
-            import_client2.TempleRegistry.createElement("span", { "class": `title` }, [
-              ...this._toNodeList(title)
-            ]).element,
-            import_client2.TempleRegistry.createText(`
-  `, false)
-          ]).element,
-          import_client2.TempleRegistry.createText(`
-  `, false),
-          import_client2.TempleRegistry.createElement("div", { "class": `body` }, [
-            ...this._toNodeList((0, import_temple.children)())
-          ]).element,
-          import_client2.TempleRegistry.createText(`
-`, false)
-        ]).element
-      ];
-    }
-  };
-
-  // temple-component-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/components/code-snippet.tml
-  var import_client3 = __toESM(require_client2());
   var import_prismjs = __toESM(require_prism());
-  var import_temple2 = __toESM(require_temple());
-  var CodeSnippet_1f2900d78698832785d0 = class extends import_client3.TempleComponent {
-    static component = ["code-snippet", "CodeSnippet_1f2900d78698832785d0"];
+  var import_temple = __toESM(require_temple());
+  var Code_6f36bc13bb6a166c7abc = class extends import_client2.TempleComponent {
+    static component = ["code", "Code_6f36bc13bb6a166c7abc"];
     styles() {
       return `:host {
     display: block;
@@ -2509,6 +2463,7 @@ var TempleBundle = (() => {
   }`;
     }
     template() {
+      const config = this.props;
       const {
         lang = "markup",
         numbers = false,
@@ -2517,8 +2472,8 @@ var TempleBundle = (() => {
         ltrim = false,
         rtrim = false,
         detab = 0
-      } = (0, import_temple2.props)();
-      const childlist = (0, import_temple2.children)();
+      } = config;
+      const childlist = (0, import_temple.children)();
       let snippet = childlist[0]?.textContent || "";
       if (detab) {
         snippet = snippet.replace(
@@ -2551,1855 +2506,122 @@ var TempleBundle = (() => {
         }
       };
       return () => [
-        import_client3.TempleRegistry.createElement("link", { "rel": `stylesheet`, "href": `https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css` }).element,
-        import_client3.TempleRegistry.createText(`
+        import_client2.TempleRegistry.createElement("link", { "rel": `stylesheet`, "href": `https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css` }).element,
+        import_client2.TempleRegistry.createText(`
 `, false),
-        import_client3.TempleRegistry.createElement("link", { "rel": `stylesheet`, "href": `https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-tomorrow.min.css` }).element,
-        import_client3.TempleRegistry.createText(`
+        import_client2.TempleRegistry.createElement("link", { "rel": `stylesheet`, "href": `https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-tomorrow.min.css` }).element,
+        import_client2.TempleRegistry.createText(`
 `, false),
         ...!!(lang === "bash") ? [
-          import_client3.TempleRegistry.createText(`
+          import_client2.TempleRegistry.createText(`
   `, false),
-          import_client3.TempleRegistry.createElement("div", { "class": `terminal` }, [
-            import_client3.TempleRegistry.createElement("span", {}, [
-              import_client3.TempleRegistry.createText(`$`, false)
+          import_client2.TempleRegistry.createElement("div", { "class": `terminal` }, [
+            import_client2.TempleRegistry.createElement("span", {}, [
+              import_client2.TempleRegistry.createText(`$`, false)
             ]).element,
-            import_client3.TempleRegistry.createText(` `, false),
+            import_client2.TempleRegistry.createText(` `, false),
             ...this._toNodeList(childlist)
           ]).element,
-          import_client3.TempleRegistry.createText(`
+          import_client2.TempleRegistry.createText(`
 `, false)
         ] : !!snippet ? [
           ,
-          import_client3.TempleRegistry.createText(`
+          import_client2.TempleRegistry.createText(`
   `, false),
           ...!!numbers ? [
-            import_client3.TempleRegistry.createText(`
+            import_client2.TempleRegistry.createText(`
     `, false),
-            import_client3.TempleRegistry.createElement("pre", { "class": `snippet line-numbers` }, [
-              import_client3.TempleRegistry.createElement("code", { "mount": highlight }, []).element
+            import_client2.TempleRegistry.createElement("pre", { "class": `snippet line-numbers` }, [
+              import_client2.TempleRegistry.createElement("code", { "mount": highlight }, []).element
             ]).element,
-            import_client3.TempleRegistry.createText(`
+            import_client2.TempleRegistry.createText(`
   `, false)
           ] : true ? [
             ,
-            import_client3.TempleRegistry.createText(`
+            import_client2.TempleRegistry.createText(`
     `, false),
-            import_client3.TempleRegistry.createElement("pre", { "class": `snippet pad` }, [
-              import_client3.TempleRegistry.createElement("code", { "mount": highlight }, []).element
+            import_client2.TempleRegistry.createElement("pre", { "class": `snippet pad` }, [
+              import_client2.TempleRegistry.createElement("code", { "mount": highlight }, []).element
             ]).element,
-            import_client3.TempleRegistry.createText(`
+            import_client2.TempleRegistry.createText(`
   `, false)
           ] : [],
-          import_client3.TempleRegistry.createText(`
+          import_client2.TempleRegistry.createText(`
 `, false)
         ] : []
       ];
     }
   };
 
-  // temple-component-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/components/dev-ui.tml
-  var import_client4 = __toESM(require_client2());
-
-  // src/modules/diagram/types.json
-  var types_default = {
-    Asset: {
-      type: {
-        kind: "property",
-        list: false,
-        type: ["text/html", "text/javascript", "text/css", "text/plain"],
-        description: "The MIME type of the build file asset"
-      },
-      content: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "The source code of the build file asset."
-      }
-    },
-    Path: {
-      path: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "The file path",
-        example: "'/path/to/file'"
-      },
-      type: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "The type of path.",
-        example: "'file'"
-      }
-    },
-    Config: {
-      brand: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "The brand prefixed before the component tag name.",
-        example: "'temple'"
-      },
-      cwd: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "The project's current working directory (cwd).",
-        example: "'/path/to/project'"
-      },
-      fs: {
-        kind: "property",
-        list: false,
-        type: "FileSystem",
-        description: "The file system being used to read/write files.",
-        example: "import fs from 'fs';\n\nfs"
-      },
-      emitter: {
-        kind: "property",
-        list: false,
-        type: "EventEmitter",
-        description: "The NodeJS EventEmitter instance being used.",
-        example: "import EventEmitter from 'events';\n\nnew EventEmitter();"
-      },
-      "name?": {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "Custom name of component."
-      },
-      "type?": {
-        kind: "property",
-        list: false,
-        type: ["document", "component", "template"],
-        description: "Type of component"
-      },
-      "minify?": {
-        kind: "property",
-        list: false,
-        type: "boolean",
-        description: "Whether to minify the generated JavaScript code."
-      },
-      "tsconfig?": {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "The location of the used tsconfig.json.",
-        example: "'/path/to/tsconfig.json'"
-      },
-      "component_extname?": {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "The component file extension.",
-        example: "'.tml'"
-      },
-      "document_extname?": {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "The document file extension.",
-        example: "'.dtml'"
-      }
-    },
-    Import: {
-      typeOnly: {
-        kind: "property",
-        list: false,
-        type: "boolean",
-        description: "Should import as type only.",
-        example: "import type { Foo } from 'bar';"
-      },
-      "names?": {
-        kind: "property",
-        list: true,
-        type: "string",
-        description: "All the names imported",
-        example: "import { Foo, Bar } from 'foobar';"
-      },
-      default: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "The default import name",
-        example: "import foo from 'bar';"
-      },
-      source: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "The file path where names are imported from.",
-        example: "import * from 'foobar';"
-      }
-    },
-    Build: {
-      source: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "Returns the generated JavaScript source code.",
-        example: "compiler.import('./docs/api.dtml').source; //server js code"
-      },
-      TempleDocument: {
-        kind: "property",
-        list: false,
-        type: "ServerDocumentClass",
-        description: "Returns a server document class that can be instantiated.",
-        example: "new (compiler.import('./docs/api.dtml').TempleDocument);"
-      },
-      document: {
-        kind: "property",
-        list: false,
-        type: "ServerDocument",
-        description: "Returns the default instantiated document used to render the final HTML markup.",
-        example: "compiler.import('./docs/api.dtml').document.render(); //<html>...</html>"
-      }
-    },
-    CacheOptions: {
-      buildPath: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "The absolute path the build directory",
-        example: "'/path/to/build'"
-      },
-      "manifestFile?": {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "The name of the manifest file.",
-        example: "'manifest.json'"
-      },
-      "environment?": {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "The environment mode that will determine the cache strategy.",
-        example: "'production' | 'development'"
-      }
-    },
-    Component: {
-      ast: {
-        kind: "property",
-        list: false,
-        type: "AST",
-        description: "Returns an abstract syntax tree (AST) interpretation of the component.",
-        example: "component.ast.markup;"
-      },
-      brand: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "Returns the brand prefixed before the component tag name.",
-        example: "component.brand; //--> 'temple'"
-      },
-      classname: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "Returns the suggested class name of the component.",
-        example: "component.classname; //--> 'Button_abc123'"
-      },
-      components: {
-        kind: "property",
-        list: true,
-        type: "Component",
-        description: "Returns a list of child components imported by this component.",
-        example: "component.components[0].brand; //--> 'temple'"
-      },
-      contents: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "Returns the raw temple source code.",
-        example: "component.contents;"
-      },
-      cwd: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "Returns the project's current working directory (cwd).",
-        example: "component.cwd; //--> '/path/to/project'"
-      },
-      dependencies: {
-        kind: "property",
-        list: true,
-        type: "{ path: string, type: string }",
-        description: "Returns all the files this component imports sorted by type.",
-        example: "component.dependencies; //--> [{ type: 'file', path: './random/file' }, ...]"
-      },
-      dirname: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "Returns the directory name where this component file exists.",
-        example: "component.dirname;"
-      },
-      fs: {
-        kind: "property",
-        list: false,
-        type: "FileSystem",
-        description: "Returns the file system being used to read/write files.",
-        example: "component.fs;"
-      },
-      id: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "Returns a unique component ID used for build files.",
-        example: "component.id;"
-      },
-      imports: {
-        kind: "property",
-        list: true,
-        type: "Import",
-        description: "Returns the files imported by this component. This does not include any component files.",
-        example: "component.imports;"
-      },
-      markup: {
-        kind: "property",
-        list: true,
-        type: "Token",
-        description: "Returns the markup abstract syntax tree.",
-        example: "component.markup;"
-      },
-      loader: {
-        kind: "property",
-        list: false,
-        type: "FileLoader",
-        description: "Returns the file loader used to resolve paths of imported files.",
-        example: "component.loader.absolute('./path/to/some/file');"
-      },
-      parent: {
-        kind: "property",
-        list: false,
-        type: "Component|null",
-        description: "Returns the parent component, if any.",
-        example: "component.parent;"
-      },
-      registry: {
-        kind: "property",
-        list: false,
-        type: "Record<string, Component>",
-        description: "Returns all child components and sub-child components.",
-        example: "component.registry;"
-      },
-      relative: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "Returns the source file path relative to the current working directory (cwd).",
-        example: "component.contents;"
-      },
-      source: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "Returns the source file path. This may or may not be the absolute path.",
-        example: "component.source;"
-      },
-      scripts: {
-        kind: "property",
-        list: true,
-        type: "string",
-        description: "Returns all the collective JavaScript in the temple source file.",
-        example: "component.scripts;"
-      },
-      styles: {
-        kind: "property",
-        list: true,
-        type: "string",
-        description: "Returns all the collective CSS styles in the temple source file.",
-        example: "component.styles;"
-      },
-      tagname: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "Returns the suggested HTML tag name.",
-        example: "component.tagname;"
-      },
-      type: {
-        kind: "property",
-        list: false,
-        type: ["document", "component", "template"],
-        description: "Returns type of component. Will transpile depending on the type.",
-        example: "component.type;"
-      }
-    },
-    EventEmitter: {
-      render: {
-        kind: "event",
-        params: {
-          builder: {
-            kind: "property",
-            list: false,
-            type: "DocumentBuilder"
-          },
-          build: {
-            kind: "property",
-            list: false,
-            type: "Build"
-          },
-          props: {
-            kind: "property",
-            list: false,
-            type: "Hash"
-          }
-        },
-        data: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Triggers before the document is rendered.",
-        example: "compiler.emitter.on('render', e => {\n  const { builder, build, props } = e.params;\n  //...\n  e.data = 'new html...';\n});"
-      },
-      rendered: {
-        kind: "event",
-        params: {
-          builder: {
-            kind: "property",
-            list: false,
-            type: "DocumentBuilder"
-          },
-          build: {
-            kind: "property",
-            list: false,
-            type: "Build"
-          },
-          props: {
-            kind: "property",
-            list: false,
-            type: "Hash"
-          },
-          html: {
-            kind: "property",
-            list: false,
-            type: "string"
-          }
-        },
-        data: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Triggers after the document is rendered.",
-        example: "compiler.emitter.on('rendered', e => {\n  const { builder, build, props, html } = e.params;\n  //...\n  e.data = 'new html...';\n});"
-      },
-      build: {
-        kind: "event",
-        params: {
-          builder: {
-            kind: "property",
-            list: false,
-            type: "DocumentBuilder"
-          }
-        },
-        data: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Triggers before the document is built.",
-        example: "compiler.emitter.on('build', e => {\n  const { builder } = e.params;\n  //...\n  e.data = 'new temple source...';\n});"
-      },
-      built: {
-        kind: "event",
-        params: {
-          builder: {
-            kind: "property",
-            list: false,
-            type: "DocumentBuilder"
-          },
-          build: {
-            kind: "property",
-            list: false,
-            type: "Build"
-          }
-        },
-        data: {
-          kind: "property",
-          list: false,
-          type: "Build"
-        },
-        description: "Triggers after the document is built.",
-        example: "compiler.emitter.on('built', e => {\n  const { builder, build } = e.params;\n  //...\n  e.data = { ...build };\n});"
-      },
-      "build-client": {
-        kind: "event",
-        params: {
-          builder: {
-            kind: "property",
-            list: false,
-            type: "DocumentBuilder"
-          }
-        },
-        data: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Triggers before the client js is rendered.",
-        example: "compiler.emitter.on('build-client', e => {\n  const { builder } = e.params;\n  //...\n  e.data = 'new temple source...';\n});"
-      },
-      "built-client": {
-        kind: "event",
-        params: {
-          builder: {
-            kind: "property",
-            list: false,
-            type: "DocumentBuilder"
-          },
-          build: {
-            kind: "property",
-            list: false,
-            type: "Build"
-          }
-        },
-        data: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Triggers after the client js is rendered.",
-        example: "compiler.emitter.on('built-client', e => {\n  const { builder, build } = e.params;\n  //...\n  e.data = 'new client js...';\n});"
-      },
-      "build-markup": {
-        kind: "event",
-        params: {
-          builder: {
-            kind: "property",
-            list: false,
-            type: "DocumentBuilder"
-          }
-        },
-        data: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Triggers before markup is rendered.",
-        example: "compiler.emitter.on('build-markup', e => {\n  const { builder } = e.params;\n  //...\n  e.data = 'new temple source...';\n});"
-      },
-      "built-markup": {
-        kind: "event",
-        params: {
-          builder: {
-            kind: "property",
-            list: false,
-            type: "DocumentBuilder"
-          },
-          build: {
-            kind: "property",
-            list: false,
-            type: "Build"
-          }
-        },
-        data: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Triggers after markup is rendered.",
-        example: "compiler.emitter.on('built-markup', e => {\n  const { builder, build } = e.params;\n  //...\n  e.data = 'new markup...';\n});"
-      },
-      "build-server": {
-        kind: "event",
-        params: {
-          builder: {
-            kind: "property",
-            list: false,
-            type: "DocumentBuilder"
-          }
-        },
-        data: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Triggers before the server js is rendered.",
-        example: "compiler.emitter.on('build-server', e => {\n  const { builder } = e.params;\n  //...\n  e.data = 'new temple source...';\n});"
-      },
-      "built-server": {
-        kind: "event",
-        params: {
-          builder: {
-            kind: "property",
-            list: false,
-            type: "DocumentBuilder"
-          },
-          build: {
-            kind: "property",
-            list: false,
-            type: "Build"
-          }
-        },
-        data: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Triggers after the server js is rendered.",
-        example: "compiler.emitter.on('built-server', e => {\n  const { builder, build } = e.params;\n  //...\n  e.data = 'new server js...';\n});"
-      },
-      "build-styles": {
-        kind: "event",
-        params: {
-          builder: {
-            kind: "property",
-            list: false,
-            type: "DocumentBuilder"
-          }
-        },
-        data: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Triggers before the css styles are rendered.",
-        example: "compiler.emitter.on('build-styles', e => {\n  const { builder } = e.params;\n  //...\n  e.data = 'new temple source...';\n});"
-      },
-      "built-styles": {
-        kind: "event",
-        params: {
-          builder: {
-            kind: "property",
-            list: false,
-            type: "DocumentBuilder"
-          },
-          build: {
-            kind: "property",
-            list: false,
-            type: "Build"
-          }
-        },
-        data: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Triggers after the css styles is rendered.",
-        example: "compiler.emitter.on('built-styles', e => {\n  const { builder, build } = e.params;\n  //...\n  e.data = 'new css...';\n});"
-      },
-      "manifest-load": {
-        kind: "event",
-        params: {
-          manifest: {
-            kind: "property",
-            list: false,
-            type: "DocumentManifest"
-          },
-          map: {
-            kind: "property",
-            list: false,
-            type: "Map<string, string>"
-          }
-        },
-        data: {
-          kind: "property",
-          list: false,
-          type: "Map<string, string>"
-        },
-        description: "Triggers before the manifest is loaded.",
-        example: "compiler.emitter.on('manifest-load', e => {\n  const { manifest, map } = e.params;\n  //...\n  e.data = new Map<string, string>();\n});"
-      },
-      "manifest-resolve": {
-        kind: "event",
-        params: {
-          manifest: {
-            kind: "property",
-            list: false,
-            type: "DocumentManifest"
-          },
-          id: {
-            kind: "property",
-            list: false,
-            type: "string"
-          }
-        },
-        description: "Triggers before a build ID is resolved.",
-        example: "compiler.emitter.on('manifest-resolve', e => {\n  const { manifest, id } = e.params;\n  //...\n});"
-      },
-      "manifest-resolved": {
-        kind: "event",
-        params: {
-          manifest: {
-            kind: "property",
-            list: false,
-            type: "DocumentManifest"
-          },
-          id: {
-            kind: "property",
-            list: false,
-            type: "string"
-          },
-          path: {
-            kind: "property",
-            list: false,
-            type: "string"
-          }
-        },
-        data: {
-          kind: "property",
-          list: false,
-          type: "Map<string, string>"
-        },
-        description: "Triggers after a build ID/entry is set.",
-        example: "compiler.emitter.on('manifest-resolved', e => {\n  const { manifest, id, path } = e.params;\n  //...\n});"
-      },
-      "manifest-unresolved": {
-        kind: "event",
-        params: {
-          manifest: {
-            kind: "property",
-            list: false,
-            type: "DocumentManifest"
-          },
-          id: {
-            kind: "property",
-            list: false,
-            type: "string"
-          },
-          path: {
-            kind: "property",
-            list: false,
-            type: "string|undefined"
-          }
-        },
-        data: {
-          kind: "property",
-          list: false,
-          type: "Map<string, string>"
-        },
-        description: "Triggers after a build ID is deleted.",
-        example: "compiler.emitter.on('manifest-unresolved', e => {\n  const { manifest, id, path } = e.params;\n  //...\n});"
-      }
-    },
-    DocumentManifest: {
-      emitter: {
-        kind: "property",
-        list: false,
-        type: "EventEmitter",
-        description: "The NodeJS EventEmitter instance being used.",
-        example: "compiler.manifest.emitter.on('render', e => {\n  console.log(e.params);\n});"
-      },
-      registry: {
-        kind: "property",
-        list: false,
-        type: "Map<string, string>",
-        description: "The manifest registry used to map build IDs to document entry files.",
-        example: "compiler.manifest.registry.entries();"
-      },
-      builder: {
-        kind: "function",
-        async: false,
-        args: [
-          {
-            kind: "property",
-            list: false,
-            name: "id",
-            type: "string"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "DocumentBuilder"
-        },
-        description: "Returns a document builder given the build id.",
-        example: "compiler.manifest.builder('abc123');"
-      },
-      delete: {
-        kind: "function",
-        async: false,
-        args: [
-          {
-            kind: "property",
-            list: false,
-            name: "id",
-            type: "string"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "DocumentManifest"
-        },
-        description: "Removes an entry file from the manifest given the build id.",
-        example: "compiler.manifest.delete('abc123');"
-      },
-      entries: {
-        kind: "function",
-        async: false,
-        args: [],
-        returns: {
-          kind: "property",
-          list: true,
-          type: "[ string, string ]"
-        },
-        description: "Returns an array of build IDs and entry file paths.",
-        example: "compiler.manifest.entries();"
-      },
-      get: {
-        kind: "function",
-        async: false,
-        args: [
-          {
-            kind: "property",
-            name: "id",
-            type: "string"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Returns the entry file path given the build id.",
-        example: "compiler.manifest.get('abc123');"
-      },
-      has: {
-        kind: "function",
-        async: false,
-        args: [
-          {
-            kind: "property",
-            name: "id",
-            type: "string"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "boolean"
-        },
-        description: "Returns true if the build id exists in the manifest.",
-        example: "compiler.manifest.has('abc123');"
-      },
-      load: {
-        kind: "function",
-        async: false,
-        args: [
-          {
-            kind: "property",
-            name: "manifest",
-            type: "Record<string, string>"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "DocumentManifest"
-        },
-        description: "Loads an entire manifest object to the registry.",
-        example: "compiler.manifest.load({ abc123: '/path/to/entry.dtml' });"
-      },
-      keys: {
-        kind: "function",
-        async: false,
-        args: [],
-        returns: {
-          kind: "property",
-          list: true,
-          type: "string"
-        },
-        description: "Returns an array of build IDs.",
-        example: "compiler.manifest.keys();"
-      },
-      set: {
-        kind: "function",
-        async: false,
-        args: [
-          {
-            kind: "property",
-            name: "id",
-            type: "string"
-          },
-          {
-            kind: "property",
-            name: "path",
-            type: "string"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "DocumentManifest"
-        },
-        description: "Sets an entry file path to the manifest given the build id.",
-        example: "compiler.manifest.set('abc123', '/path/to/entry.dtml');"
-      },
-      toJson: {
-        kind: "function",
-        async: false,
-        args: [],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Returns the manifest as a JSON string.",
-        example: "compiler.manifest.toJson();"
-      },
-      values: {
-        kind: "function",
-        async: false,
-        args: [],
-        returns: {
-          kind: "property",
-          list: true,
-          type: "string"
-        },
-        description: "Returns an array of entry file paths.",
-        example: "compiler.manifest.values();"
-      }
-    },
-    DocumentTranspiler: {
-      directive: {
-        kind: "function",
-        async: false,
-        args: [
-          {
-            kind: "property",
-            name: "directive",
-            type: "DirectiveInterface"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "DocumentTranspiler"
-        },
-        description: "Adds a directive that transpiles custom markup tags like if/elif/else, each, try/catch.",
-        example: "compiler.fromSource('./docs/api.dtml').transpiler.directive(CustomDirective);"
-      },
-      transpile: {
-        kind: "function",
-        args: [],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "SourceFile"
-        }
-      },
-      description: "Converts a temple file to server-side JavaScript.",
-      example: "compiler.fromSource('./docs/api.dtml').transpiler.transpile();"
-    },
-    DocumentBuilder: {
-      document: {
-        kind: "property",
-        list: false,
-        type: "Component",
-        description: "Returns a document component with various meta information, used for transpilation.",
-        example: "compiler.fromSource('./docs/api.dtml').document.classname; //--> 'Index_abc123'"
-      },
-      emitter: {
-        kind: "property",
-        list: false,
-        type: "EventEmitter",
-        description: "The NodeJS EventEmitter instance being used.",
-        example: "compiler.fromSource('./docs/api.dtml').emitter.on('render', e => {\n  console.log(e.params);\n});"
-      },
-      extnames: {
-        kind: "property",
-        list: true,
-        type: "string",
-        description: "Returns the file extensions that are recognized to parse as Temple components.",
-        example: "compiler.fromSource('./docs/api.dtml').extnames; //--> [ 'tml', 'dtml' ]"
-      },
-      transpiler: {
-        kind: "property",
-        list: false,
-        type: "DocumentTranspiler",
-        description: "Returns a transpiler used to convert a temple file to server-side JavaScript.",
-        example: "compiler.fromSource('./docs/api.dtml').transpiler.transpile();"
-      },
-      tsconfig: {
-        kind: "property",
-        list: false,
-        type: "string",
-        description: "Returns the location of the used tsconfig.json.",
-        example: "compiler.fromSource('./docs/api.dtml').tsconfig; //--> /path/to/tsconfig.json"
-      },
-      build: {
-        kind: "function",
-        async: true,
-        args: [],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "Build"
-        },
-        description: "Generates the server-side component and brings it into the runtime.",
-        example: "compiler.fromSource('./docs/api.dtml').build();"
-      },
-      client: {
-        kind: "function",
-        async: true,
-        args: [],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Generates the browser-side JavaScript.",
-        example: "compiler.fromSource('./docs/api.dtml').client(); //client js code"
-      },
-      component: {
-        kind: "function",
-        async: true,
-        args: [],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Generates the source file as an independent component.",
-        example: "compiler.fromSource('./docs/my-button.tml').component(); //component js code"
-      },
-      markup: {
-        kind: "function",
-        async: true,
-        args: [],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Generates the html markup.",
-        example: "compiler.fromSource('./docs/api.dtml').markup(); //<html>...</html>"
-      },
-      server: {
-        kind: "function",
-        async: true,
-        args: [],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Generates the server-side JavaScript.",
-        example: "compiler.fromSource('./docs/api.dtml').markup(); //server js code"
-      },
-      styles: {
-        kind: "function",
-        async: true,
-        args: [],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Generates the css styles.",
-        example: "compiler.fromSource('./docs/api.dtml').styles(); //css code"
-      }
-    },
-    ServerDocumentClass: {
-      component: {
-        kind: "property",
-        list: false,
-        type: "[ string, string ]",
-        description: "Returns the component tag name and class name.",
-        example: "compiler.import('./docs/api.dtml').TempleDocument.component; //--> [ 'tui-button', 'TuiButton_abc123' ]"
-      },
-      new: {
-        kind: "function",
-        args: [],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "ServerDocument"
-        },
-        description: "Instantiates the server document class on the server-side used to render the final HTML.",
-        example: "new (compiler.import('./docs/api.dtml').TempleDocument);"
-      }
-    },
-    ServerDocument: {
-      id: {
-        kind: "function",
-        args: [],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Returns a unique document ID used to map the build cache.",
-        example: "compiler.import('./docs/api.dtml').document.id(); //--> 'abc123'"
-      },
-      styles: {
-        kind: "function",
-        args: [],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Returns the css styles for this document.",
-        example: "compiler.import('./docs/api.dtml').document.styles(); //css styles"
-      },
-      template: {
-        template: "function",
-        args: [],
-        returns: {
-          kind: "property",
-          list: true,
-          type: "Element"
-        },
-        description: "Returns an array of Element children and sub-children.",
-        example: "compiler.import('./docs/api.dtml').document.template();"
-      },
-      render: {
-        kind: "function",
-        args: [
-          {
-            kind: "property",
-            name: "props",
-            type: "Record<string, any>"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Returns the final document HTML markup.",
-        example: "compiler.import('./docs/api.dtml').document.render();"
-      }
-    },
-    TempleCompiler: {
-      config: {
-        kind: "property",
-        list: false,
-        type: "Config",
-        description: "The Temple configuration",
-        example: "compiler.config.brand; //--> 'temple'"
-      },
-      fs: {
-        kind: "property",
-        list: false,
-        type: "FileSystem",
-        description: "The file system being used.",
-        example: "compiler.fs.readFileSync('some/file', 'utf8');"
-      },
-      emitter: {
-        kind: "property",
-        list: false,
-        type: "EventEmitter",
-        description: "The NodeJS EventEmitter instance being used.",
-        example: "compiler.emitter.on('render', e => {\n  console.log(e.params);\n});"
-      },
-      manifest: {
-        kind: "property",
-        list: false,
-        type: "DocumentManifest",
-        description: "The manifest registry used to map build IDs to document entry files.",
-        example: "compiler.manifest.entries();"
-      },
-      component: {
-        kind: "function",
-        args: [],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "Component"
-        }
-      },
-      fromId: {
-        kind: "function",
-        args: [
-          {
-            kind: "property",
-            list: false,
-            name: "id",
-            type: "string"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "DocumentBuilder"
-        },
-        description: "Returns a new DocumentBuilder instance given a build ID.",
-        example: "compiler.fromId('abc123').build();"
-      },
-      fromCache: {
-        kind: "function",
-        args: [
-          {
-            kind: "property",
-            list: false,
-            name: "cacheFile",
-            type: "string"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "Build"
-        },
-        description: "Returns build information from a compiled template.",
-        example: "compiler.fromCache('/path/to/build/abc123.js').document.render();"
-      },
-      fromSource: {
-        kind: "function",
-        args: [
-          {
-            kind: "property",
-            list: false,
-            name: "sourceFile",
-            type: "string"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "DocumentBuilder"
-        },
-        description: "Returns a new DocumentBuilder instance given a template source file.",
-        example: "compiler.fromSource('./docs/api.dtml').build();"
-      },
-      withCache: {
-        kind: "function",
-        args: [
-          {
-            kind: "property",
-            list: false,
-            name: "options",
-            type: "CacheOptions"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "TempleCompiler"
-        },
-        description: "Enables a default build cache strategy.",
-        example: "compiler.withCache({\n  environment: process.env.NODE_ENV,\n  buildPath: path.join(docs, 'build')\n})"
-      },
-      asset: {
-        kind: "function",
-        async: true,
-        args: [
-          {
-            kind: "property",
-            list: false,
-            name: "assetFile",
-            type: "string"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "Asset"
-        },
-        description: "Returns a compiled build asset, given an asset file name.",
-        example: "compiler.asset('abc123.css'); //--> { type: 'text/css', content: '...' }"
-      },
-      client: {
-        kind: "function",
-        async: true,
-        args: [
-          {
-            kind: "property",
-            list: false,
-            name: "sourceFile",
-            type: "string"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Returns a compiled client script, given the the template source file.",
-        example: "compiler.client('./docs/api.dtml'); //client script"
-      },
-      import: {
-        kind: "function",
-        async: true,
-        args: [
-          {
-            kind: "property",
-            list: false,
-            name: "sourceFile",
-            type: "string"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "Build"
-        },
-        description: "Returns build information, given the the template source file.",
-        example: "compiler.import('/path/to/build/abc123.js').document.render();"
-      },
-      markup: {
-        kind: "function",
-        async: true,
-        args: [
-          {
-            kind: "property",
-            list: false,
-            name: "sourceFile",
-            type: "string"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Returns a compiled markup, given the the template source file.",
-        example: "compiler.markup('./docs/api.dtml'); //--> <html>...</html>"
-      },
-      render: {
-        kind: "function",
-        async: true,
-        args: [
-          {
-            kind: "property",
-            list: false,
-            name: "sourceFile",
-            type: "string"
-          },
-          {
-            kind: "property",
-            list: false,
-            name: "props",
-            type: "Hash"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Returns the final HTML markup, given the the template source file.",
-        example: "compiler.render('./docs/api.dtml', {\n  title: 'API Documentation'\n});"
-      },
-      server: {
-        kind: "function",
-        async: true,
-        args: [
-          {
-            kind: "property",
-            list: false,
-            name: "sourceFile",
-            type: "string"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Returns compiled server code, given the the template source file.",
-        example: "compiler.server('./docs/api.dtml'); // server script"
-      },
-      styles: {
-        kind: "function",
-        async: true,
-        args: [
-          {
-            kind: "property",
-            list: false,
-            name: "sourceFile",
-            type: "string"
-          }
-        ],
-        returns: {
-          kind: "property",
-          list: false,
-          type: "string"
-        },
-        description: "Returns compiled css styles, given the the template source file.",
-        example: "compiler.styles('./docs/api.dtml'); //css styles"
-      }
-    }
-  };
-
-  // temple-component-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/components/dev-ui.tml
-  var import_temple3 = __toESM(require_temple());
-  var DevUi_87d69b704d467329fbce = class extends import_client4.TempleComponent {
-    static component = ["dev-ui", "DevUi_87d69b704d467329fbce"];
+  // temple-component-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/modules/ide/preview.tml
+  var import_client3 = __toESM(require_client2());
+  var import_temple2 = __toESM(require_temple());
+  var Preview_f99bb2771682cb0390ea = class extends import_client3.TempleComponent {
+    static component = ["preview", "Preview_f99bb2771682cb0390ea"];
     styles() {
       return `:host {
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     display: block;
-    margin: 40px 0;
-    overflow: hidden;
   }
-  a {
-    color: #007BFF;
-    cursor: pointer;
-  }
-  th {
-    padding: 10px;
-    text-align: left;
-    text-transform: uppercase;
-  }
-  td {
-    border-color: #666666;
-    border-top-style: solid;
-    border-top-width: 1px;
-    padding: 10px;
-  }
-  .tbl-container {
-    position: relative;
-    margin-bottom: 20px;
-    overflow: auto;
-  }
-  .tbl {
-    border-collapse: collapse;
-    display: table;
-    width: 100%;
-  }
-
-  .tbl-scroll {
-    overflow: auto;
-    flex-grow: 1;
-    height: 100%;
-    width: 100%;
-  }
-
-  .tbl-valign="top" nowrap {
-    white-space: valign="top" nowrap;
-  }
-
-  .tbl-z0 {
-    z-index: 0;
-  }
-  .tbl-z1 {
-    z-index: 1;
-  }
-  .tbl-z2 {
-    z-index: 2;
-  }
-  .tbl-z3 {
-    z-index: 3;
-  }
-  .tbl-z4 {
-    z-index: 4;
-  }
-
-  .tbl-sticky {
-    position: sticky;
-  }
-  .tbl-sticky-b {
-    bottom: 0;
-  }
-  .tbl-sticky-l {
-    left: 0;
-  }
-  .tbl-sticky-t {
-    top: 0;
-  }
-  .tbl-sticky-r {
-    right: 0;
-  }
-
-  .tbl-col {
-    border-color: black;
-    border-style: solid;
-    border-top-width: 1px;
-    padding-bottom: 16px;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 16px;
-  }
-
-  .tbl-foot {
-    border-color: black;
-    border-style: solid;
-    border-top-width: 1px;
-    padding-bottom: 16px;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 16px;
-  }
-
-  .tbl-row {
-    padding-bottom: 16px;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 16px;
-  }
-
-  .tbl-head {
-    border-color: black;
-    border-style: solid;
-    border-top-width: 1px;
-    padding-bottom: 16px;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 16px;
-  }
-
-  tr td:first-child {
-    color: #E49F1A;
-  }
-
-  h3 {
-    color: #DA532C;
-    background: #1A1A1A;
-    border-bottom: 1px solid #29252A;
-    font-size: 16px;
-    margin: 0;
-    padding: 10px;
-  }
-  h5 {
-    font-weight: normal;
-    margin: 15px 0 5px;
-    text-transform: uppercase;
-  }
-  td p {
-    margin: 0 0 10px;
-  }
-  .container {
-    background-color: #020202;
+  .preview {
+    background-color: #EFEFEF;
+    color: #222222;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
     padding: 10px;
   }`;
     }
     template() {
-      const { start = "TempleCompiler" } = (0, import_temple3.props)();
-      const paths = (0, import_temple3.signal)([start]);
-      const active = (0, import_temple3.signal)(start);
-      const next = (e) => {
-        const type = e.target.getAttribute("data-type");
-        paths.value = [...paths.value, type];
-        active.value = type;
-      };
-      const prev = () => {
-        paths.value = paths.value.slice(0, paths.value.length - 1);
-        active.value = paths.value[paths.value.length - 1];
-      };
       return () => [
-        import_client4.TempleRegistry.createElement("link", { "rel": `stylesheet`, "type": `text/css`, "href": `/temple/styles/fontawesome/all.css` }).element,
+        import_client3.TempleRegistry.createElement("link", { "rel": `stylesheet`, "href": `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css` }).element,
+        import_client3.TempleRegistry.createText(`
+`, false),
+        import_client3.TempleRegistry.createElement("div", { "class": `preview` }, [
+          ...this._toNodeList((0, import_temple2.children)())
+        ]).element
+      ];
+    }
+  };
+
+  // temple-component-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/modules/ide/app.tml
+  var import_client4 = __toESM(require_client2());
+  var import_temple3 = __toESM(require_temple());
+  var App_05341fddbfd1fe4f273b = class extends import_client4.TempleComponent {
+    static component = ["app", "App_05341fddbfd1fe4f273b"];
+    styles() {
+      return ``;
+    }
+    template() {
+      const { title, panel } = (0, import_temple3.props)();
+      const classname = `body ${panel ? "panel" : ""}`;
+      const style = panel ? `height:${panel}px` : "";
+      return () => [
         import_client4.TempleRegistry.createText(`
 `, false),
-        import_client4.TempleRegistry.createElement("div", {}, [
+        import_client4.TempleRegistry.createElement("div", { "class": `window` }, [
           import_client4.TempleRegistry.createText(`
   `, false),
-          import_client4.TempleRegistry.createElement("h3", {}, [
+          import_client4.TempleRegistry.createElement("div", { "class": `head` }, [
             import_client4.TempleRegistry.createText(`
     `, false),
-            ...!!(paths.value.length > 1) ? [
-              import_client4.TempleRegistry.createText(`
-      `, false),
-              import_client4.TempleRegistry.createElement("a", { "click": prev }, [
-                import_client4.TempleRegistry.createText(`
-        `, false),
-                import_client4.TempleRegistry.createElement("i", { "class": `fas fa-arrow-left` }, []).element,
-                import_client4.TempleRegistry.createText(`
-      `, false)
-              ]).element,
-              import_client4.TempleRegistry.createText(`
-    `, false)
-            ] : [],
+            import_client4.TempleRegistry.createElement("span", { "class": `dot` }, []).element,
             import_client4.TempleRegistry.createText(`
-    API: `, false),
-            ...this._toNodeList(active.value),
+    `, false),
+            import_client4.TempleRegistry.createElement("span", { "class": `dot` }, []).element,
+            import_client4.TempleRegistry.createText(`
+    `, false),
+            import_client4.TempleRegistry.createElement("span", { "class": `dot` }, []).element,
+            import_client4.TempleRegistry.createText(`
+    `, false),
+            import_client4.TempleRegistry.createElement("span", { "class": `title` }, [
+              ...this._toNodeList(title)
+            ]).element,
             import_client4.TempleRegistry.createText(`
   `, false)
           ]).element,
           import_client4.TempleRegistry.createText(`
   `, false),
-          import_client4.TempleRegistry.createElement("div", { "class": `container` }, [
-            import_client4.TempleRegistry.createText(`
-    `, false),
-            import_client4.TempleRegistry.createElement("div", { "class": `tbl-container` }, [
-              import_client4.TempleRegistry.createText(`
-      `, false),
-              import_client4.TempleRegistry.createElement("table", { "class": `tbl` }, [
-                import_client4.TempleRegistry.createText(`
-        `, false),
-                import_client4.TempleRegistry.createElement("thead", {}, [
-                  import_client4.TempleRegistry.createText(`
-          `, false),
-                  import_client4.TempleRegistry.createElement("th", {}, [
-                    import_client4.TempleRegistry.createText(`Property`, false)
-                  ]).element,
-                  import_client4.TempleRegistry.createText(`
-          `, false),
-                  import_client4.TempleRegistry.createElement("th", {}, [
-                    import_client4.TempleRegistry.createText(`Returns`, false)
-                  ]).element,
-                  import_client4.TempleRegistry.createText(`
-          `, false),
-                  import_client4.TempleRegistry.createElement("th", {}, [
-                    import_client4.TempleRegistry.createText(`Description`, false)
-                  ]).element,
-                  import_client4.TempleRegistry.createText(`
-        `, false)
-                ]).element,
-                import_client4.TempleRegistry.createText(`
-        `, false),
-                import_client4.TempleRegistry.createElement("tbody", {}, [
-                  import_client4.TempleRegistry.createText(`
-          `, false),
-                  ...Object.entries(types_default[active.value]).map(([key, prop]) => [
-                    import_client4.TempleRegistry.createText(`
-            `, false),
-                    import_client4.TempleRegistry.createElement("tr", {}, [
-                      import_client4.TempleRegistry.createText(`
-              `, false),
-                      ...!!(prop.kind === "property") ? [
-                        import_client4.TempleRegistry.createText(`
-                `, false),
-                        import_client4.TempleRegistry.createElement("td", { "valign": `top`, "nowrap": true }, [
-                          ...this._toNodeList(key)
-                        ]).element,
-                        import_client4.TempleRegistry.createText(`
-                `, false),
-                        ...!!types_default[prop.type] ? [
-                          import_client4.TempleRegistry.createText(`
-                  `, false),
-                          import_client4.TempleRegistry.createElement("td", { "valign": `top`, "nowrap": true }, [
-                            import_client4.TempleRegistry.createText(`
-                    `, false),
-                            import_client4.TempleRegistry.createElement("a", { "data-type": prop.type, "click": next }, [
-                              import_client4.TempleRegistry.createText(`
-                      `, false),
-                              ...this._toNodeList(prop.type),
-                              import_client4.TempleRegistry.createText(`
-                    `, false)
-                            ]).element,
-                            ...this._toNodeList(prop.list ? "[]" : ""),
-                            import_client4.TempleRegistry.createText(`
-                  `, false)
-                          ]).element,
-                          import_client4.TempleRegistry.createText(`
-                `, false)
-                        ] : true ? [
-                          ,
-                          import_client4.TempleRegistry.createText(`
-                  `, false),
-                          import_client4.TempleRegistry.createElement("td", { "valign": `top`, "nowrap": true }, [
-                            ...this._toNodeList(prop.type),
-                            ...this._toNodeList(prop.list ? "[]" : "")
-                          ]).element,
-                          import_client4.TempleRegistry.createText(`
-                `, false)
-                        ] : [],
-                        import_client4.TempleRegistry.createText(`
-                `, false),
-                        import_client4.TempleRegistry.createElement("td", {}, [
-                          import_client4.TempleRegistry.createText(`
-                  `, false),
-                          ...!!prop.description ? [
-                            import_client4.TempleRegistry.createText(`
-                    `, false),
-                            import_client4.TempleRegistry.createElement("p", {}, [
-                              ...this._toNodeList(prop.description)
-                            ]).element,
-                            import_client4.TempleRegistry.createText(`
-                    `, false),
-                            ...!!prop.example ? [
-                              import_client4.TempleRegistry.createText(`
-                      `, false),
-                              import_client4.TempleRegistry.createElement("h5", {}, [
-                                import_client4.TempleRegistry.createText(`Example`, false)
-                              ]).element,
-                              import_client4.TempleRegistry.createText(`
-                      `, false),
-                              import_client4.TempleRegistry.createComponent(CodeSnippet_1f2900d78698832785d0, { "lang": `js` }, [
-                                ...this._toNodeList(prop.example)
-                              ]).element,
-                              import_client4.TempleRegistry.createText(` 
-                    `, false)
-                            ] : [],
-                            import_client4.TempleRegistry.createText(`
-                  `, false)
-                          ] : [],
-                          import_client4.TempleRegistry.createText(`
-                `, false)
-                        ]).element,
-                        import_client4.TempleRegistry.createText(`
-              `, false)
-                      ] : !!(prop.kind === "function") ? [
-                        ,
-                        import_client4.TempleRegistry.createText(`
-                `, false),
-                        import_client4.TempleRegistry.createElement("td", { "valign": `top`, "nowrap": true }, [
-                          import_client4.TempleRegistry.createText(`
-                  `, false),
-                          ...this._toNodeList(key),
-                          import_client4.TempleRegistry.createText(`(
-                    `, false),
-                          ...Object.entries(prop.args).map(([index, arg]) => [
-                            import_client4.TempleRegistry.createText(`
-                      `, false),
-                            ...!!(index > 0) ? [
-                              import_client4.TempleRegistry.createText(`, `, false)
-                            ] : [],
-                            import_client4.TempleRegistry.createText(`
-                      `, false),
-                            ...this._toNodeList(arg.name),
-                            import_client4.TempleRegistry.createText(`: 
-                      `, false),
-                            ...!!types_default[arg.type] ? [
-                              import_client4.TempleRegistry.createText(`
-                        `, false),
-                              import_client4.TempleRegistry.createElement("a", { "data-type": arg.type, "click": next }, [
-                                import_client4.TempleRegistry.createText(`
-                          `, false),
-                                ...this._toNodeList(arg.type),
-                                import_client4.TempleRegistry.createText(`
-                        `, false)
-                              ]).element,
-                              ...this._toNodeList(arg.list ? "[]" : ""),
-                              import_client4.TempleRegistry.createText(`
-                      `, false)
-                            ] : true ? [
-                              ,
-                              import_client4.TempleRegistry.createText(`
-                        `, false),
-                              ...this._toNodeList(arg.type),
-                              ...this._toNodeList(arg.list ? "[]" : ""),
-                              import_client4.TempleRegistry.createText(`
-                      `, false)
-                            ] : [],
-                            import_client4.TempleRegistry.createText(`
-                    `, false)
-                          ]).flat(),
-                          import_client4.TempleRegistry.createText(`
-                  )
-                `, false)
-                        ]).element,
-                        import_client4.TempleRegistry.createText(`
-                `, false),
-                        ...!!types_default[prop.returns.type] ? [
-                          import_client4.TempleRegistry.createText(`
-                  `, false),
-                          import_client4.TempleRegistry.createElement("td", { "valign": `top`, "nowrap": true }, [
-                            import_client4.TempleRegistry.createText(`
-                    `, false),
-                            import_client4.TempleRegistry.createElement("a", { "data-type": prop.returns.type, "click": next }, [
-                              import_client4.TempleRegistry.createText(`
-                      `, false),
-                              ...this._toNodeList(prop.returns.type),
-                              import_client4.TempleRegistry.createText(`
-                    `, false)
-                            ]).element,
-                            ...this._toNodeList(prop.returns.list ? "[]" : ""),
-                            import_client4.TempleRegistry.createText(`
-                  `, false)
-                          ]).element,
-                          import_client4.TempleRegistry.createText(`
-                `, false)
-                        ] : true ? [
-                          ,
-                          import_client4.TempleRegistry.createText(`
-                  `, false),
-                          import_client4.TempleRegistry.createElement("td", { "valign": `top`, "nowrap": true }, [
-                            ...this._toNodeList(prop.returns.type),
-                            ...this._toNodeList(prop.returns.list ? "[]" : "")
-                          ]).element,
-                          import_client4.TempleRegistry.createText(`
-                `, false)
-                        ] : [],
-                        import_client4.TempleRegistry.createText(`
-                `, false),
-                        import_client4.TempleRegistry.createElement("td", {}, [
-                          import_client4.TempleRegistry.createText(`
-                  `, false),
-                          ...!!prop.description ? [
-                            import_client4.TempleRegistry.createText(`
-                    `, false),
-                            import_client4.TempleRegistry.createElement("p", {}, [
-                              ...this._toNodeList(prop.description)
-                            ]).element,
-                            import_client4.TempleRegistry.createText(`
-                    `, false),
-                            ...!!prop.example ? [
-                              import_client4.TempleRegistry.createText(`
-                      `, false),
-                              import_client4.TempleRegistry.createElement("h5", {}, [
-                                import_client4.TempleRegistry.createText(`Example`, false)
-                              ]).element,
-                              import_client4.TempleRegistry.createText(`
-                      `, false),
-                              import_client4.TempleRegistry.createComponent(CodeSnippet_1f2900d78698832785d0, { "lang": `js` }, [
-                                ...this._toNodeList(prop.example)
-                              ]).element,
-                              import_client4.TempleRegistry.createText(` 
-                    `, false)
-                            ] : [],
-                            import_client4.TempleRegistry.createText(`
-                  `, false)
-                          ] : [],
-                          import_client4.TempleRegistry.createText(`
-                `, false)
-                        ]).element,
-                        import_client4.TempleRegistry.createText(`
-              `, false)
-                      ] : !!(prop.kind === "event") ? [
-                        ,
-                        import_client4.TempleRegistry.createText(`
-                `, false),
-                        import_client4.TempleRegistry.createElement("td", { "valign": `top`, "nowrap": true }, [
-                          ...this._toNodeList(`on('${key}', (event: Event) => void)`)
-                        ]).element,
-                        import_client4.TempleRegistry.createText(`
-                `, false),
-                        import_client4.TempleRegistry.createElement("td", { "valign": `top`, "nowrap": true }, [
-                          import_client4.TempleRegistry.createText(`void`, false)
-                        ]).element,
-                        import_client4.TempleRegistry.createText(`
-                `, false),
-                        import_client4.TempleRegistry.createElement("td", {}, [
-                          import_client4.TempleRegistry.createText(`
-                  `, false),
-                          ...!!prop.description ? [
-                            import_client4.TempleRegistry.createText(`
-                    `, false),
-                            import_client4.TempleRegistry.createElement("p", {}, [
-                              ...this._toNodeList(prop.description)
-                            ]).element,
-                            import_client4.TempleRegistry.createText(`
-                    `, false),
-                            ...!!prop.example ? [
-                              import_client4.TempleRegistry.createText(`
-                      `, false),
-                              import_client4.TempleRegistry.createElement("h5", {}, [
-                                import_client4.TempleRegistry.createText(`Example`, false)
-                              ]).element,
-                              import_client4.TempleRegistry.createText(`
-                      `, false),
-                              import_client4.TempleRegistry.createComponent(CodeSnippet_1f2900d78698832785d0, { "lang": `js` }, [
-                                ...this._toNodeList(prop.example)
-                              ]).element,
-                              import_client4.TempleRegistry.createText(` 
-                    `, false)
-                            ] : [],
-                            import_client4.TempleRegistry.createText(`
-                  `, false)
-                          ] : [],
-                          import_client4.TempleRegistry.createText(`
-                `, false)
-                        ]).element,
-                        import_client4.TempleRegistry.createText(`
-              `, false)
-                      ] : [],
-                      import_client4.TempleRegistry.createText(`
-            `, false)
-                    ]).element,
-                    import_client4.TempleRegistry.createText(`
-          `, false)
-                  ]).flat(),
-                  import_client4.TempleRegistry.createText(`
-        `, false)
-                ]).element,
-                import_client4.TempleRegistry.createText(`
-      `, false)
-              ]).element,
-              import_client4.TempleRegistry.createText(`
-    `, false)
-            ]).element,
-            import_client4.TempleRegistry.createText(`
-  `, false)
+          import_client4.TempleRegistry.createElement("div", { "class": classname, "style": style }, [
+            ...this._toNodeList((0, import_temple3.children)())
           ]).element,
           import_client4.TempleRegistry.createText(`
 `, false)
@@ -4408,31 +2630,112 @@ var TempleBundle = (() => {
     }
   };
 
+  // temple-component-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/modules/i18n/translate.tml
+  var import_client5 = __toESM(require_client2());
+
+  // src/modules/i18n/index.ts
+  var _ = function(phrase, ...variables) {
+    let translation = translate(phrase);
+    for (let i = 0; i < variables.length; i++) {
+      translation = translation.replace("%s", String(variables[i]));
+    }
+    return translation;
+  };
+  var translate = function(phrase) {
+    return phrase;
+  };
+
+  // temple-component-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/modules/i18n/translate.tml
+  var import_temple4 = __toESM(require_temple());
+  var Translate_7d25e372f5ffb5e39dad = class extends import_client5.TempleComponent {
+    static component = ["translate", "Translate_7d25e372f5ffb5e39dad"];
+    styles() {
+      return ``;
+    }
+    template() {
+      const { trim = false, p = false, div = false } = (0, import_temple4.props)();
+      const childlist = (0, import_temple4.children)();
+      const phrase = [];
+      const variables = [];
+      for (const child of childlist) {
+        if (typeof child === "string") {
+          phrase.push(child);
+        } else if (child instanceof Node && child.textContent) {
+          phrase.push(child.textContent);
+        } else {
+          phrase.push("%s");
+          variables.push(child);
+        }
+      }
+      let words = phrase.join("");
+      if (trim) {
+        words = words.replace(/\s+/, " ").trim();
+      }
+      const chunks = translate(words).split("%s");
+      const translations = [];
+      for (let i = 0; i < chunks.length; i++) {
+        translations.push(document.createTextNode(chunks[i]));
+        if (variables[i]) {
+          translations.push(variables[i]);
+        }
+      }
+      return () => [
+        import_client5.TempleRegistry.createText(`
+    `, false),
+        ...!!p ? [
+          import_client5.TempleRegistry.createText(`
+      `, false),
+          import_client5.TempleRegistry.createElement("p", {}, [
+            ...this._toNodeList(translations)
+          ]).element,
+          import_client5.TempleRegistry.createText(`
+    `, false)
+        ] : !!div ? [
+          ,
+          import_client5.TempleRegistry.createText(`
+      `, false),
+          import_client5.TempleRegistry.createElement("div", {}, [
+            ...this._toNodeList(translations)
+          ]).element,
+          import_client5.TempleRegistry.createText(`
+    `, false)
+        ] : true ? [
+          ,
+          import_client5.TempleRegistry.createText(`
+      `, false),
+          ...this._toNodeList(translations),
+          import_client5.TempleRegistry.createText(`
+    `, false)
+        ] : []
+      ];
+    }
+  };
+
   // temple-document-client-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/docs/index.dtml
-  var import_client6 = __toESM(require_client2());
-  import_client5.emitter.once("ready", () => {
+  var import_client7 = __toESM(require_client2());
+  import_client6.emitter.once("ready", () => {
     const script = document.querySelector("script[data-app]");
     if (!script) {
-      throw import_client5.TempleException.for("APP_DATA not found");
+      throw import_client6.TempleException.for("APP_DATA not found");
     }
     try {
       const data2 = atob(script.getAttribute("data-app"));
       window.__APP_DATA__ = JSON.parse(data2);
       Object.entries(window.__APP_DATA__).forEach(([key, value]) => {
-        import_client5.data.set(key, value);
+        import_client6.data.set(key, value);
       });
     } catch (error) {
-      throw import_client5.TempleException.for("APP_DATA is not a valid JSON");
+      throw import_client6.TempleException.for("APP_DATA is not a valid JSON");
     }
-    import_client5.data.set("current", "document");
-    const url = "/docs/";
-    const title = "Documentation - Temple reactive web component template engine.";
-    const description = "Temple is a template engine hat generates web components and support reactivity.";
-    const toggle = (_) => {
+    import_client6.data.set("current", "document");
+    const url = "/docs/index.html";
+    const title = _("Documentation - Temple reactive web component template engine.");
+    const description = _("Temple is a template engine hat generates web components and support reactivity.");
+    const toggle = (_2) => {
       document.body.classList.toggle("panel-left-open");
     };
-    import_client5.data.delete("current");
-    const __BINDINGS__ = { "0": { "class": `head panel-head` }, "1": { "class": `menu fas fa-fw fa-bars`, "click": toggle }, "2": { "href": `/temple` }, "3": { "src": `/temple/temple-icon.png`, "alt": `Temple Logo` }, "5": { "class": `tx-white`, "href": `/temple` }, "7": { "href": `/temple/docs` }, "8": { "class": `github`, "href": `https://github.com/ossPhilippines/frui`, "target": `_blank` }, "9": { "class": `fab fa-github` }, "10": { "class": `npm`, "href": `https://www.npmjs.com/package/frui`, "target": `_blank` }, "11": { "class": `fab fa-npm text-white` }, "12": { "class": `discord`, "href": `https://discord.gg/open-source-software-ph-905496362982981723`, "target": `_blank` }, "13": { "class": `fab fa-discord text-white` }, "14": { "class": `left panel-left` }, "16": { "href": `/temple` }, "17": { "src": `/temple/temple-icon.png`, "alt": `Temple Logo` }, "19": { "class": `tx-white`, "href": `/temple` }, "20": { "class": `toggle fas fa-fw fa-chevron-left`, "click": toggle }, "23": { "href": `/temple/docs/index.html` }, "24": { "href": `/temple/docs/started.html` }, "25": { "href": `/temple/docs/questions.html` }, "27": { "href": `/temple/docs/engine.html` }, "28": { "href": `/temple/docs/static-sites.html` }, "29": { "href": `/temple/docs/publisher.html` }, "31": { "href": `/temple/docs/attributes.html` }, "32": { "href": `/temple/docs/conditionals.html` }, "33": { "href": `/temple/docs/iterations.html` }, "34": { "href": `/temple/docs/trycatch.html` }, "35": { "href": `/temple/docs/directives.html` }, "37": { "href": `/temple/docs/props.html` }, "38": { "href": `/temple/docs/signals.html` }, "39": { "href": `/temple/docs/shared.html` }, "40": { "href": `/temple/docs/events.html` }, "42": { "href": `/temple/docs/templates.html` }, "43": { "href": `/temple/docs/components.html` }, "44": { "class": `panel-main` }, "45": { "class": `docs container` }, "49": { "class": `tbl-container` }, "50": { "class": `tbl` }, "68": { "title": `Transpiler Example` }, "69": { "class": `snippet-preview` }, "70": { "numbers": true }, "71": { "lang": `js`, "trim": true }, "72": { "class": `pager` }, "73": { "class": `next`, "href": `/temple/docs/started.html` }, "74": { "class": `fas fa-fw fa-chevron-right` }, "75": { "class": `foot` } };
+    import_client6.data.delete("current");
+    const __BINDINGS__ = { "0": { "class": `head panel-head` }, "1": { "class": `menu fas fa-fw fa-bars`, "click": toggle }, "2": { "href": `/temple` }, "3": { "src": `/temple/temple-icon.png`, "alt": `Temple Logo` }, "5": { "class": `tx-white`, "href": `/temple` }, "7": { "href": `/temple/docs/index.html` }, "8": { "class": `github`, "href": `https://github.com/ossPhilippines/temple`, "target": `_blank` }, "9": { "class": `fab fa-github` }, "10": { "class": `npm`, "href": `https://www.npmjs.com/package/temple`, "target": `_blank` }, "11": { "class": `fab fa-npm text-white` }, "12": { "class": `discord`, "href": `https://discord.gg/open-source-software-ph-905496362982981723`, "target": `_blank` }, "13": { "class": `fab fa-discord text-white` }, "14": { "class": `left panel-left` }, "16": { "href": `/temple` }, "17": { "src": `/temple/temple-icon.png`, "alt": `Temple Logo` }, "19": { "class": `tx-white`, "href": `/temple` }, "20": { "class": `toggle fas fa-fw fa-chevron-left`, "click": toggle }, "23": { "href": `/temple/docs/index.html` }, "24": { "href": `/temple/docs/getting-started.html` }, "25": { "href": `/temple/docs/frequent-questions.html` }, "27": { "href": `/temple/docs/markup-syntax.html` }, "28": { "href": `/temple/docs/state-management.html` }, "29": { "href": `/temple/docs/component-strategy.html` }, "30": { "href": `/temple/docs/compiler-api.html` }, "31": { "href": `/temple/docs/client-api.html` }, "33": { "href": `/temple/docs/template-engine.html` }, "34": { "href": `/temple/docs/single-page.html` }, "35": { "href": `/temple/docs/static-site.html` }, "36": { "href": `/temple/docs/component-publisher.html` }, "37": { "href": `/temple/docs/developer-tools.html` }, "39": { "href": `/temple/docs/latest-updates.html` }, "40": { "href": `/temple/docs/contributing-guide.html` }, "41": { "href": `/temple/docs/known-issues.html` }, "42": { "class": `panel-main` }, "43": { "class": `docs container` }, "45": { "p": true, "trim": true }, "46": { "p": true, "trim": true }, "47": { "p": true, "trim": true }, "48": { "p": true, "trim": true }, "49": { "title": `Basic Example` }, "50": { "class": `split-view` }, "51": { "numbers": true, "trim": true, "detab": 14 }, "55": { "p": true, "trim": true }, "56": { "title": `Transpiler Example` }, "57": { "class": `split-view` }, "58": { "numbers": true, "ltrim": true, "detab": 14 }, "59": { "class": `div`, "lang": `js`, "trim": true, "detab": 14 }, "60": { "class": `pager` }, "61": { "class": `next`, "href": `/temple/docs/getting-started.html` }, "62": { "class": `fas fa-fw fa-chevron-right` }, "63": { "class": `foot` } };
     for (const element of document.body.querySelectorAll("*")) {
       const attributes = Object.fromEntries(
         Array.from(element.attributes).map((attribute) => [
@@ -4440,24 +2743,26 @@ var TempleBundle = (() => {
           attribute.nodeValue.length > 0 ? attribute.nodeValue : true
         ])
       );
-      const id = String(import_client5.TempleRegistry.elements.size);
+      const id = String(import_client6.TempleRegistry.elements.size);
       if (__BINDINGS__[id]) {
         Object.assign(attributes, __BINDINGS__[id]);
         element.TempleAttributes = __BINDINGS__[id];
       }
-      import_client5.TempleRegistry.register(element, attributes);
+      import_client6.TempleRegistry.register(element, attributes);
     }
-    customElements.define("panel-main", PanelMain_b21c6a1d888781a72a3e);
-    customElements.define("window-app", WindowApp_05952304bd7774a5f83e);
-    customElements.define("code-snippet", CodeSnippet_1f2900d78698832785d0);
-    customElements.define("dev-ui", DevUi_87d69b704d467329fbce);
-    import_client5.emitter.emit("mounted", document.body);
+    customElements.define("panel-main", Main_fd7f1af6410c5b5c8e1f);
+    customElements.define("ide-code", Code_6f36bc13bb6a166c7abc);
+    customElements.define("ide-preview", Preview_f99bb2771682cb0390ea);
+    customElements.define("ide-app", App_05341fddbfd1fe4f273b);
+    customElements.define("i18n-translate", Translate_7d25e372f5ffb5e39dad);
+    import_client6.emitter.emit("mounted", document.body);
   });
   var components = {
-    "PanelMain_b21c6a1d888781a72a3e": PanelMain_b21c6a1d888781a72a3e,
-    "WindowApp_05952304bd7774a5f83e": WindowApp_05952304bd7774a5f83e,
-    "CodeSnippet_1f2900d78698832785d0": CodeSnippet_1f2900d78698832785d0,
-    "DevUi_87d69b704d467329fbce": DevUi_87d69b704d467329fbce
+    "PanelMain_fd7f1af6410c5b5c8e1f": Main_fd7f1af6410c5b5c8e1f,
+    "IdeCode_6f36bc13bb6a166c7abc": Code_6f36bc13bb6a166c7abc,
+    "IdePreview_f99bb2771682cb0390ea": Preview_f99bb2771682cb0390ea,
+    "IdeApp_05341fddbfd1fe4f273b": App_05341fddbfd1fe4f273b,
+    "I18nTranslate_7d25e372f5ffb5e39dad": Translate_7d25e372f5ffb5e39dad
   };
   var BUILD_ID = "3e6a90cc5da3e950a902";
   return __toCommonJS(docs_exports);

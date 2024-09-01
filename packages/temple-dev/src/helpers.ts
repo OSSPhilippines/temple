@@ -70,6 +70,7 @@ export function esRefreshPlugin(component: Component) {
         const source = transpile(component);
         return {
           contents: toTS(source),
+          resolveDir: component.dirname,
           loader: 'ts'
         };
       });

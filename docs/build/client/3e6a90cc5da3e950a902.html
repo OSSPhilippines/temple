@@ -8,7 +8,7 @@
   <meta property="og:title" content="Documentation - Temple reactive web component template engine." />
   <meta property="og:description" content="Temple is a template engine hat generates web components and support reactivity." />
   <meta property="og:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
-  <meta property="og:url" content="https://ossphilippines.github.io/temple/docs/" />
+  <meta property="og:url" content="https://ossphilippines.github.io/temple/docs/index.html" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@OSSPhilippines" />
@@ -34,11 +34,11 @@
   </a>
   <h3><a class="tx-white" href="/temple">Temple</a></h3>
   <nav>
-    <a href="/temple/docs">Docs</a>
-    <a class="github" href="https://github.com/ossPhilippines/frui" target="_blank">
+    <a href="/temple/docs/index.html">Docs</a>
+    <a class="github" href="https://github.com/ossPhilippines/temple" target="_blank">
       <i class="fab fa-github"></i>
     </a>
-    <a class="npm" href="https://www.npmjs.com/package/frui" target="_blank">
+    <a class="npm" href="https://www.npmjs.com/package/temple" target="_blank">
       <i class="fab fa-npm text-white"></i>
     </a>
     <a class="discord" href="https://discord.gg/open-source-software-ph-905496362982981723" target="_blank">
@@ -57,111 +57,114 @@
   <nav>
     <h6>Introduction</h6>
     <a href="/temple/docs/index.html">Documentation</a>
-    <a href="/temple/docs/started.html">Getting Started</a>
-    <a href="/temple/docs/questions.html">Frequent Questions</a>
+    <a href="/temple/docs/getting-started.html">Getting Started</a>
+    <a href="/temple/docs/frequent-questions.html">Frequent Questions</a>
 
-    <h6>Temple Modes</h6>
-    <a href="/temple/docs/engine.html">Template Engine</a>
-    <a href="/temple/docs/static-sites.html">Static Site Generator</a>
-    <a href="/temple/docs/publisher.html">Component Publisher</a>
+    <h6>Features</h6>
+    <a href="/temple/docs/markup-syntax.html">Markup Syntax</a>
+    <a href="/temple/docs/state-management.html">State Management</a>
+    <a href="/temple/docs/component-strategy.html">Component Strategy</a>
+    <a href="/temple/docs/compiler-api.html">Compiler API</a>
+    <a href="/temple/docs/client-api.html">Client API</a>
 
-    <h6>Temple Syntax</h6>
-    <a href="/temple/docs/attributes.html">Attributes</a>
-    <a href="/temple/docs/conditionals.html">Conditionals</a>
-    <a href="/temple/docs/iterations.html">Iterations</a>
-    <a href="/temple/docs/trycatch.html">Try Catch</a>
-    <a href="/temple/docs/directives.html">Directives</a>
+    <h6>Usage</h6>
+    <a href="/temple/docs/template-engine.html">Template Engine</a>
+    <a href="/temple/docs/single-page.html">Single Page App</a>
+    <a href="/temple/docs/static-site.html">Static Site Generator</a>
+    <a href="/temple/docs/component-publisher.html">Component Publisher</a>
+    <a href="/temple/docs/developer-tools.html">Developer Tools</a>
 
-    <h6>State Management</h6>
-    <a href="/temple/docs/props.html">Props</a>
-    <a href="/temple/docs/signals.html">Signals</a>
-    <a href="/temple/docs/shared.html">Shared</a>
-    <a href="/temple/docs/events.html">Events</a>
-
-    <h6>Web Components</h6>
-    <a href="/temple/docs/templates.html">Templates</a>
-    <a href="/temple/docs/components.html">Components</a>
+    <h6>Contributing</h6>
+    <a href="/temple/docs/latest-updates.html">Latest Updates</a>
+    <a href="/temple/docs/contributing-guide.html">Contribution Guide</a>
+    <a href="/temple/docs/known-issues.html">Known Issues</a>
   </nav>
 </aside>
     <panel-main class="panel-main">
       <div class="docs container">
         <h1>Documentation</h1>
-        <p>
+
+        <i18n-translate p trim>
           Temple is a template engine with a built-in compiler that 
           generates HTML markup, web components and support reactivity. 
-        </p>
-        <p>
-          Temple can be used as a template engine on the server side, as a
-          site generator to make static websites and single page 
-          applications, and can be used to publish native HTML5 web 
-          components. The focus of the Temple project are the following.
-        </p>
-        <div class="tbl-container">
-          <table class="tbl">
-            <thead>
-              <th>Features</th>
-              <th>De-Features</th>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Template Engine</td>
-                <td>No Hydration</td>
-              </tr>
-              <tr>
-                <td>Web Components</td>
-                <td>No Hooks</td>
-              </tr>
-              <tr>
-                <td>Server First</td>
-                <td>No Memo</td>
-              </tr>
-              <tr>
-                <td>Reactive Signals</td>
-                <td>No Brandcuffs</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p>
+        </i18n-translate>
+        <i18n-translate p trim>
+          Like React and Svelte, Temple is a modern approach to building
+          front-end code addressing state management and reactivity. 
+          Unlike React and Svelte that focus on keeping the developer 
+          experience mostly on the front-end, Temple focuses on being 
+          a modern templating solution for server side frameworks.
+        </i18n-translate>
+        <i18n-translate p trim>
+          Temple can be used as a template engine on the server side, 
+          as a site generator to make static websites and single page 
+          applications, or can be used to publish native HTML5 web 
+          components.
+        </i18n-translate>
+        <i18n-translate p trim>
+          Temple sticks closely to the classic web development model of 
+          HTML, CSS, and JS, just adding a few extensions to HTML and 
+          JavaScript. It arguably has fewer concepts and tools to learn 
+          than some of the other framework options.
+        </i18n-translate>
+        <ide-app title="Basic Example">
+          <div class="split-view">
+            <ide-code numbers trim >
+              &lt;style&gt;
+                h1 { font-weight: bold; }
+              &lt;/style&gt;
+              &lt;script&gt;
+                const name = 'world';
+              &lt;/script&gt;
+              &lt;h1&gt;Hello {name}!&lt;/h1&gt;
+            </ide-code>
+            <ide-preview>
+              <div>
+                <h1>Hello world!</h1>
+              </div>
+            </ide-preview>
+          </div>
+        </ide-app>
+        <i18n-translate p trim>
           At it's core, a temple file is a special template file that 
           allows HTML, JavaScript, CSS and importing of components and 
-          templates. All of which are transpiled to its respective 
-          TypeScript or JavaScript source code.
-        </p>
-        <window-app title="Transpiler Example">
-          <div class="snippet-preview">
-            <code-snippet numbers>
-&lt;style&gt;
-  h1 { font-weight: bold; }
-&lt;/style&gt;
-&lt;script&gt;
-  import { props } from '@ossph/temple';
-  const { name } = props();
-&lt;/script&gt;
-&lt;h1&gt;Hello {name}!!&lt;/h1&gt;
+          templates. All of which are transpiled to TypeScript or 
+          JavaScript source code.
+        </i18n-translate>
+        <ide-app title="Transpiler Example">
+          <div class="split-view">
+            <ide-code numbers ltrim >
+              &lt;style&gt;
+                h1 { font-weight: bold; }
+              &lt;/style&gt;
+              &lt;script&gt;
+                import { props } from '@ossph/temple';
+                const { name } = props();
+              &lt;/script&gt;
+              &lt;h1&gt;Hello {name}!!&lt;/h1&gt;
+              
+              
 
-
-
-.
-            </code-snippet>
-            <code-snippet lang="js" trim>
-import { props } from '@ossph/temple';
-export default class Hello extends TempleComponent {
-  styles() {
-    return 'h1 { font-weight: bold; }';
-  }
-  template() {
-    const { name } = props();
-    return () =&gt; [
-      TempleRegistry.createElement('h1', null, `Hello ${name}`)
-    ]
-  }
-}
-            </code-snippet>
+            </ide-code>
+            <ide-code class="div" lang="js" trim >
+              import { props } from '@ossph/temple';
+              export default class Hello extends TempleComponent {
+                styles() {
+                  return 'h1 { font-weight: bold; }';
+                }
+                template() {
+                  const { name } = props();
+                  return () =&gt; [
+                    TempleRegistry.createElement('h1', null, `Hello ${name}`)
+                  ]
+                }
+              }
+            </ide-code>
           </div>
-        </window-app>
+        </ide-app>
+        
         <nav class="pager">
-          <a class="next" href="/temple/docs/started.html">
+          <a class="next" href="/temple/docs/getting-started.html">
             Getting Started
             <i class="fas fa-fw fa-chevron-right"></i>
           </a>

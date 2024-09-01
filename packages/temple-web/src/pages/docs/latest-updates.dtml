@@ -1,0 +1,40 @@
+<link rel="import" type="template" href="@/modules/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
+<link rel="import" type="template" href="@/modules/panel/left.tml" name="panel-left" />
+<link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+<script>
+  import { env } from '@ossph/temple';
+  import { _ } from '@/modules/i18n';
+
+  const url = '/docs/latest-updates.html';
+  const title = _('Latest Updates - Temple reactive web component template engine.');
+  const description = _('Checkout the latest updates on Temple project.');
+  const toggle = _ => {
+    document.body.classList.toggle('panel-left-open');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark panel with-head with-left">
+    <panel-head />
+    <panel-left />
+    <panel-main class="panel-main">
+      <div class="docs container">
+        <h1>{_('Latest Updates')}</h1>
+        
+        <nav class="pager">
+          <a class="prev" href="/temple/docs/developer-tools.html">
+            <i class="fas fa-fw fa-chevron-left"></i>
+            {_('Developer Tools')}
+          </a>
+          <a class="next" href="/temple/docs/contributing-guide.html">
+            {_('Contributing Guide')}
+            <i class="fas fa-fw fa-chevron-right"></i>
+          </a>
+        </nav>
+      </div>
+      <footer class="foot"></footer>
+    </panel-main>
+  </body>
+</html>

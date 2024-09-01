@@ -617,13 +617,59 @@ a, a:link a:hover, a:active, a:visited {
   text-align: right;
 }
 
+/* Tabs
+---------------------------------*/
+.tabs {
+  border-bottom: 1px solid #333333;
+  padding: 5px 0 0 5px;
+}
+
+.tabs tui-tab {
+  position: relative;
+  top: 1px;
+}
+
+tui-tab.shift-1 {
+  padding-left: 15px;
+}
+
+tui-tab a {
+  color: var(--muted) !important;
+  cursor: pointer;
+  display: inline-block;
+}
+
+tui-tab.active a {
+  color: var(--white) !important;
+}
+
+tui-tab.tab a {
+  background-color: #222222;
+  padding: 10px;
+  border: 1px solid #222222;
+  border-bottom: none;
+  border-radius: 5px 5px 0 0;
+}
+tui-tab.tab.active a {
+  background-color: #121212;
+}
+
+tui-tab.block a {
+  background-color: #121212;
+  font-size: 14px;
+  padding: 5px;
+}
+tui-tab.block.active a {
+  background-color: #121212;
+}
+
 /* Window App
 ---------------------------------*/
-window-app {
+ide-app {
   display: block;
 }
 
-window-app .window {
+ide-app .window {
   background-color: #212121;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -631,7 +677,7 @@ window-app .window {
   overflow: hidden;
 }
 
-window-app .window .head {
+ide-app .window .head {
   align-items: center;
   background: #1A1A1A;
   border-bottom: 1px solid #29252A;
@@ -643,14 +689,14 @@ window-app .window .head {
   position: relative;
 }
 
-window-app .window .head .dot {
+ide-app .window .head .dot {
   background-color: #999999;
   border-radius: 50%;
   height: 10px;
   width: 10px;
 }
 
-window-app .window .head .title {
+ide-app .window .head .title {
   align-items: center;
   display: flex;
   height: 100%;
@@ -661,30 +707,66 @@ window-app .window .head .title {
   width: 100%;
 }
 
-window-app .window .body {
+ide-app .window .body {
   background-color: #101113;
   color: #ABB2BF;
   margin: 0;
   padding: 0;
+  position: relative;
 }
 
-window-app .snippet-preview {
+ide-app .split-view {
   background-color: #000000;
   display: flex;
+  overflow: auto;
 }
-window-app .snippet-preview code-snippet {
+ide-app .split-view ide-code {
   flex-basis: 50%;
   height: 100%;
 }
-window-app .snippet-preview code-preview {
+ide-app .split-view ide-preview {
   background-color: #EFEFEF;
   flex-basis: 50%;
 }
+ide-app .folder {
+  display: block;
+  padding: 5px;
+}
+ide-app .div {
+  border-left: 1px solid #333333;
+  margin-left: 5px;
+  padding-left: 5px;
+}
+
+ide-app .body .panel-left {
+  border-right: 1px solid #333333;
+  width: 125px;
+}
+
+ide-app .body .panel-head {
+  left: 125px;
+  height: 45px;
+  z-index: 1;
+}
+
+ide-app .body .panel-main {
+  background-color: #000000;
+  left: 125px;
+  top: 45px;
+}
+
 @media (max-width: 767px) {
-  window-app .snippet-preview {
+  ide-app .split-view {
     display: block;
   }
-  window-app .snippet-preview code-snippet {
+  ide-app .split-view ide-code {
     padding-bottom: 10px;
+  }
+  ide-app .body .panel-head,
+  ide-app .body .panel-main {
+    left: 0;
+  }
+  ide-app .body .panel-left {
+    left: -125px;
   }
 }
