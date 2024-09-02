@@ -1,4 +1,4 @@
-var TempleBundle = (() => {
+var TempleAPI = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -687,11 +687,6 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`Getting Started`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/frequent-questions.html` }, [
-                    import_server.TempleRegistry.createText(`Frequent Questions`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
 
     `, false),
                   import_server.TempleRegistry.createElement("h6", {}, [
@@ -754,27 +749,6 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`Developer Tools`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
-
-    `, false),
-                  import_server.TempleRegistry.createElement("h6", {}, [
-                    import_server.TempleRegistry.createText(`Contributing`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/latest-updates.html` }, [
-                    import_server.TempleRegistry.createText(`Latest Updates`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/contributing-guide.html` }, [
-                    import_server.TempleRegistry.createText(`Contribution Guide`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/known-issues.html` }, [
-                    import_server.TempleRegistry.createText(`Known Issues`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
   `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
@@ -792,6 +766,62 @@ ${document2}`;
                 import_server.TempleRegistry.createElement("h1", {}, [
                   ...this._toNodeList(_("Compiler API"))
                 ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          The developer interface for the Temple compiler is designed 
+          to be expressive and easily access the Temple library in most 
+          scenarios. To create a new temple compiler you can follow the 
+          code below.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "trim": true, "detab": 10 }, [
+                  import_server.TempleRegistry.createText(`
+          import temple from '@ossph/temple';
+          const compiler = temple();
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(` 
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`  
+          The `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "inline": true }, [
+                    import_server.TempleRegistry.createText(`temple()`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` 
+          function itself takes in the following options, all of 
+          which are optional.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("api-ui", { "start": `TempleOptions` }),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Calling `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "inline": true }, [
+                    ...this._toNodeList(`temple()`)
+                  ]),
+                  import_server.TempleRegistry.createText(` as in 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "inline": true }, [
+                    ...this._toNodeList(`compiler = temple({/*options*/})`)
+                  ]),
+                  import_server.TempleRegistry.createText(` 
+          returns the Temple compiler which contains the following object.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("api-ui", {}),
                 import_server.TempleRegistry.createText(`
         
         `, false),

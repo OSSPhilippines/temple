@@ -1,4 +1,4 @@
-var TempleBundle = (() => {
+var TempleAPI = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -573,7 +573,7 @@ ${document2}`;
           ],
           import_server.TempleRegistry.createText(`
   `, false),
-          import_server.TempleRegistry.createElement("body", { "class": `dark panel with-head with-left` }, [
+          import_server.TempleRegistry.createElement("body", { "class": `dark panel with-head with-left with-right` }, [
             import_server.TempleRegistry.createText(`
     `, false),
             ...[
@@ -687,11 +687,6 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`Getting Started`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/frequent-questions.html` }, [
-                    import_server.TempleRegistry.createText(`Frequent Questions`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
 
     `, false),
                   import_server.TempleRegistry.createElement("h6", {}, [
@@ -754,33 +749,80 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`Developer Tools`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
-
-    `, false),
-                  import_server.TempleRegistry.createElement("h6", {}, [
-                    import_server.TempleRegistry.createText(`Contributing`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/latest-updates.html` }, [
-                    import_server.TempleRegistry.createText(`Latest Updates`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/contributing-guide.html` }, [
-                    import_server.TempleRegistry.createText(`Contribution Guide`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/known-issues.html` }, [
-                    import_server.TempleRegistry.createText(`Known Issues`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
   `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
 `, false)
               ])
             ],
+            import_server.TempleRegistry.createText(`
+    `, false),
+            import_server.TempleRegistry.createElement("aside", { "class": `panel-right right` }, [
+              import_server.TempleRegistry.createText(`
+      `, false),
+              import_server.TempleRegistry.createElement("h6", {}, [
+                ...this._toNodeList(_("On this page"))
+              ]),
+              import_server.TempleRegistry.createText(`
+      `, false),
+              import_server.TempleRegistry.createElement("nav", {}, [
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("a", { "href": `#imports` }, [
+                  ...this._toNodeList(_("Imports"))
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("a", { "href": `#styles` }, [
+                  ...this._toNodeList(_("Styles"))
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("a", { "href": `#scripts` }, [
+                  ...this._toNodeList(_("Scripts"))
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("a", { "href": `#markup` }, [
+                  ...this._toNodeList(_("Markup"))
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("nav", {}, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("a", { "href": `#tagnames` }, [
+                    ...this._toNodeList(_("Tag Names"))
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("a", { "href": `#attributes` }, [
+                    ...this._toNodeList(_("Attributes"))
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("a", { "href": `#conditionals` }, [
+                    ...this._toNodeList(_("Conditionals"))
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("a", { "href": `#iterations` }, [
+                    ...this._toNodeList(_("Iterations"))
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("a", { "href": `#trycatch` }, [
+                    ...this._toNodeList(_("Try/Catch"))
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+      `, false)
+              ]),
+              import_server.TempleRegistry.createText(`
+    `, false)
+            ]),
             import_server.TempleRegistry.createText(`
     `, false),
             import_server.TempleRegistry.createElement("panel-main", { "class": `panel-main` }, [
@@ -791,41 +833,6 @@ ${document2}`;
         `, false),
                 import_server.TempleRegistry.createElement("h1", {}, [
                   ...this._toNodeList(_("Markup Syntax"))
-                ]),
-                import_server.TempleRegistry.createText(`
-
-        `, false),
-                import_server.TempleRegistry.createElement("ide-app", { "title": `TL;DR` }, [
-                  import_server.TempleRegistry.createText(`
-          `, false),
-                  import_server.TempleRegistry.createElement("ide-code", { "numbers": true, "detab": 12 }, [
-                    ...this._toNodeList(`
-            <link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
-            
-            <style>
-              host: a {
-                color: #333;
-              }
-            </style>
-
-            <script>
-              import { getTitle, getDetail, getLink } from '@/data/article';
-              const title = getTitle();
-              const href = getLink();
-              const attributes = { target: '_blank' };
-            </script>
-
-            <a title={title} {href} {...attributes}>
-              {title}
-            </a>
-
-            <i18n-translate title=title>
-              {getDetail()}
-            </i18n-translate>
-          `)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-        `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
 
@@ -882,6 +889,9 @@ ${document2}`;
                 ]),
                 import_server.TempleRegistry.createText(`
 
+        `, false),
+                import_server.TempleRegistry.createElement("a", { "name": `imports` }, []),
+                import_server.TempleRegistry.createText(`
         `, false),
                 import_server.TempleRegistry.createElement("h2", {}, [
                   ...this._toNodeList(_("Imports"))
@@ -1004,6 +1014,9 @@ ${document2}`;
                 import_server.TempleRegistry.createText(`
 
         `, false),
+                import_server.TempleRegistry.createElement("a", { "name": `styles` }, []),
+                import_server.TempleRegistry.createText(`
+        `, false),
                 import_server.TempleRegistry.createElement("h2", {}, [
                   ...this._toNodeList(_("Styles"))
                 ]),
@@ -1119,6 +1132,9 @@ ${document2}`;
                 import_server.TempleRegistry.createText(`
 
         `, false),
+                import_server.TempleRegistry.createElement("a", { "name": `scripts` }, []),
+                import_server.TempleRegistry.createText(`
+        `, false),
                 import_server.TempleRegistry.createElement("h2", {}, [
                   ...this._toNodeList(_("Scripts"))
                 ]),
@@ -1225,6 +1241,9 @@ ${document2}`;
                 import_server.TempleRegistry.createText(`
 
         `, false),
+                import_server.TempleRegistry.createElement("a", { "name": `markup` }, []),
+                import_server.TempleRegistry.createText(`
+        `, false),
                 import_server.TempleRegistry.createElement("h2", {}, [
                   ...this._toNodeList(_("Markup"))
                 ]),
@@ -1241,6 +1260,9 @@ ${document2}`;
                 ]),
                 import_server.TempleRegistry.createText(`
 
+        `, false),
+                import_server.TempleRegistry.createElement("a", { "name": `tagnames` }, []),
+                import_server.TempleRegistry.createText(`
         `, false),
                 import_server.TempleRegistry.createElement("h3", {}, [
                   ...this._toNodeList(_("Tag Names"))
@@ -1443,13 +1465,16 @@ ${document2}`;
                 import_server.TempleRegistry.createText(`
 
         `, false),
-                import_server.TempleRegistry.createElement("tui-alert", { "solid": true, "curved": true, "info": true }, [
+                import_server.TempleRegistry.createElement("tui-alert", { "solid": true, "curved": true, "secondary": true }, [
                   import_server.TempleRegistry.createText(`
           `, false),
-                  import_server.TempleRegistry.createElement("i", { "class": `fas fa-info-circle` }, []),
+                  import_server.TempleRegistry.createElement("i", { "class": `fas fa-exclamation-triangle` }, []),
                   import_server.TempleRegistry.createText(`
-          &nbsp;
-          Any markup auto corrected by browser will cause data syncing 
+          `, false),
+                  import_server.TempleRegistry.createElement("strong", {}, [
+                    import_server.TempleRegistry.createText(`Warning:`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` Any markup auto corrected by browser will cause data syncing 
           issues with Temple.
         `, false)
                 ]),
@@ -1474,6 +1499,9 @@ ${document2}`;
                 ]),
                 import_server.TempleRegistry.createText(`
 
+        `, false),
+                import_server.TempleRegistry.createElement("a", { "name": `attributes` }, []),
+                import_server.TempleRegistry.createText(`
         `, false),
                 import_server.TempleRegistry.createElement("h3", {}, [
                   ...this._toNodeList(_("Attributes"))
@@ -1632,6 +1660,9 @@ ${document2}`;
                 import_server.TempleRegistry.createText(`
 
         `, false),
+                import_server.TempleRegistry.createElement("a", { "name": `conditionals` }, []),
+                import_server.TempleRegistry.createText(`
+        `, false),
                 import_server.TempleRegistry.createElement("h3", {}, [
                   ...this._toNodeList(_("Conditionals"))
                 ]),
@@ -1763,6 +1794,9 @@ ${document2}`;
                 import_server.TempleRegistry.createText(`
 
         `, false),
+                import_server.TempleRegistry.createElement("a", { "name": `iterations` }, []),
+                import_server.TempleRegistry.createText(`
+        `, false),
                 import_server.TempleRegistry.createElement("h3", {}, [
                   ...this._toNodeList(_("Iterations"))
                 ]),
@@ -1872,6 +1906,9 @@ ${document2}`;
                 import_server.TempleRegistry.createText(`
 
         `, false),
+                import_server.TempleRegistry.createElement("a", { "name": `trycatch` }, []),
+                import_server.TempleRegistry.createText(`
+        `, false),
                 import_server.TempleRegistry.createElement("h3", {}, [
                   ...this._toNodeList(_("Try/Catch"))
                 ]),
@@ -1940,13 +1977,13 @@ ${document2}`;
                 import_server.TempleRegistry.createElement("nav", { "class": `pager` }, [
                   import_server.TempleRegistry.createText(`
           `, false),
-                  import_server.TempleRegistry.createElement("a", { "class": `prev`, "href": `/temple/docs/frequent-questions.html` }, [
+                  import_server.TempleRegistry.createElement("a", { "class": `prev`, "href": `/temple/docs/getting-started.html` }, [
                     import_server.TempleRegistry.createText(`
             `, false),
                     import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-chevron-left` }, []),
                     import_server.TempleRegistry.createText(`
             `, false),
-                    ...this._toNodeList(_("Frequent Questions")),
+                    ...this._toNodeList(_("Getting Started")),
                     import_server.TempleRegistry.createText(`
           `, false)
                   ]),

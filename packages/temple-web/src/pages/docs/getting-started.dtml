@@ -170,8 +170,8 @@
             <i class="fas fa-fw fa-chevron-left"></i>
             {_('Documentation')}
           </a>
-          <a class="next" href="/temple/docs/frequent-questions.html">
-            {_('Frequent Questions')}
+          <a class="next" href="/temple/docs/markup-syntax.html">
+            {_('Markup Syntax')}
             <i class="fas fa-fw fa-chevron-right"></i>
           </a>
         </nav>

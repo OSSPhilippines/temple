@@ -35,6 +35,8 @@ export default abstract class TempleComponent extends HTMLElement {
   protected _props: Hash = {};
   //the initial children
   protected _children: ChildNode[]|undefined = undefined;
+  //prevents rendering loops
+  protected _rendering = false;
 
   /**
    * Returns the component styles
@@ -181,7 +183,12 @@ export default abstract class TempleComponent extends HTMLElement {
     //(this is the hydration logic)
     if (parent && !parent.initiated) {
       return;
+    //if it's already rendering
+    } else if (this._rendering) {
+      return;
     }
+    //set the rendering flag
+    this._rendering = true;
     //set the current component
     __APP_DATA__.set('current', this);
     //get the styles
@@ -227,6 +234,8 @@ export default abstract class TempleComponent extends HTMLElement {
     this._initiated = true;
     //emit the mounted event
     emitter.emit('mounted', this);
+    //reset the rendering flag
+    this._rendering = false;
     return this.shadowRoot ? this.shadowRoot.innerHTML :this.innerHTML;
   }
 

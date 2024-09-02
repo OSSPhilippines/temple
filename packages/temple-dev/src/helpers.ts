@@ -133,7 +133,7 @@ export function transpile(component: Component) {
   source.addFunction({
     name: '__REFRESH__',
     statements: (`
-      const { TempleRegistry, components, data } = TempleBundle;
+      const { TempleRegistry, components, data } = TempleAPI;
       const styles = function styles() {
         return \`${styles.join('\n').trim()}\`;
       };

@@ -1,4 +1,4 @@
-var TempleBundle = (() => {
+var TempleAPI = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -687,11 +687,6 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`Getting Started`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/frequent-questions.html` }, [
-                    import_server.TempleRegistry.createText(`Frequent Questions`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
 
     `, false),
                   import_server.TempleRegistry.createElement("h6", {}, [
@@ -754,27 +749,6 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`Developer Tools`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
-
-    `, false),
-                  import_server.TempleRegistry.createElement("h6", {}, [
-                    import_server.TempleRegistry.createText(`Contributing`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/latest-updates.html` }, [
-                    import_server.TempleRegistry.createText(`Latest Updates`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/contributing-guide.html` }, [
-                    import_server.TempleRegistry.createText(`Contribution Guide`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/known-issues.html` }, [
-                    import_server.TempleRegistry.createText(`Known Issues`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
   `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
@@ -792,6 +766,41 @@ ${document2}`;
                 import_server.TempleRegistry.createElement("h1", {}, [
                   ...this._toNodeList(_("Client API"))
                 ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Temple exposes a variable on the browser called 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "inline": true }, [
+                    import_server.TempleRegistry.createText(`TempleAPI`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` that includes all the 
+          components, classes, functions and variables used to render
+          the document on the client-side. 
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("tui-alert", { "curved": true, "secondary": true }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("i", { "class": `fas fa-exclamation-triangle` }, []),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("strong", {}, [
+                    import_server.TempleRegistry.createText(`Warning:`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` Using the client API in the wrong 
+          way could possibly break your client application.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("api-ui", { "start": `TempleAPI` }),
                 import_server.TempleRegistry.createText(`
         
         `, false),

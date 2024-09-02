@@ -1,9 +1,0 @@
-.container { padding: 20px; }
-  .error pre {
-    border: 1px solid #222222;
-    font-family: Courier, monospace;
-    line-height: 22px;
-    padding: 20px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }

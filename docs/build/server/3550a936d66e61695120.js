@@ -1,4 +1,4 @@
-var TempleBundle = (() => {
+var TempleAPI = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -687,11 +687,6 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`Getting Started`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/frequent-questions.html` }, [
-                    import_server.TempleRegistry.createText(`Frequent Questions`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
 
     `, false),
                   import_server.TempleRegistry.createElement("h6", {}, [
@@ -754,27 +749,6 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`Developer Tools`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
-
-    `, false),
-                  import_server.TempleRegistry.createElement("h6", {}, [
-                    import_server.TempleRegistry.createText(`Contributing`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/latest-updates.html` }, [
-                    import_server.TempleRegistry.createText(`Latest Updates`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/contributing-guide.html` }, [
-                    import_server.TempleRegistry.createText(`Contribution Guide`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/known-issues.html` }, [
-                    import_server.TempleRegistry.createText(`Known Issues`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
   `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
@@ -791,6 +765,390 @@ ${document2}`;
         `, false),
                 import_server.TempleRegistry.createElement("h1", {}, [
                   ...this._toNodeList(_("Single Page App"))
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          A single page application (SPA) is a website or web 
+          application that dynamically rewrites a current web page with 
+          new data from a web server, instead of the default method of 
+          a web browser loading entire new pages. Temple is capable of 
+          creating reactive SPAs using Webpack and TypeScript.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          First install the following Temple packages.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "lang": `bash` }, [
+                  import_server.TempleRegistry.createText(`
+          npm install --save-dev @ossph/temple @ossph/temple-loader
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Then, install the following TypeScript packages.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "lang": `bash` }, [
+                  import_server.TempleRegistry.createText(`
+          npm install --save-dev @types/node ts-loader ts-node typescript
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Then, install the following Webpack packages.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "lang": `bash` }, [
+                  import_server.TempleRegistry.createText(`
+          npm install --save-dev html-webpack-plugin webpack-dev-server webpack webpack-cli
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Next create the following files and directories.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "panel": 400, "title": `My Project` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("div", { "class": `panel-head` }, [
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("div", { "class": `tabs` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("tui-tab", { "class": `tab`, "group": `project`, "selector": `#client-ts` }, [
+                        import_server.TempleRegistry.createText(`
+                src/client.ts
+              `, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("tui-tab", { "class": `tab`, "group": `project`, "selector": `#app-tml` }, [
+                        import_server.TempleRegistry.createText(`
+                src/app.tml
+              `, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("tui-tab", { "class": `tab`, "group": `project`, "selector": `#index-html` }, [
+                        import_server.TempleRegistry.createText(`
+                index.html
+              `, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("tui-tab", { "class": `tab active`, "group": `project`, "selector": `#webpack-js` }, [
+                        import_server.TempleRegistry.createText(`
+                webpack.config.js
+              `, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("tui-tab", { "class": `tab`, "group": `project`, "selector": `#tsconfig-json` }, [
+                        import_server.TempleRegistry.createText(`
+                tsconfig.json
+              `, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("tui-tab", { "class": `tab`, "group": `project`, "selector": `#package-json` }, [
+                        import_server.TempleRegistry.createText(`
+                package.json
+              `, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("div", { "class": `panel-left` }, [
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("h5", { "class": `folder` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-chevron-down` }, []),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("span", {}, [
+                        import_server.TempleRegistry.createText(`src`, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("tui-tab", { "class": `shift-1 block`, "group": `project`, "selector": `#app-tml` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-file` }, []),
+                      import_server.TempleRegistry.createText(`
+              app.tml
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("tui-tab", { "class": `shift-1 block`, "group": `project`, "selector": `#client-ts` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-file` }, []),
+                      import_server.TempleRegistry.createText(`
+              client.ts
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("tui-tab", { "class": `block`, "group": `project`, "selector": `#index-html` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-file` }, []),
+                      import_server.TempleRegistry.createText(`
+              index.html
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("tui-tab", { "class": `block`, "group": `project`, "selector": `#package-json` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-file` }, []),
+                      import_server.TempleRegistry.createText(`
+              package.json
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("tui-tab", { "class": `block`, "group": `project`, "selector": `#tsconfig-json` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-file` }, []),
+                      import_server.TempleRegistry.createText(`
+              tsconfig.json
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("tui-tab", { "class": `block active`, "group": `project`, "selector": `#webpack-js` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-file` }, []),
+                      import_server.TempleRegistry.createText(`
+              webpack.config.js
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("div", { "class": `panel-main` }, [
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("main", {}, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("ide-code", { "id": `client-ts`, "style": `display:none`, "lang": `js`, "numbers": true, "trim": true, "detab": 16 }, [
+                        ...this._toNodeList(`
+                import TempleComponent from './app.tml';
+
+                TempleComponent.register();
+              `)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("ide-code", { "id": `app-tml`, "style": `display:none`, "numbers": true, "trim": true, "detab": 16 }, [
+                        ...this._toNodeList(`
+                <script>
+                  const title = 'Single Page App';
+                </script>
+                <h1>{title}</h1>
+              `)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("ide-code", { "id": `index-html`, "style": `display:none`, "numbers": true, "trim": true, "detab": 16 }, [
+                        ...this._toNodeList(`
+                <!DOCTYPE html>
+                <html>
+                  <head>
+                    <style>
+                      body {
+                        font-family: Arial, Helvetica, sans-serif;
+                        margin: 0;
+                        padding: 0;
+                        width: 100vw;
+                        height: 100vh;
+                      }
+                    </style>
+                  </head>
+                  <body>
+                    <temple-app></temple-app>
+                  </body>
+                </html>
+              `)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("ide-code", { "id": `webpack-js`, "lang": `js`, "numbers": true, "trim": true, "detab": 16 }, [
+                        ...this._toNodeList(`
+                const path = require('path');
+                const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+                module.exports = {
+                  // https://webpack.js.org/concepts/entry-points/#multi-page-application
+                  entry: {
+                    index: './src/client.ts'
+                  },
+                  output: {
+                    path: path.resolve(__dirname, './dist'),
+                    filename: '[name].bundle.js',
+                  },
+                  module: {
+                    rules: [
+                      {
+                        test: /.tml$/,
+                        use: {
+                          loader: '@ossph/temple-loader',
+                          options: { minify: false }
+                        },
+                        exclude: /node_modules/,
+                      },
+                      {
+                        test: /.ts$/,
+                        use: 'ts-loader',
+                        exclude: /node_modules/,
+                      },
+                    ],
+                  },
+                  resolve: {
+                    extensions: ['.js', '.ts', '.tml'],
+                  },
+                  // https://webpack.js.org/configuration/dev-server/
+                  devServer: {
+                    port: 8080
+                  },
+                  plugins: [
+                    new HtmlWebpackPlugin({
+                      title: 'Temple',
+                      template: "index.html",
+                    })
+                  ]
+                };
+              `)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("ide-code", { "id": `tsconfig-json`, "style": `display:none`, "lang": `js`, "numbers": true, "trim": true, "detab": 16 }, [
+                        ...this._toNodeList(`
+                {
+                  "compilerOptions": {
+                    "declaration": true,
+                    "esModuleInterop": true,
+                    "lib": [ "es2021", "es7", "es6", "dom" ],
+                    "module": "commonjs",
+                    "noUnusedLocals": true,
+                    "outDir": "./dist/",
+                    "preserveConstEnums": true,
+                    "resolveJsonModule": true,
+                    "removeComments": true,
+                    "sourceMap": false,
+                    "strict": true,
+                    "target": "es6",
+                    "skipLibCheck": true
+                  },
+                  "include": [ 
+                    "src/**/*.ts", 
+                    "@ossph/temple/types"
+                  ],
+                  "exclude": [ "dist", "node_modules" ]
+                }
+              `)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("ide-code", { "id": `package-json`, "style": `display:none`, "lang": `js`, "numbers": true, "trim": true, "detab": 16 }, [
+                        ...this._toNodeList(`
+                {
+                  "name": "my-spa",
+                  "version": "1.0.0",
+                  "private": true,
+                  "scripts": {
+                    "dev": "webpack-dev-server --mode development",
+                    "build": "webpack --mode production"
+                  },
+                  "devDependencies": {
+                    "@ossph/temple": "0.0.15"
+                    "@ossph/temple-loader": "0.0.15",
+                    "@types/node": "22.1.0",
+                    "html-webpack-plugin": "5.6.0",
+                    "webpack-dev-server": "5.0.4",
+                    "ts-loader": "9.5.1",
+                    "ts-node": "10.9.2",
+                    "typescript": "5.4.5",
+                    "webpack": "5.91.0",
+                    "webpack-cli": "5.1.4"
+                  }
+                }
+              `)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          To test the SPA and see the results, run the following command in terminal.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "title": `Terminal` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "lang": `bash` }, [
+                    import_server.TempleRegistry.createText(`
+            npm run dev
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
         

@@ -60,6 +60,9 @@
 .full {
   width: 100%;
 }
+*:not(:defined) {
+  opacity: 0;
+}
 
 /* Text Colors
 ---------------------------------*/
@@ -270,9 +273,9 @@ a, a:link a:hover, a:active, a:visited {
   overflow: hidden;
   position: absolute;
   right: 0;
-  top: 0;
+  top: 60px;
   transition: 1s;
-  width: 226px;
+  width: 200px;
 }
 
 .panel .panel-main {
@@ -305,7 +308,7 @@ a, a:link a:hover, a:active, a:visited {
 }
 
 .with-right .panel-main {
-  right: 226px;
+  right: 200px;
 }
 
 @media (max-width: 767px) {
@@ -322,6 +325,15 @@ a, a:link a:hover, a:active, a:visited {
   .panel-left-open .panel-head,
   .panel-left-open .panel-main {
     left: 226px;
+  }
+}
+
+@media (max-width: 992px) {
+  .panel .panel-right {
+    right: -200px;
+  }
+  .with-right .panel-main {
+    right: 0;
   }
 }
 
@@ -537,6 +549,38 @@ a, a:link a:hover, a:active, a:visited {
   }
 }
 
+/* Right
+---------------------------------*/
+.right {
+  background-color: #151515;
+}
+
+.right h6 {
+  color: #999999;
+  font-size: 14px;
+  margin: 0;
+  padding: 20px 20px 0;
+  text-transform: uppercase;
+}
+
+.right nav {
+  padding: 10px 20px 0;
+}
+
+.right nav nav {
+  font-size: 14px;
+  padding: 0 20px 0 10px;
+}
+
+.right nav a {
+  display: block;
+  padding: 10px 0;
+}
+
+.right nav nav a {
+  color: var(--white);
+}
+
 /* Docs
 ---------------------------------*/
 .docs {
@@ -608,6 +652,10 @@ a, a:link a:hover, a:active, a:visited {
   line-height: 16px;
 }
 
+.docs > ide-code {
+  margin-bottom: 20px;
+}
+
 .docs .pager {
   align-items: center;
   display: flex;
@@ -627,16 +675,14 @@ a, a:link a:hover, a:active, a:visited {
 ---------------------------------*/
 .tabs {
   border-bottom: 1px solid #333333;
+  display: flex;
+  overflow-x: auto;
   padding: 5px 0 0 5px;
 }
 
 .tabs tui-tab {
   position: relative;
   top: 1px;
-}
-
-tui-tab.shift-1 {
-  padding-left: 15px;
 }
 
 tui-tab a {
@@ -655,18 +701,15 @@ tui-tab.tab a {
   border: 1px solid #222222;
   border-bottom: none;
   border-radius: 5px 5px 0 0;
+  margin-left: 2px;
 }
 tui-tab.tab.active a {
   background-color: #121212;
 }
 
 tui-tab.block a {
-  background-color: #121212;
   font-size: 14px;
   padding: 5px;
-}
-tui-tab.block.active a {
-  background-color: #121212;
 }
 
 /* Window App
@@ -746,18 +789,27 @@ ide-app .div {
 
 ide-app .body .panel-left {
   border-right: 1px solid #333333;
-  width: 125px;
+  width: 150px;
+  z-index: 2;
+}
+
+ide-app .body .panel-left .shift-1 {
+  padding-left: 15px;
+}
+
+ide-app .body .panel-left .shift-2 {
+  padding-left: 30px;
 }
 
 ide-app .body .panel-head {
-  left: 125px;
+  left: 150px;
   height: 45px;
   z-index: 1;
 }
 
 ide-app .body .panel-main {
   background-color: #000000;
-  left: 125px;
+  left: 150px;
   top: 45px;
 }
 
@@ -773,6 +825,6 @@ ide-app .body .panel-main {
     left: 0;
   }
   ide-app .body .panel-left {
-    left: -125px;
+    left: -150px;
   }
 }

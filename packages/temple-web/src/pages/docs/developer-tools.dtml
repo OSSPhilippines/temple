@@ -115,10 +115,6 @@
             <i class="fas fa-fw fa-chevron-left"></i>
             {_('Component Publisher')}
           </a>
-          <a class="next" href="/temple/docs/latest-updates.html">
-            {_('Latest Updates')}
-            <i class="fas fa-fw fa-chevron-right"></i>
-          </a>
         </nav>
       </div>
       <footer class="foot"></footer>

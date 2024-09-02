@@ -1,4 +1,4 @@
-var TempleBundle = (() => {
+var TempleAPI = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -687,11 +687,6 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`Getting Started`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/frequent-questions.html` }, [
-                    import_server.TempleRegistry.createText(`Frequent Questions`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
 
     `, false),
                   import_server.TempleRegistry.createElement("h6", {}, [
@@ -754,27 +749,6 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`Developer Tools`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
-
-    `, false),
-                  import_server.TempleRegistry.createElement("h6", {}, [
-                    import_server.TempleRegistry.createText(`Contributing`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/latest-updates.html` }, [
-                    import_server.TempleRegistry.createText(`Latest Updates`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/contributing-guide.html` }, [
-                    import_server.TempleRegistry.createText(`Contribution Guide`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/known-issues.html` }, [
-                    import_server.TempleRegistry.createText(`Known Issues`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
   `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
@@ -791,6 +765,225 @@ ${document2}`;
         `, false),
                 import_server.TempleRegistry.createElement("h1", {}, [
                   ...this._toNodeList(_("Component Publisher"))
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Web components are a set of web platform APIs that allow you 
+          to create new custom, reusable, encapsulated HTML tags to use 
+          in web pages and web apps. Custom components and widgets build 
+          on the Web Component standards, will work across modern 
+          browsers, and can be used with any JavaScript library or 
+          framework that works with HTML.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Web components are based on existing web standards. Features 
+          to support web components are currently being added to the 
+          HTML and DOM specs, letting web developers easily extend HTML 
+          with new elements with encapsulated styling and custom behavior.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("tui-alert", { "solid": true, "curved": true, "info": true }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("i", { "class": `fas fa-info-circle` }, []),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("strong", {}, [
+                    import_server.TempleRegistry.createText(`Note:`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` Web components even work in React 
+          projects.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          First, create a project with the following structure and files.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "panel": 290, "title": `My Project` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("div", { "class": `panel-head` }, [
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("div", { "class": `tabs` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("tui-tab", { "class": `tab active`, "group": `project`, "selector": `#build-ts` }, [
+                        import_server.TempleRegistry.createText(`
+                src/build.ts
+              `, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("tui-tab", { "class": `tab`, "group": `project`, "selector": `#component-tml` }, [
+                        import_server.TempleRegistry.createText(`
+                src/component.tml
+              `, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("tui-tab", { "class": `tab`, "group": `project`, "selector": `#package-json` }, [
+                        import_server.TempleRegistry.createText(`
+                package.json
+              `, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("div", { "class": `panel-left` }, [
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("h5", { "class": `folder` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-chevron-down` }, []),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("span", {}, [
+                        import_server.TempleRegistry.createText(`src`, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("tui-tab", { "class": `shift-1 block active`, "group": `project`, "selector": `#build-ts` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-file` }, []),
+                      import_server.TempleRegistry.createText(`
+              build.ts
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("tui-tab", { "class": `shift-1 block`, "group": `project`, "selector": `#component-tml` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-file` }, []),
+                      import_server.TempleRegistry.createText(`
+              component.tml
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("tui-tab", { "class": `block`, "group": `project`, "selector": `#package-json` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-file` }, []),
+                      import_server.TempleRegistry.createText(`
+              package.json
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("div", { "class": `panel-main` }, [
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("main", {}, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("ide-code", { "id": `build-ts`, "lang": `js`, "numbers": true, "trim": true, "detab": 16 }, [
+                        ...this._toNodeList(`
+                import http from 'http';
+                import temple from '@ossph/temple/compiler';
+
+                //create temple compiler
+                const compiler = temple({ cwd: __dirname });
+                //load component, and render
+                const component = compiler
+                  .fromSource('./component.tml')
+                  .component();
+                
+                //save component
+                compiler.fs.writeFileSync('/path/to/component.js', component);
+              `)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("ide-code", { "id": `component-tml`, "style": `display:none`, "numbers": true, "trim": true, "detab": 16 }, [
+                        ...this._toNodeList(`
+                <style>
+                  .title { text-align: center; }
+                </style>
+                <script>
+                  const title = 'Hello';
+                </script>
+                <h1 class="title">{title}</h1>
+              `)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("ide-code", { "id": `package-json`, "style": `display:none`, "lang": `js`, "numbers": true, "trim": true, "detab": 16 }, [
+                        ...this._toNodeList(`
+                {
+                  "name": "my-project",
+                  "version": "1.0.0",
+                  "private": true,
+                  "scripts": {
+                    "build": "ts-node ./src/build.ts"
+                  },
+                  "dependencies": {
+                    "@ossph/temple": "0.0.15"
+                  },
+                  "devDependencies": {
+                    "@ossph/temple-dev": "0.0.15",
+                    "@types/node": "22.1.0",
+                    "ts-node": "10.9.2",
+                    "typescript": "5.5.4"
+                  }
+                }
+              `)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          To test the build script and see the results, run the 
+          following command in terminal.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "lang": `bash` }, [
+                  import_server.TempleRegistry.createText(`
+          npm run build
+        `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
         

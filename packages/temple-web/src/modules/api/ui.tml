@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="/temple/styles/fontawesome/all.css" />
-<link rel="import" type="component" href="@/components/code-snippet.tml" />
+<link rel="import" type="component" href="@/modules/ide/code.tml" name="ide-code" />
 <style>
   :host {
     border-radius: 5px;
@@ -190,15 +190,6 @@
                 <else />
                   <td valign="top" nowrap>{prop.type}{prop.list ? '[]' :''}</td>
                 </if>
-                <td>
-                  <if true={prop.description}>
-                    <p>{prop.description}</p>
-                    <if true={prop.example}>
-                      <h5>Example</h5>
-                      <code-snippet lang="js">{prop.example}</code-snippet> 
-                    </if>
-                  </if>
-                </td>
               <elif true={prop.kind === 'function'} />
                 <td valign="top" nowrap>
                   {key}(
@@ -224,28 +215,19 @@
                 <else />
                   <td valign="top" nowrap>{prop.returns.type}{prop.returns.list ? '[]' :''}</td>
                 </if>
-                <td>
-                  <if true={prop.description}>
-                    <p>{prop.description}</p>
-                    <if true={prop.example}>
-                      <h5>Example</h5>
-                      <code-snippet lang="js">{prop.example}</code-snippet> 
-                    </if>
-                  </if>
-                </td>
               <elif true={prop.kind === 'event'} />
                 <td valign="top" nowrap>{`on('${key}', (event: Event) => void)`}</td>
                 <td valign="top" nowrap>void</td>
-                <td>
-                  <if true={prop.description}>
-                    <p>{prop.description}</p>
-                    <if true={prop.example}>
-                      <h5>Example</h5>
-                      <code-snippet lang="js">{prop.example}</code-snippet> 
-                    </if>
-                  </if>
-                </td>
               </if>
+              <td>
+                <if true={prop.description}>
+                  <p>{prop.description}</p>
+                  <if true={prop.example}>
+                    <h5>Example</h5>
+                    <ide-code lang="js">{prop.example}</ide-code> 
+                  </if>
+                </if>
+              </td>
             </tr>
           </each>
         </tbody>

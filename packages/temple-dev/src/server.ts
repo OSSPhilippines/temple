@@ -36,7 +36,7 @@ export function dev(options: DevelopOptions = {}) {
           const script = fs.readFileSync(
             require.resolve('@ossph/temple-dev/client.js')
           );
-          const id = 'TempleBundle.BUILD_ID';
+          const id = 'TempleAPI.BUILD_ID';
           const start = `;temple_dev.default(${id}, {path: '${route}'});`;
           res.end(script + start); 
           return true;

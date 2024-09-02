@@ -1063,6 +1063,71 @@
       "example": "compiler.import('./docs/api.dtml').document.render();"
     }
   },
+  "TempleOptions": {
+    "brand?": {
+      "kind": "property",
+      "list": false,
+      "type": "string",
+      "description": "The brand prefixed before the component tag name.",
+      "example": "const compiler = temple({ brand: 'temple' });"
+    },
+    "cwd?": {
+      "kind": "property",
+      "list": false,
+      "type": "string",
+      "description": "The project's current working directory (cwd).",
+      "example": "const compiler = temple({ cwd: '/path/to/project' });'"
+    },
+    "fs?": {
+      "kind": "property",
+      "list": false,
+      "type": "FileSystem",
+      "description": "The file system being used to read/write files.",
+      "example": "import fs from 'fs';\n\nconst compiler = temple({ fs });'"
+    },
+    "emitter?": {
+      "kind": "property",
+      "list": false,
+      "type": "EventEmitter",
+      "description": "The NodeJS EventEmitter instance being used.",
+      "example": "import emitter from 'events';\n\nconst compiler = temple({ emitter });'"
+    },
+    "type?": {
+      "kind": "property",
+      "list": false,
+      "type": ["document", "component", "template"],
+      "description": "Type of component",
+      "example": "const compiler = temple({ type: 'component' });'"
+    },
+    "minify?": {
+      "kind": "property",
+      "list": false,
+      "type": "boolean",
+      "description": "Whether to minify the generated JavaScript code.",
+      "example": "const compiler = temple({ minify: true });'"
+    },
+    "tsconfig?": {
+      "kind": "property",
+      "list": false,
+      "type": "string",
+      "description": "The location of the used tsconfig.json.",
+      "example": "const compiler = temple({ tsconfig: '/path/to/tsconfig.json' });'"
+    },
+    "component_extname?": {
+      "kind": "property",
+      "list": false,
+      "type": "string",
+      "description": "The component file extension.",
+      "example": "const compiler = temple({ component_extname: '.tml' });'"
+    },
+    "document_extname?": {
+      "kind": "property",
+      "list": false,
+      "type": "string",
+      "description": "The document file extension.",
+      "example": "const compiler = temple({ document_extname: '.dtml' });'"
+    }
+  },
   "TempleCompiler": {
     "config": {
       "kind": "property",
@@ -1311,6 +1376,562 @@
       },
       "description": "Returns compiled css styles, given the the template source file.",
       "example": "compiler.styles('./docs/api.dtml'); //css styles"
+    }
+  },
+  "TempleComponent": {
+    "attr": {
+      "kind": "property",
+      "list": false,
+      "type": "Hash",
+      "description": "Returns only the valid HTML tag attributes (string and true).",
+      "example": "this.attr; //--> { disabled: true, type: 'button' }"
+    },
+    "props": {
+      "kind": "property",
+      "list": false,
+      "type": "Hash",
+      "description": "Returns all the attributes assigned to the component.",
+      "example": "this.props; //--> { disabled: true, count: 4, click: handleClick }"
+    },
+    "metadata": {
+      "kind": "property",
+      "list": false,
+      "type": "[ string, string ]",
+      "description": "Returns the tag and class name of the component.",
+      "example": "this.metadata; //--> [ 'fancy-button', 'FancyButton_abc123' ]"
+    },
+    "styles": {
+      "kind": "function",
+      "args": [],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "string"
+      },
+      "description": "Returns the css styles used in the component.",
+      "example": "this.styles(); //css styles"
+    },
+    "template": {
+      "kind": "function",
+      "args": [],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "Node[]"
+      },
+      "description": "Returns a function that returns an array of elements, text nodes and web components",
+      "example": "this.template(); //--> () => [ Element, Text, Element, ... ]"
+    },
+    "render": {
+      "kind": "function",
+      "args": [],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "string"
+      },
+      "description": "Renders the children and returns the final HTML markup.",
+      "example": "this.render(); //--> '<p>...</p>'"
+    }
+  },
+  "TempleRegistry": {
+    "elements": {
+      "kind": "property",
+      "list": false,
+      "type": "Map<Element, TempleElement>",
+      "description": "Returns a map of elements used in the DOM.",
+      "example": "TempleAPI.TempleRegistry.elements.get(component);"
+    },
+    "createComponent": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "tagname",
+          "type": "string"
+        },
+        {
+          "kind": "property",
+          "list": false,
+          "name": "component",
+          "type": "TempleComponent"
+        },
+        {
+          "kind": "property",
+          "list": false,
+          "name": "props",
+          "type": "Hash"
+        },
+        {
+          "kind": "property",
+          "list": false,
+          "name": "children>",
+          "type": "Node[]"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "TempleElement"
+      },
+      "description": "Creates a TempleElement from a web component class.",
+      "example": "TempleAPI.TempleRegistry.createComponent('fancy-button', TempleComponent, { title: 'Hello' }, children);"
+    },
+    "createElement": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "tagname",
+          "type": "string"
+        },
+        {
+          "kind": "property",
+          "list": false,
+          "name": "props",
+          "type": "Hash"
+        },
+        {
+          "kind": "property",
+          "list": false,
+          "name": "children>",
+          "type": "Node[]"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "TempleElement"
+      },
+      "description": "Creates a TempleElement from a string tag name.",
+      "example": "TempleAPI.TempleRegistry.createElement('a', { href: '/' }, children);"
+    },
+    "createText": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "text",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "TextNode"
+      },
+      "description": "Creates a TextNode from a raw string.",
+      "example": "TempleAPI.TempleRegistry.createText('foo');"
+    },
+    "get": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "element",
+          "type": "Element"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "TempleElement"
+      },
+      "description": "Returns a TempleElement given a DOM element.",
+      "example": "TempleAPI.TempleRegistry.get(element)"
+    },
+    "has": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "element",
+          "type": "Element"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "boolean"
+      },
+      "description": "Returns true if the given element exists in the registry",
+      "example": "TempleAPI.TempleRegistry.has(element)"
+    },
+    "map": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "callback",
+          "type": "Function"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": true,
+        "type": "T"
+      },
+      "description": "Like array map for registry returns an array of whatever the callback returns.",
+      "example": "TempleAPI.TempleRegistry.map((temple, element) => [temple, element]);"
+    },
+    "register": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "element",
+          "type": "TempleElement"
+        },
+        {
+          "kind": "property",
+          "list": false,
+          "name": "props",
+          "type": "Hash"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "TempleElement"
+      },
+      "description": "Registers a TempleElement to the registry.",
+      "example": "TempleAPI.TempleRegistry.register(element, { foo: 'bar' });"
+    }
+  },
+  "TempleElement": {
+    "attributes": {
+      "kind": "property",
+      "list": false,
+      "type": "Hash",
+      "description": "Returns all the attributes assigned to the element.",
+      "example": "element.attributes; //--> { href: '/', title: 'Home' }"
+    },
+    "element": {
+      "kind": "property",
+      "list": false,
+      "type": "Element",
+      "description": "Returns the DOM element.",
+      "example": "element.element; //--> <a href='/' title='Home'>"
+    },
+    "hasAttribute": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "boolean"
+      },
+      "description": "Returns true if the element has the given attribute.",
+      "example": "element.hasAttribute('href');"
+    },
+    "getAttribute": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "unknown"
+      },
+      "description": "Returns the value of the given attribute.",
+      "example": "element.getAttribute('href');"
+    },
+    "removeAttribute": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "TempleElement"
+      },
+      "description": "Removes the given attribute from the element.",
+      "example": "element.removeAttribute('href');"
+    },
+    "setAttribute": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "kind": "property",
+          "list": false,
+          "name": "value",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "TempleElement"
+      },
+      "description": "Sets the given attribute to the element.",
+      "example": "element.setAttribute('href', '/');"
+    },
+    "setAttributes": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "attributes",
+          "type": "Hash"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "TempleElement"
+      },
+      "description": "Sets multiple attributes to the element.",
+      "example": "element.setAttributes({ href: '/', title: 'Home' });"
+    }
+  },
+  "TempleEmitter": {
+    "emit": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "event",
+          "type": "string"
+        },
+        {
+          "kind": "property",
+          "list": false,
+          "name": "target",
+          "type": "T"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "TempleEmitter"
+      },
+      "description": "Emits an event with optional parameters.",
+      "example": "emitter.emit('click', { x: 10, y: 20 });"
+    },
+    "unbind": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "event",
+          "type": "string"
+        },
+        {
+          "kind": "property",
+          "list": false,
+          "name": "listener",
+          "type": "Function"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "TempleEmitter"
+      },
+      "description": "Removes an event listener.",
+      "example": "emitter.unbind('click', handleClick);"
+    },
+    "on": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "event",
+          "type": "string"
+        },
+        {
+          "kind": "property",
+          "list": false,
+          "name": "listener",
+          "type": "Function"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "TempleEmitter"
+      },
+      "description": "Adds an event listener.",
+      "example": "emitter.on('click', handleClick);"
+    },
+    "once": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "event",
+          "type": "string"
+        },
+        {
+          "kind": "property",
+          "list": false,
+          "name": "listener",
+          "type": "Function"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "TempleEmitter"
+      },
+      "description": "Adds an event listener that only fires once.",
+      "example": "emitter.once('click', handleClick);"
+    }
+  },
+  "TempleAPI": {
+    "BUILD_ID": {
+      "kind": "property",
+      "list": false,
+      "type": "string",
+      "description": "The unique build ID used to map the build cache.",
+      "example": "TempleAPI.BUILD_ID; //--> 'abc123'"
+    },
+    "TempleComponent": {
+      "kind": "property",
+      "list": false,
+      "type": "TempleComponent",
+      "description": "The Temple component class used to create custom elements.",
+      "example": "new TempleAPI.TempleComponent();"
+    },
+    "TempleElement": {
+      "kind": "property",
+      "list": false,
+      "type": "TempleElement",
+      "description": "The Temple element class used to create custom elements.",
+      "example": "new TempleAPI.TempleElement(\n  document.createElement('a'),\n  { href: '/' }\n); ]"
+    },
+    "TempleEmitter": {
+      "kind": "property",
+      "list": false,
+      "type": "TempleEmitter",
+      "description": "The Temple emitter class used to create custom events.",
+      "example": "new TempleAPI.TempleEmitter();"
+    },
+    "TempleException": {
+      "kind": "property",
+      "list": false,
+      "type": "TempleException",
+      "description": "The Temple exception class used to create custom errors.",
+      "example": "throw TempleAPI.TempleException.for('error message');"
+    },
+    "TempleRegistry": {
+      "kind": "property",
+      "list": false,
+      "type": "TempleRegistry",
+      "description": "The Temple registry class used to store custom elements.",
+      "example": "new TempleAPI.TempleRegistry.createElement('a', { href: '/' });"
+    },
+    "children": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "component",
+          "type": "TempleComponent"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": true,
+        "type": "Node"
+      },
+      "description": "Returns an array of child nodes.",
+      "example": "TempleAPI.children(component); //--> [ Element, Text, Element, ... ]"
+    },
+    "components": {
+      "kind": "property",
+      "list": false,
+      "type": "Record<string, TempleComponent>",
+      "description": "Returns an object of Temple components classes used in the DOM.",
+      "example": "new TempleAPI.components['fancy-button']; //--> TempleComponent"
+    },
+    "data": {
+      "kind": "property",
+      "list": false,
+      "type": "TempleDataMap",
+      "description": "The Temple data map used to bring server side data to the client.",
+      "example": "TempleAPI.data.get('props');"
+    },
+    "emitter": {
+      "kind": "property",
+      "list": false,
+      "type": "TempleEmitter",
+      "description": "The Temple emitter class used to create custom events.",
+      "example": "TempleAPI.emitter.on('click', () => {});"
+    },
+    "props": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "component",
+          "type": "TempleComponent"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": true,
+        "type": "Hash"
+      },
+      "description": "Returns an object of component attributes",
+      "example": "TempleAPI.props(component); //--> { foo: 'bar', count: 4 }"
+    },
+    "signal": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "component",
+          "type": "TempleComponent"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "Signal"
+      },
+      "description": "Returns a signal object used to re-render components whenever its value changes",
+      "example": "const count = TempleAPI.signal(1, component)"
     }
   }
 }

@@ -58,7 +58,6 @@
     <h6>Introduction</h6>
     <a href="/temple/docs/index.html">Documentation</a>
     <a href="/temple/docs/getting-started.html">Getting Started</a>
-    <a href="/temple/docs/frequent-questions.html">Frequent Questions</a>
 
     <h6>Features</h6>
     <a href="/temple/docs/markup-syntax.html">Markup Syntax</a>
@@ -73,16 +72,26 @@
     <a href="/temple/docs/static-site.html">Static Site Generator</a>
     <a href="/temple/docs/component-publisher.html">Component Publisher</a>
     <a href="/temple/docs/developer-tools.html">Developer Tools</a>
-
-    <h6>Contributing</h6>
-    <a href="/temple/docs/latest-updates.html">Latest Updates</a>
-    <a href="/temple/docs/contributing-guide.html">Contribution Guide</a>
-    <a href="/temple/docs/known-issues.html">Known Issues</a>
   </nav>
 </aside>
     <panel-main class="panel-main">
       <div class="docs container">
         <h1>Client API</h1>
+
+        <i18n-translate p trim>
+          Temple exposes a variable on the browser called 
+          <ide-code inline>TempleAPI</ide-code> that includes all the 
+          components, classes, functions and variables used to render
+          the document on the client-side. 
+        </i18n-translate>
+
+        <tui-alert curved secondary>
+          <i class="fas fa-exclamation-triangle"></i>
+          <strong>Warning:</strong> Using the client API in the wrong 
+          way could possibly break your client application.
+        </tui-alert>
+
+        <api-ui start="TempleAPI"></api-ui>
         
         <nav class="pager">
           <a class="prev" href="/temple/docs/compiler-api.html">

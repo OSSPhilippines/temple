@@ -58,7 +58,6 @@
     <h6>Introduction</h6>
     <a href="/temple/docs/index.html">Documentation</a>
     <a href="/temple/docs/getting-started.html">Getting Started</a>
-    <a href="/temple/docs/frequent-questions.html">Frequent Questions</a>
 
     <h6>Features</h6>
     <a href="/temple/docs/markup-syntax.html">Markup Syntax</a>
@@ -73,16 +72,233 @@
     <a href="/temple/docs/static-site.html">Static Site Generator</a>
     <a href="/temple/docs/component-publisher.html">Component Publisher</a>
     <a href="/temple/docs/developer-tools.html">Developer Tools</a>
-
-    <h6>Contributing</h6>
-    <a href="/temple/docs/latest-updates.html">Latest Updates</a>
-    <a href="/temple/docs/contributing-guide.html">Contribution Guide</a>
-    <a href="/temple/docs/known-issues.html">Known Issues</a>
   </nav>
 </aside>
     <panel-main class="panel-main">
       <div class="docs container">
         <h1>Single Page App</h1>
+
+        <i18n-translate p trim>
+          A single page application (SPA) is a website or web 
+          application that dynamically rewrites a current web page with 
+          new data from a web server, instead of the default method of 
+          a web browser loading entire new pages. Temple is capable of 
+          creating reactive SPAs using Webpack and TypeScript.
+        </i18n-translate>
+
+        <i18n-translate p trim>
+          First install the following Temple packages.
+        </i18n-translate>
+        <ide-code lang="bash">
+          npm install --save-dev @ossph/temple @ossph/temple-loader
+        </ide-code>
+
+        <i18n-translate p trim>
+          Then, install the following TypeScript packages.
+        </i18n-translate>
+        <ide-code lang="bash">
+          npm install --save-dev @types/node ts-loader ts-node typescript
+        </ide-code>
+
+        <i18n-translate p trim>
+          Then, install the following Webpack packages.
+        </i18n-translate>
+        <ide-code lang="bash">
+          npm install --save-dev html-webpack-plugin webpack-dev-server webpack webpack-cli
+        </ide-code>
+
+        <i18n-translate p trim>
+          Next create the following files and directories.
+        </i18n-translate>
+
+        <ide-app  title="My Project">
+          <div class="panel-head">
+            <div class="tabs">
+              <tui-tab class="tab" group="project" selector="#client-ts">
+                src/client.ts
+              </tui-tab>
+              <tui-tab class="tab" group="project" selector="#app-tml">
+                src/app.tml
+              </tui-tab>
+              <tui-tab class="tab" group="project" selector="#index-html">
+                index.html
+              </tui-tab>
+              <tui-tab class="tab active" group="project" selector="#webpack-js">
+                webpack.config.js
+              </tui-tab>
+              <tui-tab class="tab" group="project" selector="#tsconfig-json">
+                tsconfig.json
+              </tui-tab>
+              <tui-tab class="tab" group="project" selector="#package-json">
+                package.json
+              </tui-tab>
+            </div>
+          </div>
+          <div class="panel-left">
+            <h5 class="folder">
+              <i class="fas fa-fw fa-chevron-down"></i>
+              <span>src</span>
+            </h5>
+            <tui-tab class="shift-1 block" group="project" selector="#app-tml">
+              <i class="fas fa-fw fa-file"></i>
+              app.tml
+            </tui-tab>
+            <tui-tab class="shift-1 block" group="project" selector="#client-ts">
+              <i class="fas fa-fw fa-file"></i>
+              client.ts
+            </tui-tab>
+            <tui-tab class="block" group="project" selector="#index-html">
+              <i class="fas fa-fw fa-file"></i>
+              index.html
+            </tui-tab>
+            <tui-tab class="block" group="project" selector="#package-json">
+              <i class="fas fa-fw fa-file"></i>
+              package.json
+            </tui-tab>
+            <tui-tab class="block" group="project" selector="#tsconfig-json">
+              <i class="fas fa-fw fa-file"></i>
+              tsconfig.json
+            </tui-tab>
+            <tui-tab class="block active" group="project" selector="#webpack-js">
+              <i class="fas fa-fw fa-file"></i>
+              webpack.config.js
+            </tui-tab>
+          </div>
+          <div class="panel-main">
+            <main>
+              <ide-code id="client-ts" style="display:none" lang="js" numbers trim >
+                import TempleComponent from './app.tml';
+
+                TempleComponent.register();
+              </ide-code>
+              <ide-code id="app-tml" style="display:none" numbers trim >
+                &lt;script&gt;
+                  const title = 'Single Page App';
+                &lt;/script&gt;
+                &lt;h1&gt;{title}&lt;/h1&gt;
+              </ide-code>
+              <ide-code id="index-html" style="display:none" numbers trim >
+                &lt;!DOCTYPE html&gt;
+                &lt;html&gt;
+                  &lt;head&gt;
+                    &lt;style&gt;
+                      body {
+                        font-family: Arial, Helvetica, sans-serif;
+                        margin: 0;
+                        padding: 0;
+                        width: 100vw;
+                        height: 100vh;
+                      }
+                    &lt;/style&gt;
+                  &lt;/head&gt;
+                  &lt;body&gt;
+                    &lt;temple-app&gt;&lt;/temple-app&gt;
+                  &lt;/body&gt;
+                &lt;/html&gt;
+              </ide-code>
+              <ide-code id="webpack-js" lang="js" numbers trim >
+                const path = require('path');
+                const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+                module.exports = {
+                  // https://webpack.js.org/concepts/entry-points/#multi-page-application
+                  entry: {
+                    index: './src/client.ts'
+                  },
+                  output: {
+                    path: path.resolve(__dirname, './dist'),
+                    filename: '[name].bundle.js',
+                  },
+                  module: {
+                    rules: [
+                      {
+                        test: /.tml$/,
+                        use: {
+                          loader: '@ossph/temple-loader',
+                          options: { minify: false }
+                        },
+                        exclude: /node_modules/,
+                      },
+                      {
+                        test: /.ts$/,
+                        use: 'ts-loader',
+                        exclude: /node_modules/,
+                      },
+                    ],
+                  },
+                  resolve: {
+                    extensions: ['.js', '.ts', '.tml'],
+                  },
+                  // https://webpack.js.org/configuration/dev-server/
+                  devServer: {
+                    port: 8080
+                  },
+                  plugins: [
+                    new HtmlWebpackPlugin({
+                      title: 'Temple',
+                      template: "index.html",
+                    })
+                  ]
+                };
+              </ide-code>
+              <ide-code id="tsconfig-json" style="display:none" lang="js" numbers trim >
+                {
+                  "compilerOptions": {
+                    "declaration": true,
+                    "esModuleInterop": true,
+                    "lib": [ "es2021", "es7", "es6", "dom" ],
+                    "module": "commonjs",
+                    "noUnusedLocals": true,
+                    "outDir": "./dist/",
+                    "preserveConstEnums": true,
+                    "resolveJsonModule": true,
+                    "removeComments": true,
+                    "sourceMap": false,
+                    "strict": true,
+                    "target": "es6",
+                    "skipLibCheck": true
+                  },
+                  "include": [ 
+                    "src/**/*.ts", 
+                    "@ossph/temple/types"
+                  ],
+                  "exclude": [ "dist", "node_modules" ]
+                }
+              </ide-code>
+              <ide-code id="package-json" style="display:none" lang="js" numbers trim >
+                {
+                  "name": "my-spa",
+                  "version": "1.0.0",
+                  "private": true,
+                  "scripts": {
+                    "dev": "webpack-dev-server --mode development",
+                    "build": "webpack --mode production"
+                  },
+                  "devDependencies": {
+                    "@ossph/temple": "0.0.15"
+                    "@ossph/temple-loader": "0.0.15",
+                    "@types/node": "22.1.0",
+                    "html-webpack-plugin": "5.6.0",
+                    "webpack-dev-server": "5.0.4",
+                    "ts-loader": "9.5.1",
+                    "ts-node": "10.9.2",
+                    "typescript": "5.4.5",
+                    "webpack": "5.91.0",
+                    "webpack-cli": "5.1.4"
+                  }
+                }
+              </ide-code>
+            </main>
+          </div>
+        </ide-app>
+        <i18n-translate p trim>
+          To test the SPA and see the results, run the following command in terminal.
+        </i18n-translate>
+        <ide-app title="Terminal">
+          <ide-code lang="bash">
+            npm run dev
+          </ide-code>
+        </ide-app>
         
         <nav class="pager">
           <a class="prev" href="/temple/docs/template-engine.html">

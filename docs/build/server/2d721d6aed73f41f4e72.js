@@ -1,4 +1,4 @@
-var TempleBundle = (() => {
+var TempleAPI = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -687,11 +687,6 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`Getting Started`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/frequent-questions.html` }, [
-                    import_server.TempleRegistry.createText(`Frequent Questions`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
 
     `, false),
                   import_server.TempleRegistry.createElement("h6", {}, [
@@ -754,27 +749,6 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`Developer Tools`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
-
-    `, false),
-                  import_server.TempleRegistry.createElement("h6", {}, [
-                    import_server.TempleRegistry.createText(`Contributing`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/latest-updates.html` }, [
-                    import_server.TempleRegistry.createText(`Latest Updates`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/contributing-guide.html` }, [
-                    import_server.TempleRegistry.createText(`Contribution Guide`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/known-issues.html` }, [
-                    import_server.TempleRegistry.createText(`Known Issues`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
   `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
@@ -797,8 +771,20 @@ ${document2}`;
         `, false),
                 import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
                   import_server.TempleRegistry.createText(`
-          Create a project with the following structure and files using 
-          Temple, TypeScript and the native Node.js HTTP server.
+          Template engines are used when you want to rapidly build web 
+          applications that are split into different pages. Templates 
+          also enable fast rendering of the server-side data that needs
+          to be passed to the application. You can use Temple, TypeScript 
+          and the native Node.js HTTP server to serve up HTML documents
+          from the server-side.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          First, create a project with the following structure and files.
         `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
@@ -965,7 +951,6 @@ ${document2}`;
                   },
                   "devDependencies": {
                     "@ossph/temple-dev": "0.0.15",
-                    "@types/express": "4.17.21",
                     "@types/node": "22.1.0",
                     "ts-node": "10.9.2",
                     "typescript": "5.5.4"
@@ -1005,15 +990,22 @@ ${document2}`;
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("ide-app", { "title": `Terminal` }, [
+                import_server.TempleRegistry.createElement("ide-code", { "lang": `bash` }, [
                   import_server.TempleRegistry.createText(`
+          npm run dev
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Load 
           `, false),
-                  import_server.TempleRegistry.createElement("ide-code", { "lang": `bash` }, [
-                    import_server.TempleRegistry.createText(`
-            npm i && npx ts-node src/index.ts
-          `, false)
+                  import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "inline": true }, [
+                    import_server.TempleRegistry.createText(`'http://localhost:3000/'`, false)
                   ]),
-                  import_server.TempleRegistry.createText(`
+                  import_server.TempleRegistry.createText(` 
+          in your browser to see your application.
         `, false)
                 ]),
                 import_server.TempleRegistry.createText(`

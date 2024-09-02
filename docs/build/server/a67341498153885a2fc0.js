@@ -1,4 +1,4 @@
-var TempleBundle = (() => {
+var TempleAPI = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -688,11 +688,6 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`Getting Started`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/frequent-questions.html` }, [
-                    import_server.TempleRegistry.createText(`Frequent Questions`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
 
     `, false),
                   import_server.TempleRegistry.createElement("h6", {}, [
@@ -753,27 +748,6 @@ ${document2}`;
     `, false),
                   import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/developer-tools.html` }, [
                     import_server.TempleRegistry.createText(`Developer Tools`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-
-    `, false),
-                  import_server.TempleRegistry.createElement("h6", {}, [
-                    import_server.TempleRegistry.createText(`Contributing`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/latest-updates.html` }, [
-                    import_server.TempleRegistry.createText(`Latest Updates`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/contributing-guide.html` }, [
-                    import_server.TempleRegistry.createText(`Contribution Guide`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/known-issues.html` }, [
-                    import_server.TempleRegistry.createText(`Known Issues`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
   `, false)
@@ -1124,10 +1098,10 @@ ${document2}`;
                   ]),
                   import_server.TempleRegistry.createText(`
           `, false),
-                  import_server.TempleRegistry.createElement("a", { "class": `next`, "href": `/temple/docs/frequent-questions.html` }, [
+                  import_server.TempleRegistry.createElement("a", { "class": `next`, "href": `/temple/docs/markup-syntax.html` }, [
                     import_server.TempleRegistry.createText(`
             `, false),
-                    ...this._toNodeList(_("Frequent Questions")),
+                    ...this._toNodeList(_("Markup Syntax")),
                     import_server.TempleRegistry.createText(`
             `, false),
                     import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-chevron-right` }, []),

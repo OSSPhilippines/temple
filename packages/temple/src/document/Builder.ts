@@ -24,7 +24,7 @@ export default class Builder {
   public static load(source: string) {
     const context = load(source);
     //get the Document
-    const Document = context.TempleBundle.default as ServerDocumentClass;
+    const Document = context.TempleAPI.default as ServerDocumentClass;
     //instantiate document
     const document = new Document();
     return {
@@ -143,7 +143,7 @@ export default class Builder {
         bundle: true,
         minify: this._minify,
         platform: 'browser',
-        globalName: 'TempleBundle',
+        globalName: 'TempleAPI',
         plugins: [ 
           esAliasPlugin({
             cwd: this._document.cwd,
@@ -242,7 +242,7 @@ export default class Builder {
         minify: this._minify,
         bundle: true,
         platform: 'node',
-        globalName: 'TempleBundle',
+        globalName: 'TempleAPI',
         plugins: [ 
           esAliasPlugin({
             cwd: this._document.cwd,

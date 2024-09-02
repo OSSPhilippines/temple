@@ -1,4 +1,4 @@
-var TempleBundle = (() => {
+var TempleAPI = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -229,8 +229,7 @@ var TempleBundle = (() => {
         static get elements() {
           return this._elements;
         }
-        static createComponent(definition, attributes, children8 = []) {
-          const tagname = definition.component[0];
+        static createComponent(tagname, definition, attributes, children8 = []) {
           const template = document.createElement("template");
           template.innerHTML = `<${tagname}></${tagname}>`;
           const fragment = template.content;
@@ -370,6 +369,7 @@ var TempleBundle = (() => {
           this._attributes = {};
           this._props = {};
           this._children = void 0;
+          this._rendering = false;
         }
         static register() {
           customElements.define(this.component[0], this);
@@ -429,7 +429,10 @@ var TempleBundle = (() => {
           const parent = this.getParentComponent();
           if (parent && !parent.initiated) {
             return;
+          } else if (this._rendering) {
+            return;
           }
+          this._rendering = true;
           data_1.default.set("current", this);
           const styles = this.styles();
           if (!this._template) {
@@ -459,6 +462,7 @@ var TempleBundle = (() => {
           data_1.default.delete("current");
           this._initiated = true;
           TempleEmitter_1.default.emit("mounted", this);
+          this._rendering = false;
           return this.shadowRoot ? this.shadowRoot.innerHTML : this.innerHTML;
         }
         wait() {
@@ -2957,7 +2961,7 @@ var TempleBundle = (() => {
       return ``;
     }
     template() {
-      const { trim = false, p = false, div = false } = (0, import_temple5.props)();
+      const { trim = false, p = false, li = false, div = false } = (0, import_temple5.props)();
       const childlist = (0, import_temple5.children)();
       const phrase = [];
       const variables = [];
@@ -2990,6 +2994,15 @@ var TempleBundle = (() => {
           import_client6.TempleRegistry.createText(`
       `, false),
           import_client6.TempleRegistry.createElement("p", {}, [
+            ...this._toNodeList(translations)
+          ]).element,
+          import_client6.TempleRegistry.createText(`
+    `, false)
+        ] : !!li ? [
+          ,
+          import_client6.TempleRegistry.createText(`
+      `, false),
+          import_client6.TempleRegistry.createElement("li", {}, [
             ...this._toNodeList(translations)
           ]).element,
           import_client6.TempleRegistry.createText(`

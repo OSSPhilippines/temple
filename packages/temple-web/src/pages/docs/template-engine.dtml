@@ -27,8 +27,16 @@
         <h1>{_('Template Engine')}</h1>
 
         <i18n-translate p trim>
-          Create a project with the following structure and files using 
-          Temple, TypeScript and the native Node.js HTTP server.
+          Template engines are used when you want to rapidly build web 
+          applications that are split into different pages. Templates 
+          also enable fast rendering of the server-side data that needs
+          to be passed to the application. You can use Temple, TypeScript 
+          and the native Node.js HTTP server to serve up HTML documents
+          from the server-side.
+        </i18n-translate>
+
+        <i18n-translate p trim>
+          First, create a project with the following structure and files.
         </i18n-translate>
         <ide-app panel={410} title="My Project">
           <div class="panel-head">
@@ -125,7 +133,6 @@
                   },
                   "devDependencies": {
                     "@ossph/temple-dev": "0.0.15",
-                    "@types/express": "4.17.21",
                     "@types/node": "22.1.0",
                     "ts-node": "10.9.2",
                     "typescript": "5.5.4"
@@ -144,11 +151,14 @@
           is using the most basic Temple syntax. To test the script and 
           see the results, run the following command in terminal.
         </i18n-translate>
-        <ide-app title="Terminal">
-          <ide-code lang="bash">
-            npm i && npx ts-node src/index.ts
-          </ide-code>
-        </ide-app>
+        <ide-code lang="bash">
+          npm run dev
+        </ide-code>
+        <i18n-translate p trim>
+          Load 
+          <ide-code lang="js" inline>'http://localhost:3000/'</ide-code> 
+          in your browser to see your application.
+        </i18n-translate>
         
         <nav class="pager">
           <a class="prev" href="/temple/docs/client-api.html">

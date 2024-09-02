@@ -26,7 +26,7 @@
     <script src="/dev.js"></script>
   
 </head>
-  <body class="dark panel with-head with-left">
+  <body class="dark panel with-head with-left with-right">
     <header class="head panel-head">
   <i class="menu fas fa-fw fa-bars" ></i>
   <a href="/temple">
@@ -58,7 +58,6 @@
     <h6>Introduction</h6>
     <a href="/temple/docs/index.html">Documentation</a>
     <a href="/temple/docs/getting-started.html">Getting Started</a>
-    <a href="/temple/docs/frequent-questions.html">Frequent Questions</a>
 
     <h6>Features</h6>
     <a href="/temple/docs/markup-syntax.html">Markup Syntax</a>
@@ -73,43 +72,27 @@
     <a href="/temple/docs/static-site.html">Static Site Generator</a>
     <a href="/temple/docs/component-publisher.html">Component Publisher</a>
     <a href="/temple/docs/developer-tools.html">Developer Tools</a>
-
-    <h6>Contributing</h6>
-    <a href="/temple/docs/latest-updates.html">Latest Updates</a>
-    <a href="/temple/docs/contributing-guide.html">Contribution Guide</a>
-    <a href="/temple/docs/known-issues.html">Known Issues</a>
   </nav>
 </aside>
+    <aside class="panel-right right">
+      <h6>On this page</h6>
+      <nav>
+        <a href="#imports">Imports</a>
+        <a href="#styles">Styles</a>
+        <a href="#scripts">Scripts</a>
+        <a href="#markup">Markup</a>
+        <nav>
+          <a href="#tagnames">Tag Names</a>
+          <a href="#attributes">Attributes</a>
+          <a href="#conditionals">Conditionals</a>
+          <a href="#iterations">Iterations</a>
+          <a href="#trycatch">Try/Catch</a>
+        </nav>
+      </nav>
+    </aside>
     <panel-main class="panel-main">
       <div class="docs container">
         <h1>Markup Syntax</h1>
-
-        <ide-app title="TL;DR">
-          <ide-code numbers >
-            &lt;link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" /&gt;
-            
-            &lt;style&gt;
-              host: a {
-                color: #333;
-              }
-            &lt;/style&gt;
-
-            &lt;script&gt;
-              import { getTitle, getDetail, getLink } from '@/data/article';
-              const title = getTitle();
-              const href = getLink();
-              const attributes = { target: '_blank' };
-            &lt;/script&gt;
-
-            &lt;a title={title} {href} {...attributes}&gt;
-              {title}
-            &lt;/a&gt;
-
-            &lt;i18n-translate title=title&gt;
-              {getDetail()}
-            &lt;/i18n-translate&gt;
-          </ide-code>
-        </ide-app>
 
         <i18n-translate p trim>
           Components are the building blocks of Temple files. Documents 
@@ -140,6 +123,7 @@
           </ide-code>
         </ide-app>
 
+        <a name="imports"></a>
         <h2>Imports</h2>
 
         <i18n-translate p trim>
@@ -197,6 +181,7 @@
           attribute specifies the tag name of the imported component or template.
         </i18n-translate>
 
+        <a name="styles"></a>
         <h2>Styles</h2>
 
         <i18n-translate p trim>
@@ -252,6 +237,7 @@
           </ide-code>
         </ide-app>
 
+        <a name="scripts"></a>
         <h2>Scripts</h2>
 
         <i18n-translate p trim>
@@ -306,6 +292,7 @@
           </ide-code>
         </ide-app>
 
+        <a name="markup"></a>
         <h2>Markup</h2>
 
         <i18n-translate p trim>
@@ -315,6 +302,7 @@
           can be used in other projects any modern browser.
         </i18n-translate>
 
+        <a name="tagnames"></a>
         <h3>Tag Names</h3>
 
         <i18n-translate p trim>
@@ -384,10 +372,9 @@
           </i18n-translate>
         </ul>
 
-        <tui-alert solid curved info>
-          <i class="fas fa-info-circle"></i>
-          &nbsp;
-          Any markup auto corrected by browser will cause data syncing 
+        <tui-alert solid curved secondary>
+          <i class="fas fa-exclamation-triangle"></i>
+          <strong>Warning:</strong> Any markup auto corrected by browser will cause data syncing 
           issues with Temple.
         </tui-alert>
 
@@ -398,6 +385,7 @@
           <ide-code inline>&lt;i18n-translate&gt;&lt;/i18n-translate&gt;</ide-code>.
         </i18n-translate>
 
+        <a name="attributes"></a>
         <h3>Attributes</h3>
 
         <ide-app title="Markup Expressions">
@@ -475,6 +463,7 @@
           You can assign any valid JavaScript expression to an attribute.
         </i18n-translate>
 
+        <a name="conditionals"></a>
         <h3>Conditionals</h3>
 
         <ide-app title="Conditionals">
@@ -538,6 +527,7 @@
           show content when the previous condition is false.
         </i18n-translate>
 
+        <a name="iterations"></a>
         <h3>Iterations</h3>
 
         <ide-app title="Each">
@@ -583,6 +573,7 @@
           variable name.
         </i18n-translate>
 
+        <a name="trycatch"></a>
         <h3>Try/Catch</h3>
 
         <ide-app title="Try/Catch Example">
@@ -609,9 +600,9 @@
         </i18n-translate>
 
         <nav class="pager">
-          <a class="prev" href="/temple/docs/frequent-questions.html">
+          <a class="prev" href="/temple/docs/getting-started.html">
             <i class="fas fa-fw fa-chevron-left"></i>
-            Frequent Questions
+            Getting Started
           </a>
           <a class="next" href="/temple/docs/state-management.html">
             State Management

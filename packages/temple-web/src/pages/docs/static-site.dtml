@@ -2,6 +2,9 @@
 <link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
 <link rel="import" type="template" href="@/modules/panel/left.tml" name="panel-left" />
 <link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@/modules/ide/code.tml" name="ide-code" />
+<link rel="import" type="component" href="@/modules/ide/app.tml" name="ide-app" />
+<link rel="import" type="component" href="@/modules/tui/tab.tml" name="tui-tab" />
 <link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
 <script>
   import { env } from '@ossph/temple';
@@ -22,6 +25,168 @@
     <panel-main class="panel-main">
       <div class="docs container">
         <h1>{_('Static Site Generator')}</h1>
+
+        <i18n-translate p trim>
+          A static site generator is a tool that generates a full static 
+          HTML website based on raw data and a set of templates. 
+          Essentially, a static site generator automates the task of 
+          coding individual HTML pages and gets those pages ready to 
+          serve to users ahead of time. Because these HTML pages are 
+          pre-built, they can load very quickly in browsers. You can use 
+          Temple, TypeScript and the native Node.js HTTP server to 
+          generate HTML documents in order to be served statically.
+        </i18n-translate>
+
+        <i18n-translate p trim>
+          First, create a project with the following structure and files.
+        </i18n-translate>
+        <ide-app panel={410} title="My Project">
+          <div class="panel-head">
+            <div class="tabs">
+              <tui-tab class="tab active" group="project" selector="#index-ts">
+                src/index.ts
+              </tui-tab>
+              <tui-tab class="tab" group="project" selector="#index-dtml">
+                src/pages/index.dtml
+              </tui-tab>
+              <tui-tab class="tab" group="project" selector="#package-json">
+                package.json
+              </tui-tab>
+            </div>
+          </div>
+          <div class="panel-left">
+            <h5 class="folder">
+              <i class="fas fa-fw fa-chevron-down"></i>
+              <span>src</span>
+            </h5>
+            <tui-tab class="shift-1 block active" group="project" selector="#index-ts">
+              <i class="fas fa-fw fa-file"></i>
+              index.ts
+            </tui-tab>
+            <h5 class="folder shift-1">
+              <i class="fas fa-fw fa-chevron-down" style="margin-left:4px"></i>
+              <span>pages</span>
+            </h5>
+            <tui-tab class="shift-2 block" group="project" selector="#index-dtml">
+              <i class="fas fa-fw fa-file"></i>
+              index.dtml
+            </tui-tab>
+            <tui-tab class="block" group="project" selector="#package-json">
+              <i class="fas fa-fw fa-file"></i>
+              package.json
+            </tui-tab>
+          </div>
+          <div class="panel-main">
+            <main>
+              <ide-code id="index-ts" lang="js" numbers trim detab={16}>{`
+                import http from 'http';
+                import temple from '@ossph/temple/compiler';
+
+                //where your pages are:
+                const pages = path.join(__dirname, 'pages');
+                //where your build files are:
+                const build = path.join(__dirname, '../build');
+
+                //create temple compiler
+                const compiler = temple({ 
+                  cwd: __dirname 
+                }).withCache({ 
+                  buildPath: path.join(build, 'build') 
+                });
+                //create http server
+                const server = http.createServer(async (req, res) => {
+                  //for build asset:
+                  if (req.url?.startsWith('/build/')) {
+                    //get filename ie. abc123.js
+                    const filename = req.url.substring(7);
+                    //get asset
+                    const { type, content } = await compiler.asset(filename);
+                    //send response
+                    res.writeHead(200, { 'Content-Type': type });
+                    return res.end(content);
+                  }
+                  // from /foo/bar.html to foo/bar.html
+                  const route = request.url?.substring(1) || 'index.html';
+                  const { fs } = compiler;
+                  const file = path.join(build, route);
+                  //for document pages: 
+                  if (file.endsWith('.html')) {
+                    const route = file.substring(0, file.length - 5);
+                    const template = path.join(pages, route + '.dtml');
+                    if (fs.existsSync(template)) {
+                      //send response
+                      return res.type('text/html').render(route, props);
+                    }
+                  }
+                  //for static files:
+                  if (fs.existsSync(file)) {
+                    res.writeHead(200);
+                    fs.createReadStream(file).pipe(res);
+                    return;
+                  } 
+                  //anything else?
+                  res.statusCode = 404;
+                  res.end('Not Found');
+                });
+                //listen on port 3000
+                server.listen(3000);
+              `}</ide-code>
+              <ide-code id="index-dtml" style="display:none" numbers trim detab={16}>{`
+                <style>
+                  .title { text-align: center; }
+                </style>
+                <script>
+                  import { env, props } from '@ossph/temple';
+                  const { BUILD_ID, APP_DATA } = env();
+                  const { title } = props();
+                </script>
+                <html>
+                  <head>
+                    <title>{title}</title>
+                    <link rel="stylesheet" type="text/css" href={\`/build/\${BUILD_ID}.css\`} />
+                    <script data-app={APP_DATA} src={\`/build/\${BUILD_ID}.js\`}></script>
+                  </head>
+                  <body>
+                    <h1 class="title">{title}</h1>
+                  </body>
+                </html>
+              `}</ide-code>
+              <ide-code id="package-json" style="display:none" lang="js" numbers trim detab={16}>{`
+                {
+                  "name": "my-project",
+                  "version": "1.0.0",
+                  "private": true,
+                  "scripts": {
+                    "dev": "ts-node ./src/index.ts"
+                  },
+                  "dependencies": {
+                    "@ossph/temple": "0.0.15"
+                  },
+                  "devDependencies": {
+                    "@ossph/temple-dev": "0.0.15",
+                    "@types/node": "22.1.0",
+                    "ts-node": "10.9.2",
+                    "typescript": "5.5.4"
+                  }
+                }
+              `}</ide-code>
+            </main>
+          </div>
+        </ide-app>
+
+        <i18n-translate p trim>
+          To test the script and see the results, run the following 
+          command in terminal.
+        </i18n-translate>
+        <ide-code lang="bash">
+          npm run dev
+        </ide-code>
+        <i18n-translate p trim>
+          Load 
+          <ide-code lang="js" inline>'http://localhost:3000/'</ide-code> 
+          in your browser. After loading you should see files that were 
+          generated in a new build folder found in your project root. 
+        </i18n-translate>
         
         <nav class="pager">
           <a class="prev" href="/temple/docs/single-page.html">

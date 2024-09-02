@@ -1,4 +1,4 @@
-var TempleBundle = (() => {
+var TempleAPI = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -687,11 +687,6 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`Getting Started`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/frequent-questions.html` }, [
-                    import_server.TempleRegistry.createText(`Frequent Questions`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
 
     `, false),
                   import_server.TempleRegistry.createElement("h6", {}, [
@@ -754,27 +749,6 @@ ${document2}`;
                     import_server.TempleRegistry.createText(`Developer Tools`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
-
-    `, false),
-                  import_server.TempleRegistry.createElement("h6", {}, [
-                    import_server.TempleRegistry.createText(`Contributing`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/latest-updates.html` }, [
-                    import_server.TempleRegistry.createText(`Latest Updates`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/contributing-guide.html` }, [
-                    import_server.TempleRegistry.createText(`Contribution Guide`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/known-issues.html` }, [
-                    import_server.TempleRegistry.createText(`Known Issues`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
   `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
@@ -791,6 +765,278 @@ ${document2}`;
         `, false),
                 import_server.TempleRegistry.createElement("h1", {}, [
                   ...this._toNodeList(_("Static Site Generator"))
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          A static site generator is a tool that generates a full static 
+          HTML website based on raw data and a set of templates. 
+          Essentially, a static site generator automates the task of 
+          coding individual HTML pages and gets those pages ready to 
+          serve to users ahead of time. Because these HTML pages are 
+          pre-built, they can load very quickly in browsers. You can use 
+          Temple, TypeScript and the native Node.js HTTP server to 
+          generate HTML documents in order to be served statically.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          First, create a project with the following structure and files.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("ide-app", { "panel": 410, "title": `My Project` }, [
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("div", { "class": `panel-head` }, [
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("div", { "class": `tabs` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("tui-tab", { "class": `tab active`, "group": `project`, "selector": `#index-ts` }, [
+                        import_server.TempleRegistry.createText(`
+                src/index.ts
+              `, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("tui-tab", { "class": `tab`, "group": `project`, "selector": `#index-dtml` }, [
+                        import_server.TempleRegistry.createText(`
+                src/pages/index.dtml
+              `, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("tui-tab", { "class": `tab`, "group": `project`, "selector": `#package-json` }, [
+                        import_server.TempleRegistry.createText(`
+                package.json
+              `, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("div", { "class": `panel-left` }, [
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("h5", { "class": `folder` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-chevron-down` }, []),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("span", {}, [
+                        import_server.TempleRegistry.createText(`src`, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("tui-tab", { "class": `shift-1 block active`, "group": `project`, "selector": `#index-ts` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-file` }, []),
+                      import_server.TempleRegistry.createText(`
+              index.ts
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("h5", { "class": `folder shift-1` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-chevron-down`, "style": `margin-left:4px` }, []),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("span", {}, [
+                        import_server.TempleRegistry.createText(`pages`, false)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("tui-tab", { "class": `shift-2 block`, "group": `project`, "selector": `#index-dtml` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-file` }, []),
+                      import_server.TempleRegistry.createText(`
+              index.dtml
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("tui-tab", { "class": `block`, "group": `project`, "selector": `#package-json` }, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-file` }, []),
+                      import_server.TempleRegistry.createText(`
+              package.json
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+          `, false),
+                  import_server.TempleRegistry.createElement("div", { "class": `panel-main` }, [
+                    import_server.TempleRegistry.createText(`
+            `, false),
+                    import_server.TempleRegistry.createElement("main", {}, [
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("ide-code", { "id": `index-ts`, "lang": `js`, "numbers": true, "trim": true, "detab": 16 }, [
+                        ...this._toNodeList(`
+                import http from 'http';
+                import temple from '@ossph/temple/compiler';
+
+                //where your pages are:
+                const pages = path.join(__dirname, 'pages');
+                //where your build files are:
+                const build = path.join(__dirname, '../build');
+
+                //create temple compiler
+                const compiler = temple({ 
+                  cwd: __dirname 
+                }).withCache({ 
+                  buildPath: path.join(build, 'build') 
+                });
+                //create http server
+                const server = http.createServer(async (req, res) => {
+                  //for build asset:
+                  if (req.url?.startsWith('/build/')) {
+                    //get filename ie. abc123.js
+                    const filename = req.url.substring(7);
+                    //get asset
+                    const { type, content } = await compiler.asset(filename);
+                    //send response
+                    res.writeHead(200, { 'Content-Type': type });
+                    return res.end(content);
+                  }
+                  // from /foo/bar.html to foo/bar.html
+                  const route = request.url?.substring(1) || 'index.html';
+                  const { fs } = compiler;
+                  const file = path.join(build, route);
+                  //for document pages: 
+                  if (file.endsWith('.html')) {
+                    const route = file.substring(0, file.length - 5);
+                    const template = path.join(pages, route + '.dtml');
+                    if (fs.existsSync(template)) {
+                      //send response
+                      return res.type('text/html').render(route, props);
+                    }
+                  }
+                  //for static files:
+                  if (fs.existsSync(file)) {
+                    res.writeHead(200);
+                    fs.createReadStream(file).pipe(res);
+                    return;
+                  } 
+                  //anything else?
+                  res.statusCode = 404;
+                  res.end('Not Found');
+                });
+                //listen on port 3000
+                server.listen(3000);
+              `)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("ide-code", { "id": `index-dtml`, "style": `display:none`, "numbers": true, "trim": true, "detab": 16 }, [
+                        ...this._toNodeList(`
+                <style>
+                  .title { text-align: center; }
+                </style>
+                <script>
+                  import { env, props } from '@ossph/temple';
+                  const { BUILD_ID, APP_DATA } = env();
+                  const { title } = props();
+                </script>
+                <html>
+                  <head>
+                    <title>{title}</title>
+                    <link rel="stylesheet" type="text/css" href={\`/build/\${BUILD_ID}.css\`} />
+                    <script data-app={APP_DATA} src={\`/build/\${BUILD_ID}.js\`}></script>
+                  </head>
+                  <body>
+                    <h1 class="title">{title}</h1>
+                  </body>
+                </html>
+              `)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+              `, false),
+                      import_server.TempleRegistry.createElement("ide-code", { "id": `package-json`, "style": `display:none`, "lang": `js`, "numbers": true, "trim": true, "detab": 16 }, [
+                        ...this._toNodeList(`
+                {
+                  "name": "my-project",
+                  "version": "1.0.0",
+                  "private": true,
+                  "scripts": {
+                    "dev": "ts-node ./src/index.ts"
+                  },
+                  "dependencies": {
+                    "@ossph/temple": "0.0.15"
+                  },
+                  "devDependencies": {
+                    "@ossph/temple-dev": "0.0.15",
+                    "@types/node": "22.1.0",
+                    "ts-node": "10.9.2",
+                    "typescript": "5.5.4"
+                  }
+                }
+              `)
+                      ]),
+                      import_server.TempleRegistry.createText(`
+            `, false)
+                    ]),
+                    import_server.TempleRegistry.createText(`
+          `, false)
+                  ]),
+                  import_server.TempleRegistry.createText(`
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          To test the script and see the results, run the following 
+          command in terminal.
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("ide-code", { "lang": `bash` }, [
+                  import_server.TempleRegistry.createText(`
+          npm run dev
+        `, false)
+                ]),
+                import_server.TempleRegistry.createText(`
+        `, false),
+                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
+                  import_server.TempleRegistry.createText(`
+          Load 
+          `, false),
+                  import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "inline": true }, [
+                    import_server.TempleRegistry.createText(`'http://localhost:3000/'`, false)
+                  ]),
+                  import_server.TempleRegistry.createText(` 
+          in your browser. After loading you should see files that were 
+          generated in a new build folder found in your project root. 
+        `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
         

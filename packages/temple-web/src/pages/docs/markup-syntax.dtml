@@ -19,39 +19,28 @@
 </script>
 <html>
   <html-head />
-  <body class="dark panel with-head with-left">
+  <body class="dark panel with-head with-left with-right">
     <panel-head />
     <panel-left />
+    <aside class="panel-right right">
+      <h6>{_('On this page')}</h6>
+      <nav>
+        <a href="#imports">{_('Imports')}</a>
+        <a href="#styles">{_('Styles')}</a>
+        <a href="#scripts">{_('Scripts')}</a>
+        <a href="#markup">{_('Markup')}</a>
+        <nav>
+          <a href="#tagnames">{_('Tag Names')}</a>
+          <a href="#attributes">{_('Attributes')}</a>
+          <a href="#conditionals">{_('Conditionals')}</a>
+          <a href="#iterations">{_('Iterations')}</a>
+          <a href="#trycatch">{_('Try/Catch')}</a>
+        </nav>
+      </nav>
+    </aside>
     <panel-main class="panel-main">
       <div class="docs container">
         <h1>{_('Markup Syntax')}</h1>
-
-        <ide-app title="TL;DR">
-          <ide-code numbers detab={12}>{`
-            <link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
-            
-            <style>
-              host: a {
-                color: #333;
-              }
-            </style>
-
-            <script>
-              import { getTitle, getDetail, getLink } from '@/data/article';
-              const title = getTitle();
-              const href = getLink();
-              const attributes = { target: '_blank' };
-            </script>
-
-            <a title={title} {href} {...attributes}>
-              {title}
-            </a>
-
-            <i18n-translate title=title>
-              {getDetail()}
-            </i18n-translate>
-          `}</ide-code>
-        </ide-app>
 
         <i18n-translate p trim>
           Components are the building blocks of Temple files. Documents 
@@ -82,6 +71,7 @@
           `}</ide-code>
         </ide-app>
 
+        <a name="imports"></a>
         <h2>{_('Imports')}</h2>
 
         <i18n-translate p trim>
@@ -139,6 +129,7 @@
           attribute specifies the tag name of the imported component or template.
         </i18n-translate>
 
+        <a name="styles"></a>
         <h2>{_('Styles')}</h2>
 
         <i18n-translate p trim>
@@ -197,6 +188,7 @@
           `}</ide-code>
         </ide-app>
 
+        <a name="scripts"></a>
         <h2>{_('Scripts')}</h2>
 
         <i18n-translate p trim>
@@ -251,6 +243,7 @@
           `}</ide-code>
         </ide-app>
 
+        <a name="markup"></a>
         <h2>{_('Markup')}</h2>
 
         <i18n-translate p trim>
@@ -260,6 +253,7 @@
           can be used in other projects any modern browser.
         </i18n-translate>
 
+        <a name="tagnames"></a>
         <h3>{_('Tag Names')}</h3>
 
         <i18n-translate p trim>
@@ -329,10 +323,9 @@
           </i18n-translate>
         </ul>
 
-        <tui-alert solid curved info>
-          <i class="fas fa-info-circle"></i>
-          &nbsp;
-          Any markup auto corrected by browser will cause data syncing 
+        <tui-alert solid curved secondary>
+          <i class="fas fa-exclamation-triangle"></i>
+          <strong>Warning:</strong> Any markup auto corrected by browser will cause data syncing 
           issues with Temple.
         </tui-alert>
 
@@ -343,6 +336,7 @@
           <ide-code inline>{`<i18n-translate></i18n-translate>`}</ide-code>.
         </i18n-translate>
 
+        <a name="attributes"></a>
         <h3>{_('Attributes')}</h3>
 
         <ide-app title="Markup Expressions">
@@ -420,6 +414,7 @@
           You can assign any valid JavaScript expression to an attribute.
         </i18n-translate>
 
+        <a name="conditionals"></a>
         <h3>{_('Conditionals')}</h3>
 
         <ide-app title="Conditionals">
@@ -483,6 +478,7 @@
           show content when the previous condition is false.
         </i18n-translate>
 
+        <a name="iterations"></a>
         <h3>{_('Iterations')}</h3>
 
         <ide-app title="Each">
@@ -528,6 +524,7 @@
           variable name.
         </i18n-translate>
 
+        <a name="trycatch"></a>
         <h3>{_('Try/Catch')}</h3>
 
         <ide-app title="Try/Catch Example">
@@ -554,9 +551,9 @@
         </i18n-translate>
 
         <nav class="pager">
-          <a class="prev" href="/temple/docs/frequent-questions.html">
+          <a class="prev" href="/temple/docs/getting-started.html">
             <i class="fas fa-fw fa-chevron-left"></i>
-            {_('Frequent Questions')}
+            {_('Getting Started')}
           </a>
           <a class="next" href="/temple/docs/state-management.html">
             {_('State Management')}

@@ -261,8 +261,12 @@ export default class Transpiler {
         )}`;
       }
       //business as usual
-      const componentName = component.classname;
-      expression += `TempleRegistry.createComponent(${componentName}, {`;
+      const classname = component.classname;
+      const tagname = component.brand 
+        ? `${component.brand}-${component.tagname}`
+        : component.tagname;
+
+      expression += `TempleRegistry.createComponent('${tagname}', ${classname}, {`;
     //this is a tag that is not a component/template
     } else {
       expression += `TempleRegistry.createElement('${token.name}', {`;

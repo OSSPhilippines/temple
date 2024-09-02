@@ -22,6 +22,7 @@ export default class TempleRegistry {
    * Localizes a TempleComponent instance
    */
   public static createComponent(
+    tagname: string,
     definition: TempleComponentClass, 
     attributes: Record<string, any>, 
     children: Element[] = []
@@ -33,8 +34,6 @@ export default class TempleRegistry {
     //definitions to that. This will allow us to encapsule a component
     //inside of another component without having to register it.
 
-    //get the tagname for the component
-    const tagname = definition.component[0];
     // Create a template for the inner component
     const template = document.createElement('template');
     template.innerHTML = `<${tagname}></${tagname}>`;

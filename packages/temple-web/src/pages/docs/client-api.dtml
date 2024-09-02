@@ -2,6 +2,9 @@
 <link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
 <link rel="import" type="template" href="@/modules/panel/left.tml" name="panel-left" />
 <link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@/modules/ide/code.tml" name="ide-code" />
+<link rel="import" type="component" href="@/modules/api/ui.tml" name="api-ui" />
+<link rel="import" type="component" href="@/modules/tui/alert.tml" name="tui-alert" />
 <link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
 <script>
   import { env } from '@ossph/temple';
@@ -22,6 +25,21 @@
     <panel-main class="panel-main">
       <div class="docs container">
         <h1>{_('Client API')}</h1>
+
+        <i18n-translate p trim>
+          Temple exposes a variable on the browser called 
+          <ide-code inline>TempleAPI</ide-code> that includes all the 
+          components, classes, functions and variables used to render
+          the document on the client-side. 
+        </i18n-translate>
+
+        <tui-alert curved secondary>
+          <i class="fas fa-exclamation-triangle"></i>
+          <strong>Warning:</strong> Using the client API in the wrong 
+          way could possibly break your client application.
+        </tui-alert>
+
+        <api-ui start="TempleAPI" />
         
         <nav class="pager">
           <a class="prev" href="/temple/docs/compiler-api.html">

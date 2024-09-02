@@ -58,7 +58,6 @@
     <h6>Introduction</h6>
     <a href="/temple/docs/index.html">Documentation</a>
     <a href="/temple/docs/getting-started.html">Getting Started</a>
-    <a href="/temple/docs/frequent-questions.html">Frequent Questions</a>
 
     <h6>Features</h6>
     <a href="/temple/docs/markup-syntax.html">Markup Syntax</a>
@@ -73,16 +72,35 @@
     <a href="/temple/docs/static-site.html">Static Site Generator</a>
     <a href="/temple/docs/component-publisher.html">Component Publisher</a>
     <a href="/temple/docs/developer-tools.html">Developer Tools</a>
-
-    <h6>Contributing</h6>
-    <a href="/temple/docs/latest-updates.html">Latest Updates</a>
-    <a href="/temple/docs/contributing-guide.html">Contribution Guide</a>
-    <a href="/temple/docs/known-issues.html">Known Issues</a>
   </nav>
 </aside>
     <panel-main class="panel-main">
       <div class="docs container">
         <h1>Compiler API</h1>
+
+        <i18n-translate p trim>
+          The developer interface for the Temple compiler is designed 
+          to be expressive and easily access the Temple library in most 
+          scenarios. To create a new temple compiler you can follow the 
+          code below.
+        </i18n-translate>
+        <ide-code lang="js" trim >
+          import temple from '@ossph/temple';
+          const compiler = temple();
+        </ide-code> 
+        <i18n-translate p trim>  
+          The <ide-code lang="js" inline>temple()</ide-code> 
+          function itself takes in the following options, all of 
+          which are optional.
+        </i18n-translate>
+
+        <api-ui start="TempleOptions"></api-ui>
+        <i18n-translate p trim>
+          Calling <ide-code lang="js" inline>temple()</ide-code> as in 
+          <ide-code lang="js" inline>compiler = temple({/*options*/})</ide-code> 
+          returns the Temple compiler which contains the following object.
+        </i18n-translate>
+        <api-ui></api-ui>
         
         <nav class="pager">
           <a class="prev" href="/temple/docs/component-strategy.html">

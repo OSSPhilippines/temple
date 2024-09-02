@@ -2,6 +2,8 @@
 <link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
 <link rel="import" type="template" href="@/modules/panel/left.tml" name="panel-left" />
 <link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@/modules/ide/code.tml" name="ide-code" />
+<link rel="import" type="component" href="@/modules/api/ui.tml" name="api-ui" />
 <link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
 <script>
   import { env } from '@ossph/temple';
@@ -22,6 +24,30 @@
     <panel-main class="panel-main">
       <div class="docs container">
         <h1>{_('Compiler API')}</h1>
+
+        <i18n-translate p trim>
+          The developer interface for the Temple compiler is designed 
+          to be expressive and easily access the Temple library in most 
+          scenarios. To create a new temple compiler you can follow the 
+          code below.
+        </i18n-translate>
+        <ide-code lang="js" trim detab={10}>
+          import temple from '@ossph/temple';
+          const compiler = temple();
+        </ide-code> 
+        <i18n-translate p trim>  
+          The <ide-code lang="js" inline>temple()</ide-code> 
+          function itself takes in the following options, all of 
+          which are optional.
+        </i18n-translate>
+
+        <api-ui start="TempleOptions" />
+        <i18n-translate p trim>
+          Calling <ide-code lang="js" inline>{`temple()`}</ide-code> as in 
+          <ide-code lang="js" inline>{`compiler = temple({/*options*/})`}</ide-code> 
+          returns the Temple compiler which contains the following object.
+        </i18n-translate>
+        <api-ui />
         
         <nav class="pager">
           <a class="prev" href="/temple/docs/component-strategy.html">

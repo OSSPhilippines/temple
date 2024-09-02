@@ -1,4 +1,4 @@
-var TempleBundle = (() => {
+var TempleAPI = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -229,8 +229,7 @@ var TempleBundle = (() => {
         static get elements() {
           return this._elements;
         }
-        static createComponent(definition, attributes, children6 = []) {
-          const tagname = definition.component[0];
+        static createComponent(tagname, definition, attributes, children6 = []) {
           const template = document.createElement("template");
           template.innerHTML = `<${tagname}></${tagname}>`;
           const fragment = template.content;
@@ -370,6 +369,7 @@ var TempleBundle = (() => {
           this._attributes = {};
           this._props = {};
           this._children = void 0;
+          this._rendering = false;
         }
         static register() {
           customElements.define(this.component[0], this);
@@ -429,7 +429,10 @@ var TempleBundle = (() => {
           const parent = this.getParentComponent();
           if (parent && !parent.initiated) {
             return;
+          } else if (this._rendering) {
+            return;
           }
+          this._rendering = true;
           data_1.default.set("current", this);
           const styles = this.styles();
           if (!this._template) {
@@ -459,6 +462,7 @@ var TempleBundle = (() => {
           data_1.default.delete("current");
           this._initiated = true;
           TempleEmitter_1.default.emit("mounted", this);
+          this._rendering = false;
           return this.shadowRoot ? this.shadowRoot.innerHTML : this.innerHTML;
         }
         wait() {
@@ -2653,7 +2657,7 @@ var TempleBundle = (() => {
       return ``;
     }
     template() {
-      const { trim = false, p = false, div = false } = (0, import_temple4.props)();
+      const { trim = false, p = false, li = false, div = false } = (0, import_temple4.props)();
       const childlist = (0, import_temple4.children)();
       const phrase = [];
       const variables = [];
@@ -2686,6 +2690,15 @@ var TempleBundle = (() => {
           import_client5.TempleRegistry.createText(`
       `, false),
           import_client5.TempleRegistry.createElement("p", {}, [
+            ...this._toNodeList(translations)
+          ]).element,
+          import_client5.TempleRegistry.createText(`
+    `, false)
+        ] : !!li ? [
+          ,
+          import_client5.TempleRegistry.createText(`
+      `, false),
+          import_client5.TempleRegistry.createElement("li", {}, [
             ...this._toNodeList(translations)
           ]).element,
           import_client5.TempleRegistry.createText(`
@@ -2735,7 +2748,7 @@ var TempleBundle = (() => {
       document.body.classList.toggle("panel-left-open");
     };
     import_client6.data.delete("current");
-    const __BINDINGS__ = { "0": { "class": `head panel-head` }, "1": { "class": `menu fas fa-fw fa-bars`, "click": toggle }, "2": { "href": `/temple` }, "3": { "src": `/temple/temple-icon.png`, "alt": `Temple Logo` }, "5": { "class": `tx-white`, "href": `/temple` }, "7": { "href": `/temple/docs/index.html` }, "8": { "class": `github`, "href": `https://github.com/ossPhilippines/temple`, "target": `_blank` }, "9": { "class": `fab fa-github` }, "10": { "class": `npm`, "href": `https://www.npmjs.com/package/temple`, "target": `_blank` }, "11": { "class": `fab fa-npm text-white` }, "12": { "class": `discord`, "href": `https://discord.gg/open-source-software-ph-905496362982981723`, "target": `_blank` }, "13": { "class": `fab fa-discord text-white` }, "14": { "class": `left panel-left` }, "16": { "href": `/temple` }, "17": { "src": `/temple/temple-icon.png`, "alt": `Temple Logo` }, "19": { "class": `tx-white`, "href": `/temple` }, "20": { "class": `toggle fas fa-fw fa-chevron-left`, "click": toggle }, "23": { "href": `/temple/docs/index.html` }, "24": { "href": `/temple/docs/getting-started.html` }, "25": { "href": `/temple/docs/frequent-questions.html` }, "27": { "href": `/temple/docs/markup-syntax.html` }, "28": { "href": `/temple/docs/state-management.html` }, "29": { "href": `/temple/docs/component-strategy.html` }, "30": { "href": `/temple/docs/compiler-api.html` }, "31": { "href": `/temple/docs/client-api.html` }, "33": { "href": `/temple/docs/template-engine.html` }, "34": { "href": `/temple/docs/single-page.html` }, "35": { "href": `/temple/docs/static-site.html` }, "36": { "href": `/temple/docs/component-publisher.html` }, "37": { "href": `/temple/docs/developer-tools.html` }, "39": { "href": `/temple/docs/latest-updates.html` }, "40": { "href": `/temple/docs/contributing-guide.html` }, "41": { "href": `/temple/docs/known-issues.html` }, "42": { "class": `panel-main` }, "43": { "class": `docs container` }, "45": { "p": true, "trim": true }, "46": { "p": true, "trim": true }, "47": { "p": true, "trim": true }, "48": { "p": true, "trim": true }, "49": { "title": `Basic Example` }, "50": { "class": `split-view` }, "51": { "numbers": true, "trim": true, "detab": 14 }, "55": { "p": true, "trim": true }, "56": { "title": `Transpiler Example` }, "57": { "class": `split-view` }, "58": { "numbers": true, "ltrim": true, "detab": 14 }, "59": { "class": `div`, "lang": `js`, "trim": true, "detab": 14 }, "60": { "class": `pager` }, "61": { "class": `next`, "href": `/temple/docs/getting-started.html` }, "62": { "class": `fas fa-fw fa-chevron-right` }, "63": { "class": `foot` } };
+    const __BINDINGS__ = { "0": { "class": `head panel-head` }, "1": { "class": `menu fas fa-fw fa-bars`, "click": toggle }, "2": { "href": `/temple` }, "3": { "src": `/temple/temple-icon.png`, "alt": `Temple Logo` }, "5": { "class": `tx-white`, "href": `/temple` }, "7": { "href": `/temple/docs/index.html` }, "8": { "class": `github`, "href": `https://github.com/ossPhilippines/temple`, "target": `_blank` }, "9": { "class": `fab fa-github` }, "10": { "class": `npm`, "href": `https://www.npmjs.com/package/temple`, "target": `_blank` }, "11": { "class": `fab fa-npm text-white` }, "12": { "class": `discord`, "href": `https://discord.gg/open-source-software-ph-905496362982981723`, "target": `_blank` }, "13": { "class": `fab fa-discord text-white` }, "14": { "class": `left panel-left` }, "16": { "href": `/temple` }, "17": { "src": `/temple/temple-icon.png`, "alt": `Temple Logo` }, "19": { "class": `tx-white`, "href": `/temple` }, "20": { "class": `toggle fas fa-fw fa-chevron-left`, "click": toggle }, "23": { "href": `/temple/docs/index.html` }, "24": { "href": `/temple/docs/getting-started.html` }, "26": { "href": `/temple/docs/markup-syntax.html` }, "27": { "href": `/temple/docs/state-management.html` }, "28": { "href": `/temple/docs/component-strategy.html` }, "29": { "href": `/temple/docs/compiler-api.html` }, "30": { "href": `/temple/docs/client-api.html` }, "32": { "href": `/temple/docs/template-engine.html` }, "33": { "href": `/temple/docs/single-page.html` }, "34": { "href": `/temple/docs/static-site.html` }, "35": { "href": `/temple/docs/component-publisher.html` }, "36": { "href": `/temple/docs/developer-tools.html` }, "37": { "class": `panel-main` }, "38": { "class": `docs container` }, "40": { "p": true, "trim": true }, "41": { "p": true, "trim": true }, "42": { "p": true, "trim": true }, "43": { "p": true, "trim": true }, "44": { "title": `Basic Example` }, "45": { "class": `split-view` }, "46": { "numbers": true, "trim": true, "detab": 14 }, "50": { "p": true, "trim": true }, "51": { "title": `Transpiler Example` }, "52": { "class": `split-view` }, "53": { "numbers": true, "ltrim": true, "detab": 14 }, "54": { "class": `div`, "lang": `js`, "trim": true, "detab": 14 }, "55": { "class": `pager` }, "56": { "class": `next`, "href": `/temple/docs/getting-started.html` }, "57": { "class": `fas fa-fw fa-chevron-right` }, "58": { "class": `foot` } };
     for (const element of document.body.querySelectorAll("*")) {
       const attributes = Object.fromEntries(
         Array.from(element.attributes).map((attribute) => [
