@@ -116,13 +116,11 @@
         </i18n-translate>
         <ide-app title="Server Example">
           <ide-code lang="js" numbers trim >
-            import temple from '@ossph/temple/server';
-            //make a template engine
-            const engine = temple({...options...});
-            //load a Temple file
-            const render = await engine.load('./page.html');
-            //render final HTML
-            const results = render({...props...});
+            import temple from '@ossph/temple/compiler';
+            //make a temple compiler
+            const compiler = temple();
+            //render HTML
+            const results = compiler.render('./page.dtml');
           </ide-code>
         </ide-app>
 
