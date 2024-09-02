@@ -17,14 +17,18 @@ $ npm -i @ossph/temple-express
 ```js
 import path from 'path';
 import express from 'express';
-import engine from '@ossph/temple-express';
+import { view } from '@ossph/temple-express';
 
+//create temple compiler
+const compiler = temple({ cwd: __dirname, minify: false });
+//create express app
 const app = express();
+
 //let's use express' template engine feature
-app.engine('tml', engine({ cwd: __dirname }));
+app.engine('dtml', view(compiler));
 //set the view engine to temple
 app.set('views', path.join(__dirname, 'templates'));
-app.set('view engine', 'tml');
+app.set('view engine', 'dtml');
 //..other routes
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');

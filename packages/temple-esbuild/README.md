@@ -15,17 +15,11 @@ $ npm -i @ossph/temple-esbuild
 ## Usage
 
 ```js
-import path from 'path';
 import esbuild from 'esbuild';
-import { Component } from '@ossph/temple/compiler';
-import { tmlPlugin } from 'temple-esbuild';
-
-const document = path.resolve(__dirname, './app.tml');
-const component = new Component(document, {...options...});
-const tsconfig = path.resolve(__dirname, './tsconfig.json');
+import { esComponentPlugin } from 'temple-esbuild';
 
 esbuild.build({
   entryPoints: [ './app.tml' ],
-  plugins: [ tmlPlugin(component, tsconfig) ]
+  plugins: [ esComponentPlugin() ]
 });
 ```

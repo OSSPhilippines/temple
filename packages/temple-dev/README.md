@@ -16,23 +16,29 @@ $ npm -i @ossph/temple-dev
 # Usage
 
 ```js
-import express from 'express';
+import http from 'http';
 import temple from '@ossph/temple/compiler';
-import { dev, inject } from '@ossph/temple-dev';
+import { dev } from '@ossph/temple-dev';
 
-//setup a template engine
+//create temple compiler
 const compiler = temple({ cwd: __dirname });
-//setup an HTTP server
-const app = express();
-//attach the dev middleware
-app.use(dev({ cwd: __dirname }));
+//1. create dev tools
+const { router, refresh } = dev({ cwd: __dirname });
 
-app.get('/', async (req, res) => {
-  const { document } = await compiler.import('./templates/page.tml');
-  //here we are going to inject the dev 
-  //script needed to listen to the server
-  res.send(inject(document.render()));
+//create http server
+const server = http.createServer(async (req, res) => {
+  //2. Add dev router
+  if (router(req, res)) return;
+  //if home page
+  if (req.url === '/') {
+    //3. sync builder with refresh server
+    refresh.sync(compiler.fromSource('./page.dtml'));
+    //compile the document
+    const html = await compiler.render('./page.dtml');
+    //... send response ...
+  }
+  //... other routes ...
 });
-
-app.listen(3000);
+//listen on port 3000
+server.listen(3000);
 ```

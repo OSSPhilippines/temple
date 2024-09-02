@@ -1,6 +1,6 @@
-# ⛩️ Temple Language
+# ⛩️ Temple
 
-Adds syntax highlighting, formatting, auto-completion, jump-to-definition and linting for .tml files.
+The reactive web component template engine.
 
 ## Install
 
@@ -8,31 +8,18 @@ Adds syntax highlighting, formatting, auto-completion, jump-to-definition and li
 $ npm -i @ossph/temple
 ```
 
-## Server Usage
+## Compiler Usage
 
 ```js
+//on server:
 import temple from '@ossph/temple/compiler';
-//make a template engine
-const compiler = temple({...options...});
-//load a Temple file
-const { document } = await compiler.import('./page.html');
-//render final HTML
-const results = document.render({...props...});
+//make a temple compiler
+const compiler = temple();
+//render HTML
+const results = compiler.render('./page.dtml');
+//show HTML
+console.log(results);
 ```
-
-### Document Options
-
-| Name        | Description                            |
-|-------------|----------------------------------------|
-| fs          | File system where temple files located |
-| cwd         | The current working directory          |
-| brand       | The web component prefix               |
-| cache       | Turn on file caching                   |
-| minify      | Turn on minification                   |
-| bundle      | Turn on file bundling                  |
-| buildFolder | If cache, where to put cached files    |
-| tsconfig    | Location of your tsconfig.json file    |
-
 
 ## Temple Markup
 
@@ -71,8 +58,7 @@ const results = document.render({...props...});
 <!-- page.html -->
 <script>
   import { props } from '@ossph/temple';
-  type PageProps = { name: string };
-  const { name } = props<PageProps>();
+  const { name } = props();
 </script>
 <h1>Hello {name}</h1>
 ```
@@ -83,31 +69,31 @@ const results = document.render({...props...});
 <!-- page.html -->
 <script>
   import { signal } from '@ossph/temple';
-  const name = signal<string>('world');
-  name.value += '!';
+  const name = signal('world');
+  const add = () => name.value += '!';
 </script>
-<h1>Hello {name.value}</h1>
+<h1 click=add>Hello {name.value}</h1>
 ```
 
 **Markup with Imports**
 
 ```html
 <!-- page.html -->
-<link rel="import" href="./my-heading.html">
+<link rel="import" type="component" href="./my-heading.tml" />
 <script>
   const name = 'world';
 </script>
-<my-heading name={name}>Hello</my-heading>
+<my-heading {name}>Hello</my-heading>
 ```
 
 ```html
 <!-- my-heading.html -->
 <script>
-  import { props } from '@ossph/temple';
-  type PageProps = { name: string, children: string };
-  const { name, children } = props<PageProps>();
+  import { props, children } from '@ossph/temple';
+  const { name } = props();
+
 </script>
-<h1>{children} {name}</h1>
+<h1>{children()} {name}</h1>
 ```
 
 **Markup with Conditional**
@@ -141,33 +127,19 @@ const results = document.render({...props...});
 
 ```html
 <!-- page.html -->
-<link rel="import" href="./components/header.tml" />
-<link rel="import" href="./components/paragraph.tml" />
-<link rel="import" href="./components/todo.tml" />
+<link rel="import" type="template" href="./templates/html-head.tml" />
+<link rel="import" type="component" href="./components/to-do.tml" />
 <style>
   body { 
     background-color: #DA532C; 
     color: #EFEFEF; 
   }
-  img { width: 100px; height: 100px; }
-  .title { text-align: center; }
-  .logo { text-align: center; }
-  .description { text-align: center; }
-  .list { text-align: center; }
 </style>
 <html>
-  <head>
-    <title>Temple</title>
-    <link rel="favicon" href="/favicon.ico" />
-    <link rel="shortcut icon" type="image/png" href="/favicon.png" />
-  </head>
-  <body class="light">
-    <header class="title">{potitle}</header>
-    <div class="logo">
-      <img src="/temple-logo.png" alt="Logo" />
-    </div>
-    <paragraph classname="description">{description}</paragraph>
-    <todo list=list start=start />
+  <html-head />
+  <body>
+    <h1>{title}</h1>
+    <to-do list=list start=start />
   </body>
 </html>
 ```
@@ -179,15 +151,7 @@ Current frontend solutions for the most part, come in the form of a
 into the frontend framework and give little export out to support server 
 first solutions. Temple is a modern HTML markup language and a server 
 first template engine with a built-in parser/compiler that generates 
-web components and support reactivity. The focus of Temple are the 
-following.
-
-| Features         | De-Features   |
-|------------------|---------------|
-| Template Engine  | No Hydration  |
-| Web Components   | No Hooks      |
-| Server First     | No Memo       |
-| Reactive Signals | No Brandcuffs |
+web components and support reactivity. 
 
 Temple works with most server frameworks including:
 
