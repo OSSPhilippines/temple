@@ -8,7 +8,7 @@
   <a href="https://github.com/OSSPhilippines/temple/blob/main/README.md#contributing"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" /></a>
   <br />
   <br />
-  <a href="https://ossphilippines.github.io/">Documentation</a>
+  <a href="https://ossphilippines.github.io/temple">Documentation</a>
   <br />
   <hr />
 </div>
