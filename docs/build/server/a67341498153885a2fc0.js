@@ -608,7 +608,7 @@ ${document2}`;
                   ]),
                   import_server.TempleRegistry.createText(`
     `, false),
-                  import_server.TempleRegistry.createElement("a", { "class": `github`, "href": `https://github.com/ossPhilippines/temple`, "target": `_blank` }, [
+                  import_server.TempleRegistry.createElement("a", { "class": `github`, "href": `https://github.com/OSSPhilippines/temple`, "target": `_blank` }, [
                     import_server.TempleRegistry.createText(`
       `, false),
                     import_server.TempleRegistry.createElement("i", { "class": `fab fa-github` }, []),
@@ -617,7 +617,7 @@ ${document2}`;
                   ]),
                   import_server.TempleRegistry.createText(`
     `, false),
-                  import_server.TempleRegistry.createElement("a", { "class": `npm`, "href": `https://www.npmjs.com/package/temple`, "target": `_blank` }, [
+                  import_server.TempleRegistry.createElement("a", { "class": `npm`, "href": `https://www.npmjs.com/package/@ossph/temple`, "target": `_blank` }, [
                     import_server.TempleRegistry.createText(`
       `, false),
                     import_server.TempleRegistry.createElement("i", { "class": `fab fa-npm text-white` }, []),

@@ -8,14 +8,14 @@
     <a href="/temple/docs/index.html">Docs</a>
     <a 
       class="github" 
-      href="https://github.com/ossPhilippines/temple" 
+      href="https://github.com/OSSPhilippines/temple" 
       target="_blank"
     >
       <i class="fab fa-github"></i>
     </a>
     <a 
       class="npm" 
-      href="https://www.npmjs.com/package/temple"
+      href="https://www.npmjs.com/package/@ossph/temple"
       target="_blank"
     >
       <i class="fab fa-npm text-white"></i>
