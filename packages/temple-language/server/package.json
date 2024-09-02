@@ -1,7 +1,7 @@
 {
 	"name": "temple-language-server",
 	"description": "Implementation of temple language server in node.",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"author": "Chris <chris@incept.asia>",
 	"license": "MIT",
 	"repository": {
@@ -12,7 +12,7 @@
     "build": "tsc"
   },
 	"dependencies": {
-		"@ossph/temple": "0.1.0",
+		"@ossph/temple": "0.1.1",
     "vscode-languageserver": "8.1.0",
     "vscode-languageserver-textdocument": "1.0.8",
     "vscode-uri": "3.0.8"

@@ -1,6 +1,6 @@
 {
   "name": "temple-web",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Temple Website",
   "private": true,
   "scripts": {
@@ -9,12 +9,12 @@
     "dev": "NODE_ENV=development ts-node ./src/index.ts"
   },
   "dependencies": {
-    "@ossph/temple": "0.1.0",
+    "@ossph/temple": "0.1.1",
     "express": "4.19.2",
     "prismjs": "1.29.0"
   },
   "devDependencies": {
-    "@ossph/temple-dev": "0.1.0",
+    "@ossph/temple-dev": "0.1.1",
     "@types/express": "4.17.21",
     "@types/node": "22.1.0",
     "@types/prismjs": "1.26.4",
