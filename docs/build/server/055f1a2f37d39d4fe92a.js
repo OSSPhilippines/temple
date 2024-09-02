@@ -239,8 +239,8 @@ var TempleAPI = (() => {
       var TempleElement_1 = __importDefault(require_TempleElement());
       var TempleRegistry_1 = __importDefault(require_TempleRegistry());
       var TempleDocument2 = class {
-        render(props = {}) {
-          data_1.default.set("props", props || {});
+        render(props2 = {}) {
+          data_1.default.set("props", props2 || {});
           data_1.default.set("env", Object.assign(Object.assign({}, process.env || {}), { BUILD_ID: this.id(), APP_DATA: btoa(JSON.stringify(Object.assign(Object.assign({}, Object.fromEntries(data_1.default.entries())), { env: Object.assign(Object.assign({}, Object.fromEntries(Object.entries(process.env || {}).filter((entry) => entry[0].startsWith("PUBLIC_")))), { BUILD_ID: this.id() }) }))) }));
           const children = this.template();
           let document2 = TempleElement_1.default.render(children).trim();
@@ -320,9 +320,9 @@ ${document2}`;
         return mod && mod.__esModule ? mod : { "default": mod };
       };
       Object.defineProperty(exports, "__esModule", { value: true });
-      exports.default = props;
+      exports.default = props2;
       var data_1 = __importDefault(require_data());
-      function props() {
+      function props2() {
         return data_1.default.get("props") || {};
       }
     }
@@ -452,10 +452,10 @@ ${document2}`;
     }
   });
 
-  // temple-document-server-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/docs/static-site.dtml
-  var static_site_exports = {};
-  __export(static_site_exports, {
-    default: () => StaticSite_1bf701a55aaad047771e
+  // temple-document-server-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/500.dtml
+  var __exports = {};
+  __export(__exports, {
+    default: () => N500_055f1a2f37d39d4fe92a
   });
   var import_server = __toESM(require_server2());
   var import_server2 = __toESM(require_server2());
@@ -472,18 +472,27 @@ ${document2}`;
     return phrase;
   };
 
-  // temple-document-server-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/docs/static-site.dtml
-  var StaticSite_1bf701a55aaad047771e = class extends import_server.TempleDocument {
+  // temple-document-server-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/500.dtml
+  var N500_055f1a2f37d39d4fe92a = class extends import_server.TempleDocument {
     id() {
-      return "1bf701a55aaad047771e";
+      return "055f1a2f37d39d4fe92a";
     }
     styles() {
-      return ``;
+      return `.container { padding: 20px; }
+  .error pre {
+    border: 1px solid #222222;
+    font-family: Courier, monospace;
+    line-height: 22px;
+    padding: 20px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }`;
     }
     template() {
-      const url = "/docs/static-site.html";
-      const title = _("Static Site Generator - Temple reactive web component template engine.");
-      const description = _("How to use Temple to generate static sites.");
+      const url = "/temple/500.html";
+      const title = _("Oops... - Temple - The reactive web component template engine.");
+      const description = _("Temple is a template engine hat generates web components and support reactivity.");
+      const { error } = (0, import_server2.props)();
       const toggle = (_2) => {
         document.body.classList.toggle("panel-left-open");
       };
@@ -573,7 +582,7 @@ ${document2}`;
           ],
           import_server.TempleRegistry.createText(`
   `, false),
-          import_server.TempleRegistry.createElement("body", { "class": `dark panel with-head with-left` }, [
+          import_server.TempleRegistry.createElement("body", { "class": `dark panel with-head` }, [
             import_server.TempleRegistry.createText(`
     `, false),
             ...[
@@ -641,440 +650,38 @@ ${document2}`;
             ],
             import_server.TempleRegistry.createText(`
     `, false),
-            ...[
-              import_server.TempleRegistry.createElement("aside", { "class": `left panel-left` }, [
-                import_server.TempleRegistry.createText(`
-  `, false),
-                import_server.TempleRegistry.createElement("header", {}, [
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple` }, [
-                    import_server.TempleRegistry.createText(`
-      `, false),
-                    import_server.TempleRegistry.createElement("img", { "src": `/temple/temple-icon.png`, "alt": `Temple Logo` }),
-                    import_server.TempleRegistry.createText(`
-    `, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("h3", {}, [
-                    import_server.TempleRegistry.createElement("a", { "class": `tx-white`, "href": `/temple` }, [
-                      import_server.TempleRegistry.createText(`Temple`, false)
-                    ])
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("i", { "class": `toggle fas fa-fw fa-chevron-left`, "click": toggle }, []),
-                  import_server.TempleRegistry.createText(`
-  `, false)
-                ]),
-                import_server.TempleRegistry.createText(`
-  `, false),
-                import_server.TempleRegistry.createElement("nav", {}, [
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("h6", {}, [
-                    import_server.TempleRegistry.createText(`Introduction`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/index.html` }, [
-                    import_server.TempleRegistry.createText(`Documentation`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/getting-started.html` }, [
-                    import_server.TempleRegistry.createText(`Getting Started`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-
-    `, false),
-                  import_server.TempleRegistry.createElement("h6", {}, [
-                    import_server.TempleRegistry.createText(`Features`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/markup-syntax.html` }, [
-                    import_server.TempleRegistry.createText(`Markup Syntax`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/state-management.html` }, [
-                    import_server.TempleRegistry.createText(`State Management`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/component-strategy.html` }, [
-                    import_server.TempleRegistry.createText(`Component Strategy`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/compiler-api.html` }, [
-                    import_server.TempleRegistry.createText(`Compiler API`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/client-api.html` }, [
-                    import_server.TempleRegistry.createText(`Client API`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-
-    `, false),
-                  import_server.TempleRegistry.createElement("h6", {}, [
-                    import_server.TempleRegistry.createText(`Usage`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/template-engine.html` }, [
-                    import_server.TempleRegistry.createText(`Template Engine`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/single-page.html` }, [
-                    import_server.TempleRegistry.createText(`Single Page App`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/static-site.html` }, [
-                    import_server.TempleRegistry.createText(`Static Site Generator`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/component-publisher.html` }, [
-                    import_server.TempleRegistry.createText(`Component Publisher`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-    `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/developer-tools.html` }, [
-                    import_server.TempleRegistry.createText(`Developer Tools`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-  `, false)
-                ]),
-                import_server.TempleRegistry.createText(`
-`, false)
-              ])
-            ],
-            import_server.TempleRegistry.createText(`
-    `, false),
             import_server.TempleRegistry.createElement("panel-main", { "class": `panel-main` }, [
               import_server.TempleRegistry.createText(`
       `, false),
-              import_server.TempleRegistry.createElement("div", { "class": `docs container` }, [
+              import_server.TempleRegistry.createElement("div", { "class": `container` }, [
                 import_server.TempleRegistry.createText(`
         `, false),
                 import_server.TempleRegistry.createElement("h1", {}, [
-                  ...this._toNodeList(_("Static Site Generator"))
-                ]),
-                import_server.TempleRegistry.createText(`
-
-        `, false),
-                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
-                  import_server.TempleRegistry.createText(`
-          A static site generator is a tool that generates a full static 
-          HTML website based on raw data and a set of templates. 
-          Essentially, a static site generator automates the task of 
-          coding individual HTML pages and gets those pages ready to 
-          serve to users ahead of time. Because these HTML pages are 
-          pre-built, they can load very quickly in browsers. You can use 
-          Temple, TypeScript and the native Node.js HTTP server to 
-          generate HTML documents in order to be served statically.
-        `, false)
-                ]),
-                import_server.TempleRegistry.createText(`
-
-        `, false),
-                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
-                  import_server.TempleRegistry.createText(`
-          First, create a project with the following structure and files.
-        `, false)
+                  ...this._toNodeList(_("Oops..."))
                 ]),
                 import_server.TempleRegistry.createText(`
         `, false),
-                import_server.TempleRegistry.createElement("ide-app", { "panel": 410, "title": `My Project` }, [
+                import_server.TempleRegistry.createElement("p", {}, [
                   import_server.TempleRegistry.createText(`
           `, false),
-                  import_server.TempleRegistry.createElement("div", { "class": `panel-head` }, [
+                  import_server.TempleRegistry.createElement("i18n-translate", {}, [
                     import_server.TempleRegistry.createText(`
-            `, false),
-                    import_server.TempleRegistry.createElement("div", { "class": `tabs` }, [
-                      import_server.TempleRegistry.createText(`
-              `, false),
-                      import_server.TempleRegistry.createElement("tui-tab", { "class": `tab active`, "group": `project`, "selector": `#index-ts` }, [
-                        import_server.TempleRegistry.createText(`
-                src/index.ts
-              `, false)
-                      ]),
-                      import_server.TempleRegistry.createText(`
-              `, false),
-                      import_server.TempleRegistry.createElement("tui-tab", { "class": `tab`, "group": `project`, "selector": `#index-dtml` }, [
-                        import_server.TempleRegistry.createText(`
-                src/pages/index.dtml
-              `, false)
-                      ]),
-                      import_server.TempleRegistry.createText(`
-              `, false),
-                      import_server.TempleRegistry.createElement("tui-tab", { "class": `tab`, "group": `project`, "selector": `#package-json` }, [
-                        import_server.TempleRegistry.createText(`
-                package.json
-              `, false)
-                      ]),
-                      import_server.TempleRegistry.createText(`
-            `, false)
-                    ]),
-                    import_server.TempleRegistry.createText(`
-          `, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-          `, false),
-                  import_server.TempleRegistry.createElement("div", { "class": `panel-left` }, [
-                    import_server.TempleRegistry.createText(`
-            `, false),
-                    import_server.TempleRegistry.createElement("h5", { "class": `folder` }, [
-                      import_server.TempleRegistry.createText(`
-              `, false),
-                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-chevron-down` }, []),
-                      import_server.TempleRegistry.createText(`
-              `, false),
-                      import_server.TempleRegistry.createElement("span", {}, [
-                        import_server.TempleRegistry.createText(`src`, false)
-                      ]),
-                      import_server.TempleRegistry.createText(`
-            `, false)
-                    ]),
-                    import_server.TempleRegistry.createText(`
-            `, false),
-                    import_server.TempleRegistry.createElement("tui-tab", { "class": `shift-1 block active`, "group": `project`, "selector": `#index-ts` }, [
-                      import_server.TempleRegistry.createText(`
-              `, false),
-                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-file` }, []),
-                      import_server.TempleRegistry.createText(`
-              index.ts
-            `, false)
-                    ]),
-                    import_server.TempleRegistry.createText(`
-            `, false),
-                    import_server.TempleRegistry.createElement("h5", { "class": `folder shift-1` }, [
-                      import_server.TempleRegistry.createText(`
-              `, false),
-                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-chevron-down`, "style": `margin-left:4px` }, []),
-                      import_server.TempleRegistry.createText(`
-              `, false),
-                      import_server.TempleRegistry.createElement("span", {}, [
-                        import_server.TempleRegistry.createText(`pages`, false)
-                      ]),
-                      import_server.TempleRegistry.createText(`
-            `, false)
-                    ]),
-                    import_server.TempleRegistry.createText(`
-            `, false),
-                    import_server.TempleRegistry.createElement("tui-tab", { "class": `shift-2 block`, "group": `project`, "selector": `#index-dtml` }, [
-                      import_server.TempleRegistry.createText(`
-              `, false),
-                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-file` }, []),
-                      import_server.TempleRegistry.createText(`
-              index.dtml
-            `, false)
-                    ]),
-                    import_server.TempleRegistry.createText(`
-            `, false),
-                    import_server.TempleRegistry.createElement("tui-tab", { "class": `block`, "group": `project`, "selector": `#package-json` }, [
-                      import_server.TempleRegistry.createText(`
-              `, false),
-                      import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-file` }, []),
-                      import_server.TempleRegistry.createText(`
-              package.json
-            `, false)
-                    ]),
-                    import_server.TempleRegistry.createText(`
-          `, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-          `, false),
-                  import_server.TempleRegistry.createElement("div", { "class": `panel-main` }, [
-                    import_server.TempleRegistry.createText(`
-            `, false),
-                    import_server.TempleRegistry.createElement("main", {}, [
-                      import_server.TempleRegistry.createText(`
-              `, false),
-                      import_server.TempleRegistry.createElement("ide-code", { "id": `index-ts`, "lang": `js`, "numbers": true, "trim": true, "detab": 16 }, [
-                        ...this._toNodeList(`
-                import http from 'http';
-                import temple from '@ossph/temple/compiler';
-
-                //where your pages are:
-                const pages = path.join(__dirname, 'pages');
-                //where your build files are:
-                const build = path.join(__dirname, '../build');
-
-                //create temple compiler
-                const compiler = temple({ 
-                  cwd: __dirname 
-                }).withCache({ 
-                  buildPath: path.join(build, 'build') 
-                });
-                //create http server
-                const server = http.createServer(async (req, res) => {
-                  //for build asset:
-                  if (req.url?.startsWith('/build/')) {
-                    //get filename ie. abc123.js
-                    const filename = req.url.substring(7);
-                    //get asset
-                    const { type, content } = await compiler.asset(filename);
-                    //send response
-                    res.writeHead(200, { 'Content-Type': type });
-                    return res.end(content);
-                  }
-                  // from /foo/bar.html to foo/bar.html
-                  const route = request.url?.substring(1) || 'index.html';
-                  const { fs } = compiler;
-                  const file = path.join(build, route);
-                  //for document pages: 
-                  if (file.endsWith('.html')) {
-                    const route = file.substring(0, file.length - 5);
-                    const template = path.join(pages, route + '.dtml');
-                    if (fs.existsSync(template)) {
-                      //send response
-                      return res.type('text/html').render(route, props);
-                    }
-                  }
-                  //for static files:
-                  if (fs.existsSync(file)) {
-                    res.writeHead(200);
-                    fs.createReadStream(file).pipe(res);
-                    return;
-                  } 
-                  //anything else?
-                  res.statusCode = 404;
-                  res.end('Not Found');
-                });
-                //listen on port 3000
-                server.listen(3000);
-              `)
-                      ]),
-                      import_server.TempleRegistry.createText(`
-              `, false),
-                      import_server.TempleRegistry.createElement("ide-code", { "id": `index-dtml`, "style": `display:none`, "numbers": true, "trim": true, "detab": 16 }, [
-                        ...this._toNodeList(`
-                <style>
-                  .title { text-align: center; }
-                </style>
-                <script>
-                  import { env, props } from '@ossph/temple';
-                  const { BUILD_ID, APP_DATA } = env();
-                  const { title } = props();
-                </script>
-                <html>
-                  <head>
-                    <title>{title}</title>
-                    <link rel="stylesheet" type="text/css" href={\`/build/\${BUILD_ID}.css\`} />
-                    <script data-app={APP_DATA} src={\`/build/\${BUILD_ID}.js\`}></script>
-                  </head>
-                  <body>
-                    <h1 class="title">{title}</h1>
-                  </body>
-                </html>
-              `)
-                      ]),
-                      import_server.TempleRegistry.createText(`
-              `, false),
-                      import_server.TempleRegistry.createElement("ide-code", { "id": `package-json`, "style": `display:none`, "lang": `js`, "numbers": true, "trim": true, "detab": 16 }, [
-                        ...this._toNodeList(`
-                {
-                  "name": "my-project",
-                  "version": "1.0.0",
-                  "private": true,
-                  "scripts": {
-                    "dev": "ts-node ./src/index.ts"
-                  },
-                  "dependencies": {
-                    "@ossph/temple": "0.1.0"
-                  },
-                  "devDependencies": {
-                    "@ossph/temple-dev": "0.1.0",
-                    "@types/node": "22.1.0",
-                    "ts-node": "10.9.2",
-                    "typescript": "5.5.4"
-                  }
-                }
-              `)
-                      ]),
-                      import_server.TempleRegistry.createText(`
-            `, false)
-                    ]),
-                    import_server.TempleRegistry.createText(`
+            Something went wrong. Please try again later.
           `, false)
                   ]),
                   import_server.TempleRegistry.createText(`
         `, false)
                 ]),
                 import_server.TempleRegistry.createText(`
-
         `, false),
-                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
-                  import_server.TempleRegistry.createText(`
-          To test the script and see the results, run the following 
-          command in terminal.
-        `, false)
-                ]),
-                import_server.TempleRegistry.createText(`
-        `, false),
-                import_server.TempleRegistry.createElement("ide-code", { "lang": `bash` }, [
-                  import_server.TempleRegistry.createText(`
-          npm run dev
-        `, false)
-                ]),
-                import_server.TempleRegistry.createText(`
-        `, false),
-                import_server.TempleRegistry.createElement("i18n-translate", { "p": true, "trim": true }, [
-                  import_server.TempleRegistry.createText(`
-          Load 
-          `, false),
-                  import_server.TempleRegistry.createElement("ide-code", { "lang": `js`, "inline": true }, [
-                    import_server.TempleRegistry.createText(`'http://localhost:3000/'`, false)
-                  ]),
-                  import_server.TempleRegistry.createText(` 
-          in your browser. After loading you should see files that were 
-          generated in a new build folder found in your project root. 
-        `, false)
-                ]),
-                import_server.TempleRegistry.createText(`
-        
-        `, false),
-                import_server.TempleRegistry.createElement("nav", { "class": `pager` }, [
-                  import_server.TempleRegistry.createText(`
-          `, false),
-                  import_server.TempleRegistry.createElement("a", { "class": `prev`, "href": `/temple/docs/single-page.html` }, [
-                    import_server.TempleRegistry.createText(`
-            `, false),
-                    import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-chevron-left` }, []),
-                    import_server.TempleRegistry.createText(`
-            `, false),
-                    ...this._toNodeList(_("Single Page App")),
-                    import_server.TempleRegistry.createText(`
-          `, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-          `, false),
-                  import_server.TempleRegistry.createElement("a", { "class": `next`, "href": `/temple/docs/component-publisher.html` }, [
-                    import_server.TempleRegistry.createText(`
-            `, false),
-                    ...this._toNodeList(_("Component Publisher")),
-                    import_server.TempleRegistry.createText(`
-            `, false),
-                    import_server.TempleRegistry.createElement("i", { "class": `fas fa-fw fa-chevron-right` }, []),
-                    import_server.TempleRegistry.createText(`
-          `, false)
-                  ]),
-                  import_server.TempleRegistry.createText(`
-        `, false)
+                import_server.TempleRegistry.createElement("div", { "class": `error` }, [
+                  import_server.TempleRegistry.createElement("pre", {}, [
+                    ...this._toNodeList(error || "")
+                  ])
                 ]),
                 import_server.TempleRegistry.createText(`
       `, false)
               ]),
-              import_server.TempleRegistry.createText(`
-      `, false),
-              import_server.TempleRegistry.createElement("footer", { "class": `foot` }, []),
               import_server.TempleRegistry.createText(`
     `, false)
             ]),
@@ -1087,5 +694,5 @@ ${document2}`;
       ];
     }
   };
-  return __toCommonJS(static_site_exports);
+  return __toCommonJS(__exports);
 })();

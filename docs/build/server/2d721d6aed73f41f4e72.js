@@ -553,14 +553,14 @@ ${document2}`;
               import_server.TempleRegistry.createElement("link", { "rel": `stylesheet`, "type": `text/css`, "href": `/temple/styles/theme.css` }),
               import_server.TempleRegistry.createText(`
   `, false),
-              import_server.TempleRegistry.createElement("link", { "rel": `stylesheet`, "type": `text/css`, "href": `/temple/build/${(0, import_server2.env)("BUILD_ID")}.css` }),
+              import_server.TempleRegistry.createElement("link", { "rel": `stylesheet`, "type": `text/css`, "href": `/temple/build/client/${(0, import_server2.env)("BUILD_ID")}.css` }),
               import_server.TempleRegistry.createText(`
   
   `, false),
-              import_server.TempleRegistry.createElement("script", { "data-app": (0, import_server2.env)("APP_DATA"), "src": `/temple/build/${(0, import_server2.env)("BUILD_ID")}.js` }),
+              import_server.TempleRegistry.createElement("script", { "data-app": (0, import_server2.env)("APP_DATA"), "src": `/temple/build/client/${(0, import_server2.env)("BUILD_ID")}.js` }),
               import_server.TempleRegistry.createText(`
   `, false),
-              ...!!((0, import_server2.env)("NODE_ENV") !== "production") ? [
+              ...!!((0, import_server2.env)("NODE_ENV") === "development") ? [
                 import_server.TempleRegistry.createText(`
     `, false),
                 import_server.TempleRegistry.createElement("script", { "src": `/dev.js` }),
@@ -947,10 +947,10 @@ ${document2}`;
                     "dev": "ts-node ./src/index.ts"
                   },
                   "dependencies": {
-                    "@ossph/temple": "0.0.15"
+                    "@ossph/temple": "0.1.0"
                   },
                   "devDependencies": {
-                    "@ossph/temple-dev": "0.0.15",
+                    "@ossph/temple-dev": "0.1.0",
                     "@types/node": "22.1.0",
                     "ts-node": "10.9.2",
                     "typescript": "5.5.4"

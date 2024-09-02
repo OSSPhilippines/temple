@@ -553,14 +553,14 @@ ${document2}`;
               import_server.TempleRegistry.createElement("link", { "rel": `stylesheet`, "type": `text/css`, "href": `/temple/styles/theme.css` }),
               import_server.TempleRegistry.createText(`
   `, false),
-              import_server.TempleRegistry.createElement("link", { "rel": `stylesheet`, "type": `text/css`, "href": `/temple/build/${(0, import_server2.env)("BUILD_ID")}.css` }),
+              import_server.TempleRegistry.createElement("link", { "rel": `stylesheet`, "type": `text/css`, "href": `/temple/build/client/${(0, import_server2.env)("BUILD_ID")}.css` }),
               import_server.TempleRegistry.createText(`
   
   `, false),
-              import_server.TempleRegistry.createElement("script", { "data-app": (0, import_server2.env)("APP_DATA"), "src": `/temple/build/${(0, import_server2.env)("BUILD_ID")}.js` }),
+              import_server.TempleRegistry.createElement("script", { "data-app": (0, import_server2.env)("APP_DATA"), "src": `/temple/build/client/${(0, import_server2.env)("BUILD_ID")}.js` }),
               import_server.TempleRegistry.createText(`
   `, false),
-              ...!!((0, import_server2.env)("NODE_ENV") !== "production") ? [
+              ...!!((0, import_server2.env)("NODE_ENV") === "development") ? [
                 import_server.TempleRegistry.createText(`
     `, false),
                 import_server.TempleRegistry.createElement("script", { "src": `/dev.js` }),
@@ -1107,8 +1107,8 @@ ${document2}`;
                     "build": "webpack --mode production"
                   },
                   "devDependencies": {
-                    "@ossph/temple": "0.0.15"
-                    "@ossph/temple-loader": "0.0.15",
+                    "@ossph/temple": "0.1.0"
+                    "@ossph/temple-loader": "0.1.0",
                     "@types/node": "22.1.0",
                     "html-webpack-plugin": "5.6.0",
                     "webpack-dev-server": "5.0.4",

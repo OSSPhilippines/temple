@@ -68,7 +68,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 //routes
-app.get('/temple/build/:build', async (req, res) => {
+app.get('/temple/build/client/:build', async (req, res) => {
   //get filename ie. abc123.js
   const filename = req.params.build;
   //get asset

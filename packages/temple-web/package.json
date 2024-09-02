@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "build": "ts-node ./src/build.ts",
-    "dev": "ts-node ./src/index.ts"
+    "start": "ts-node ./src/index.ts",
+    "dev": "NODE_ENV=development ts-node ./src/index.ts"
   },
   "dependencies": {
     "@ossph/temple": "0.1.0",
