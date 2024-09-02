@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Temple - The reactive web component template engine.</title>
+  <meta name="description" content="Temple is a template engine hat generates web components and support reactivity." />
+  <meta property="og:title" content="Temple - The reactive web component template engine." />
+  <meta property="og:description" content="Temple is a template engine hat generates web components and support reactivity." />
+  <meta property="og:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
+  <meta property="og:url" content="https://ossphilippines.github.io/temple/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@OSSPhilippines" />
+  <meta name="twitter:title" content="Temple - The reactive web component template engine." />
+  <meta name="twitter:description" content="Temple is a template engine hat generates web components and support reactivity." />
+  <meta name="twitter:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
+  <link rel="favicon" href="/temple/favicon.ico" />
+  <link rel="shortcut icon" type="image/png" href="/temple/favicon.png" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/fontawesome/all.css" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/theme.css" />
+  <link rel="stylesheet" type="text/css" href="/temple/build/f01cefc94e8ee605f3f5.css" />
+  
+  <script data-app="eyJwcm9wcyI6eyJ0aXRsZSI6IlRlbXBsZSBEb2N1bWVudGF0aW9uIn0sImVudiI6eyJCVUlMRF9JRCI6ImYwMWNlZmM5NGU4ZWU2MDVmM2Y1In19" src="/temple/build/f01cefc94e8ee605f3f5.js"></script>
+  
+    <script src="/dev.js"></script>
+  
+</head>
+  <body class="dark panel with-head">
+    <header class="head panel-head">
+  <i class="menu fas fa-fw fa-bars" ></i>
+  <a href="/temple">
+    <img src="/temple/temple-icon.png" alt="Temple Logo" />
+  </a>
+  <h3><a class="tx-white" href="/temple">Temple</a></h3>
+  <nav>
+    <a href="/temple/docs/index.html">Docs</a>
+    <a class="github" href="https://github.com/ossPhilippines/temple" target="_blank">
+      <i class="fab fa-github"></i>
+    </a>
+    <a class="npm" href="https://www.npmjs.com/package/temple" target="_blank">
+      <i class="fab fa-npm text-white"></i>
+    </a>
+    <a class="discord" href="https://discord.gg/open-source-software-ph-905496362982981723" target="_blank">
+      <i class="fab fa-discord text-white"></i>
+    </a>
+  </nav>
+</header>
+    <panel-main class="panel-main">
+      <section class="section-hero">
+        <img src="/temple/temple-icon.png" alt="Temple Logo" />
+        <h1>Temple</h1>
+        <i18n-translate p trim>
+          The reactive web component template engine.
+        </i18n-translate>
+        <tui-button primary xl rounded style="margin-right:10px;" href="/temple/docs/getting-started.html">
+          Get Started
+        </tui-button>
+        <tui-button secondary xl rounded href="/temple/docs/index.html">
+          Read the Docs
+        </tui-button>
+      </section>
+      <section class="section-sample">
+        <i18n-translate p trim>
+          Temple is a modern HTML markup language and a server first 
+          template engine with a built-in parser/compiler that 
+          generates web components and supports reactivity.
+        </i18n-translate>
+        <ide-app title="Basic Example">
+          <div class="split-view">
+            <ide-code numbers trim >
+              &lt;style&gt;
+                h1 { font-weight: bold; }
+              &lt;/style&gt;
+              &lt;script&gt;
+                const name = 'world';
+              &lt;/script&gt;
+              &lt;h1&gt;Hello {name}!&lt;/h1&gt;
+            </ide-code>
+            <ide-preview>
+              <div>
+                <h1>Hello world!</h1>
+              </div>
+            </ide-preview>
+          </div>
+        </ide-app>
+      </section>
+      <section class="section-bullets">
+        <ul>
+          <li>
+            <h3>Expressive Markup</h3>
+            <i18n-translate p trim>
+              Any data type as attributes. Easily express logic with 
+              markup directives like if, each, and try catch. 
+            </i18n-translate>
+          </li>
+          <li>
+            <h3>Reactive Signals</h3>
+            <i18n-translate p trim>
+              Easily transition from backend logic to reactive states.
+              No Hydration and no memoization needed.
+            </i18n-translate>
+          </li>
+          <li>
+            <h3>Bare Metal</h3>
+            <i18n-translate p trim>
+              Work with the DOM directly. Import any web components 
+              from any source. Works with Lit, HTMX.
+            </i18n-translate>
+          </li>
+        </ul>
+      </section>
+      <section class="section-interactive">
+        <h3>Server Setup</h3>
+        <i18n-translate p trim>
+          Temple can be used with popular server 
+          frameworks in just a few lines of code.
+        </i18n-translate>
+        <ide-app title="Server Example">
+          <ide-code lang="js" numbers trim >
+            import temple from '@ossph/temple/server';
+            //make a template engine
+            const engine = temple({...options...});
+            //load a Temple file
+            const render = await engine.load('./page.html');
+            //render final HTML
+            const results = render({...props...});
+          </ide-code>
+        </ide-app>
+
+        <h3>Props</h3>
+        <i18n-translate p trim>
+          Import your component props and use immediately
+        </i18n-translate>
+        <ide-app title="Props Example">
+          <div class="split-view">
+            <ide-code numbers trim >
+              &lt;style&gt;
+                h1 { font-weight: bold; }
+              &lt;/style&gt;
+              &lt;script&gt;
+                import { props } from '@ossph/temple';
+                const { name } = props();
+              &lt;/script&gt;
+              &lt;h1&gt;Hello {name}!&lt;/h1&gt;
+            </ide-code>
+            <ide-preview>
+              <div>
+                <h1>Hello world!</h1>
+              </div>
+            </ide-preview>
+          </div>
+        </ide-app>
+
+        <h3>Reactive Signals</h3>
+        <i18n-translate p trim>
+          Use signals to manage state changes and re-renders.
+        </i18n-translate>
+        <ide-app title="Signal Example">
+          <div class="split-view">
+            <ide-code numbers trim >
+              &lt;style&gt;
+                h1 { font-weight: bold; }
+              &lt;/style&gt;
+              &lt;script&gt;
+                import { signal } from '@ossph/temple';
+                const name = signal('world');
+                name.value += '!';
+              &lt;/script&gt;
+              &lt;h1&gt;Hello {name.value}&lt;/h1&gt;
+            </ide-code>
+            <ide-preview>
+              <div>
+                <h1>Hello world!</h1>
+              </div>
+            </ide-preview>
+          </div>
+        </ide-app>
+
+        <h3>Components and Templates</h3>
+        <i18n-translate p trim>
+          Import components and templates for reusability.
+        </i18n-translate>
+        <ide-app title="Import Example">
+          <div class="split-view">
+            <ide-code numbers trim >
+              &lt;!-- page.html --&gt;
+              &lt;link rel="import" href="./my-heading.html" /&gt;
+              &lt;script&gt;
+                const name = 'world';
+              &lt;/script&gt;
+              &lt;my-heading {name}&gt;Hello&lt;/my-heading&gt;
+            </ide-code>
+            <ide-code class="div" trim >
+              &lt;!-- my-heading.html --&gt;
+              &lt;script&gt;
+                import { props } from '@ossph/temple';
+                const { name, children } = props();
+              &lt;/script&gt;
+              &lt;h1&gt;{children} {name}&lt;/h1&gt;
+            </ide-code>
+          </div>
+        </ide-app>
+
+        <h3>Conditionals and Iterations</h3>
+        <i18n-translate p trim>
+          Case for conditions and iterations in an expressive way.
+        </i18n-translate>
+        <ide-app title="Conditional + Iteration Example">
+          <div class="split-view">
+            <ide-code numbers trim >
+              &lt;script&gt;
+                const name = 'world';
+                const show = name === "world";
+              &lt;/script&gt;
+
+              &lt;if true=show&gt;
+                &lt;h1&gt;Hello {name}&lt;/h1&gt;
+              &lt;/if&gt;
+            </ide-code>
+            <ide-code class="div" trim >
+              &lt;script&gt;
+                const list = [ 'a', 'b', 'c' ];
+              &lt;/script&gt;
+              &lt;ul&gt;
+                &lt;each key=i value=item from=list&gt;
+                  &lt;li&gt;{i}: {item}&lt;/li&gt;
+                &lt;/each&gt;
+              &lt;/ul&gt;
+            </ide-code>
+          </div>
+        </ide-app>
+      </section>
+      <section class="section-servers">
+        <h3>Works With Popular Server Frameworks</h3>
+        <div>
+          <a href="https://expressjs.com/" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Expressjs.png" alt="Express" />
+          </a>
+          <a href="https://fastify.dev/" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Fastify_logo.svg" alt="Fastify" />
+          </a>
+          <a href="https://hapi.dev/" target="_blank">
+            <img src="https://raw.githubusercontent.com/hapijs/assets/master/images/hapi.png" alt="Hapi" />
+          </a>
+          <a href="https://koajs.com/" target="_blank">
+            <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/koajs_logo_icon_168379.png" alt="Koa" />
+          </a>
+          <a href="https://nestjs.com/" target="_blank">
+            <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/nestjs_logo_icon_169927.png" alt="NestJS" />
+          </a>
+          <a href="http://restify.com/" target="_blank">
+            <img src="https://raw.githubusercontent.com/restify/node-restify/gh-images/logo/png/restify_logo_black_transp_288x288.png?raw=true" alt="Restify" />
+          </a>
+        </div>
+      </section>
+      <section class="section-testimonials">
+        <h3>Temple Loves Developers!</h3>
+        <section>
+          <tweet-box name="Joff Tiquez" handle="@jrtiquez" href="https://twitter.com/jrtiquez" src="https://github.com/jofftiquez.png">
+            <p>Im a vue developer. No need for this. OSSPH does not support this project.</p>
+          </tweet-box>
+          <tweet-box name="Primeagen" handle="@theprimeagen" href="https://twitter.com/ThePrimeagen" src="https://pbs.twimg.com/profile_images/1759330620160049152/2i_wkOoK_400x400.jpg">
+            <p>Temple? Never heard of it...<br />"The Name..."</p>
+          </tweet-box>
+          <tweet-box name="Kristian Quirapas" handle="@YourCompanyCTO" href="https://twitter.com/YourCompanyCTO" src="https://avatars.githubusercontent.com/u/85150796?v=4">
+            <p>Temple is good news for Node developers. I'm a rust developer so it don't matter to me.</p>
+          </tweet-box>
+          <tweet-box name="Drizzle Team" handle="@drizzle.team" href="https://twitter.com/DrizzleORM" src="https://pbs.twimg.com/profile_images/1767809210060877824/mAtEmNk0_400x400.jpg">
+            <p>Temple copied this section from us. We are the original.</p>
+          </tweet-box>
+          <tweet-box name="Chris B" handle="@cblanquera" href="https://twitter.com/cblanquera" src="https://avatars.githubusercontent.com/u/120378?v=4">
+            <p>After creating the Temple project, I am really excited to get back to ReactJS.</p>
+          </tweet-box>
+          <tweet-box name="Theo" handle="@t3dotgg" href="https://twitter.com/t3dotgg" src="https://yt3.googleusercontent.com/4NapxEtLcHQ6wN2zA_DMmkOk47RFb_gy6sjSmUZGg_ARHjlIUjFsrNFddrcKMkTYpBNxCp3J=s160-c-k-c0x00ffffff-no-rj">
+            <p>Temple? no thanks. Keep your stack front end. App router for life.</p>
+          </tweet-box>
+        </section>
+      </section>
+      <section class="section-action">
+        <h3>What are you waiting for?</h3>
+        <tui-button primary xl rounded style="margin-right:10px;" href="/temple/docs/getting-started.html">
+          Get Started
+        </tui-button>
+        <tui-button secondary xl rounded href="/temple/docs/index.html">
+          Read the Docs
+        </tui-button>
+      </section>
+      <footer class="foot"></footer>
+    </panel-main>
+  </body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Developer Tools - Temple reactive web component template engine.</title>
+  <meta name="description" content="Enable tools for a better developer experience and debugging." />
+  <meta property="og:title" content="Developer Tools - Temple reactive web component template engine." />
+  <meta property="og:description" content="Enable tools for a better developer experience and debugging." />
+  <meta property="og:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
+  <meta property="og:url" content="https://ossphilippines.github.io/temple/docs/developer-tools.html" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@OSSPhilippines" />
+  <meta name="twitter:title" content="Developer Tools - Temple reactive web component template engine." />
+  <meta name="twitter:description" content="Enable tools for a better developer experience and debugging." />
+  <meta name="twitter:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
+  <link rel="favicon" href="/temple/favicon.ico" />
+  <link rel="shortcut icon" type="image/png" href="/temple/favicon.png" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/fontawesome/all.css" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/theme.css" />
+  <link rel="stylesheet" type="text/css" href="/temple/build/13781afd4fbd704a9789.css" />
+  
+  <script data-app="eyJwcm9wcyI6eyJ0aXRsZSI6IlRlbXBsZSBEb2N1bWVudGF0aW9uIn0sImVudiI6eyJCVUlMRF9JRCI6IjEzNzgxYWZkNGZiZDcwNGE5Nzg5In19" src="/temple/build/13781afd4fbd704a9789.js"></script>
+  
+    <script src="/dev.js"></script>
+  
+</head>
+  <body class="dark panel with-head with-left">
+    <header class="head panel-head">
+  <i class="menu fas fa-fw fa-bars" ></i>
+  <a href="/temple">
+    <img src="/temple/temple-icon.png" alt="Temple Logo" />
+  </a>
+  <h3><a class="tx-white" href="/temple">Temple</a></h3>
+  <nav>
+    <a href="/temple/docs/index.html">Docs</a>
+    <a class="github" href="https://github.com/ossPhilippines/temple" target="_blank">
+      <i class="fab fa-github"></i>
+    </a>
+    <a class="npm" href="https://www.npmjs.com/package/temple" target="_blank">
+      <i class="fab fa-npm text-white"></i>
+    </a>
+    <a class="discord" href="https://discord.gg/open-source-software-ph-905496362982981723" target="_blank">
+      <i class="fab fa-discord text-white"></i>
+    </a>
+  </nav>
+</header>
+    <aside class="left panel-left">
+  <header>
+    <a href="/temple">
+      <img src="/temple/temple-icon.png" alt="Temple Logo" />
+    </a>
+    <h3><a class="tx-white" href="/temple">Temple</a></h3>
+    <i class="toggle fas fa-fw fa-chevron-left" ></i>
+  </header>
+  <nav>
+    <h6>Introduction</h6>
+    <a href="/temple/docs/index.html">Documentation</a>
+    <a href="/temple/docs/getting-started.html">Getting Started</a>
+
+    <h6>Features</h6>
+    <a href="/temple/docs/markup-syntax.html">Markup Syntax</a>
+    <a href="/temple/docs/state-management.html">State Management</a>
+    <a href="/temple/docs/component-strategy.html">Component Strategy</a>
+    <a href="/temple/docs/compiler-api.html">Compiler API</a>
+    <a href="/temple/docs/client-api.html">Client API</a>
+
+    <h6>Usage</h6>
+    <a href="/temple/docs/template-engine.html">Template Engine</a>
+    <a href="/temple/docs/single-page.html">Single Page App</a>
+    <a href="/temple/docs/static-site.html">Static Site Generator</a>
+    <a href="/temple/docs/component-publisher.html">Component Publisher</a>
+    <a href="/temple/docs/developer-tools.html">Developer Tools</a>
+  </nav>
+</aside>
+    <panel-main class="panel-main">
+      <div class="docs container">
+        <h1>Developer Tools</h1>
+
+        <i18n-translate p trim>
+          Temple provides a separate package for a better development 
+          experience when working with server frameworks that utilize 
+          the native http module. Start by installing adding 
+          <ide-code lang="js" inline>'@ossph/temple-dev'</ide-code>
+          to your project.
+        </i18n-translate>
+        <ide-app title="Terminal">
+          <ide-code lang="bash">
+            npm install --save-dev @ossph/temple-dev
+          </ide-code>
+        </ide-app>
+        <i18n-translate p trim>
+          Next, import the <ide-code lang="js" inline>dev()</ide-code> 
+          function from the package and use it in your existing 
+          <ide-code lang="js" inline>'src/index.ts'</ide-code> 
+          file to create a development server as shown in the example below.
+        </i18n-translate>
+        <ide-app title="src/index.ts">
+          <ide-code lang="js" numbers trim >
+            import http from 'http';
+            import temple from '@ossph/temple/compiler';
+            import { dev } from '@ossph/temple-dev';
+
+            //create temple compiler
+            const compiler = temple({ cwd: __dirname });
+            //1. create dev tools
+            const { router, refresh } = dev({ cwd: __dirname });
+
+            //create http server
+            const server = http.createServer(async (req, res) =&gt; {
+              //2. Add dev router
+              if (router(req, res)) return;
+              //if home page
+              if (req.url === '/') {
+                //3. sync builder with refresh server
+                refresh.sync(compiler.fromSource('./page.dtml'));
+                //compile the document
+                const html = await compiler.render('./page.dtml');
+                //... send response ...
+              }
+              //... other routes ...
+            });
+            //listen on port 3000
+            server.listen(3000);
+          </ide-code>
+        </ide-app>
+        <i18n-translate p trim>
+          Lastly, update the document file 
+          <ide-code lang="js" inline>'src/page.dtml'</ide-code> 
+          to include the development script 
+          <ide-code inline>&lt;script src="/dev.js"&gt;&lt;/script&gt;</ide-code> 
+          as shown below.
+        </i18n-translate>
+        <ide-app title="src/page.dtml">
+          <ide-code numbers trim >
+            &lt;script&gt;
+              //... 
+            &lt;/script&gt;
+            &lt;html&gt;
+              &lt;head&gt;
+                &lt;!-- ... --&gt;
+                &lt;!-- 4. include dev script --&gt;
+                &lt;script src="/dev.js"&gt;&lt;/script&gt;
+              &lt;/head&gt;
+              &lt;body&gt;
+                &lt;!-- ... --&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+          </ide-code>
+        </ide-app>
+        <i18n-translate p trim>
+          Run the following command in terminal.
+        </i18n-translate>
+        <ide-app title="Terminal">
+          <ide-code lang="bash">
+            npx ts-node src/index.ts
+          </ide-code>
+        </ide-app>
+        <i18n-translate p trim>
+          Whenever <ide-code lang="js" inline>'src/page.dtml'</ide-code> 
+          is updated, the development server will automatically refresh 
+          the page. Components will also be updated in real-time.
+        </i18n-translate>
+        
+        <nav class="pager">
+          <a class="prev" href="/temple/docs/component-publisher.html">
+            <i class="fas fa-fw fa-chevron-left"></i>
+            Component Publisher
+          </a>
+        </nav>
+      </div>
+      <footer class="foot"></footer>
+    </panel-main>
+  </body>
+</html>

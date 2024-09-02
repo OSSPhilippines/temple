@@ -8,16 +8,16 @@ The reactive web component template engine.
 $ npm -i @ossph/temple
 ```
 
-## Server Usage
+## Compiler Usage
 
 ```js
-import temple from '@ossph/temple/server';
+import temple from '@ossph/temple/compiler';
 //make a template engine
-const engine = temple({...options...});
+const compiler = temple({...options...});
 //load a Temple file
-const render = await engine.load('./page.html');
+const { document } = await compiler.import('./page.tml');
 //render final HTML
-const results = render({...props...});
+const results = document.render({...props...});
 ```
 
 ### Document Options
@@ -162,7 +162,7 @@ const results = render({...props...});
     <link rel="shortcut icon" type="image/png" href="/favicon.png" />
   </head>
   <body class="light">
-    <header class="title">{potitle}</header>
+    <header class="title">{title}</header>
     <div class="logo">
       <img src="/temple-logo.png" alt="Logo" />
     </div>

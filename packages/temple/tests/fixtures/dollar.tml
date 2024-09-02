@@ -1,0 +1,1 @@
+<div><span>$</span> {children()}</div>

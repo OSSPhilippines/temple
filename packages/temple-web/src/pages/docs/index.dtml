@@ -1,0 +1,118 @@
+<link rel="import" type="template" href="@/modules/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
+<link rel="import" type="template" href="@/modules/panel/left.tml" name="panel-left" />
+<link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@/modules/ide/code.tml" name="ide-code" />
+<link rel="import" type="component" href="@/modules/ide/preview.tml" name="ide-preview" />
+<link rel="import" type="component" href="@/modules/ide/app.tml" name="ide-app" />
+<link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+<script>
+  import { env } from '@ossph/temple';
+  import { _ } from '@/modules/i18n';
+
+  const url = '/docs/index.html';
+  const title = _('Documentation - Temple reactive web component template engine.');
+  const description = _('Temple is a template engine hat generates web components and support reactivity.');
+  const toggle = _ => {
+    document.body.classList.toggle('panel-left-open');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark panel with-head with-left">
+    <panel-head />
+    <panel-left />
+    <panel-main class="panel-main">
+      <div class="docs container">
+        <h1>{_('Documentation')}</h1>
+
+        <i18n-translate p trim>
+          Temple is a template engine with a built-in compiler that 
+          generates HTML markup, web components and support reactivity. 
+        </i18n-translate>
+        <i18n-translate p trim>
+          Like React and Svelte, Temple is a modern approach to building
+          front-end code addressing state management and reactivity. 
+          Unlike React and Svelte that focus on keeping the developer 
+          experience mostly on the front-end, Temple focuses on being 
+          a modern templating solution for server side frameworks.
+        </i18n-translate>
+        <i18n-translate p trim>
+          Temple can be used as a template engine on the server side, 
+          as a site generator to make static websites and single page 
+          applications, or can be used to publish native HTML5 web 
+          components.
+        </i18n-translate>
+        <i18n-translate p trim>
+          Temple sticks closely to the classic web development model of 
+          HTML, CSS, and JS, just adding a few extensions to HTML and 
+          JavaScript. It arguably has fewer concepts and tools to learn 
+          than some of the other framework options.
+        </i18n-translate>
+        <ide-app title="Basic Example">
+          <div class="split-view">
+            <ide-code numbers trim detab={14}>{`
+              <style>
+                h1 { font-weight: bold; }
+              </style>
+              <script>
+                const name = 'world';
+              </script>
+              <h1>Hello {name}!</h1>
+            `}</ide-code>
+            <ide-preview>
+              <div>
+                <h1>Hello world!</h1>
+              </div>
+            </ide-preview>
+          </div>
+        </ide-app>
+        <i18n-translate p trim>
+          At it's core, a temple file is a special template file that 
+          allows HTML, JavaScript, CSS and importing of components and 
+          templates. All of which are transpiled to TypeScript or 
+          JavaScript source code.
+        </i18n-translate>
+        <ide-app title="Transpiler Example">
+          <div class="split-view">
+            <ide-code numbers ltrim detab={14}>{`
+              <style>
+                h1 { font-weight: bold; }
+              </style>
+              <script>
+                import { props } from '@ossph/temple';
+                const { name } = props();
+              </script>
+              <h1>Hello {name}!!</h1>
+              
+              
+
+            `}</ide-code>
+            <ide-code class="div" lang="js" trim detab={14}>{`
+              import { props } from '@ossph/temple';
+              export default class Hello extends TempleComponent {
+                styles() {
+                  return 'h1 { font-weight: bold; }';
+                }
+                template() {
+                  const { name } = props();
+                  return () => [
+                    TempleRegistry.createElement('h1', null, \`Hello \${name}\`)
+                  ]
+                }
+              }
+            `}</ide-code>
+          </div>
+        </ide-app>
+        
+        <nav class="pager">
+          <a class="next" href="/temple/docs/getting-started.html">
+            {_('Getting Started')}
+            <i class="fas fa-fw fa-chevron-right"></i>
+          </a>
+        </nav>
+      </div>
+      <footer class="foot"></footer>
+    </panel-main>
+  </body>
+</html>

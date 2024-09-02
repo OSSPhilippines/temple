@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Template Engine - Temple reactive web component template engine.</title>
+  <meta name="description" content="How to use Temple as a template engine." />
+  <meta property="og:title" content="Template Engine - Temple reactive web component template engine." />
+  <meta property="og:description" content="How to use Temple as a template engine." />
+  <meta property="og:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
+  <meta property="og:url" content="https://ossphilippines.github.io/temple/docs/template-engine.html" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@OSSPhilippines" />
+  <meta name="twitter:title" content="Template Engine - Temple reactive web component template engine." />
+  <meta name="twitter:description" content="How to use Temple as a template engine." />
+  <meta name="twitter:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
+  <link rel="favicon" href="/temple/favicon.ico" />
+  <link rel="shortcut icon" type="image/png" href="/temple/favicon.png" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/fontawesome/all.css" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/theme.css" />
+  <link rel="stylesheet" type="text/css" href="/temple/build/2d721d6aed73f41f4e72.css" />
+  
+  <script data-app="eyJwcm9wcyI6eyJ0aXRsZSI6IlRlbXBsZSBEb2N1bWVudGF0aW9uIn0sImVudiI6eyJCVUlMRF9JRCI6IjJkNzIxZDZhZWQ3M2Y0MWY0ZTcyIn19" src="/temple/build/2d721d6aed73f41f4e72.js"></script>
+  
+    <script src="/dev.js"></script>
+  
+</head>
+  <body class="dark panel with-head with-left">
+    <header class="head panel-head">
+  <i class="menu fas fa-fw fa-bars" ></i>
+  <a href="/temple">
+    <img src="/temple/temple-icon.png" alt="Temple Logo" />
+  </a>
+  <h3><a class="tx-white" href="/temple">Temple</a></h3>
+  <nav>
+    <a href="/temple/docs/index.html">Docs</a>
+    <a class="github" href="https://github.com/ossPhilippines/temple" target="_blank">
+      <i class="fab fa-github"></i>
+    </a>
+    <a class="npm" href="https://www.npmjs.com/package/temple" target="_blank">
+      <i class="fab fa-npm text-white"></i>
+    </a>
+    <a class="discord" href="https://discord.gg/open-source-software-ph-905496362982981723" target="_blank">
+      <i class="fab fa-discord text-white"></i>
+    </a>
+  </nav>
+</header>
+    <aside class="left panel-left">
+  <header>
+    <a href="/temple">
+      <img src="/temple/temple-icon.png" alt="Temple Logo" />
+    </a>
+    <h3><a class="tx-white" href="/temple">Temple</a></h3>
+    <i class="toggle fas fa-fw fa-chevron-left" ></i>
+  </header>
+  <nav>
+    <h6>Introduction</h6>
+    <a href="/temple/docs/index.html">Documentation</a>
+    <a href="/temple/docs/getting-started.html">Getting Started</a>
+
+    <h6>Features</h6>
+    <a href="/temple/docs/markup-syntax.html">Markup Syntax</a>
+    <a href="/temple/docs/state-management.html">State Management</a>
+    <a href="/temple/docs/component-strategy.html">Component Strategy</a>
+    <a href="/temple/docs/compiler-api.html">Compiler API</a>
+    <a href="/temple/docs/client-api.html">Client API</a>
+
+    <h6>Usage</h6>
+    <a href="/temple/docs/template-engine.html">Template Engine</a>
+    <a href="/temple/docs/single-page.html">Single Page App</a>
+    <a href="/temple/docs/static-site.html">Static Site Generator</a>
+    <a href="/temple/docs/component-publisher.html">Component Publisher</a>
+    <a href="/temple/docs/developer-tools.html">Developer Tools</a>
+  </nav>
+</aside>
+    <panel-main class="panel-main">
+      <div class="docs container">
+        <h1>Template Engine</h1>
+
+        <i18n-translate p trim>
+          Template engines are used when you want to rapidly build web 
+          applications that are split into different pages. Templates 
+          also enable fast rendering of the server-side data that needs
+          to be passed to the application. You can use Temple, TypeScript 
+          and the native Node.js HTTP server to serve up HTML documents
+          from the server-side.
+        </i18n-translate>
+
+        <i18n-translate p trim>
+          First, create a project with the following structure and files.
+        </i18n-translate>
+        <ide-app  title="My Project">
+          <div class="panel-head">
+            <div class="tabs">
+              <tui-tab class="tab active" group="project" selector="#index-ts">
+                src/index.ts
+              </tui-tab>
+              <tui-tab class="tab" group="project" selector="#page-dtml">
+                src/page.dtml
+              </tui-tab>
+              <tui-tab class="tab" group="project" selector="#package-json">
+                package.json
+              </tui-tab>
+            </div>
+          </div>
+          <div class="panel-left">
+            <h5 class="folder">
+              <i class="fas fa-fw fa-chevron-down"></i>
+              <span>src</span>
+            </h5>
+            <tui-tab class="shift-1 block active" group="project" selector="#index-ts">
+              <i class="fas fa-fw fa-file"></i>
+              index.ts
+            </tui-tab>
+            <tui-tab class="shift-1 block" group="project" selector="#page-dtml">
+              <i class="fas fa-fw fa-file"></i>
+              page.dtml
+            </tui-tab>
+            <tui-tab class="block" group="project" selector="#package-json">
+              <i class="fas fa-fw fa-file"></i>
+              package.json
+            </tui-tab>
+          </div>
+          <div class="panel-main">
+            <main>
+              <ide-code id="index-ts" lang="js" numbers trim >
+                import http from 'http';
+                import temple from '@ossph/temple/compiler';
+
+                //create temple compiler
+                const compiler = temple({ cwd: __dirname });
+                //create http server
+                const server = http.createServer(async (req, res) =&gt; {
+                  //if build asset...
+                  if (req.url?.startsWith('/build/')) {
+                    //get filename ie. abc123.js
+                    const filename = req.url.substring(7);
+                    //get asset
+                    const { type, content } = await compiler.asset(filename);
+                    //send response
+                    res.writeHead(200, { 'Content-Type': type });
+                    return res.end(content);
+                  //if home page
+                  } else if (req.url === '/') {
+                    res.writeHead(200, { 'Content-Type': 'text/html' });
+                    return res.end(await compiler.render('./index.dtml', {
+                      title: 'Hello World'
+                    }));
+                  }
+                });
+                //listen on port 3000
+                server.listen(3000);
+              </ide-code>
+              <ide-code id="page-dtml" style="display:none" numbers trim >
+                &lt;style&gt;
+                  .title { text-align: center; }
+                &lt;/style&gt;
+                &lt;script&gt;
+                  import { env, props } from '@ossph/temple';
+                  const { BUILD_ID, APP_DATA } = env();
+                  const { title } = props();
+                &lt;/script&gt;
+                &lt;html&gt;
+                  &lt;head&gt;
+                    &lt;title&gt;{title}&lt;/title&gt;
+                    &lt;link rel="stylesheet" type="text/css" href={`/build/${BUILD_ID}.css`} /&gt;
+                    &lt;script data-app={APP_DATA} src={`/build/${BUILD_ID}.js`}&gt;&lt;/script&gt;
+                  &lt;/head&gt;
+                  &lt;body&gt;
+                    &lt;h1 class="title"&gt;{title}&lt;/h1&gt;
+                  &lt;/body&gt;
+                &lt;/html&gt;
+              </ide-code>
+              <ide-code id="package-json" style="display:none" lang="js" numbers trim >
+                {
+                  "name": "my-project",
+                  "version": "1.0.0",
+                  "private": true,
+                  "scripts": {
+                    "dev": "ts-node ./src/index.ts"
+                  },
+                  "dependencies": {
+                    "@ossph/temple": "0.0.15"
+                  },
+                  "devDependencies": {
+                    "@ossph/temple-dev": "0.0.15",
+                    "@types/node": "22.1.0",
+                    "ts-node": "10.9.2",
+                    "typescript": "5.5.4"
+                  }
+                }
+              </ide-code>
+            </main>
+          </div>
+        </ide-app>
+        <i18n-translate p trim>
+          The server file 
+          <ide-code inline>src/index.ts</ide-code> 
+          implements a simple server utilizing the Temple compiler in 
+          its most simplistic form. The document file
+          <ide-code inline>src/page.dtml</ide-code> 
+          is using the most basic Temple syntax. To test the script and 
+          see the results, run the following command in terminal.
+        </i18n-translate>
+        <ide-code lang="bash">
+          npm run dev
+        </ide-code>
+        <i18n-translate p trim>
+          Load 
+          <ide-code lang="js" inline>'http://localhost:3000/'</ide-code> 
+          in your browser to see your application.
+        </i18n-translate>
+        
+        <nav class="pager">
+          <a class="prev" href="/temple/docs/client-api.html">
+            <i class="fas fa-fw fa-chevron-left"></i>
+            Client API
+          </a>
+          <a class="next" href="/temple/docs/single-page.html">
+            Single Page App
+            <i class="fas fa-fw fa-chevron-right"></i>
+          </a>
+        </nav>
+      </div>
+      <footer class="foot"></footer>
+    </panel-main>
+  </body>
+</html>

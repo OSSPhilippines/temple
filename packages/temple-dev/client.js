@@ -18,28 +18,35 @@ var temple_dev = (() => {
   };
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // src/sse/client.ts
+  // src/client.ts
   var client_exports = {};
   __export(client_exports, {
     default: () => client
   });
-  function client(options = {}, wait = 0) {
+  function client(id, options = {}, wait = 0) {
     const { path = "/__temple_dev__" } = options;
     const source = new EventSource(path);
-    source.addEventListener("refresh", () => {
-      window.location.reload();
+    source.addEventListener("refresh", (message) => {
+      const data = JSON.parse(message.data);
+      if (!data[id]) return;
+      data[id].forEach((code) => {
+        try {
+          const script = new Function(code);
+          script();
+        } catch (e) {
+          console.error(e);
+        }
+      });
     });
     source.onopen = () => {
       if (wait > 0) {
-        console.clear();
-        console.log("Connection re-established.");
+        window.location.reload();
       }
-      wait = 0;
     };
     source.onerror = () => {
       source.close();
       if (wait < 1e4) {
-        setTimeout(() => client(options, wait + 2e3), wait);
+        setTimeout(() => client(id, options, wait + 2e3), wait);
       } else {
         console.error(
           "Too many connection attempts. Please check your server and refresh page."

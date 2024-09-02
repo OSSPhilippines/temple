@@ -2,30 +2,19 @@ import type { NestExpressApplication } from '@nestjs/platform-express';
 import * as path from 'path';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import temple from '@ossph/temple/server';
+import { view } from '@ossph/temple-express';
+import { TempleService } from './temple/temple.service';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const cwd = path.dirname(__dirname);
   app.useStaticAssets(path.join(cwd, 'public'));
-  app.setBaseViewsDir(path.join(cwd, 'templates'));
+  app.setBaseViewsDir(path.join(cwd, 'pages'));
 
-  const engine = temple({ cwd });
+  const { compiler } = app.get<TempleService>(TempleService);
 
-  app.engine(
-    'tml',
-    async (
-      filePath: string,
-      options: Record<string, any>,
-      callback: (err: Error | null, results: string | undefined) => void,
-    ) => {
-      const render = await engine.load(filePath);
-      const results = render(options);
-      callback(null, results);
-    },
-  );
-
-  app.setViewEngine('tml');
+  app.engine('dtml', view(compiler));
+  app.setViewEngine('dtml');
 
   await app.listen(3000);
 }

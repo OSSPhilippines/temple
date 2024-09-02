@@ -1,0 +1,633 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Temple Language",
+  "scopeName": "source.tml",
+  "fileTypes": [ "tml", "dtml" ],
+  "injections": {
+    "L:(meta.script.tml | meta.style.tml) (meta.lang.js | meta.lang.javascript) - (meta source)": {
+      "patterns": [
+        {
+          "name": "meta.embedded.block.tml",
+          "begin": "(?<=>)(?!</)",
+          "end": "(?=</)",
+          "contentName": "source.js",
+          "patterns": [
+            {
+              "include": "source.js"
+            }
+          ]
+        }
+      ]
+    },
+    "L:(meta.script.tml | meta.style.tml) (meta.lang.ts | meta.lang.typescript) - (meta source)": {
+      "patterns": [
+        {
+          "name": "meta.embedded.block.tml",
+          "begin": "(?<=>)(?!</)",
+          "end": "(?=</)",
+          "contentName": "source.ts",
+          "patterns": [
+            {
+              "include": "source.ts"
+            }
+          ]
+        }
+      ]
+    },
+    "L:meta.script.tml - meta.lang - (meta source)": {
+      "patterns": [
+        {
+          "begin": "(?<=>)(?!</)",
+          "end": "(?=</)",
+          "name": "meta.embedded.block.tml",
+          "contentName": "source.js",
+          "patterns": [
+            {
+              "include": "source.js"
+            }
+          ]
+        }
+      ]
+    },
+    "L:meta.style.tml meta.lang.css - (meta source)": {
+      "patterns": [
+        {
+          "begin": "(?<=>)(?!</)",
+          "end": "(?=</)",
+          "name": "meta.embedded.block.tml",
+          "contentName": "source.css",
+          "patterns": [
+            {
+              "include": "source.css"
+            }
+          ]
+        }
+      ]
+    },
+    "L:meta.style.tml - meta.lang - (meta source)": {
+      "patterns": [
+        {
+          "begin": "(?<=>)(?!</)",
+          "end": "(?=</)",
+          "name": "meta.embedded.block.tml",
+          "contentName": "source.css",
+          "patterns": [
+            {
+              "include": "source.css"
+            }
+          ]
+        }
+      ]
+    },
+    "L:meta.template.tml - meta.lang - (meta source)": {
+      "patterns": [
+        {
+          "begin": "(?<=>)\\s",
+          "end": "(?=</template)",
+          "patterns": [
+            {
+              "include": "#scope"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "patterns": [
+    {
+      "include": "#scope"
+    }
+  ],
+  "repository": {
+    "scope": {
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#tags"
+        },
+        {
+          "include": "#interpolation"
+        },
+        {
+          "begin": "(?<=>|})",
+          "end": "(?=<|{)",
+          "name": "text.tml"
+        }
+      ]
+    },
+    "comments": {
+      "begin": "<!--",
+      "end": "-->",
+      "captures": {
+        "0": {
+          "name": "punctuation.definition.comment.tml"
+        }
+      },
+      "name": "comment.block.tml",
+      "patterns": [
+        {
+          "begin": "(@)(component)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.keyword.tml"
+            },
+            "2": {
+              "name": "storage.type.class.component.tml keyword.declaration.class.component.tml"
+            }
+          },
+          "end": "(?=-->)",
+          "contentName": "comment.block.documentation.tml",
+          "patterns": [
+            {
+              "match": ".*?(?=-->)",
+              "captures": {
+                "0": {
+                  "patterns": [
+                    {
+                      "include": "text.html.markdown"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "include": "text.html.markdown"
+            }
+          ]
+        },
+        {
+          "match": "\\G-?>|<!--(?!>)|<!-(?=-->)|--!>",
+          "name": "invalid.illegal.characters-not-allowed-here.tml"
+        }
+      ]
+    },
+    "destructuring": {
+      "patterns": [
+        {
+          "begin": "(?={)",
+          "end": "(?<=})",
+          "name": "meta.embedded.expression.tml source.ts",
+          "patterns": [
+            {
+              "include": "source.ts#object-binding-pattern"
+            }
+          ]
+        },
+        {
+          "begin": "(?=\\[)",
+          "end": "(?<=\\])",
+          "name": "meta.embedded.expression.tml source.ts",
+          "patterns": [
+            {
+              "include": "source.ts#array-binding-pattern"
+            }
+          ]
+        }
+      ]
+    },
+    "destructuring-const": {
+      "patterns": [
+        {
+          "begin": "(?={)",
+          "end": "(?<=})",
+          "name": "meta.embedded.expression.tml source.ts",
+          "patterns": [
+            {
+              "include": "source.ts#object-binding-pattern-const"
+            }
+          ]
+        },
+        {
+          "begin": "(?=\\[)",
+          "end": "(?<=\\])",
+          "name": "meta.embedded.expression.tml source.ts",
+          "patterns": [
+            {
+              "include": "source.ts#array-binding-pattern-const"
+            }
+          ]
+        }
+      ]
+    },
+    "interpolation": {
+      "patterns": [
+        {
+          "begin": "\\{",
+          "end": "\\}",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.section.embedded.begin.tml"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.section.embedded.end.tml"
+            }
+          },
+          "contentName": "meta.embedded.expression.tml source.ts",
+          "patterns": [
+            {
+              "begin": "\\G\\s*(?={)",
+              "end": "(?<=})",
+              "patterns": [
+                {
+                  "include": "source.ts#object-literal"
+                }
+              ]
+            },
+            {
+              "include": "source.ts"
+            }
+          ]
+        }
+      ]
+    },
+    "attributes": {
+      "patterns": [
+        {
+          "include": "#attributes-keyvalue"
+        },
+        {
+          "include": "#attributes-interpolated"
+        }
+      ]
+    },
+    "attributes-interpolated": {
+      "begin": "(?<!:|=)\\s*({)",
+      "end": "(\\})",
+      "captures": {
+        "1": {
+          "name": "entity.other.attribute-name.tml"
+        }
+      },
+      "contentName": "meta.embedded.expression.tml source.ts",
+      "patterns": [
+        {
+          "include": "source.ts"
+        }
+      ]
+    },
+    "attributes-keyvalue": {
+      "begin": "((?:--)?[_$[:alpha:]][_\\-$[:alnum:]]*)",
+      "beginCaptures": {
+        "0": {
+          "patterns": [
+            {
+              "match": "--.*",
+              "name": "support.type.property-name.tml"
+            },
+            {
+              "match": ".*",
+              "name": "entity.other.attribute-name.tml"
+            }
+          ]
+        }
+      },
+      "end": "(?=\\s*+[^=\\s])",
+      "name": "meta.attribute.$1.tml",
+      "patterns": [
+        {
+          "begin": "=",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.separator.key-value.tml"
+            }
+          },
+          "end": "(?<=[^\\s=])(?!\\s*=)|(?=/?>)",
+          "patterns": [
+            {
+              "include": "#attributes-value"
+            }
+          ]
+        }
+      ]
+    },
+    "attributes-value": {
+      "patterns": [
+        {
+          "include": "#interpolation"
+        },
+        {
+          "match": "(?:(['\"])([0-9._]+[\\w%]{,4})(\\1))|(?:([0-9._]+[\\w%]{,4})(?=\\s|/?>))",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.string.begin.tml"
+            },
+            "2": {
+              "name": "constant.numeric.decimal.tml"
+            },
+            "3": {
+              "name": "punctuation.definition.string.end.tml"
+            },
+            "4": {
+              "name": "constant.numeric.decimal.tml"
+            }
+          }
+        },
+        {
+          "match": "([^\\s\"'=<>`/]|/(?!>))+",
+          "name": "string.unquoted.tml",
+          "patterns": [
+            {
+              "include": "#interpolation"
+            }
+          ]
+        },
+        {
+          "begin": "(['\"])",
+          "end": "\\1",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.tml"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.tml"
+            }
+          },
+          "name": "string.quoted.tml",
+          "patterns": [
+            {
+              "include": "#interpolation"
+            }
+          ]
+        }
+      ]
+    },
+    "attributes-generics": {
+      "begin": "(generics)(=)([\"'])",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.other.attribute-name.tml"
+        },
+        "2": {
+          "name": "punctuation.separator.key-value.tml"
+        },
+        "3": {
+          "name": "punctuation.definition.string.begin.tml"
+        }
+      },
+      "end": "(\\3)",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.string.end.tml"
+        }
+      },
+      "contentName": "meta.embedded.expression.tml source.ts",
+      "patterns": [
+        {
+          "include": "#type-parameters"
+        }
+      ]
+    },
+    "type-parameters": {
+      "name": "meta.type.parameters.ts",
+      "patterns": [
+        {
+          "include": "source.ts#comment"
+        },
+        {
+          "name": "storage.modifier.ts",
+          "match": "(?<![_$[:alnum:]])(?:(?<=\\.\\.\\.)|(?<!\\.))(extends|in|out|const)(?![_$[:alnum:]])(?:(?=\\.\\.\\.)|(?!\\.))"
+        },
+        {
+          "include": "source.ts#type"
+        },
+        {
+          "include": "source.ts#punctuation-comma"
+        },
+        {
+          "name": "keyword.operator.assignment.ts",
+          "match": "(=)(?!>)"
+        }
+      ]
+    },
+    "tags": {
+      "patterns": [
+        {
+          "include": "#tags-lang"
+        },
+        {
+          "include": "#tags-void"
+        },
+        {
+          "include": "#tags-general-end"
+        },
+        {
+          "include": "#tags-general-start"
+        }
+      ]
+    },
+    "tags-name": {
+      "patterns": [
+        {
+          "match": "(tml)(:)([a-z][\\w0-9:-]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.control.tml"
+            },
+            "2": {
+              "name": "punctuation.definition.keyword.tml"
+            },
+            "3": {
+              "name": "entity.name.tag.tml"
+            }
+          }
+        },
+        {
+          "match": "slot",
+          "name": "keyword.control.tml"
+        },
+        {
+          "match": "[A-Z][a-zA-Z0-9_]*",
+          "name": "support.class.component.tml"
+        },
+        {
+          "match": "[a-z][\\w0-9:]*-[\\w0-9:-]*",
+          "name": "meta.tag.custom.tml entity.name.tag.tml"
+        },
+        {
+          "match": "[a-z][\\w0-9:-]*",
+          "name": "entity.name.tag.tml"
+        }
+      ]
+    },
+    "tags-start-attributes": {
+      "begin": "\\G",
+      "end": "(?=/?>)",
+      "name": "meta.tag.start.tml",
+      "patterns": [
+        {
+          "include": "#attributes"
+        }
+      ]
+    },
+    "tags-lang-start-attributes": {
+      "begin": "\\G",
+      "end": "(?=/>)|>",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.tag.end.tml"
+        }
+      },
+      "name": "meta.tag.start.tml",
+      "patterns": [
+        {
+          "include": "#attributes-generics"
+        },
+        {
+          "include": "#attributes"
+        }
+      ]
+    },
+    "tags-start-node": {
+      "match": "(<)([^/\\s>/]*)",
+      "captures": {
+        "1": {
+          "name": "punctuation.definition.tag.begin.tml"
+        },
+        "2": {
+          "patterns": [
+            {
+              "include": "#tags-name"
+            }
+          ]
+        }
+      },
+      "name": "meta.tag.start.tml"
+    },
+    "tags-end-node": {
+      "match": "(</)(.*?)\\s*(>)|(/>)",
+      "captures": {
+        "1": {
+          "name": "meta.tag.end.tml punctuation.definition.tag.begin.tml"
+        },
+        "2": {
+          "name": "meta.tag.end.tml",
+          "patterns": [
+            {
+              "include": "#tags-name"
+            }
+          ]
+        },
+        "3": {
+          "name": "meta.tag.end.tml punctuation.definition.tag.end.tml"
+        },
+        "4": {
+          "name": "meta.tag.start.tml punctuation.definition.tag.end.tml"
+        }
+      }
+    },
+    "tags-lang": {
+      "begin": "<(script|style|template)",
+      "end": "</\\1\\s*>|/>",
+      "beginCaptures": {
+        "0": {
+          "patterns": [
+            {
+              "include": "#tags-start-node"
+            }
+          ]
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "patterns": [
+            {
+              "include": "#tags-end-node"
+            }
+          ]
+        }
+      },
+      "name": "meta.$1.tml",
+      "patterns": [
+        {
+          "begin": "\\G(?=\\s*[^>]*?(type|lang)\\s*=\\s*(['\"]|)(?:text/)?(\\w+)\\2)",
+          "end": "(?=</|/>)",
+          "name": "meta.lang.$3.tml",
+          "patterns": [
+            {
+              "include": "#tags-lang-start-attributes"
+            }
+          ]
+        },
+        {
+          "include": "#tags-lang-start-attributes"
+        }
+      ]
+    },
+    "tags-void": {
+      "begin": "(<)(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)(?=\\s|/?>)",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.begin.tml"
+        },
+        "2": {
+          "name": "entity.name.tag.tml"
+        }
+      },
+      "end": "/?>",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.tag.begin.tml"
+        }
+      },
+      "name": "meta.tag.void.tml",
+      "patterns": [
+        {
+          "include": "#attributes"
+        }
+      ]
+    },
+    "tags-general-start": {
+      "begin": "(<)([^/\\s>/]*)",
+      "end": "(/?>)",
+      "beginCaptures": {
+        "0": {
+          "patterns": [
+            {
+              "include": "#tags-start-node"
+            }
+          ]
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "meta.tag.start.tml punctuation.definition.tag.end.tml"
+        }
+      },
+      "name": "meta.scope.tag.$2.tml",
+      "patterns": [
+        {
+          "include": "#tags-start-attributes"
+        }
+      ]
+    },
+    "tags-general-end": {
+      "begin": "(</)([^/\\s>]*)",
+      "end": "(>)",
+      "beginCaptures": {
+        "1": {
+          "name": "meta.tag.end.tml punctuation.definition.tag.begin.tml"
+        },
+        "2": {
+          "name": "meta.tag.end.tml",
+          "patterns": [
+            {
+              "include": "#tags-name"
+            }
+          ]
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "meta.tag.end.tml punctuation.definition.tag.end.tml"
+        }
+      },
+      "name": "meta.scope.tag.$2.tml"
+    }
+  }
+}

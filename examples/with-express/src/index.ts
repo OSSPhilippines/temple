@@ -1,30 +1,48 @@
 import path from 'path';
 import express from 'express';
-import temple from '@ossph/temple/server';
+import temple from '@ossph/temple/compiler';
+import { view, dev } from '@ossph/temple-express';
 
+//create temple compiler
+const compiler = temple({ cwd: __dirname, minify: false });
+
+//create express app
 const app = express();
-//general options for temple
-const engine = temple({ cwd: __dirname });
-//let's use express' template engine feature
-app.engine(
-  'tml',
-  async (
-    filePath: string,
-    options: Record<string, any>,
-    callback: (err: Error | null, results: string | undefined) => void,
-  ) => {
-    const { settings, _locals, cache, ...props } = options;
-    const render = await engine.load(filePath);
-    callback(null, render(props));
-  },
-);
 //set the view engine to temple
-app.set('views', path.join(__dirname, 'templates'));
-app.set('view engine', 'tml');
+app.set('views', path.join(__dirname, 'pages'));
+app.set('view engine', 'dtml');
+
+//if production (live)
+if (process.env.NODE_ENV === 'production') {
+  //let's use express' template engine feature
+  app.engine('dtml', view(compiler));
+  //...other production settings...
+//if development mode
+} else {
+  //get development middleware
+  const { router, view } = dev({ cwd: __dirname });
+  //use development middleware
+  app.use(router);
+  //let's use express' template engine feature
+  app.engine('dtml', view(compiler));
+}
+
+//open public folder
+app.use(express.static('public'));
+
+//routes
+app.get('/build/:build', async (req, res) => {
+  //get filename ie. abc123.js
+  const filename = req.params.build;
+  //get asset
+  const { type, content } = await compiler.asset(filename);
+  //send response
+  res.type(type).send(content);
+});
 
 app.get('/', async (req, res) => {
   //now use the temple template engine
-  res.render('page', {
+  res.render('index', {
     title: 'Temple',
     description: 'Edit this file to change the content of the page.',
     start: 0,
@@ -41,9 +59,7 @@ app.get('/', async (req, res) => {
   res.type('text/html');
 });
 
-//open public folder
-app.use(express.static('public'));
-
+//listen
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');
 });

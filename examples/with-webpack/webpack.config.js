@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   // https://webpack.js.org/concepts/entry-points/#multi-page-application
   entry: {
-    index: './src/app.tml'
+    index: './src/client.ts'
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -16,7 +16,7 @@ module.exports = {
         test: /\.tml$/,
         use: {
           loader: '@ossph/temple-loader',
-          options: { minify: true }
+          options: { minify: false }
         },
         exclude: /node_modules/,
       },

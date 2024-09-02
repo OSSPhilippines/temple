@@ -1,0 +1,182 @@
+<link rel="import" type="template" href="@/modules/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
+<link rel="import" type="template" href="@/modules/panel/left.tml" name="panel-left" />
+<link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@/modules/ide/code.tml" name="ide-code" />
+<link rel="import" type="component" href="@/modules/ide/app.tml" name="ide-app" />
+<link rel="import" type="component" href="@/modules/tui/alert.tml" name="tui-alert" />
+<link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+<script>
+  import { env } from '@ossph/temple';
+  import { _ } from '@/modules/i18n';
+
+  const url = '/docs/getting-started.html';
+  const title = _('Getting Started - Temple reactive web component template engine.');
+  const description = _('How to install, setup and use Temple in a project.');
+  const toggle = _ => {
+    document.body.classList.toggle('panel-left-open');
+  };
+  const examples = 'https://github.com/OSSPhilippines/temple/tree/main/examples';
+</script>
+<html>
+  <html-head />
+  <body class="dark panel with-head with-left">
+    <panel-head />
+    <panel-left />
+    <panel-main class="panel-main">
+      <div class="docs container">
+        <h1>{_('Getting Started')}</h1>
+
+        <i18n-translate p trim>
+          To use Temple in a project, run the following commands in terminal: 
+        </i18n-translate>
+        <ide-app title="Terminal">
+          <ide-code lang="bash">
+            npm install --save @ossph/temple && npm install --save-dev ts-node typescript
+          </ide-code>
+        </ide-app>
+        <tui-alert solid curved info>
+          <i class="fas fa-info-circle"></i>
+          &nbsp;
+          Download the Temple editor plugin at the <a 
+            target="_blank" 
+            href="https://marketplace.visualstudio.com/items?itemName=ossph.temple-language"
+          >Visual Studio Marketplace</a>.
+        </tui-alert>
+        <i18n-translate p trim>
+          Create a server file called
+          <ide-code inline>src/index.ts</ide-code> 
+          with the following code that uses the compiler.
+        </i18n-translate>
+        <ide-app title="src/index.ts">
+          <ide-code lang="js" numbers trim detab={12}>{`
+            //on server:
+            import temple from '@ossph/temple/compiler';
+            //make a temple compiler
+            const compiler = temple();
+            //render HTML
+            const results = compiler.render('./page.dtml');
+            //show HTML
+            console.log(results);
+          `}</ide-code>
+        </ide-app>
+        <i18n-translate p trim>
+          Next, create a document file called
+          <ide-code inline>src/page.dtml</ide-code> 
+          with the following template code.
+        </i18n-translate>
+        <ide-app title="src/page.dtml">
+          <ide-code numbers trim detab={12}>{`
+            <style>
+              .title { text-align: center; }
+            </style>
+            <script>
+              const title = 'Hello World';
+            </script>
+            <html>
+              <head>
+                <title>{title}</title>
+              </head>
+              <body>
+                <h1 class="title">{title}</h1>
+              </body>
+            </html>
+          `}</ide-code>
+        </ide-app>
+        <i18n-translate p trim>
+          To test the script and see the results, run the following 
+          command in terminal.
+        </i18n-translate>
+        <ide-app title="Terminal">
+          <ide-code lang="bash">
+            npx ts-node src/index.ts
+          </ide-code>
+        </ide-app>
+        <i18n-translate p trim>
+          To see other getting started examples with various frameworks,
+          you can check out the following links.
+        </i18n-translate>
+        <ul>
+          <li>
+            <a target="_blank" href={`${examples}/with-http`}>
+              Node HTTP
+            </a>
+          </li>
+          <li>
+            <a target="_blank" href={`${examples}/with-express`}>
+              ExpressJS
+            </a>
+          </li>
+          <li>
+            <a target="_blank" href={`${examples}/with-fastify`}>
+              Fastify
+            </a>
+          </li>
+          <li>
+            <a target="_blank" href={`${examples}/with-hapi`}>
+              Hapi
+            </a>
+          </li>
+          <li>
+            <a target="_blank" href={`${examples}/with-koa`}>
+              Koa
+            </a>
+          </li>
+          <li>
+            <a target="_blank" href={`${examples}/with-nest`}>
+              NestJS
+            </a>
+          </li>
+          <li>
+            <a target="_blank" href={`${examples}/with-restify`}>
+              Restify
+            </a>
+          </li>
+          <li>
+            <a target="_blank" href={`${examples}/with-webpack`}>
+              Webpack
+            </a>
+          </li>
+        </ul> 
+        <i18n-translate p trim>
+          Depending on how you plan to use Temple, you can also look at 
+          the following project modes.
+        </i18n-translate>
+        <ul>
+          <li>
+            <a href="/temple/docs/template-engine.html">
+              Template Engine
+            </a>
+          </li>
+          <li>
+            <a href="/temple/docs/single-page.html">
+              Single Page App
+            </a>
+          </li>
+          <li>
+            <a href="/temple/docs/static-site.html">
+              Static Site Generator
+            </a>
+          </li>
+          <li>
+            <a href="/temple/docs/component-publisher.html">
+              Web Component Publisher
+            </a>
+          </li>
+        </ul>
+        
+        <nav class="pager">
+          <a class="prev" href="/temple/docs/index.html">
+            <i class="fas fa-fw fa-chevron-left"></i>
+            {_('Documentation')}
+          </a>
+          <a class="next" href="/temple/docs/markup-syntax.html">
+            {_('Markup Syntax')}
+            <i class="fas fa-fw fa-chevron-right"></i>
+          </a>
+        </nav>
+      </div>
+      <footer class="foot"></footer>
+    </panel-main>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "@ossph/temple-express",
+  "version": "0.0.15",
+  "description": "Temple plugin for Express and native HTTP.",
+  "license": "Apache-2.0",
+  "author": "Chris <chris@incept.asia>",
+  "homepage": "https://github.com/OSSPhilippines/temple",
+  "bugs": "https://github.com/OSSPhilippines/temple/issues",
+  "repository": "OSSPhilippines/temple",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "tsconfig.json"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@ossph/temple": "0.0.15",
+    "@ossph/temple-dev": "0.0.15"
+  },
+  "devDependencies": {
+    "@types/node": "22.1.0"
+  }
+}

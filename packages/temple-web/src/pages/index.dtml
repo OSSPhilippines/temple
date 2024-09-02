@@ -1,0 +1,439 @@
+<link rel="import" type="template" href="@/modules/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
+<link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@/modules/tui/button.tml" name="tui-button" />
+<link rel="import" type="component" href="@/modules/ide/code.tml" name="ide-code" />
+<link rel="import" type="component" href="@/modules/ide/preview.tml" name="ide-preview" />
+<link rel="import" type="component" href="@/modules/ide/app.tml" name="ide-app" />
+<link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+<link rel="import" type="component" href="@/components/tweet-box.tml" />
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+  }
+  a, a:link, a:hover, a:active, a:visited {
+    color: var(--fg-primary);
+    text-decoration: none;
+  }
+  p, li {
+    font-size: 20px;
+    line-height: 36px;
+  }
+  .fab, .fas, .fa {
+    line-height: 16px;
+  }
+  .section-hero {
+    background-color: var(--bg-first);
+    padding: 40px 0;
+    text-align: center;
+    width: 100%;
+  }
+  .section-hero img {
+    height: 100px;
+  }
+  .section-hero h1 {
+    font-size: 40px;
+  }
+  .section-hero p {
+    font-size: 30px;
+    padding: 30px 0;
+  }
+  .section-sample {
+    margin: auto;
+    max-width: 960px;
+    padding: 0 20px;
+  }
+  .section-sample p {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .section-bullets {
+    background-color: var(--bg-first);
+    margin: auto;
+    padding: 40px 20px;
+    text-align: center;
+  }
+  .section-bullets ul {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    text-align: center;
+  }
+  .section-bullets li {
+    width: calc(33.33%-20px);
+    margin: 10px;
+    max-width: 300px;
+  }
+  .section-bullets li h3 {
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .section-bullets li p {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .section-interactive {
+    margin: auto;
+    max-width: 960px;
+    padding: 40px 20px;
+  }
+  .section-interactive h3 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .section-interactive p {
+    font-size: 16px;
+    line-height: 26px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .section-servers {
+    background-color: #CCCCCC;
+    margin: auto;
+    padding: 40px 20px;
+    text-align: center;
+  }
+  .section-servers h3 {
+    color: #242424;
+    font-size: 30px;
+    text-transform: uppercase;
+  }
+  .section-servers div {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 40px auto 0;
+    max-width: 960px;
+  }
+  .section-servers a {
+    display: block;
+    flex-basis: 33%;
+    margin-bottom: 20px;
+  }
+  .section-servers img {
+    height: 60px;
+  }
+
+  .section-testimonials {
+    background-color: var(--bg-first);
+    margin: auto;
+    padding: 40px 20px;
+  }
+  .section-testimonials h3 {
+    font-size: 26px;
+    text-align: center;
+  }
+  .section-testimonials > section {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .section-testimonials tweet-box {
+    flex-basis: 33%;
+  }
+
+  .section-action {
+    margin: auto;
+    padding: 40px 20px;
+    text-align: center;
+  }
+  .section-action h3 {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 960px) {
+    .section-testimonials tweet-box {
+      flex-basis: 50%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .section-bullets ul {
+      display: block;
+    }
+    .section-bullets li {
+      margin: 10px auto 40px;
+    }
+    .section-servers div {
+      display: block;
+    }
+    .section-testimonials tweet-box {
+      flex-basis: 100%;
+    }
+  }
+</style>
+<script>
+  import { env } from '@ossph/temple';
+  import { _ } from '@/modules/i18n';
+
+  const url = '/';
+  const title = _('Temple - The reactive web component template engine.');
+  const description = _('Temple is a template engine hat generates web components and support reactivity.');
+  const toggle = _ => {
+    document.body.classList.toggle('panel-left-open');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark panel with-head">
+    <panel-head />
+    <panel-main class="panel-main">
+      <section class="section-hero">
+        <img src="/temple/temple-icon.png" alt="Temple Logo" />
+        <h1>{_('Temple')}</h1>
+        <i18n-translate p trim>
+          The reactive web component template engine.
+        </i18n-translate>
+        <tui-button 
+          primary xl rounded 
+          style="margin-right:10px;" 
+          href="/temple/docs/getting-started.html"
+        >
+          {_('Get Started')}
+        </tui-button>
+        <tui-button secondary xl rounded href="/temple/docs/index.html">
+          {_('Read the Docs')}
+        </tui-button>
+      </section>
+      <section class="section-sample">
+        <i18n-translate p trim>
+          Temple is a modern HTML markup language and a server first 
+          template engine with a built-in parser/compiler that 
+          generates web components and supports reactivity.
+        </i18n-translate>
+        <ide-app title="Basic Example">
+          <div class="split-view">
+            <ide-code numbers trim detab={14}>{`
+              <style>
+                h1 { font-weight: bold; }
+              </style>
+              <script>
+                const name = 'world';
+              </script>
+              <h1>Hello {name}!</h1>
+            `}</ide-code>
+            <ide-preview>
+              <div>
+                <h1>{_('Hello world!')}</h1>
+              </div>
+            </ide-preview>
+          </div>
+        </ide-app>
+      </section>
+      <section class="section-bullets">
+        <ul>
+          <li>
+            <h3>{_('Expressive Markup')}</h3>
+            <i18n-translate p trim>
+              Any data type as attributes. Easily express logic with 
+              markup directives like if, each, and try catch. 
+            </i18n-translate>
+          </li>
+          <li>
+            <h3>{_('Reactive Signals')}</h3>
+            <i18n-translate p trim>
+              Easily transition from backend logic to reactive states.
+              No Hydration and no memoization needed.
+            </i18n-translate>
+          </li>
+          <li>
+            <h3>{_('Bare Metal')}</h3>
+            <i18n-translate p trim>
+              Work with the DOM directly. Import any web components 
+              from any source. Works with Lit, HTMX.
+            </i18n-translate>
+          </li>
+        </ul>
+      </section>
+      <section class="section-interactive">
+        <h3>{_('Server Setup')}</h3>
+        <i18n-translate p trim>
+          Temple can be used with popular server 
+          frameworks in just a few lines of code.
+        </i18n-translate>
+        <ide-app title="Server Example">
+          <ide-code lang="js" numbers trim detab={12}>{`
+            import temple from '@ossph/temple/server';
+            //make a template engine
+            const engine = temple({...options...});
+            //load a Temple file
+            const render = await engine.load('./page.html');
+            //render final HTML
+            const results = render({...props...});
+          `}</ide-code>
+        </ide-app>
+
+        <h3>{_('Props')}</h3>
+        <i18n-translate p trim>
+          Import your component props and use immediately
+        </i18n-translate>
+        <ide-app title="Props Example">
+          <div class="split-view">
+            <ide-code numbers trim detab={14}>{`
+              <style>
+                h1 { font-weight: bold; }
+              </style>
+              <script>
+                import { props } from '@ossph/temple';
+                const { name } = props();
+              </script>
+              <h1>Hello {name}!</h1>
+            `}</ide-code>
+            <ide-preview>
+              <div>
+                <h1>{_('Hello world!')}</h1>
+              </div>
+            </ide-preview>
+          </div>
+        </ide-app>
+
+        <h3>{_('Reactive Signals')}</h3>
+        <i18n-translate p trim>
+          Use signals to manage state changes and re-renders.
+        </i18n-translate>
+        <ide-app title="Signal Example">
+          <div class="split-view">
+            <ide-code numbers trim detab={14}>{`
+              <style>
+                h1 { font-weight: bold; }
+              </style>
+              <script>
+                import { signal } from '@ossph/temple';
+                const name = signal('world');
+                name.value += '!';
+              </script>
+              <h1>Hello {name.value}</h1>
+            `}</ide-code>
+            <ide-preview>
+              <div>
+                <h1>{_('Hello world!')}</h1>
+              </div>
+            </ide-preview>
+          </div>
+        </ide-app>
+
+        <h3>{_('Components and Templates')}</h3>
+        <i18n-translate p trim>
+          Import components and templates for reusability.
+        </i18n-translate>
+        <ide-app title="Import Example">
+          <div class="split-view">
+            <ide-code numbers trim detab={14}>{`
+              <!-- page.html -->
+              <link rel="import" href="./my-heading.html" />
+              <script>
+                const name = 'world';
+              </script>
+              <my-heading {name}>Hello</my-heading>
+            `}</ide-code>
+            <ide-code class="div" trim detab={14}>{`
+              <!-- my-heading.html -->
+              <script>
+                import { props } from '@ossph/temple';
+                const { name, children } = props();
+              </script>
+              <h1>{children} {name}</h1>
+            `}</ide-code>
+          </div>
+        </ide-app>
+
+        <h3>{_('Conditionals and Iterations')}</h3>
+        <i18n-translate p trim>
+          Case for conditions and iterations in an expressive way.
+        </i18n-translate>
+        <ide-app title="Conditional + Iteration Example">
+          <div class="split-view">
+            <ide-code numbers trim detab={14}>{`
+              <script>
+                const name = 'world';
+                const show = name === "world";
+              </script>
+
+              <if true=show>
+                <h1>Hello {name}</h1>
+              </if>
+            `}</ide-code>
+            <ide-code class="div" trim detab={14}>{`
+              <script>
+                const list = [ 'a', 'b', 'c' ];
+              </script>
+              <ul>
+                <each key=i value=item from=list>
+                  <li>{i}: {item}</li>
+                </each>
+              </ul>
+            `}</ide-code>
+          </div>
+        </ide-app>
+      </section>
+      <section class="section-servers">
+        <h3>{_('Works With Popular Server Frameworks')}</h3>
+        <div>
+          <a href="https://expressjs.com/" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Expressjs.png" alt="Express" />
+          </a>
+          <a href="https://fastify.dev/" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Fastify_logo.svg" alt="Fastify" />
+          </a>
+          <a href="https://hapi.dev/" target="_blank">
+            <img src="https://raw.githubusercontent.com/hapijs/assets/master/images/hapi.png" alt="Hapi" />
+          </a>
+          <a href="https://koajs.com/" target="_blank">
+            <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/koajs_logo_icon_168379.png" alt="Koa" />
+          </a>
+          <a href="https://nestjs.com/" target="_blank">
+            <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/nestjs_logo_icon_169927.png" alt="NestJS" />
+          </a>
+          <a href="http://restify.com/" target="_blank">
+            <img src="https://raw.githubusercontent.com/restify/node-restify/gh-images/logo/png/restify_logo_black_transp_288x288.png?raw=true" alt="Restify" />
+          </a>
+        </div>
+      </section>
+      <section class="section-testimonials">
+        <h3>{_('Temple Loves Developers!')}</h3>
+        <section>
+          <tweet-box name="Joff Tiquez" handle="@jrtiquez" href="https://twitter.com/jrtiquez" src="https://github.com/jofftiquez.png">
+            <p>Im a vue developer. No need for this. OSSPH does not support this project.</p>
+          </tweet-box>
+          <tweet-box name="Primeagen" handle="@theprimeagen" href="https://twitter.com/ThePrimeagen" src="https://pbs.twimg.com/profile_images/1759330620160049152/2i_wkOoK_400x400.jpg">
+            <p>Temple? Never heard of it...<br />"The Name..."</p>
+          </tweet-box>
+          <tweet-box name="Kristian Quirapas" handle="@YourCompanyCTO" href="https://twitter.com/YourCompanyCTO" src="https://avatars.githubusercontent.com/u/85150796?v=4">
+            <p>Temple is good news for Node developers. I'm a rust developer so it don't matter to me.</p>
+          </tweet-box>
+          <tweet-box name="Drizzle Team" handle="@drizzle.team" href="https://twitter.com/DrizzleORM" src="https://pbs.twimg.com/profile_images/1767809210060877824/mAtEmNk0_400x400.jpg">
+            <p>Temple copied this section from us. We are the original.</p>
+          </tweet-box>
+          <tweet-box name="Chris B" handle="@cblanquera" href="https://twitter.com/cblanquera" src="https://avatars.githubusercontent.com/u/120378?v=4">
+            <p>After creating the Temple project, I am really excited to get back to ReactJS.</p>
+          </tweet-box>
+          <tweet-box name="Theo" handle="@t3dotgg" href="https://twitter.com/t3dotgg" src="https://yt3.googleusercontent.com/4NapxEtLcHQ6wN2zA_DMmkOk47RFb_gy6sjSmUZGg_ARHjlIUjFsrNFddrcKMkTYpBNxCp3J=s160-c-k-c0x00ffffff-no-rj">
+            <p>Temple? no thanks. Keep your stack front end. App router for life.</p>
+          </tweet-box>
+        </section>
+      </section>
+      <section class="section-action">
+        <h3>{_('What are you waiting for?')}</h3>
+        <tui-button primary xl rounded style="margin-right:10px;" href="/temple/docs/getting-started.html">
+          {_('Get Started')}
+        </tui-button>
+        <tui-button secondary xl rounded href="/temple/docs/index.html">
+          {_('Read the Docs')}
+        </tui-button>
+      </section>
+      <footer class="foot"></footer>
+    </panel-main>
+  </body>
+</html>

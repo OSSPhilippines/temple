@@ -1,0 +1,29 @@
+{
+  "name": "@ossph/temple-esbuild",
+  "version": "0.0.15",
+  "description": "ESBuild support for the Temple markup language.",
+  "license": "Apache-2.0",
+  "author": "Chris <chris@incept.asia>",
+  "homepage": "https://github.com/OSSPhilippines/temple",
+  "bugs": "https://github.com/OSSPhilippines/temple/issues",
+  "repository": "OSSPhilippines/temple",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "index.d.ts",
+    "index.js",
+    "LICENSE",
+    "README.md",
+    "tsconfig.json"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@ossph/temple": "0.0.15"
+  },
+  "devDependencies": {
+    "@types/node": "22.0.0",
+    "typescript": "5.5.4"
+  }
+}

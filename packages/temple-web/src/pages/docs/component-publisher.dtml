@@ -1,0 +1,157 @@
+<link rel="import" type="template" href="@/modules/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
+<link rel="import" type="template" href="@/modules/panel/left.tml" name="panel-left" />
+<link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@/modules/ide/code.tml" name="ide-code" />
+<link rel="import" type="component" href="@/modules/ide/app.tml" name="ide-app" />
+<link rel="import" type="component" href="@/modules/tui/tab.tml" name="tui-tab" />
+<link rel="import" type="component" href="@/modules/tui/alert.tml" name="tui-alert" />
+<link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+<script>
+  import { env } from '@ossph/temple';
+  import { _ } from '@/modules/i18n';
+
+  const url = '/docs/component-publisher.html';
+  const title = _('Component Publisher - Temple reactive web component template engine.');
+  const description = _('How to use Temple to publish web components.');
+  const toggle = _ => {
+    document.body.classList.toggle('panel-left-open');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark panel with-head with-left">
+    <panel-head />
+    <panel-left />
+    <panel-main class="panel-main">
+      <div class="docs container">
+        <h1>{_('Component Publisher')}</h1>
+
+        <i18n-translate p trim>
+          Web components are a set of web platform APIs that allow you 
+          to create new custom, reusable, encapsulated HTML tags to use 
+          in web pages and web apps. Custom components and widgets build 
+          on the Web Component standards, will work across modern 
+          browsers, and can be used with any JavaScript library or 
+          framework that works with HTML.
+        </i18n-translate>
+
+        <i18n-translate p trim>
+          Web components are based on existing web standards. Features 
+          to support web components are currently being added to the 
+          HTML and DOM specs, letting web developers easily extend HTML 
+          with new elements with encapsulated styling and custom behavior.
+        </i18n-translate>
+
+        <tui-alert solid curved info>
+          <i class="fas fa-info-circle"></i>
+          <strong>Note:</strong> Web components even work in React 
+          projects.
+        </tui-alert>
+
+        <i18n-translate p trim>
+          First, create a project with the following structure and files.
+        </i18n-translate>
+        <ide-app panel={290} title="My Project">
+          <div class="panel-head">
+            <div class="tabs">
+              <tui-tab class="tab active" group="project" selector="#build-ts">
+                src/build.ts
+              </tui-tab>
+              <tui-tab class="tab" group="project" selector="#component-tml">
+                src/component.tml
+              </tui-tab>
+              <tui-tab class="tab" group="project" selector="#package-json">
+                package.json
+              </tui-tab>
+            </div>
+          </div>
+          <div class="panel-left">
+            <h5 class="folder">
+              <i class="fas fa-fw fa-chevron-down"></i>
+              <span>src</span>
+            </h5>
+            <tui-tab class="shift-1 block active" group="project" selector="#build-ts">
+              <i class="fas fa-fw fa-file"></i>
+              build.ts
+            </tui-tab>
+            <tui-tab class="shift-1 block" group="project" selector="#component-tml">
+              <i class="fas fa-fw fa-file"></i>
+              component.tml
+            </tui-tab>
+            <tui-tab class="block" group="project" selector="#package-json">
+              <i class="fas fa-fw fa-file"></i>
+              package.json
+            </tui-tab>
+          </div>
+          <div class="panel-main">
+            <main>
+              <ide-code id="build-ts" lang="js" numbers trim detab={16}>{`
+                import http from 'http';
+                import temple from '@ossph/temple/compiler';
+
+                //create temple compiler
+                const compiler = temple({ cwd: __dirname });
+                //load component, and render
+                const component = compiler
+                  .fromSource('./component.tml')
+                  .component();
+                
+                //save component
+                compiler.fs.writeFileSync('/path/to/component.js', component);
+              `}</ide-code>
+              <ide-code id="component-tml" style="display:none" numbers trim detab={16}>{`
+                <style>
+                  .title { text-align: center; }
+                </style>
+                <script>
+                  const title = 'Hello';
+                </script>
+                <h1 class="title">{title}</h1>
+              `}</ide-code>
+              <ide-code id="package-json" style="display:none" lang="js" numbers trim detab={16}>{`
+                {
+                  "name": "my-project",
+                  "version": "1.0.0",
+                  "private": true,
+                  "scripts": {
+                    "build": "ts-node ./src/build.ts"
+                  },
+                  "dependencies": {
+                    "@ossph/temple": "0.0.15"
+                  },
+                  "devDependencies": {
+                    "@ossph/temple-dev": "0.0.15",
+                    "@types/node": "22.1.0",
+                    "ts-node": "10.9.2",
+                    "typescript": "5.5.4"
+                  }
+                }
+              `}</ide-code>
+            </main>
+          </div>
+        </ide-app>
+
+        <i18n-translate p trim>
+          To test the build script and see the results, run the 
+          following command in terminal.
+        </i18n-translate>
+        <ide-code lang="bash">
+          npm run build
+        </ide-code>
+        
+        <nav class="pager">
+          <a class="prev" href="/temple/docs/static-site.html">
+            <i class="fas fa-fw fa-chevron-left"></i>
+            Static Site Generator
+          </a>
+          <a class="next" href="/temple/docs/developer-tools.html">
+            Developer Tools
+            <i class="fas fa-fw fa-chevron-right"></i>
+          </a>
+        </nav>
+      </div>
+      <footer class="foot"></footer>
+    </panel-main>
+  </body>
+</html>

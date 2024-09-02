@@ -1,0 +1,310 @@
+<link rel="stylesheet" type="text/css" href="/temple/styles/fontawesome/all.css" />
+<style>
+  :host {
+    --black: #222222;
+    --white: #FCFCFC;
+    --info: #1474FC;
+    --error: #DC3545;
+    --warning: #FF7B07;
+    --success: #28A745;
+    --muted: #999999;
+    --primary: #E49F1A;
+    --secondary: #DA532C;
+  }
+
+  /* Text Colors
+  ---------------------------------*/
+  .tx-white {
+    color: var(--white);
+  }
+  .tx-info {
+    color: var(--info);
+  }
+  .tx-error {
+    color: var(--error);
+  }
+  .tx-warning {
+    color: var(--warning);
+  }
+  .tx-success {
+    color: var(--success);
+  }
+  .tx-muted {
+    color: var(--muted);
+  }
+  .tx-primary {
+    color: var(--primary);
+  }
+  .tx-secondary {
+    color: var(--secondary);
+  }
+  
+  /* Generic
+  ---------------------------------*/
+  .block {
+    display: block;
+  }
+  .full {
+    width: 100%;
+  }
+
+  /* Borders
+  ---------------------------------*/
+  .curved {
+    border-radius: 5px;
+  }
+  .rounded {
+    border-radius:12px;
+  }
+  .pill {
+    border-radius: 10000px;
+  }
+  .solid {
+    border-style: solid;
+  }
+  .dash {
+    border-style: dashed;
+  }
+  .dotted {
+    border-style: dotted;
+  }
+  .thin {
+    border-width: 1px;
+  }
+  .thick {
+    border-width: 5px;
+  }
+
+  .bd-info {
+    border-color: var(--info);
+  }
+  .bd-error {
+    border-color: var(--error);
+  }
+  .bd-warning {
+    border-color: var(--warning);
+  }
+  .bd-success {
+    border-color: var(--success);
+  }
+  .bd-muted {
+    border-color: var(--muted);
+  }
+  .bd-primary {
+    border-color: var(--primary);
+  }
+  .bd-secondary {
+    border-color: var(--secondary);
+  }
+
+  /* Backgrounds
+  ---------------------------------*/
+  .bg-white {
+    background-color: var(--white);
+  }
+  .bg-info {
+    background-color: var(--info);
+  }
+  .bg-error {
+    background-color: var(--error);
+  }
+  .bg-warning {
+    background-color: var(--warning);
+  }
+  .bg-success {
+    background-color: var(--success);
+  }
+  .bg-muted {
+    background-color: var(--muted);
+  }
+  .bg-primary {
+    background-color: var(--primary);
+  }
+  .bg-secondary {
+    background-color: var(--secondary);
+  }
+
+  /* Padding
+  ---------------------------------*/
+  .pd-xs {
+    padding: 2px 4px;
+  }
+  .pd-sm {
+    padding: 4px 8px;
+  }
+  .pd-md {
+    padding: 6px 12px;
+  }
+  .pd-lg {
+    padding: 8px 16px;
+  }
+  .pd-xl {
+    padding: 10px 20px;
+  }
+  .pd-2xl {
+    padding: 12px 24px;
+  }
+  .pd-3xl {
+    padding: 14px 28px;
+  }
+  .pd-4xl {
+    padding: 16px 32px;
+  }
+  .pd-5xl {
+    padding: 18px 36px;
+  }
+
+  /* Button
+  ---------------------------------*/
+  .button, .button:link, .button:hover, .button:active .button:visited {
+    border: 0;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+  }
+</style>
+<script>
+  import { props, classnames, children } from '@ossph/temple';
+  // Separate component related props from field attributes
+  const { 
+    block,     full,    color,
+    xs,        sm,      md,
+    lg,        xl,      xl2, 
+    xl3,       xl4,     xl5, 
+    curved,    rounded, pill,
+    info,      warning, success, 
+    error,     muted,   primary, 
+    secondary, outline, transparent, 
+    solid,     style,   href,  
+    ...attributes 
+  } = props<{
+    block?: boolean,
+    full?: boolean,
+    color?: string,
+    xs?: boolean, 
+    sm?: boolean, 
+    md?: boolean, 
+    lg?: boolean, 
+    xl?: boolean, 
+    xl2?: boolean, 
+    xl3?: boolean, 
+    xl4?: boolean, 
+    xl5?: boolean, 
+    curved?: boolean,
+    rounded?: boolean,
+    pill?: boolean,
+    info?: boolean, 
+    warning?: boolean, 
+    success?: boolean, 
+    error?: boolean, 
+    muted?: boolean, 
+    primary?: boolean, 
+    secondary?: boolean, 
+    outline?: boolean, 
+    transparent?: boolean, 
+    solid?: boolean, 
+    style?: string,
+    href?: string
+  }>();
+
+  const config = {
+    classes: [ 'button' ],
+    styles: ''
+  }
+
+  if (block) {
+    config.classes.push('block');
+  }
+  if (full) {
+    config.classes.push('full');
+  }
+
+  //determine size
+  const size = xs ? 'xs' 
+    : sm ? 'sm' 
+    : md ? 'md' 
+    : lg ? 'lg' 
+    : xl ? 'xl' 
+    : xl2 ? '2xl' 
+    : xl3 ? '3xl' 
+    : xl4 ? '4xl' 
+    : xl5 ? '5xl' 
+    : 'md';
+  config.classes.push(`pd-${size}`);
+
+  const layout = outline 
+    ? 'outline' 
+    : transparent
+    ? 'transparent'
+    : solid 
+    ? 'solid'
+    : 'solid';
+
+  if (curved) {
+    config.classes.push('curved');
+  } else if (rounded) {
+    config.classes.push('rounded');
+  } else if (pill) {
+    config.classes.push('pill');
+  }
+
+  if (layout === 'outline' || layout === 'transparent') {
+    config.classes.push('solid', 'thin');
+    if (layout === 'outline') {
+      config.classes.push('bg-white');
+    }
+    if (color) {
+      config.styles += `border-color: ${color};`;
+      config.styles += `color: ${color};`;
+    } else if (info) {
+      config.classes.push('bd-info', 'tx-info');
+    } else if (warning) {
+      config.classes.push('bd-warning', 'tx-warning');
+    } else if (success) {
+      config.classes.push('bd-success', 'tx-success');
+    } else if (error) {
+      config.classes.push('bd-error', 'tx-error');
+    } else if (muted) {
+      config.classes.push('bd-muted', 'tx-muted');
+    } else if (primary) {
+      config.classes.push('bd-primary', 'tx-primary');
+    } else if (secondary) {
+      config.classes.push('bd-secondary', 'tx-secondary');
+    }
+  } else {
+    config.classes.push('tx-white');
+    if (color) {
+      config.styles += `background-color: ${color};`;
+    } else if (info) {
+      config.classes.push('bg-info');
+    } else if (warning) {
+      config.classes.push('bg-warning');
+    } else if (success) {
+      config.classes.push('bg-success');
+    } else if (error) {
+      config.classes.push('bg-error');
+    } else if (muted) {
+      config.classes.push('bg-muted');
+    } else if (primary) {
+      config.classes.push('bg-primary');
+    } else if (secondary) {
+      config.classes.push('bg-secondary');
+    }
+  } 
+
+  const map = {
+    classes: [ ...config.classes, classnames() ].join(' '),
+    styles: config.styles + style
+  };
+  const childlist = children();
+</script>
+<if true={!!href}>
+  <a class={map.classes} style={map.styles} href={href} {...attributes}>
+    {childlist}
+  </a>
+</if>
+<if true={!href}>
+  <button class={map.classes} style={map.styles} {...attributes}>
+    {childlist}
+  </button>
+</if>

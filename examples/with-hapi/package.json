@@ -9,10 +9,10 @@
   "dependencies": {
     "@hapi/hapi": "21.3.9",
     "@hapi/inert": "7.1.0",
-    "@ossph/temple": "0.0.12"
+    "@ossph/temple": "0.0.15"
   },
   "devDependencies": {
-    "@types/node": "20.12.7",
+    "@types/node": "22.1.0",
     "ts-node": "10.9.2",
     "typescript": "5.4.5"
   }

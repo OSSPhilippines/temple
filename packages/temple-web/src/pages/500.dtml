@@ -1,0 +1,46 @@
+<link rel="import" type="template" href="@/modules/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
+<link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+<style>
+  .container { padding: 20px; }
+  .error pre {
+    border: 1px solid #222222;
+    font-family: Courier, monospace;
+    line-height: 22px;
+    padding: 20px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+</style>
+<script>
+  import { env, props } from '@ossph/temple';
+  import { _ } from '@/modules/i18n';
+
+  const url = '/temple/500.html';
+  const title = _('Oops... - Temple - The reactive web component template engine.');
+  const description = _('Temple is a template engine hat generates web components and support reactivity.');
+
+  const { error } = props();
+
+  const toggle = _ => {
+    document.body.classList.toggle('panel-left-open');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark panel with-head">
+    <panel-head />
+    <panel-main class="panel-main">
+      <div class="container">
+        <h1>{_('Oops...')}</h1>
+        <p>
+          <i18n-translate>
+            Something went wrong. Please try again later.
+          </i18n-translate>
+        </p>
+        <div class="error"><pre>{error || ''}</pre></div>
+      </div>
+    </panel-main>
+  </body>
+</html>

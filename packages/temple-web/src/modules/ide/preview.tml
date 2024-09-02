@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" />
+<style>
+  :host {
+    display: block;
+  }
+  .preview {
+    background-color: #EFEFEF;
+    color: #222222;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    padding: 10px;
+  }
+</style>
+<script>
+  import { children } from '@ossph/temple';
+</script>
+<div class="preview">{children()}</div>

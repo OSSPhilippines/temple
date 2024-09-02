@@ -1,0 +1,26 @@
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
+  <meta property="og:url" content={`https://ossphilippines.github.io/temple${url}`} />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@OSSPhilippines" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
+  <link rel="favicon" href="/temple/favicon.ico" />
+  <link rel="shortcut icon" type="image/png" href="/temple/favicon.png" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/fontawesome/all.css" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/theme.css" />
+  <link rel="stylesheet" type="text/css" href={`/temple/build/${env('BUILD_ID')}.css`} />
+  
+  <script data-app={env('APP_DATA')} src={`/temple/build/${env('BUILD_ID')}.js`}></script>
+  <if true={env('NODE_ENV') !== 'production'}>
+    <script src="/dev.js"></script>
+  </if>
+</head>

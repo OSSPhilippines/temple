@@ -1,7 +1,7 @@
 import path from 'path';
 import fastify from 'fastify';
 import fstatic from '@fastify/static';
-import temple from '@ossph/temple/server';
+import temple from '@ossph/temple/compiler';
 
 const app = fastify({ logger: true });
 
@@ -9,11 +9,11 @@ app.register(fstatic, {
   root: path.join(path.dirname(__dirname), 'public')
 })
 
-const engine = temple({ cwd: __dirname });
+const compiler = temple({ cwd: __dirname });
 
 app.get('/', async (req, res) => {
-  const render = await engine.load('./templates/page.tml');
-  const results = render({
+  res.type('text/html');
+  res.send(await compiler.render('./pages/index.dtml', {
     title: 'Temple',
     description: 'Edit this file to change the content of the page.',
     start: 0,
@@ -26,9 +26,16 @@ app.get('/', async (req, res) => {
       'Fork the respository',
       'Contribute to the project'
     ]
-  });
-  res.type('text/html');
-  res.send(results);
+  }));
+});
+
+app.get<{Params: { build: string}}>('/build/:build', async (req, res) => {
+  //get filename ie. abc123.js
+  const filename = req.params.build;
+  //get asset
+  const { type, content } = await compiler.asset(filename);
+  //send response
+  res.type(type).send(content);
 });
 
 app.listen({ port: 3000 }, function (err, address) {

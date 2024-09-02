@@ -1,0 +1,177 @@
+<link rel="import" type="template" href="@/modules/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
+<link rel="import" type="template" href="@/modules/panel/left.tml" name="panel-left" />
+<link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@/modules/ide/code.tml" name="ide-code" />
+<link rel="import" type="component" href="@/modules/ide/app.tml" name="ide-app" />
+<link rel="import" type="component" href="@/modules/tui/tab.tml" name="tui-tab" />
+<link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+<script>
+  import { env } from '@ossph/temple';
+  import { _ } from '@/modules/i18n';
+
+  const url = '/docs/template-engine.html';
+  const title = _('Template Engine - Temple reactive web component template engine.');
+  const description = _('How to use Temple as a template engine.');
+  const toggle = _ => {
+    document.body.classList.toggle('panel-left-open');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark panel with-head with-left">
+    <panel-head />
+    <panel-left />
+    <panel-main class="panel-main">
+      <div class="docs container">
+        <h1>{_('Template Engine')}</h1>
+
+        <i18n-translate p trim>
+          Template engines are used when you want to rapidly build web 
+          applications that are split into different pages. Templates 
+          also enable fast rendering of the server-side data that needs
+          to be passed to the application. You can use Temple, TypeScript 
+          and the native Node.js HTTP server to serve up HTML documents
+          from the server-side.
+        </i18n-translate>
+
+        <i18n-translate p trim>
+          First, create a project with the following structure and files.
+        </i18n-translate>
+        <ide-app panel={410} title="My Project">
+          <div class="panel-head">
+            <div class="tabs">
+              <tui-tab class="tab active" group="project" selector="#index-ts">
+                src/index.ts
+              </tui-tab>
+              <tui-tab class="tab" group="project" selector="#page-dtml">
+                src/page.dtml
+              </tui-tab>
+              <tui-tab class="tab" group="project" selector="#package-json">
+                package.json
+              </tui-tab>
+            </div>
+          </div>
+          <div class="panel-left">
+            <h5 class="folder">
+              <i class="fas fa-fw fa-chevron-down"></i>
+              <span>src</span>
+            </h5>
+            <tui-tab class="shift-1 block active" group="project" selector="#index-ts">
+              <i class="fas fa-fw fa-file"></i>
+              index.ts
+            </tui-tab>
+            <tui-tab class="shift-1 block" group="project" selector="#page-dtml">
+              <i class="fas fa-fw fa-file"></i>
+              page.dtml
+            </tui-tab>
+            <tui-tab class="block" group="project" selector="#package-json">
+              <i class="fas fa-fw fa-file"></i>
+              package.json
+            </tui-tab>
+          </div>
+          <div class="panel-main">
+            <main>
+              <ide-code id="index-ts" lang="js" numbers trim detab={16}>{`
+                import http from 'http';
+                import temple from '@ossph/temple/compiler';
+
+                //create temple compiler
+                const compiler = temple({ cwd: __dirname });
+                //create http server
+                const server = http.createServer(async (req, res) => {
+                  //if build asset...
+                  if (req.url?.startsWith('/build/')) {
+                    //get filename ie. abc123.js
+                    const filename = req.url.substring(7);
+                    //get asset
+                    const { type, content } = await compiler.asset(filename);
+                    //send response
+                    res.writeHead(200, { 'Content-Type': type });
+                    return res.end(content);
+                  //if home page
+                  } else if (req.url === '/') {
+                    res.writeHead(200, { 'Content-Type': 'text/html' });
+                    return res.end(await compiler.render('./index.dtml', {
+                      title: 'Hello World'
+                    }));
+                  }
+                });
+                //listen on port 3000
+                server.listen(3000);
+              `}</ide-code>
+              <ide-code id="page-dtml" style="display:none" numbers trim detab={16}>{`
+                <style>
+                  .title { text-align: center; }
+                </style>
+                <script>
+                  import { env, props } from '@ossph/temple';
+                  const { BUILD_ID, APP_DATA } = env();
+                  const { title } = props();
+                </script>
+                <html>
+                  <head>
+                    <title>{title}</title>
+                    <link rel="stylesheet" type="text/css" href={\`/build/\${BUILD_ID}.css\`} />
+                    <script data-app={APP_DATA} src={\`/build/\${BUILD_ID}.js\`}></script>
+                  </head>
+                  <body>
+                    <h1 class="title">{title}</h1>
+                  </body>
+                </html>
+              `}</ide-code>
+              <ide-code id="package-json" style="display:none" lang="js" numbers trim detab={16}>{`
+                {
+                  "name": "my-project",
+                  "version": "1.0.0",
+                  "private": true,
+                  "scripts": {
+                    "dev": "ts-node ./src/index.ts"
+                  },
+                  "dependencies": {
+                    "@ossph/temple": "0.0.15"
+                  },
+                  "devDependencies": {
+                    "@ossph/temple-dev": "0.0.15",
+                    "@types/node": "22.1.0",
+                    "ts-node": "10.9.2",
+                    "typescript": "5.5.4"
+                  }
+                }
+              `}</ide-code>
+            </main>
+          </div>
+        </ide-app>
+        <i18n-translate p trim>
+          The server file 
+          <ide-code inline>src/index.ts</ide-code> 
+          implements a simple server utilizing the Temple compiler in 
+          its most simplistic form. The document file
+          <ide-code inline>src/page.dtml</ide-code> 
+          is using the most basic Temple syntax. To test the script and 
+          see the results, run the following command in terminal.
+        </i18n-translate>
+        <ide-code lang="bash">
+          npm run dev
+        </ide-code>
+        <i18n-translate p trim>
+          Load 
+          <ide-code lang="js" inline>'http://localhost:3000/'</ide-code> 
+          in your browser to see your application.
+        </i18n-translate>
+        
+        <nav class="pager">
+          <a class="prev" href="/temple/docs/client-api.html">
+            <i class="fas fa-fw fa-chevron-left"></i>
+            {_('Client API')}
+          </a>
+          <a class="next" href="/temple/docs/single-page.html">
+            {_('Single Page App')}
+            <i class="fas fa-fw fa-chevron-right"></i>
+          </a>
+        </nav>
+      </div>
+      <footer class="foot"></footer>
+    </panel-main>
+  </body>
+</html>

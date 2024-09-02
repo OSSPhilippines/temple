@@ -1,0 +1,139 @@
+{
+  "Asset": {
+    "type": "'text/html'|'text/javascript'|'text/css'|'text/plain'", 
+    "content": "string" 
+  },
+  "Path": { 
+    "path": "string", 
+    "type": "string" 
+  },
+  "Token": {
+    "start": "number",
+    "end": "number",
+    "type": "string",
+    "value": "string"
+  },
+  "Import": {
+    "typeOnly": "boolean",
+    "names": "string[]|undefined",
+    "default": "string",
+    "source": "string"
+  },
+  "Build": {
+    "source": "string",
+    "TempleDocument": "ServerDocumentClass",
+    "document": "ServerDocument"
+  },
+  "Component": {
+    "ast": "AST",
+    "brand": "string",
+    "classname": "string",
+    "components": "Component[]",
+    "contents": "string",
+    "cwd": "string",
+    "dependencies": "{ path: string, type: string }[]",
+    "dirname": "string",
+    "fs": "FileSystem",
+    "id": "string",
+    "imports": "Import[]",
+    "markup": "Token[]",
+    "loader": "FileLoader",
+    "parent": "Component|null",
+    "registry": "Record<string, Component>",
+    "relative": "string",
+    "source": "string",
+    "scripts": "string[]",
+    "styles": "string[]",
+    "tagname": "string",
+    "type": "'document'|'component'|'template'"
+  },
+  "EventEmitter": {
+    "on(name: 'render', event: Event)": "void",
+    "on(name: 'rendered', event: Event)": "void",
+    "on(name: 'build', event: Event)": "void",
+    "on(name: 'built', event: Event)": "void",
+    "on(name: 'build-client', event: Event)": "void",
+    "on(name: 'built-client', event: Event)": "void",
+    "on(name: 'build-markup', event: Event)": "void",
+    "on(name: 'built-markup', event: Event)": "void",
+    "on(name: 'build-server', event: Event)": "void",
+    "on(name: 'built-server', event: Event)": "void",
+    "on(name: 'build-styles', event: Event)": "void",
+    "on(name: 'built-styles', event: Event)": "void",
+    "on(name: 'manifest-load', event: Event)": "void",
+    "on(name: 'manifest-resolve', event: Event)": "void",
+    "on(name: 'manifest-resolved', event: Event)": "void",
+    "on(name: 'manifest-unresolved', event: Event)": "void",
+    "on(name: 'dev-file-changed', event: Event)": "void",
+    "on(name: 'dev-update-document', event: Event)": "void",
+    "on(name: 'dev-update-component', event: Event)": "void"
+  },
+  "DocumentManifest": {
+    "emitter": "EventEmitter",
+    "registry": "Map<string, string>",
+    "builder(id: string)": "DocumentBuilder",
+    "delete(id: string)": "DocumentManifest",
+    "entries()": "[ string, string ][]",
+    "get(id: string)": "string",
+    "has(id: string)": "boolean",
+    "load(manifest: Record<string, string>)": "DocumentManifest",
+    "keys()": "string[]",
+    "set(id: string, path: string)": "DocumentManifest",
+    "toJson()": "string",
+    "values()": "string[]"
+  },
+  "DocumentTranspiler": {
+    "directive(directive: DirectiveInterface)": "DocumentTranspiler",
+    "transpile()": "SourceFile"
+  },
+  "DocumentBuilder": {
+    "document": "Component",
+    "emitter": "EventEmitter",
+    "extnames": "string[]",
+    "transpiler": "DocumentTranspiler",
+    "tsconfig": "string",
+    "build()": "Promise<Build>",
+    "client()": "Promise<string>",
+    "markup()": "Promise<string>",
+    "server()": "Promise<string>",
+    "styles()": "Promise<string>"
+  },
+  "ServerDocumentClass": {
+    "component": "[ string, string ]",
+    "new ()": "ServerDocument"
+  },
+  "ServerDocument": {
+    "id()": "string",
+    "styles()": "string",
+    "template()": "Element[]",
+    "render(props: Record<string, any>)": "string"
+  },
+  "TempleCompiler": {
+    "config": {
+      "brand": "string",
+      "cwd": "string",
+      "fs": "FileSystem",
+      "emitter": "EventEmitter",
+      "name?": "string",
+      "type?": "document'|'component'|'template",
+      "minify?": "boolean",
+      "tsconfig?": "string",
+      "component_extname?": "string",
+      "document_extname?": "string"
+    },
+    "fs": "FileSystem",
+    "emitter": "EventEmitter",
+    "manifest": "DocumentManifest",
+    "fromId(id: string)": "DocumentBuilder",
+    "fromCache(cacheFile: string)": "Build",
+    "fromSource(sourceFile: string)": "DocumentBuilder",
+    "withCache(options: CacheOptions)": "TempleCompiler",
+    "asset(assetFile: string)": "Promise<Asset>",
+    "client(sourceFile: string)": "Promise<string>",
+    "import(sourceFile: string)": "Promise<Build>",
+    "markup(sourceFile: string)": "Promise<string>",
+    "render(sourceFile: string, props: Hash)":  "Promise<string>",
+    "server(sourceFile: string)": "Promise<string>",
+    "styles(sourceFile: string)": "Promise<string>"
+  }
+}
