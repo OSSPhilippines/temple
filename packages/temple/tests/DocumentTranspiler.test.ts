@@ -28,7 +28,7 @@ describe('Temple Document Transpiler', () => {
     //   ]).element
     // ]
     expect(server).to.contain('TempleRegistry.createElement(\'div\', { \'title\': title }, [');
-    expect(server).to.contain('TempleRegistry.createText(`$`)');
+    expect(server).to.contain('TempleRegistry.createText(`$`, false)');
 
     const client = toTS(transpiler.client());
     //console.log('--client--', client);

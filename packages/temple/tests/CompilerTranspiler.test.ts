@@ -18,7 +18,6 @@ describe('Temple Compiler Transpiler', () => {
   it('Should transpile $', () => {
     const transpiler = new Transpiler(component, tsconfig);
     const actual = transpiler.transpile();
-    //console.log(toTS(actual));
     // [
     //   TempleRegistry.createElement('div', { }, [
     //     TempleRegistry.createElement('span', { }, [
@@ -27,6 +26,6 @@ describe('Temple Compiler Transpiler', () => {
     //     TempleRegistry.createText(`ok`)
     //   ]).element
     // ]
-    expect(toTS(actual)).to.contain('TempleRegistry.createText(`$`)');
+    expect(toTS(actual)).to.contain('TempleRegistry.createText(`$`, false)');
   });
 });
