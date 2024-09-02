@@ -645,9 +645,9 @@ ${document2}`;
   }`;
     }
     template() {
-      const url = "/";
+      const url = "/temple/index.html";
       const title = _("Temple - The reactive web component template engine.");
-      const description = _("Temple is a template engine hat generates web components and support reactivity.");
+      const description = _("Temple is a template engine that generates web components and support reactivity.");
       const toggle = (_2) => {
         document.body.classList.toggle("panel-left-open");
       };

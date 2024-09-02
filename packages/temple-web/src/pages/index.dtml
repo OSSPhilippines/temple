@@ -178,9 +178,9 @@
   import { env } from '@ossph/temple';
   import { _ } from '@/modules/i18n';
 
-  const url = '/';
+  const url = '/temple/index.html';
   const title = _('Temple - The reactive web component template engine.');
-  const description = _('Temple is a template engine hat generates web components and support reactivity.');
+  const description = _('Temple is a template engine that generates web components and support reactivity.');
   const toggle = _ => {
     document.body.classList.toggle('panel-left-open');
   };

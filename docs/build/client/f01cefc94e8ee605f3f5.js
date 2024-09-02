@@ -3132,9 +3132,9 @@ var TempleAPI = (() => {
       throw import_client8.TempleException.for("APP_DATA is not a valid JSON");
     }
     import_client8.data.set("current", "document");
-    const url = "/";
+    const url = "/temple/index.html";
     const title = _("Temple - The reactive web component template engine.");
-    const description = _("Temple is a template engine hat generates web components and support reactivity.");
+    const description = _("Temple is a template engine that generates web components and support reactivity.");
     const toggle = (_2) => {
       document.body.classList.toggle("panel-left-open");
     };
