@@ -1,6 +1,6 @@
 {
   "name": "temple-language",
-  "version": "0.0.15",
+  "version": "0.1.0",
   "description": "Adds syntax highlighting, formatting, auto-completion, jump-to-definition and linting for .tml files.",
   "license": "Apache-2.0",
 	"icon": "temple-logo.png",
