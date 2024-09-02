@@ -1,6 +1,7 @@
 <div align="center">
   <img src="https://ossphilippines.github.io/temple/temple-icon.png" width="100" />
   <h1>Temple</h1>
+  <p>The reactive web component template engine.</p>
   <a href="https://www.npmjs.com/package/@ossph/temple"><img src="https://img.shields.io/npm/v/%40ossph%2Ftemple.svg?style=flat" /></a>
   <a href="https://github.com/OSSPhilippines/temple/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat" /></a>
   <a href="https://github.com/OSSPhilippines/temple/commits/main/"><img src="https://img.shields.io/github/last-commit/OSSPhilippines/temple" /></a>
@@ -11,10 +12,6 @@
   <br />
   <hr />
 </div>
-
-# ⛩️ Temple
-
-The reactive web component template engine.
 
 ## Install
 
