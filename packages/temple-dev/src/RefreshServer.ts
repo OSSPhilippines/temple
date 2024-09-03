@@ -97,7 +97,7 @@ export default class RefreshServer {
       return this;
     }
 
-    this._emitter.trigger('dev-file-change', { filePath });
+    await this._emitter.waitFor('dev-file-change', { filePath });
 
     //Lots of things to figure out for hot refresh...
     // - What file changed? (filePath)
@@ -109,7 +109,7 @@ export default class RefreshServer {
     //loop through the registry of loaded documents
     for (const builder of this._registry.values()) {
       const document = builder.document;
-      this._emitter.trigger(
+      await this._emitter.waitFor(
         'dev-update-document', 
         { filePath, document }
       );
@@ -143,7 +143,7 @@ export default class RefreshServer {
             tsconfig: this._tsconfig
           });
           updates[document.id].push(script);
-          this._emitter.trigger(
+          await this._emitter.waitFor(
             'dev-update-component', 
             { filePath, document, component }
           );
@@ -157,7 +157,7 @@ export default class RefreshServer {
             tsconfig: this._tsconfig
           });
           updates[document.id].push(script);
-          this._emitter.trigger(
+          await this._emitter.waitFor(
             'dev-update-component', 
             { filePath, document, component: dependant.component }
           );
@@ -180,7 +180,7 @@ export default class RefreshServer {
       //implementation of browser refresh
     });
 
-    this._emitter.trigger('dev-file-changed', { filePath });
+    await this._emitter.waitFor('dev-file-changed', { filePath });
 
     return this;
   }
