@@ -1,0 +1,21 @@
+{
+  "name": "with-tailwind",
+  "version": "1.0.0",
+  "description": "A simple boilerplate for building web components with Temple and Tailwind",
+  "private": true,
+  "scripts": {
+    "dev": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "@ossph/temple": "0.1.1",
+    "@ossph/temple-dev": "0.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.1.0",
+    "autoprefixer": "10.4.20",
+    "postcss": "8.4.44",
+    "tailwindcss": "3.4.10",
+    "ts-node": "10.9.2",
+    "typescript": "5.5.4"
+  }
+}
