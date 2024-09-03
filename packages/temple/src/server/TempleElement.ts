@@ -11,7 +11,10 @@ export default class TempleElement {
    * Converts the markup to HTML
    */
   public static render(markup: Node[]) {
-    return markup.map(child => child.toString()).join('');
+    return markup
+      .filter(Boolean)
+      .map(child => child.toString())
+      .join('');
   }
 
   //name of the element <div>

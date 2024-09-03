@@ -28,6 +28,10 @@ export default class TempleCollection {
    * Renders the collection to string
    */
   public toString() {
-    return Array.from(this._elements).map(child => child.toString()).join('');
+    return Array
+      .from(this._elements)
+      .filter(Boolean)
+      .map(child => child.toString())
+      .join('');
   }
 }

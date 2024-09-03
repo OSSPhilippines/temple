@@ -97,27 +97,30 @@ export default class RefreshServer {
       return this;
     }
 
-    await this._emitter.waitFor('dev-file-change', { filePath });
+    const updates: Record<string, string[]> = {};
+    const params = { filePath, updates };
+    //pre emit file change
+    await this._emitter.waitFor('dev-file-change', params);
 
     //Lots of things to figure out for hot refresh...
     // - What file changed? (filePath)
     // - What document imports this component?
     // - What components import this file?
     const absolute = path.resolve(this._cwd, filePath);
-    const updates: Record<string, string[]> = {};
     
     //loop through the registry of loaded documents
     for (const builder of this._registry.values()) {
       const document = builder.document;
-      await this._emitter.waitFor(
-        'dev-update-document', 
-        { filePath, document }
-      );
       // - What document imports this component?
       //if the document is the same as the changed file
       if (document.absolute === absolute) {
+        const params = { filePath, document, updates };
+        //pre emit document update
+        await this._emitter.waitFor('dev-update-document', params);
         //just reload
         updates[document.id] = [ 'window.location.reload();' ];
+        //post emit document updated
+        await this._emitter.waitFor('dev-updated-document', params);
         continue;
       }
       // - What components import this file?
@@ -142,32 +145,49 @@ export default class RefreshServer {
             extname: this._extname,
             tsconfig: this._tsconfig
           });
+          //event params
+          const params = { filePath, document, component, updates };
+          //pre emit component update
+          await this._emitter.waitFor('dev-update-component', params);
+          //add a script to the updates
           updates[document.id].push(script);
-          await this._emitter.waitFor(
-            'dev-update-component', 
-            { filePath, document, component }
-          );
+          //post emit component updated
+          await this._emitter.waitFor('dev-updated-component', params);
           continue;
         //if the parent component is a component
         } else if (dependant.component.type === 'component') {
+          const { component } = dependant;
           //the filePath was imported as a template 
           // or file, update the parent component
-          const script = await update(dependant.component, {
+          const script = await update(component, {
             extname: this._extname,
             tsconfig: this._tsconfig
           });
+          //event params
+          const params = { filePath, document, component, updates };
+          //pre emit component update
+          await this._emitter.waitFor('dev-update-component', params);
+          //add a script to the updates
           updates[document.id].push(script);
-          await this._emitter.waitFor(
-            'dev-update-component', 
-            { filePath, document, component: dependant.component }
-          );
+          //post emit component updated
+          await this._emitter.waitFor('dev-updated-component', params);
           continue;
         }
-        
+      }
+      //if there are no updates for the document
+      if (updates[document.id].length === 0) {
+        //event params
+        const params = { filePath, document, updates };
+        //pre emit document update
+        await this._emitter.waitFor('dev-update-document', params);
+        //just reload
         updates[document.id].push('window.location.reload();');
+        //post emit document updated
+        await this._emitter.waitFor('dev-updated-document', params);
       }
     };
 
+    //send out the updates to all the clients
     this._clients.forEach(res => {
       res.write("event: refresh\n");
       res.write(`data: ${JSON.stringify(updates)}\n\n`);
@@ -180,7 +200,8 @@ export default class RefreshServer {
       //implementation of browser refresh
     });
 
-    await this._emitter.waitFor('dev-file-changed', { filePath });
+    //post emit file changed
+    await this._emitter.waitFor('dev-file-changed', params);
 
     return this;
   }
