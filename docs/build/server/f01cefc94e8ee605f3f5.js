@@ -452,7 +452,7 @@ ${document2}`;
     }
   });
 
-  // temple-document-server-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/index.dtml
+  // temple-document-server-resolver:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/index.dtml
   var pages_exports = {};
   __export(pages_exports, {
     default: () => Index_f01cefc94e8ee605f3f5
@@ -472,7 +472,7 @@ ${document2}`;
     return phrase;
   };
 
-  // temple-document-server-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/index.dtml
+  // temple-document-server-resolver:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/index.dtml
   var Index_f01cefc94e8ee605f3f5 = class extends import_server.TempleDocument {
     id() {
       return "f01cefc94e8ee605f3f5";

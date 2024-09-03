@@ -452,7 +452,7 @@ ${document2}`;
     }
   });
 
-  // temple-document-server-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/docs/single-page.dtml
+  // temple-document-server-resolver:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/docs/single-page.dtml
   var single_page_exports = {};
   __export(single_page_exports, {
     default: () => SinglePage_3550a936d66e61695120
@@ -472,7 +472,7 @@ ${document2}`;
     return phrase;
   };
 
-  // temple-document-server-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/docs/single-page.dtml
+  // temple-document-server-resolver:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/docs/single-page.dtml
   var SinglePage_3550a936d66e61695120 = class extends import_server.TempleDocument {
     id() {
       return "3550a936d66e61695120";
@@ -1107,8 +1107,8 @@ ${document2}`;
                     "build": "webpack --mode production"
                   },
                   "devDependencies": {
-                    "@ossph/temple": "0.1.0"
-                    "@ossph/temple-loader": "0.1.0",
+                    "@ossph/temple": "0.1.1"
+                    "@ossph/temple-loader": "0.1.1",
                     "@types/node": "22.1.0",
                     "html-webpack-plugin": "5.6.0",
                     "webpack-dev-server": "5.0.4",

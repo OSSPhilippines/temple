@@ -248,6 +248,9 @@ var TempleAPI = (() => {
           component.props = attributes;
           children3.forEach((child) => component.appendChild(child));
           component.register();
+          if (!customElements.get(tagname)) {
+            component.connectedCallback();
+          }
           return this.register(component, attributes);
         }
         static createElement(name, attributes, children3 = []) {
@@ -893,7 +896,7 @@ var TempleAPI = (() => {
     }
   });
 
-  // temple-document-client-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/500.dtml
+  // temple-document-client-resolver:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/500.dtml
   var __exports = {};
   __export(__exports, {
     BUILD_ID: () => BUILD_ID,
@@ -911,7 +914,7 @@ var TempleAPI = (() => {
   });
   var import_client3 = __toESM(require_client2());
 
-  // temple-component-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/modules/panel/main.tml
+  // temple-component-resolver:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/modules/panel/main.tml
   var import_client = __toESM(require_client2());
   var Main_fd7f1af6410c5b5c8e1f = class extends import_client.TempleComponent {
     static component = ["main", "Main_fd7f1af6410c5b5c8e1f"];
@@ -929,7 +932,7 @@ var TempleAPI = (() => {
     }
   };
 
-  // temple-component-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/modules/i18n/translate.tml
+  // temple-component-resolver:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/modules/i18n/translate.tml
   var import_client2 = __toESM(require_client2());
 
   // src/modules/i18n/index.ts
@@ -944,7 +947,7 @@ var TempleAPI = (() => {
     return phrase;
   };
 
-  // temple-component-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/modules/i18n/translate.tml
+  // temple-component-resolver:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/modules/i18n/translate.tml
   var import_temple = __toESM(require_temple());
   var Translate_7d25e372f5ffb5e39dad = class extends import_client2.TempleComponent {
     static component = ["translate", "Translate_7d25e372f5ffb5e39dad"];
@@ -1019,7 +1022,7 @@ var TempleAPI = (() => {
     }
   };
 
-  // temple-document-client-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/500.dtml
+  // temple-document-client-resolver:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/500.dtml
   var import_temple2 = __toESM(require_temple());
   var import_client4 = __toESM(require_client2());
   import_client3.emitter.once("ready", () => {

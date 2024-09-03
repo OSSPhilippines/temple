@@ -1,5 +1,4 @@
 import type { Request, Response } from 'express';
-
 import type { TempleEvent, DocumentBuilder } from '@ossph/temple/compiler';
 
 import path from 'path';

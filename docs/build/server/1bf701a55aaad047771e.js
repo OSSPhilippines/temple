@@ -452,7 +452,7 @@ ${document2}`;
     }
   });
 
-  // temple-document-server-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/docs/static-site.dtml
+  // temple-document-server-resolver:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/docs/static-site.dtml
   var static_site_exports = {};
   __export(static_site_exports, {
     default: () => StaticSite_1bf701a55aaad047771e
@@ -472,7 +472,7 @@ ${document2}`;
     return phrase;
   };
 
-  // temple-document-server-plugin:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/docs/static-site.dtml
+  // temple-document-server-resolver:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/docs/static-site.dtml
   var StaticSite_1bf701a55aaad047771e = class extends import_server.TempleDocument {
     id() {
       return "1bf701a55aaad047771e";
@@ -988,10 +988,10 @@ ${document2}`;
                     "dev": "ts-node ./src/index.ts"
                   },
                   "dependencies": {
-                    "@ossph/temple": "0.1.0"
+                    "@ossph/temple": "0.1.1"
                   },
                   "devDependencies": {
-                    "@ossph/temple-dev": "0.1.0",
+                    "@ossph/temple-dev": "0.1.1",
                     "@types/node": "22.1.0",
                     "ts-node": "10.9.2",
                     "typescript": "5.5.4"
