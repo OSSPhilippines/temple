@@ -24,12 +24,16 @@ export default class RefreshServer {
   protected _cwd: string;
   //event emitter
   protected _emitter: EventEmitter;
+  //extname
+  protected _extname: string;
   //file extensions to listen to
   protected _extensions: string[];
   //patterns used to ignore files and folders
   //can be an array of string, string pattern, 
   //regexp, function
   protected _ignore: OptionIgnore;
+  //tsconfig file
+  protected _tsconfig: string|undefined;
   //the file watcher
   protected _watcher: FSWatcher|null = null;
   //clients
@@ -57,6 +61,8 @@ export default class RefreshServer {
     this._emitter = options.emitter || new EventEmitter();
     this._extensions = options.include || extensions;
     this._ignore = options.ignore || [];
+    this._tsconfig = options.tsconfig;
+    this._extname = options.extname || '.tml';
   }
 
   /**
@@ -90,6 +96,8 @@ export default class RefreshServer {
     if (!this._extensions.includes(extname)) {
       return this;
     }
+
+    this._emitter.trigger('dev-file-change', { filePath });
 
     //Lots of things to figure out for hot refresh...
     // - What file changed? (filePath)
@@ -130,7 +138,10 @@ export default class RefreshServer {
             cwd: document.cwd,
             fs: document.fs
           });
-          const script = await update(component);
+          const script = await update(component, {
+            extname: this._extname,
+            tsconfig: this._tsconfig
+          });
           updates[document.id].push(script);
           this._emitter.trigger(
             'dev-update-component', 
@@ -141,7 +152,10 @@ export default class RefreshServer {
         } else if (dependant.component.type === 'component') {
           //the filePath was imported as a template 
           // or file, update the parent component
-          const script = await update(dependant.component);
+          const script = await update(dependant.component, {
+            extname: this._extname,
+            tsconfig: this._tsconfig
+          });
           updates[document.id].push(script);
           this._emitter.trigger(
             'dev-update-component', 

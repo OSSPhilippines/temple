@@ -2,5 +2,6 @@ export {
   esAliasPlugin, 
   esComponentPlugin, 
   esDocumentPlugin,
-  esWorkspacePlugin
+  esWorkspacePlugin,
+  esTemplePlugin
 } from '@ossph/temple/compiler';

@@ -283,6 +283,14 @@ export type ComponentPluginOptions = FileOptions & {
 //options for esbuild plugin
 export type DocumentPluginOptions = ComponentPluginOptions;
 
+export type TemplePluginOptions = FileOptions & {
+  brand?: string,
+  mode?: 'client'|'server',
+  tsconfig?: string,
+  component_extname?: string,
+  document_extname?: string
+};
+
 //options for the component class
 export type ComponentOptions = FileOptions & {
   name?: string,

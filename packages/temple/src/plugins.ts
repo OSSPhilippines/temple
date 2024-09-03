@@ -1,6 +1,7 @@
 //types
 import type { PluginBuild } from 'esbuild';
 import type { 
+  TemplePluginOptions,
   AliasPluginOptions,
   ComponentPluginOptions,
   DocumentPluginOptions
@@ -8,12 +9,13 @@ import type {
 
 import path from 'path';
 import FileSystem from './filesystem/NodeFS';
+import FileLoader from './filesystem/FileLoader';
 import Component from './compiler/Component';
 import ComponentTranspiler from './compiler/Transpiler';
 import DocumentTranspiler from './document/Transpiler';
 import { toTS } from './helpers';
 
-export function esAliasPlugin(options: AliasPluginOptions) {
+export function esAliasPlugin(options: AliasPluginOptions = {}) {
   const { 
     cwd = process.cwd(), 
     fs = new FileSystem() 
@@ -62,35 +64,26 @@ export function esAliasPlugin(options: AliasPluginOptions) {
   };
 };
 
-export function esComponentPlugin(options: ComponentPluginOptions) {
+export function esComponentPlugin(options: ComponentPluginOptions = {}) {
   const { 
     tsconfig, 
-    extname = 'tml',
+    extname = '.tml',
     cwd = process.cwd(),
     fs = new FileSystem(),
     ...config
   } = options;
   const name = 'temple-component-plugin';
-  const filter = new RegExp(`\\.${extname}$`);
+  const filter = new RegExp(`\\.${extname.substring(1)}$`);
+  const loader = new FileLoader(fs, cwd);
   return {
     name: name,
     setup: (build: PluginBuild) => {
       build.onResolve({ filter }, args => {
-        const absolute = 
-          //if absolute
-          args.path.startsWith('/')
-          ? args.path
-          //if relative to cwd
-          : args.path.startsWith('@/')
-          ? path.resolve(cwd, args.path.replace('@/', ''))
-          //if relative to pwd
-          : args.path.startsWith('.')
-          ? path.resolve(path.dirname(args.importer), args.path)
-          //node_modules?
-          : require.resolve(args.path, { paths: [ args.resolveDir ] });
-        
-        return fs.existsSync(absolute) 
-          ? { path: absolute, namespace: name } 
+        const pwd = path.dirname(args.importer) || cwd;
+        const extnames = [ extname ];
+        const resolved = loader.resolve(args.path, pwd, extnames);
+        return resolved
+          ? { path: resolved, namespace: name } 
           : undefined;
       });
 
@@ -110,43 +103,34 @@ export function esComponentPlugin(options: ComponentPluginOptions) {
   };
 };
 
-export function esDocumentPlugin(options: DocumentPluginOptions) {
+export function esDocumentPlugin(options: DocumentPluginOptions = {}) {
   const { 
     tsconfig, 
-    extname = 'dtml',
+    extname = '.dtml',
     cwd = process.cwd(),
     fs = new FileSystem(),
     ...config
   } = options;
-  const names = [
-    'temple-document-server-plugin',
-    'temple-document-client-plugin'
-  ];
-  const filter = new RegExp(`\\.${extname}$`);
+  const name = {
+    server: 'temple-document-server-plugin',
+    client: 'temple-document-client-plugin'
+  };
+  const filter = new RegExp(`\\.${extname.substring(1)}$`);
+  const loader = new FileLoader(fs, cwd);
   return {
     server: {
-      name: names[0],
+      name: name.server,
       setup: (build: PluginBuild) => {
         build.onResolve({ filter }, args => {
-          const absolute = 
-            //if absolute
-            args.path.startsWith('/')
-            ? args.path
-            //if relative to cwd
-            : args.path.startsWith('@/')
-            ? path.resolve(cwd, args.path.replace('@/', ''))
-            //if relative to pwd
-            : args.path.startsWith('.')
-            ? path.resolve(path.dirname(args.importer), args.path)
-            //node_modules?
-            : require.resolve(args.path, { paths: [ args.resolveDir ] });
-    
-          return fs.existsSync(absolute) 
-            ? { path: absolute, namespace: names[0] } 
+          const pwd = path.dirname(args.importer) || cwd;
+          const extnames = [ extname ];
+          const resolved = loader.resolve(args.path, pwd, extnames);
+          return resolved
+            ? { path: resolved, namespace: name.server } 
             : undefined;
         });
   
-        build.onLoad({ filter, namespace: names[0] }, args => {
+        build.onLoad({ filter, namespace: name.server }, args => {
           const document = new Component(
             args.path, 
             { ...config, fs, cwd, type: 'document' }
@@ -160,28 +144,18 @@ export function esDocumentPlugin(options: DocumentPluginOptions) {
       }
     },
     client: {
-      name: names[1],
+      name: name.client,
       setup: (build: PluginBuild) => {
         build.onResolve({ filter }, args => {
-          const absolute = 
-            //if absolute
-            args.path.startsWith('/')
-            ? args.path
-            //if relative to cwd
-            : args.path.startsWith('@/')
-            ? path.resolve(cwd, args.path.replace('@/', ''))
-            //if relative to pwd
-            : args.path.startsWith('.')
-            ? path.resolve(path.dirname(args.importer), args.path)
-            //node_modules?
-            : require.resolve(args.path, { paths: [ args.resolveDir ] });
-        
-          return fs.existsSync(absolute) 
-            ? { path: absolute, namespace: names[1] } 
+          const pwd = path.dirname(args.importer) || cwd;
+          const extnames = [ extname ];
+          const resolved = loader.resolve(args.path, pwd, extnames);
+          return resolved
+            ? { path: resolved, namespace: name.client } 
             : undefined;
         });
   
-        build.onLoad({ filter, namespace: names[1] }, args => {
+        build.onLoad({ filter, namespace: name.client }, args => {
           const document = new Component(
             args.path, 
             { ...config, fs, cwd, type: 'document' }
@@ -218,3 +192,104 @@ export function esWorkspacePlugin() {
     }
   }
 };
+
+export function esTemplePlugin(options: TemplePluginOptions = {}) {
+  const { 
+    tsconfig,
+    cwd = process.cwd(), 
+    fs = new FileSystem(),
+    mode = 'server',
+    component_extname = '.tml',
+    document_extname = '.dtml',
+    ...config
+  } = options;
+  const loader = new FileLoader(fs, cwd);
+  const extnames = [ 
+    '.js', '.json', '.ts', 
+    component_extname, 
+    document_extname 
+  ];
+  return {
+    name: 'temple-plugin',
+    setup: (build: PluginBuild) => {
+      //should resolve everything...
+      build.onResolve({ filter: /.*/ }, args => {
+        const pwd = args.importer ? path.dirname(args.importer): cwd;
+        const resolved = loader.resolve(args.path, pwd, extnames);
+
+        if (resolved) {
+          //if component
+          if (resolved.endsWith(component_extname)) {
+            return { 
+              path: resolved, 
+              namespace: 'temple-component-resolver' 
+            };
+          //if document
+          } else if (resolved.endsWith(document_extname)) {
+            return { 
+              path: resolved, 
+              namespace: mode === 'server' 
+                ? 'temple-document-server-resolver' 
+                : 'temple-document-client-resolver' 
+            };
+          }
+          return { path: resolved };
+        }
+
+        return undefined;
+      });
+
+      build.onLoad({ 
+        filter: new RegExp(`\\.${document_extname.substring(1)}$`), 
+        namespace: 'temple-document-server-resolver' 
+      }, args => {
+        const document = new Component(args.path, { 
+          ...config, 
+          fs, 
+          cwd, 
+          type: 'document' 
+        });
+        const transpiler = new DocumentTranspiler(document, tsconfig);
+        return {
+          contents: toTS(transpiler.transpile()),
+          loader: 'ts'
+        };
+      });
+
+      build.onLoad({ 
+        filter: new RegExp(`\\.${document_extname.substring(1)}$`), 
+        namespace: 'temple-document-client-resolver' 
+      }, args => {
+        const document = new Component(args.path, { 
+          ...config, 
+          fs, 
+          cwd, 
+          type: 'document' 
+        });
+        const transpiler = new DocumentTranspiler(document, tsconfig);
+        return {
+          contents: toTS(transpiler.client()),
+          loader: 'ts'
+        };
+      });
+
+      build.onLoad({ 
+        filter: new RegExp(`\\.${component_extname.substring(1)}$`), 
+        namespace: 'temple-component-resolver' 
+      }, args => {
+        const component = new Component(args.path, { 
+          ...config, 
+          fs, 
+          cwd, 
+          type: 'component' 
+        });
+        const transpiler = new ComponentTranspiler(component, tsconfig);
+        return {
+          contents: toTS(transpiler.transpile()),
+          resolveDir: path.dirname(args.path),
+          loader: 'ts'
+        };
+      });
+    }
+  };
+}

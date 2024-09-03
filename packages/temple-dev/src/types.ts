@@ -7,18 +7,27 @@ export type DevelopOptions = {
   emitter?: EventEmitter,
   include?: string[],
   ignore?: OptionIgnore,
-  route?: string
+  route?: string,
+  tsconfig?: string,
+  extname?: string
 };
 
 export type ServerOptions = {
   cwd: string,
   emitter?: EventEmitter,
   include?: string[],
-  ignore?: OptionIgnore
+  ignore?: OptionIgnore,
+  tsconfig?: string,
+  extname?: string
 };
 
 export type ClientOptions = {
   path?: string
+};
+
+export type UpdateOptions = {
+  tsconfig?: string,
+  extname?: string
 };
 
 export type Dependants = Record<string, {

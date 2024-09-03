@@ -11,9 +11,9 @@ import Component from '../compiler/Component';
 import Transpiler from './Transpiler';
 import { load, build } from '../helpers';
 import {
+  esTemplePlugin,
   esAliasPlugin,
   esComponentPlugin,
-  esDocumentPlugin,
   esWorkspacePlugin
 } from '../plugins';
 
@@ -39,7 +39,7 @@ export default class Builder {
   //emitter
   protected _emitter: EventEmitter;
   //file extensions
-  protected _extnames: [ string, string ] = [ 'tml', 'dtml' ];
+  protected _extnames: [ string, string ] = [ '.tml', '.dtml' ];
   //whether to minify the code
   protected _minify: boolean;
   //transpiler
@@ -90,8 +90,8 @@ export default class Builder {
     const { 
       emitter = new EventEmitter(),
       minify = true, 
-      component_extname = 'tml',
-      document_extname = 'dtml',
+      component_extname = '.tml',
+      document_extname = '.dtml',
       tsconfig = path.resolve(__dirname, '../../tsconfig.json')
     } = options;
 
@@ -145,25 +145,15 @@ export default class Builder {
         platform: 'browser',
         globalName: 'TempleAPI',
         plugins: [ 
-          esAliasPlugin({
-            cwd: this._document.cwd,
-            fs: this._document.fs
-          }),
-          esComponentPlugin({
+          esTemplePlugin({
+            mode: 'client',
             brand: this._document.brand,
             cwd: this._document.cwd,
             fs: this._document.fs,
             tsconfig: this._tsconfig,
-            extname: this._extnames[0]
-          }),
-          esDocumentPlugin({
-            brand: this._document.brand,
-            cwd: this._document.cwd,
-            fs: this._document.fs,
-            tsconfig: this._tsconfig,
-            extname: this._extnames[1]
-          }).client,
-          esWorkspacePlugin()
+            component_extname: this._extnames[0],
+            document_extname: this._extnames[1]
+          })
         ]
       }
     );
@@ -244,18 +234,15 @@ export default class Builder {
         platform: 'node',
         globalName: 'TempleAPI',
         plugins: [ 
-          esAliasPlugin({
-            cwd: this._document.cwd,
-            fs: this._document.fs
-          }),
-          esDocumentPlugin({
+          esTemplePlugin({
+            mode: 'server',
             brand: this._document.brand,
             cwd: this._document.cwd,
             fs: this._document.fs,
             tsconfig: this._tsconfig,
-            extname: this._extnames[1]
-          }).server,
-          esWorkspacePlugin()
+            component_extname: this._extnames[0],
+            document_extname: this._extnames[1]
+          })
         ]
       }
     );

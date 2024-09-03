@@ -1,5 +1,5 @@
 import type { PluginBuild } from 'esbuild';
-import type { Dependants } from './types';
+import type { UpdateOptions, Dependants } from './types';
 
 import path from 'path';
 import ts from 'typescript';
@@ -7,9 +7,6 @@ import { Project, IndentationText } from 'ts-morph';
 import { 
   Component, 
   ComponentTranspiler,
-  esAliasPlugin,
-  esComponentPlugin,
-  esWorkspacePlugin,
   build,
   toTS
 } from '@ossph/temple/compiler';
@@ -57,20 +54,76 @@ export function dependantsOf(
   return Object.values(dependants);
 }
 
-export function esRefreshPlugin(component: Component) {
-  const name = 'temple-refresh-plugin';
+export function esRefreshPlugin(component: Component, options: UpdateOptions) {
+  const tsconfig = options.tsconfig;
+  const extname = options.extname || '.tml';
+  const extnames = [ '.js', '.json', '.ts', extname ];
   return {
-    name: name,
+    name: 'temple-refresh-plugin',
     setup: (build: PluginBuild) => {
-      build.onResolve({ filter: /^__REFRESH__$/ }, args => {
-        return { path: args.path, namespace: name };
+      //should resolve everything...
+      build.onResolve({ filter: /.*/ }, args => {
+        if (args.path === '__REFRESH__') {
+          return { 
+            path: args.path, 
+            namespace: 'temple-refresh-resolver' 
+          };
+        }
+
+        const pwd = args.importer === '__REFRESH__'
+          ? component.dirname
+          : path.dirname(args.importer);
+        
+        const resolved = component.loader.resolve(
+          args.path, 
+          pwd, 
+          extnames
+        );
+
+        if (resolved) {
+          //if component
+          if (resolved.endsWith(extname)) {
+            return { 
+              path: resolved, 
+              namespace: 'temple-refresh-component-resolver' 
+            };
+          }
+          return { path: resolved };
+        }
+        
+        return undefined;
       });
 
-      build.onLoad({ filter: /^__REFRESH__$/, namespace: name }, args => {
+      build.onLoad({ 
+        filter: /^__REFRESH__$/, 
+        namespace: 'temple-refresh-resolver' 
+      }, args => {
         const source = transpile(component);
         return {
           contents: toTS(source),
           resolveDir: component.dirname,
+          loader: 'ts'
+        };
+      });
+
+      build.onLoad({ 
+        filter: new RegExp(`\\.${extname.substring(1)}$`), 
+        namespace: 'temple-refresh-component-resolver' 
+      }, args => {
+        const subcomponent = new Component(args.path, { 
+          cwd: component.cwd,
+          fs: component.fs,
+          //name?: string,
+          brand: component.brand,
+          type: 'component' 
+        });
+        const transpiler = new ComponentTranspiler(
+          subcomponent, 
+          tsconfig
+        );
+        return {
+          contents: toTS(transpiler.transpile()),
+          resolveDir: path.dirname(args.path),
           loader: 'ts'
         };
       });
@@ -181,21 +234,14 @@ export function transpile(component: Component) {
   return source;
 };
 
-export async function update(component: Component) {
+export async function update(
+  component: Component, 
+  options: UpdateOptions
+) {
   return await build('__REFRESH__', {
     minify: false,
     plugins: [ 
-      esAliasPlugin({
-        cwd: component.cwd,
-        fs: component.fs
-      }),
-      esRefreshPlugin(component),
-      esComponentPlugin({
-        brand: component.brand,
-        cwd: component.cwd,
-        fs: component.fs
-      }),
-      esWorkspacePlugin()
+      esRefreshPlugin(component, options)
     ]
   });
 }

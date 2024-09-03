@@ -1,6 +1,5 @@
 import type FileSystem from './FileSystem';
 import path from 'path';
-import Exception from '../Exception';
 
 /**
  * Loader
@@ -47,14 +46,19 @@ export default class FileLoader {
     //if the pathname does not start with /, 
     //the path should start with modules
     if (!pathname.startsWith('/')) {
-      pathname = path.resolve(this.modules(this._cwd), pathname);
+      const modules = this.modules(this._cwd);
+      const resolved = require.resolve(pathname, { paths: [ modules ] });
+      if (resolved.startsWith('/')) {
+        return resolved;
+      }
+      pathname = path.resolve(modules, pathname);
     }
     return pathname;
   }
 
   /**
    * Should locate the node_modules directory 
-   * where idea is actually installed
+   * where temple is actually installed
    */
   public modules(cwd = this._cwd): string {
     if (cwd === '/') {
@@ -106,41 +110,32 @@ export default class FileLoader {
   /**
    * Resolves the path name to a path that can be required
    */
-  public resolve(pathname?: string, cwd = this._cwd): string {
-    //if no pathname
-    if (!pathname) {
-      pathname = cwd;
-    //ex. plugin/foo -> node_modules/plugin
-    //ex. ./plugin or ../plugin -> [cwd] / plugin 
-    } else {
-      pathname = this._fs.realpathSync(this.absolute(pathname, cwd));
-    }
+  public resolve(
+    pathname: string, 
+    pwd = this._cwd, 
+    extnames = [ '.js', '.json' ]
+  ) {
+    const absolute = this.absolute(pathname, pwd);
 
     //ex. /plugin/foo
     //it's already absolute...
-
-    //1. Check if pathname is literally a file
-    let file = pathname;
-    if (this._fileExists(file)) {
-      return file;
-    }
-    //2. check for [pathname].js
-    file += '.js';
-    if (this._fileExists(file)) {
-      return file;
-    }
-    //3. check for [pathname].json
-    file += 'on';
-    if (this._fileExists(file)) {
-      return file;
-    }
-    //4. Check for [pathname]/index.js
-    file = path.resolve(pathname, 'index.js');
-    if (this._fileExists(file)) {
-      return file;
+    //Check if pathname is literally a file
+    if (this._fileExists(absolute)) {
+      return absolute;
     }
 
-    throw Exception.for('Could not resolve `%s`', pathname);
+    for (const extname of extnames) {
+      let file = absolute + extname;
+      if (this._fileExists(file)) {
+        return file;
+      }
+      file = path.resolve(absolute, 'index' + extname);
+      if (this._fileExists(file)) {
+        return file;
+      }
+    }
+
+    return null;
   }
 
   /**

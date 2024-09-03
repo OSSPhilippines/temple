@@ -62,12 +62,17 @@ export default class TempleRegistry {
     component._TempleAttributes = attributes;
     //also set props normally...
     component.props = attributes;
-    //append children
+    //append children (the original children)
     children.forEach(child => component.appendChild(child));
     //normally an instantiated component would self register,
     //but since we manually instantiated it to produce web component
     //encapsulation, we need to manually register this component as well
     component.register();
+    //if the component is not registered, then we need to manually
+    //connect the component
+    if (!customElements.get(tagname)) {
+      component.connectedCallback();
+    }
     //last manually register the element
     return this.register(component, attributes);
   }
@@ -90,7 +95,7 @@ export default class TempleRegistry {
         element.setAttribute(key, key);
       }
     }
-    //append children
+    //append children (the original children)
     children
       .filter(child => typeof child !== 'undefined')
       .forEach(child => element.appendChild(child));

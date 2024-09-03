@@ -45,7 +45,8 @@ import {
   esAliasPlugin, 
   esComponentPlugin, 
   esDocumentPlugin,
-  esWorkspacePlugin
+  esWorkspacePlugin,
+  esTemplePlugin
 } from './plugins';
 import FileSystem from './filesystem/FileSystem';
 import FileLoader from './filesystem/FileLoader';
@@ -97,6 +98,7 @@ export {
   esComponentPlugin, 
   esDocumentPlugin,
   esWorkspacePlugin,
+  esTemplePlugin,
   withCache
 };
 

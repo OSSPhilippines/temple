@@ -9,7 +9,6 @@ export type * from './types';
 export { 
   createSourceFile, 
   dependantsOf, 
-  esRefreshPlugin,
   transpile,
   update 
 } from './helpers';
@@ -21,10 +20,19 @@ export function dev(options: DevelopOptions = {}) {
     include, 
     ignore, 
     emitter,
+    tsconfig,
+    extname,
     cwd = process.cwd(), 
     route = '/__temple_dev__' 
   } = options;
-  const refresh = new RefreshServer({ cwd, emitter, include, ignore });
+  const refresh = new RefreshServer({ 
+    cwd, 
+    emitter, 
+    include, 
+    ignore,
+    tsconfig,
+    extname
+  });
   refresh.watch();
   return {
     refresh,
