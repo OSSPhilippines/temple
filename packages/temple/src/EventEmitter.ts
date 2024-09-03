@@ -1,5 +1,5 @@
 import type { TempleEventMap } from './types';
-import EventEmitter, { once } from 'events';
+import { EventEmitter, getEventListeners } from 'events';
 
 export class Event<T> {
   //the name of the event
@@ -70,10 +70,10 @@ export default class TempleEventEmitter extends EventEmitter<TempleEventMap> {
   }
   async waitFor<T>(name: string, params: Record<string, any> = {}) {
     const event = new Event<T>(name, params);
-    process.nextTick(() => {
-      this.emit(name, event);
-    });
-    await once(this, name);
+    const listeners = getEventListeners(this, name);
+    for (const listener of listeners) {
+      await listener(event);
+    }
     return event;
   }
 }
