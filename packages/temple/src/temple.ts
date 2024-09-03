@@ -141,14 +141,14 @@ export default function temple(options: TempleOptions = {}) {
       //get the build object
       const build = await builder.build();
       //emit view render event
-      const pre = compiler.emitter.trigger<string>(
+      const pre = await compiler.emitter.waitFor<string>(
         'render', 
         { builder, build, props }
       );
       //render the document
       const html = pre.data || build.document.render(props);
       //emit view rendered event
-      const post = compiler.emitter.trigger<string>(
+      const post = await compiler.emitter.waitFor<string>(
         'rendered', 
         { builder, build, props, html }
       );

@@ -114,14 +114,14 @@ export default class Builder {
    */
   public async build() {
     //emit build event
-    const pre = this._emitter.trigger<string>('build', { 
+    const pre = await this._emitter.waitFor<string>('build', { 
       builder: this
     });
     const source = pre.data || await this.server();
     //run server script and get the context
     const results: BuildResults = Builder.load(source);
     //emit built event
-    const post = this._emitter.trigger<BuildResults>('built', { 
+    const post = await this._emitter.waitFor<BuildResults>('built', { 
       builder: this, 
       build: results 
     });
@@ -133,7 +133,7 @@ export default class Builder {
    */
   public async client() {
     //emit build-client event
-    const pre = this._emitter.trigger<string>('build-client', { 
+    const pre = await this._emitter.waitFor<string>('build-client', { 
       builder: this 
     });
     // Bundle with esbuild
@@ -158,7 +158,7 @@ export default class Builder {
       }
     );
     //emit built-client event
-    const post = this._emitter.trigger<string>('built-client', { 
+    const post = await this._emitter.waitFor<string>('built-client', { 
       ...pre.params, 
       sourceCode 
     });
@@ -202,7 +202,7 @@ export default class Builder {
    */
   public async markup() {
     //emit build-markup event
-    const pre = this._emitter.trigger<string>('build-markup', { 
+    const pre = await this._emitter.waitFor<string>('build-markup', { 
       builder: this 
     });
     //build the styles
@@ -210,7 +210,7 @@ export default class Builder {
       await this.build()
     ).document.render();
     //emit built-markup event
-    const post = this._emitter.trigger<string>('built-markup', { 
+    const post = await this._emitter.waitFor<string>('built-markup', { 
       ...pre.params, 
       sourceCode 
     });
@@ -222,7 +222,7 @@ export default class Builder {
    */
   public async server() {
     //emit build-server event
-    const pre = this._emitter.trigger<string>('build-server', { 
+    const pre = await this._emitter.waitFor<string>('build-server', { 
       builder: this 
     });
     // Bundle with esbuild
@@ -247,7 +247,7 @@ export default class Builder {
       }
     );
     //emit build-server event
-    const post = this._emitter.trigger<string>('built-server', { 
+    const post = await this._emitter.waitFor<string>('built-server', { 
       ...pre.params, 
       sourceCode 
     });
@@ -259,7 +259,7 @@ export default class Builder {
    */
   public async styles() {
     //emit build-markup event
-    const pre = this._emitter.trigger<string>('build-styles', { 
+    const pre = await this._emitter.waitFor<string>('build-styles', { 
       builder: this 
     });
     //build the styles
@@ -267,7 +267,7 @@ export default class Builder {
       await this.build()
     ).document.styles();
     //emit built-styles event
-    const post = this._emitter.trigger<string>('built-styles', { 
+    const post = await this._emitter.waitFor<string>('built-styles', { 
       ...pre.params, 
       sourceCode 
     });
