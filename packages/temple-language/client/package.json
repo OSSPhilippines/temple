@@ -1,7 +1,7 @@
 {
   "name": "temple-language-client",
   "description": "Adds syntax highlighting, formatting, auto-completion, jump-to-definition and linting for a custom.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "scripts": {
     "build": "tsc"

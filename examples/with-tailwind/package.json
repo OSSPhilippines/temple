@@ -7,8 +7,8 @@
     "dev": "ts-node src/index.ts"
   },
   "dependencies": {
-    "@ossph/temple": "0.1.1",
-    "@ossph/temple-dev": "0.1.1"
+    "@ossph/temple": "0.1.2",
+    "@ossph/temple-dev": "0.1.2"
   },
   "devDependencies": {
     "@types/node": "22.1.0",
