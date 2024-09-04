@@ -14,7 +14,7 @@ import LanguageServer, {
   TextDocumentSyncKind
 } from './language/LanguageServer';
 
-import { ComponentException, Tokenizer } from '@ossph/temple/compiler';
+import { Exception, Tokenizer } from '@ossph/temple/compiler';
 
 // - validate example usage
 async function validate(document: TextDocument) {
@@ -27,7 +27,7 @@ async function validate(document: TextDocument) {
 	try {
 		Tokenizer.tokenize(text);
 	} catch (e) {
-		const error = e as ComponentException;
+		const error = e as Exception;
 		const diagnostic: Diagnostic = {
 			severity: DiagnosticSeverity.Error,
 			message: error.message,
