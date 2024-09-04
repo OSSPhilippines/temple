@@ -23,6 +23,18 @@ const { router, refresh } = dev({
   emitter: compiler.emitter 
 });
 
+compiler.emitter.on('dev-updated-component', async e => {
+  const { document, updates } = e.params;
+  updates[e.params.document.id].push(`;(() => {  
+    const links = Array.from(document.head.querySelectorAll('link'));
+    const stylesheet = links.find(link => link.href.includes('${document.id}.css'));
+    if (!stylesheet) {
+      return;
+    }
+    stylesheet.href = stylesheet.href.replace(/\\?\\d+$/, '?' + Date.now());
+  })();`);
+});
+
 compiler.emitter.on('built-styles', async e => {
   const { document } = e.params.builder as DocumentBuilder;
   const sourceCode = e.params.sourceCode as string;
