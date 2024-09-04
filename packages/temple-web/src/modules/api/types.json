@@ -1220,14 +1220,14 @@
       "description": "Returns a new DocumentBuilder instance given a template source file.",
       "example": "compiler.fromSource('./docs/api.dtml').build();"
     },
-    "withCache": {
+    "use": {
       "kind": "function",
       "args": [
         {
           "kind": "property",
           "list": false,
           "name": "options",
-          "type": "CacheOptions"
+          "type": "Function"
         }
       ],
       "returns": {
@@ -1236,7 +1236,7 @@
         "type": "TempleCompiler"
       },
       "description": "Enables a default build cache strategy.",
-      "example": "compiler.withCache({\n  environment: process.env.NODE_ENV,\n  buildPath: path.join(docs, 'build')\n})"
+      "example": "compiler.use(plugin)"
     },
     "asset": {
       "kind": "function",

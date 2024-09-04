@@ -102,7 +102,7 @@ var TempleAPI = (() => {
           return Array.from(this._elements);
         }
         toString() {
-          return Array.from(this._elements).map((child) => child.toString()).join("");
+          return Array.from(this._elements).filter(Boolean).map((child) => child.toString()).join("");
         }
       };
       exports.default = TempleCollection;
@@ -146,7 +146,7 @@ var TempleAPI = (() => {
       ];
       var TempleElement2 = class {
         static render(markup) {
-          return markup.map((child) => child.toString()).join("");
+          return markup.filter(Boolean).map((child) => child.toString()).join("");
         }
         get name() {
           return this._name;
@@ -602,7 +602,7 @@ ${document2}`;
                 import_server.TempleRegistry.createElement("nav", {}, [
                   import_server.TempleRegistry.createText(`
     `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/index.html` }, [
+                  import_server.TempleRegistry.createElement("a", { "class": `tx-white`, "href": `/temple/docs/index.html` }, [
                     import_server.TempleRegistry.createText(`Docs`, false)
                   ]),
                   import_server.TempleRegistry.createText(`
@@ -900,7 +900,7 @@ ${document2}`;
                       import_server.TempleRegistry.createElement("ide-code", { "id": `index-ts`, "lang": `js`, "numbers": true, "trim": true, "detab": 16 }, [
                         ...this._toNodeList(`
                 import http from 'http';
-                import temple from '@ossph/temple/compiler';
+                import temple, { cache } from '@ossph/temple/compiler';
 
                 //where your pages are:
                 const pages = path.join(__dirname, 'pages');
@@ -910,9 +910,9 @@ ${document2}`;
                 //create temple compiler
                 const compiler = temple({ 
                   cwd: __dirname 
-                }).withCache({ 
+                }).use(cache({ 
                   buildPath: path.join(build, 'build') 
-                });
+                }));
                 //create http server
                 const server = http.createServer(async (req, res) => {
                   //for build asset:

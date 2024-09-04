@@ -2,7 +2,7 @@ import type { TempleEvent, DocumentBuilder } from '@ossph/temple/compiler';
 
 import path from 'path';
 import { globSync as glob } from 'fast-glob';
-import temple from '@ossph/temple/compiler';
+import temple, { cache } from '@ossph/temple/compiler';
 
 const docs = path.resolve(__dirname, '../../../docs');
 //create temple compiler
@@ -11,10 +11,13 @@ const compiler = temple({
   cwd: __dirname,
   minify: false
 //enable cache
-}).withCache({ 
+})
+
+compiler.use(cache({ 
   environment: 'production',
   buildPath: path.join(docs, 'build') 
-});
+}));
+
 //on post markup build, cache (dev and live)
 compiler.emitter.on('rendered', (event: TempleEvent<string>) => {
   //extract builder and sourcecode from params

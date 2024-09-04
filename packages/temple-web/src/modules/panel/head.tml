@@ -5,7 +5,7 @@
   </a>
   <h3><a class="tx-white" href="/temple">Temple</a></h3>
   <nav>
-    <a href="/temple/docs/index.html">Docs</a>
+    <a class="tx-white" href="/temple/docs/index.html">Docs</a>
     <a 
       class="github" 
       href="https://github.com/OSSPhilippines/temple" 

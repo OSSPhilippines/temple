@@ -102,7 +102,7 @@ var TempleAPI = (() => {
           return Array.from(this._elements);
         }
         toString() {
-          return Array.from(this._elements).map((child) => child.toString()).join("");
+          return Array.from(this._elements).filter(Boolean).map((child) => child.toString()).join("");
         }
       };
       exports.default = TempleCollection;
@@ -146,7 +146,7 @@ var TempleAPI = (() => {
       ];
       var TempleElement2 = class {
         static render(markup) {
-          return markup.map((child) => child.toString()).join("");
+          return markup.filter(Boolean).map((child) => child.toString()).join("");
         }
         get name() {
           return this._name;
@@ -606,7 +606,7 @@ ${document2}`;
                 import_server.TempleRegistry.createElement("nav", {}, [
                   import_server.TempleRegistry.createText(`
     `, false),
-                  import_server.TempleRegistry.createElement("a", { "href": `/temple/docs/index.html` }, [
+                  import_server.TempleRegistry.createElement("a", { "class": `tx-white`, "href": `/temple/docs/index.html` }, [
                     import_server.TempleRegistry.createText(`Docs`, false)
                   ]),
                   import_server.TempleRegistry.createText(`

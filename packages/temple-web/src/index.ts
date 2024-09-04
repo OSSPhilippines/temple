@@ -3,8 +3,9 @@ import type { TempleEvent, DocumentBuilder } from '@ossph/temple/compiler';
 
 import path from 'path';
 import express from 'express';
-import temple from '@ossph/temple/compiler';
+import temple, { cache } from '@ossph/temple/compiler';
 import { view, dev } from '@ossph/temple-express';
+import { tui } from '@ossph/temple-ui';
 
 type Next = () => void;
 
@@ -15,11 +16,17 @@ const compiler = temple({
   brand: '',
   cwd: __dirname,
   minify: false
-//enable cache
-}).withCache({ 
+});
+
+//use temple ui
+compiler.use(tui({ brand: '' }));
+
+//use build cache
+compiler.use(cache({ 
   environment: process.env.NODE_ENV,
   buildPath: path.join(docs, 'build') 
-});
+}));
+
 //on post markup build, cache (dev and live)
 compiler.emitter.on('rendered', (event: TempleEvent<string>) => {
   //extract builder and sourcecode from params

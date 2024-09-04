@@ -32,7 +32,7 @@
   </a>
   <h3><a class="tx-white" href="/temple">Temple</a></h3>
   <nav>
-    <a href="/temple/docs/index.html">Docs</a>
+    <a class="tx-white" href="/temple/docs/index.html">Docs</a>
     <a class="github" href="https://github.com/OSSPhilippines/temple" target="_blank">
       <i class="fab fa-github"></i>
     </a>
@@ -130,7 +130,7 @@
             <main>
               <ide-code id="index-ts" lang="js" numbers trim >
                 import http from 'http';
-                import temple from '@ossph/temple/compiler';
+                import temple, { cache } from '@ossph/temple/compiler';
 
                 //where your pages are:
                 const pages = path.join(__dirname, 'pages');
@@ -140,9 +140,9 @@
                 //create temple compiler
                 const compiler = temple({ 
                   cwd: __dirname 
-                }).withCache({ 
+                }).use(cache({ 
                   buildPath: path.join(build, 'build') 
-                });
+                }));
                 //create http server
                 const server = http.createServer(async (req, res) =&gt; {
                   //for build asset:
