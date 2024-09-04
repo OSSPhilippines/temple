@@ -129,7 +129,7 @@ export default function temple(options: TempleOptions = {}) {
       //get the { source, TempleDocument, document }
       return await builder.styles();
     },
-    async render(sourceFile: string, props: Hash) {
+    async render(sourceFile: string, props: Hash = {}) {
       //get builder
       const builder = compiler.fromSource(sourceFile);
       //update manifest in memory
