@@ -134,3 +134,4 @@ archives
 .DS_Store
 
 .build
+packages/temple-ui

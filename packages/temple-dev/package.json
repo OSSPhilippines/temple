@@ -14,7 +14,8 @@
     "index.d.ts",
     "index.js",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "tsconfig.json"
   ],
   "scripts": {
     "build": "tsc && npx esbuild ./src/client.ts --global-name=temple_dev --format=iife --bundle --outfile=client.js"

@@ -54,7 +54,7 @@ import NodeFS from './filesystem/NodeFS';
 
 import EventEmitter, { Event as TempleEvent } from './EventEmitter';
 import Exception from './Exception';
-import withCache from './cache';
+import cache from './cache';
 import temple from './temple';
 
 export {
@@ -99,7 +99,7 @@ export {
   esDocumentPlugin,
   esWorkspacePlugin,
   esTemplePlugin,
-  withCache
+  cache
 };
 
 export default temple;

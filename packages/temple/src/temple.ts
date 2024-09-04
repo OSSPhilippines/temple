@@ -2,8 +2,7 @@ import type {
   Hash,
   ComponentType, 
   TempleOptions, 
-  TempleCompiler,
-  CacheOptions
+  TempleCompiler
 } from './types';
 
 import path from 'path';
@@ -14,7 +13,6 @@ import DocumentManifest from './document/Manifest';
 import FileSystem from './filesystem/FileSystem';
 import NodeFS from './filesystem/NodeFS';
 import Exception from './Exception';
-import cache from './cache';
 
 /**
  * Returns a server version of TempleComponent 
@@ -65,8 +63,9 @@ export default function temple(options: TempleOptions = {}) {
       //return builder
       return new DocumentBuilder(document, options);
     },
-    withCache(options: CacheOptions) {
-      return cache(compiler, options)
+    use(plugin: (compiler: TempleCompiler) => void) {
+      plugin(this);
+      return this;
     },
     async asset(filename: string) {
       //get extension ie. .js

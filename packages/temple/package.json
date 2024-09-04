@@ -16,12 +16,17 @@
   "main": "index.js",
   "files": [
     "dist",
+    "client.d.ts",
+    "client.js",
+    "compiler.d.ts",
+    "compiler.js",
     "index.d.ts",
     "index.js",
     "server.d.ts",
     "server.js",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "tsconfig.json"
   ],
   "scripts": {
     "build": "tsc",
