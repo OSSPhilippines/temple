@@ -1,6 +1,6 @@
 {
   "name": "@ossph/temple-express",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Temple plugin for Express and native HTTP.",
   "license": "Apache-2.0",
   "author": "Chris <chris@incept.asia>",
@@ -18,8 +18,8 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@ossph/temple": "0.1.2",
-    "@ossph/temple-dev": "0.1.2"
+    "@ossph/temple": "0.1.3",
+    "@ossph/temple-dev": "0.1.3"
   },
   "devDependencies": {
     "@types/node": "22.1.0"
