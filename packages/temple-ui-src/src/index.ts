@@ -38,7 +38,10 @@ export function tui(options: { brand?: string } = {}) {
         if (!stylesheet) {
           return;
         }
-        stylesheet.href = stylesheet.href.replace(/\\?\\d+$/, '?' + Date.now());
+        const [ pathname, query ] = stylesheet.href.split('?');
+        const params = new URLSearchParams(query || '');
+        params.set('v', Date.now());
+        stylesheet.href = pathname + '?' + params.toString();
       })();`);
     });
     //whenever a document style is built, replace directives with actual styles

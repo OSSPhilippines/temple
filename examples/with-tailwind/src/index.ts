@@ -1,62 +1,25 @@
-import type { DocumentBuilder } from '@ossph/temple/compiler';
-import type { Config } from 'tailwindcss';
 import path from 'path';
 import http from 'http';
-import postcss from 'postcss';
-import autoprefixer from 'autoprefixer';
-import tailwindcss from 'tailwindcss';
 import temple from '@ossph/temple/compiler';
 import { dev } from '@ossph/temple-dev';
-
-const config = {
-  darkMode: 'class',
-  theme: { extend: {} },
-  plugins: []
-};
+import { tailwind } from '@ossph/temple-tailwind';
 
 const assets = path.resolve(__dirname, '../public');
 
 //create temple compiler
 const compiler = temple({ cwd: __dirname });
+
+compiler.use(tailwind({
+  darkMode: 'class',
+  theme: { extend: {} },
+  plugins: [],
+  content: []
+}));
+
+
 const { router, refresh } = dev({ 
   cwd: __dirname, 
   emitter: compiler.emitter 
-});
-
-compiler.emitter.on('dev-updated-component', async e => {
-  const { document, updates } = e.params;
-  updates[e.params.document.id].push(`;(() => {  
-    const links = Array.from(document.head.querySelectorAll('link'));
-    const stylesheet = links.find(link => link.href.includes('${document.id}.css'));
-    if (!stylesheet) {
-      return;
-    }
-    stylesheet.href = stylesheet.href.replace(/\\?\\d+$/, '?' + Date.now());
-  })();`);
-});
-
-compiler.emitter.on('built-styles', async e => {
-  const { document } = e.params.builder as DocumentBuilder;
-  const sourceCode = e.params.sourceCode as string;
-  //if there is a tailwind directive
-  if (!sourceCode.includes('@tailwind')) {
-    return;
-  }
-  //find all the components
-  const content = Object.values(document.registry).map(
-    component => component.absolute
-  );
-  //add the document to the content
-  content.push(document.absolute);
-  const css = postcss([ autoprefixer, tailwindcss({
-    ...config,
-    content
-  } as Config)]);
-  const styles = await css.process(sourceCode, { 
-    from: undefined 
-  });
-  e.params.sourceCode = styles.css;
-  e.set(styles.css);
 });
 
 const server = http.createServer(async (req, res) => {
@@ -87,7 +50,7 @@ const server = http.createServer(async (req, res) => {
     return;
   } else if (req.url?.startsWith('/build/')) {
     //get filename ie. abc123.js
-    const filename = req.url.substring(7);
+    const filename = req.url.substring(7).split('?')[0];
     //get asset
     const { type, content } = await compiler.asset(filename);
     //send response
@@ -108,4 +71,5 @@ const server = http.createServer(async (req, res) => {
   res.statusCode = 404;
   res.end('Not Found');
 });
+
 server.listen(3000);
