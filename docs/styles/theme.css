@@ -811,6 +811,7 @@ ide-app .body .panel-main {
   background-color: #000000;
   left: 150px;
   top: 45px;
+  right: 0;
 }
 
 @media (max-width: 767px) {

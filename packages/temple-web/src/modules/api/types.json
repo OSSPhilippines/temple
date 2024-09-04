@@ -1092,13 +1092,6 @@
       "description": "The NodeJS EventEmitter instance being used.",
       "example": "import emitter from 'events';\n\nconst compiler = temple({ emitter });'"
     },
-    "type?": {
-      "kind": "property",
-      "list": false,
-      "type": ["document", "component", "template"],
-      "description": "Type of component",
-      "example": "const compiler = temple({ type: 'component' });'"
-    },
     "minify?": {
       "kind": "property",
       "list": false,
@@ -1932,6 +1925,128 @@
       },
       "description": "Returns a signal object used to re-render components whenever its value changes",
       "example": "const count = TempleAPI.signal(1, component)"
+    }
+  },
+  "Render Methods": {
+    "asset": {
+      "kind": "function",
+      "async": true,
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "assetFile",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "Asset"
+      },
+      "description": "Returns a compiled build asset, given an asset file name.",
+      "example": "await compiler.asset('abc123.css'); //--> { type: 'text/css', content: '...' }"
+    },
+    "client": {
+      "kind": "function",
+      "async": true,
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "sourceFile",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "string"
+      },
+      "description": "Returns a compiled client script, given the the template source file.",
+      "example": "await compiler.client('./docs/api.dtml'); //client script"
+    },
+    "markup": {
+      "kind": "function",
+      "async": true,
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "sourceFile",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "string"
+      },
+      "description": "Returns a compiled markup, given the the template source file.",
+      "example": "await compiler.markup('./docs/api.dtml'); //--> <html>...</html>"
+    },
+    "render":  {
+      "kind": "function",
+      "async": true,
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "sourceFile",
+          "type": "string"
+        },
+        {
+          "kind": "property",
+          "list": false,
+          "name": "props",
+          "type": "Hash"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "string"
+      },
+      "description": "Returns the final HTML markup, given the the template source file.",
+      "example": "await compiler.render('./docs/api.dtml', {\n  title: 'API Documentation'\n});"
+    },
+    "server": {
+      "kind": "function",
+      "async": true,
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "sourceFile",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "string"
+      },
+      "description": "Returns compiled server code, given the the template source file.",
+      "example": "await compiler.server('./docs/api.dtml'); // server script"
+    },
+    "styles": {
+      "kind": "function",
+      "async": true,
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "sourceFile",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "string"
+      },
+      "description": "Returns compiled css styles, given the the template source file.",
+      "example": "await compiler.styles('./docs/api.dtml'); //css styles"
     }
   }
 }

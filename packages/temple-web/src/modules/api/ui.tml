@@ -173,7 +173,9 @@
       <table class="tbl">
         <thead>
           <th>Property</th>
-          <th>Returns</th>
+          <if false={active.value.includes('Emitter')}>
+            <th>Returns</th>
+          </if>
           <th>Description</th>
         </thead>
         <tbody>
@@ -217,7 +219,6 @@
                 </if>
               <elif true={prop.kind === 'event'} />
                 <td valign="top" nowrap>{`on('${key}', (event: Event) => void)`}</td>
-                <td valign="top" nowrap>void</td>
               </if>
               <td>
                 <if true={prop.description}>
