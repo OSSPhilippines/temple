@@ -782,7 +782,7 @@ ${document2}`;
           `, false),
                   import_server.TempleRegistry.createElement("ide-code", { "lang": `bash` }, [
                     import_server.TempleRegistry.createText(`
-            npm install --save @ossph/temple && npm install --save-dev ts-node typescript
+            npm install --save @ossph/temple && npm install --save-dev ts-node typescript @types/node
           `, false)
                   ]),
                   import_server.TempleRegistry.createText(`
@@ -828,9 +828,7 @@ ${document2}`;
             //make a temple compiler
             const compiler = temple();
             //render HTML
-            const results = compiler.render('./page.dtml');
-            //show HTML
-            console.log(results);
+            compiler.render('./src/page.dtml').then(console.log);
           `)
                   ]),
                   import_server.TempleRegistry.createText(`

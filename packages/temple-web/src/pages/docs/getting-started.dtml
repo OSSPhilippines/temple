@@ -32,7 +32,7 @@
         </i18n-translate>
         <ide-app title="Terminal">
           <ide-code lang="bash">
-            npm install --save @ossph/temple && npm install --save-dev ts-node typescript
+            npm install --save @ossph/temple && npm install --save-dev ts-node typescript @types/node
           </ide-code>
         </ide-app>
         <tui-alert solid curved info>
@@ -55,9 +55,7 @@
             //make a temple compiler
             const compiler = temple();
             //render HTML
-            const results = compiler.render('./page.dtml');
-            //show HTML
-            console.log(results);
+            compiler.render('./src/page.dtml').then(console.log);
           `}</ide-code>
         </ide-app>
         <i18n-translate p trim>
