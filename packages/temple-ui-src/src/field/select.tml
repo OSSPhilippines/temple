@@ -1,0 +1,134 @@
+<style>
+:host {
+  position: relative;
+}
+
+.control {
+  align-items: center;
+  background-color: white;
+  border-color: var(--black);
+  border-style: solid;
+  border-width: 1px;
+  box-sizing: border-box;
+  color: var(--black);
+  display: flex;
+  padding-bottom: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 8px;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.placeholder {
+  color: #666666;
+}
+
+.dropdown {
+  background-color: var(--white);
+  border-color: var(--black);
+  border-style: solid;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-top-width: 0;
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+}
+
+.search {
+  padding-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 4px;
+  position: relative;
+}
+
+.search-control {
+  padding-right: 32px;
+}
+
+.search-icon {
+  background-color: var(--white);
+  color: var(--black);
+  padding: 4px;
+  position: absolute;
+  right: 9px;
+  top: 9px;
+}
+
+.options {
+  max-height: 256px;
+  overflow: auto;
+}
+
+.option {
+  align-items: center;
+  border-color: #AAAAAA;
+  border-style: solid;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-width: 1px;
+  cursor: pointer;
+  display: flex;
+  padding-bottom: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 8px;
+}
+
+.label { 
+  display: inline-block; 
+  margin-left: 4px; 
+}
+</style>
+<script>
+  import { props, classnames } from '@ossph/temple';
+  // Separate component related props from field attributes
+  const { 
+    options,
+    searchable,
+    value,
+    defaultValue,
+    placeholder = 'Choose an Option',
+    error, 
+    className,
+    style,
+    dropdown,
+    selected,
+    update
+  } = props<{
+    value?: any,
+    defaultValue?: any,
+    options: SelectOption<any>[]|Record<string, any>,
+    searchable?: boolean,
+    placeholder?: string,
+    error?: boolean,
+    style?: string,
+    dropdown?: (show: boolean) => void,
+    selected?: (value: SelectOption<any>) => void,
+    update?: (value: any) => void
+  }>();
+</script>
+<div class={classnames()} style={style}>
+  <div class="control" click={handlers.toggle}>
+    <if true={!!(selected?.label)}>
+      {selected.label}
+    <else />
+      <span class="placeholder">
+        {placeholder}
+      </span>
+    </if>
+  </div>
+  <SelectDropdown 
+    options={entries} 
+    show={showing} 
+    error={error}
+    searchable={searchable} 
+    select={handlers.select} 
+    search={handlers.search} 
+    match={handlers.match} 
+  />
+</div>

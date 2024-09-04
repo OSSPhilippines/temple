@@ -1,0 +1,87 @@
+<script>
+  import { props, classnames, children } from '@ossph/temple';
+  // Separate component related props from field attributes
+  const { 
+    color,  info,    warning, success,     
+    error,  muted,   primary, secondary,
+    solid,  outline, curved,  rounded, 
+    pill,   style,   brand
+  } = props();
+
+  const prefix = typeof brand !== 'string' 
+    ? 'tui-' : brand 
+    ? `${brand}-`: '';
+
+  const config = {
+    classes: [ `${prefix}alert` ],
+    styles: ''
+  }
+
+  const layout = outline ? 'outline' 
+    : solid ? 'solid'
+    : 'solid';
+
+  if (curved) {
+    config.classes.push(`${prefix}bd-curved`);
+  } else if (rounded) {
+    config.classes.push(`${prefix}bd-rounded`);
+  } else if (pill) {
+    config.classes.push(`${prefix}bd-pill`);
+  }
+
+  if (layout === 'outline') {
+    config.classes.push(`${prefix}solid`, `${prefix}bd-xs`);
+    if (color) {
+      config.styles += `border-color: ${color};`;
+      config.styles += `color: ${color};`;
+    } else if (info) {
+      config.classes.push(`${prefix}bd-info`, `${prefix}tx-info`);
+    } else if (warning) {
+      config.classes.push(`${prefix}bd-warning`, `${prefix}tx-warning`);
+    } else if (success) {
+      config.classes.push(`${prefix}bd-success`, `${prefix}tx-success`);
+    } else if (error) {
+      config.classes.push(`${prefix}bd-error`, `${prefix}tx-error`);
+    } else if (muted) {
+      config.classes.push(`${prefix}bd-muted`, `${prefix}tx-muted`);
+    } else if (primary) {
+      config.classes.push(`${prefix}bd-primary`, `${prefix}tx-primary`);
+    } else if (secondary) {
+      config.classes.push(`${prefix}bd-secondary`, `${prefix}tx-secondary`);
+    }
+  } else {
+    config.classes.push(`${prefix}tx-white`);
+    if (color) {
+      config.styles += `background-color: ${color};`;
+    } else if (info) {
+      //tui-bg-info
+      config.classes.push(`${prefix}bg-info`);
+    } else if (warning) {
+      //tui-bg-warning
+      config.classes.push(`${prefix}bg-warning`);
+    } else if (success) {
+      //tui-bg-success
+      config.classes.push(`${prefix}bg-success`);
+    } else if (error) {
+      //tui-bg-error
+      config.classes.push(`${prefix}bg-error`);
+    } else if (muted) {
+      //tui-bg-muted
+      config.classes.push(`${prefix}bg-muted`);
+    } else if (primary) {
+      //tui-bg-primary
+      config.classes.push(`${prefix}bg-primary`);
+    } else if (secondary) {
+      //tui-bg-secondary
+      config.classes.push(`${prefix}bg-secondary`);
+    }
+  } 
+
+  const map = {
+    classes: [ ...config.classes, classnames() ].join(' '),
+    styles: { ...config.styles, ...style }
+  };
+</script>
+<div class={map.classes} style={map.styles}>
+  {children()}
+</div>

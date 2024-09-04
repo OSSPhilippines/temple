@@ -1,0 +1,45 @@
+<style>
+  :host {
+    --black: #222222;
+    --error: #DC3545;
+  }
+  textarea {
+    border-color: var(--black);
+    border-style: solid;
+    border-width: 1px;
+    box-sizing: border-box;
+    color: var(--black);
+    padding-bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 8px;
+    width: 100%;
+  }
+  textarea.error {
+    border-color: var(--error);
+    color: var(--error);
+  }
+</style>
+<script>
+  import { props, classnames, innerHTML } from '@ossph/temple';
+  // Separate component related props from field attributes
+  const { 
+    error, 
+    change,
+    update,
+    ...attributes 
+  } = props();
+  const classes = (classnames() || '').split(' ');
+  if (error) {
+    classes.unshift('error');
+  }
+  const onchange = e => {
+    change && change(e);
+    update && update(e.target.value);
+  };
+</script>
+<textarea 
+  {...attributes} 
+  class={classname.join(' ')}
+  change={onchange} 
+>{innerHTML}</textarea>

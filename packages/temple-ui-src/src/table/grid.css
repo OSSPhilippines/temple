@@ -1,0 +1,85 @@
+.tui-tbl {
+  border-collapse: collapse;
+  display: table;
+  width: 100%;
+}
+
+.tui-tbl-scroll {
+  overflow: auto;
+  flex-grow: 1;
+  height: 100%;
+  width: 100%;
+}
+
+.tui-tbl-nowrap {
+  white-space: nowrap;
+}
+
+.tui-tbl-z0 {
+  z-index: 0;
+}
+.tui-tbl-z1 {
+  z-index: 1;
+}
+.tui-tbl-z2 {
+  z-index: 2;
+}
+.tui-tbl-z3 {
+  z-index: 3;
+}
+.tui-tbl-z4 {
+  z-index: 4;
+}
+
+.tui-tbl-sticky {
+  position: sticky;
+}
+.tui-tbl-sticky-b {
+  bottom: 0;
+}
+.tui-tbl-sticky-l {
+  left: 0;
+}
+.tui-tbl-sticky-t {
+  top: 0;
+}
+.tui-tbl-sticky-r {
+  right: 0;
+}
+
+.tui-tbl-col {
+  border-color: black;
+  border-style: solid;
+  border-top-width: 1px;
+  padding-bottom: 16px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 16px;
+}
+
+.tui-tbl-foot {
+  border-color: black;
+  border-style: solid;
+  border-top-width: 1px;
+  padding-bottom: 16px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 16px;
+}
+
+.tui-tbl-row {
+  padding-bottom: 16px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 16px;
+}
+
+.tui-tbl-head {
+  border-color: black;
+  border-style: solid;
+  border-top-width: 1px;
+  padding-bottom: 16px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 16px;
+}

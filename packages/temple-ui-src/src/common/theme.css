@@ -1,0 +1,33 @@
+:root {
+  --black: #222222;
+  --white: #FCFCFC;
+  --info: #1474FC;
+  --error: #DC3545;
+  --warning: #FF7B07;
+  --success: #28A745;
+  --muted: #999999;
+}
+
+.tui-light {
+  --bg-0: #EFEFEF;
+  --bg-1: #CFCFCF;
+  --bg-2: #AFAFAF;
+  --bg-3: #8F8F8F;
+  --bg-4: #6F6F6F;
+  --bg-inverse: #242424;
+  --tx-0: #000000;
+  --tx-1: #242424;
+  --tx-inverse: #CFCFCF;
+}
+
+.tui-dark {
+  --bg-0: #121212;
+  --bg-1: #222222;
+  --bg-2: #323232;
+  --bg-3: #424242;
+  --bg-4: #525252;
+  --bg-inverse: #DBDBDB;
+  --tx-0: #FFFFFF;
+  --tx-1: #CFCFCF;
+  --tx-inverse: #222222;
+}

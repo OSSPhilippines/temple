@@ -1,0 +1,7 @@
+.tui-control-label {
+  display: block;
+}
+
+.tui-control-error {
+  color: var(--error);
+}

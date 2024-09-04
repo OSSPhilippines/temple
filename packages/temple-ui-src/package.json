@@ -1,0 +1,25 @@
+{
+  "name": "@ossph/temple-ui-src",
+  "version": "0.1.2",
+  "private": true,
+  "scripts": {
+    "build": "yarn build:tsc && yarn build:json && yarn build:block && yarn build:common && yarn build:data && yarn build:files && yarn build:field && yarn build:form && yarn build:format && yarn build:package && yarn build:popup && yarn build:table",
+    "build:block": "cp -rf ./src/block ../temple-ui",
+    "build:common": "cp -rf ./src/common ../temple-ui",
+    "build:data": "cp -rf ./src/data ../temple-ui",
+    "build:files": "cp README.md LICENSE ../temple-ui",
+    "build:field": "cp -rf ./src/field ../temple-ui",
+    "build:form": "cp -rf ./src/form ../temple-ui",
+    "build:format": "cp -rf ./src/format ../temple-ui",
+    "build:package": "cp ./package.live.json ../temple-ui/package.json",
+    "build:popup": "cp -rf ./src/popup ../temple-ui",
+    "build:table": "cp -rf ./src/table ../temple-ui",
+    "build:json": "ts-node ./scripts/json.ts",
+    "build:tsc": "tsc"
+  },
+  "devDependencies": {
+    "@ossph/temple": "0.1.2",
+    "@types/node": "22.1.0",
+    "typescript": "5.5.4"
+  }
+}

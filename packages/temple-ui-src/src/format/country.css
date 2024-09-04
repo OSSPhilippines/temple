@@ -1,0 +1,9 @@
+.tui-format-country {
+  align-items: center; 
+  display: flex
+}
+
+.tui-format-country-flag {
+  display: inline-block; 
+  margin-right: 4px; 
+}

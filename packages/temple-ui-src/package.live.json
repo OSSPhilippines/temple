@@ -1,0 +1,11 @@
+{
+  "name": "@ossph/temple-ui",
+  "version": "0.1.2",
+  "description": "Temple user interfaces",
+  "license": "Apache-2.0",
+  "author": "Chris <chris@incept.asia>",
+  "homepage": "https://github.com/OSSPhilippines/temple",
+  "bugs": "https://github.com/OSSPhilippines/temple/issues",
+  "repository": "OSSPhilippines/temple",
+  "main": "index.js"
+}
