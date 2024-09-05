@@ -267,7 +267,7 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
                     "dev": "ts-node ./src/index.ts"
                   },
                   "dependencies": {
-                    "@ossph/temple": "0.1.3"
+                    "@ossph/temple": "0.1.4"
                   },
                   "devDependencies": {
                     "@types/node": "22.1.0",
@@ -498,10 +498,10 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
                     "dev": "ts-node ./src/index.ts"
                   },
                   "dependencies": {
-                    "@ossph/temple": "0.1.3"
+                    "@ossph/temple": "0.1.4"
                   },
                   "devDependencies": {
-                    "@ossph/temple-dev": "0.1.3",
+                    "@ossph/temple-dev": "0.1.4",
                     "@types/node": "22.1.0",
                     "ts-node": "10.9.2",
                     "typescript": "5.5.4"
@@ -930,11 +930,11 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
                     "dev": "ts-node ./src/index.ts"
                   },
                   "dependencies": {
-                    "@ossph/temple": "0.1.3"
+                    "@ossph/temple": "0.1.4"
                   },
                   "devDependencies": {
-                    "@ossph/temple-dev": "0.1.3",
-                    "@ossph/temple-tailwind": "0.1.3",
+                    "@ossph/temple-dev": "0.1.4",
+                    "@ossph/temple-tailwind": "0.1.4",
                     "@types/node": "22.1.0",
                     "autoprefixer": "10.4.20",
                     "postcss": "8.4.44",
@@ -1198,13 +1198,13 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
                     "dev": "ts-node ./src/index.ts"
                   },
                   "dependencies": {
-                    "@ossph/temple": "^0.1.3",
-                    "@ossph/temple-express": "^0.1.3",
+                    "@ossph/temple": "^0.1.4",
+                    "@ossph/temple-express": "^0.1.4",
                     "express": "^4.19.2"
                   },
                   "devDependencies": {
-                    "@ossph/temple-dev": "^0.1.3",
-                    "@ossph/temple-tailwind": "^0.1.3",
+                    "@ossph/temple-dev": "^0.1.4",
+                    "@ossph/temple-tailwind": "^0.1.4",
                     "@types/express": "^4.17.21",
                     "@types/node": "^22.5.3",
                     "autoprefixer": "^10.4.20",

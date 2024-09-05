@@ -276,8 +276,8 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
                     "build": "webpack --mode production"
                   },
                   "devDependencies": {
-                    "@ossph/temple": "0.1.3"
-                    "@ossph/temple-loader": "0.1.3",
+                    "@ossph/temple": "0.1.4"
+                    "@ossph/temple-loader": "0.1.4",
                     "@types/node": "22.1.0",
                     "html-webpack-plugin": "5.6.0",
                     "webpack-dev-server": "5.0.4",

@@ -182,10 +182,10 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
                     "dev": "ts-node ./src/index.ts"
                   },
                   "dependencies": {
-                    "@ossph/temple": "0.1.3"
+                    "@ossph/temple": "0.1.4"
                   },
                   "devDependencies": {
-                    "@ossph/temple-dev": "0.1.3",
+                    "@ossph/temple-dev": "0.1.4",
                     "@types/node": "22.1.0",
                     "ts-node": "10.9.2",
                     "typescript": "5.5.4"
