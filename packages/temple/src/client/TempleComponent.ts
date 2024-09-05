@@ -189,6 +189,8 @@ export default abstract class TempleComponent extends HTMLElement {
     }
     //set the rendering flag
     this._rendering = true;
+    //get the previous current component
+    const prev = __APP_DATA__.get('current');
     //set the current component
     __APP_DATA__.set('current', this);
     //get the styles
@@ -230,7 +232,11 @@ export default abstract class TempleComponent extends HTMLElement {
       children.forEach(child => this.shadowRoot?.appendChild(child));
     }
     //reset the current component
-    __APP_DATA__.delete('current');
+    if (prev) {
+      __APP_DATA__.set('current', prev);
+    } else {
+      __APP_DATA__.delete('current');
+    }
     this._initiated = true;
     //emit the mounted event
     emitter.emit('mounted', this);

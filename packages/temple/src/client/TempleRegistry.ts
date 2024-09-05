@@ -3,6 +3,13 @@ import TempleComponent from './TempleComponent';
 
 import TempleElement from './TempleElement';
 
+//this is used to convert HTML entities to their respective characters
+const decoder = document.createElement('textarea');
+const decode = (value: string) => {
+  decoder.innerHTML = value;
+  return decoder.value;
+}
+
 /**
  * A registry of all TempleElement/TempleComponent instances 
  * to add better attribute handling
@@ -106,9 +113,14 @@ export default class TempleRegistry {
   /**
    * Creates a TextNode and returns it
    */
-  public static createText(value: string, escape = false) {
-    //NOTE: no need to case for escaping on the browser?
-    return document.createTextNode(value);
+  public static createText(value: string, escape = true) {
+    //NOTE: TextNode will escape strings by default
+    // if we allow escape to be false, and the string 
+    // contains HTML, then the TempleRegistry count
+    // will be off.. there are also some other edge 
+    // cases that need to be considered before allowing
+    // escape to be false...
+    return document.createTextNode(decode(value));
   }
 
   /**
