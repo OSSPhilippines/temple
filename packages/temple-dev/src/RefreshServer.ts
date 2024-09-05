@@ -10,7 +10,7 @@ import {
   DocumentBuilder,
   EventEmitter
 } from '@ossph/temple/compiler';
-import { dependantsOf, update } from './helpers';
+import { dependantsOf, update, errorMessage } from './helpers';
 
 const extensions = [ '.tml', '.dtml', '.ts', '.js', '.json', '.css' ];
 
@@ -125,7 +125,17 @@ export default class RefreshServer {
       }
       // - What components import this file?
       //get any dependencies that import this file
-      const dependants = dependantsOf(absolute, document);
+      let dependants: { component: Component, type: string }[] = [];
+      try { //to get dependants
+        dependants = dependantsOf(absolute, document);
+      } catch(error) {
+        //an error could be caused if the filepath of a dependant
+        //does not exist, so we just add an error message to the 
+        //updates this will be sent to the client browser to notify
+        //the developer of the error
+        updates[document.id] = [ errorMessage(error as Error) ];
+      }
+      
       //if there are no dependants, skip
       if (dependants.length === 0) {
         continue;
@@ -141,10 +151,16 @@ export default class RefreshServer {
             cwd: document.cwd,
             fs: document.fs
           });
-          const script = await update(component, {
-            extname: this._extname,
-            tsconfig: this._tsconfig
-          });
+          let script: string;
+          try { //to generate a script to update the component
+            script = await update(component, {
+              extname: this._extname,
+              tsconfig: this._tsconfig
+            });
+          } catch(error) {
+            //notify the developer via client browser of the error
+            script = errorMessage(error as Error);
+          }
           //event params
           const params = { filePath, document, component, updates };
           //pre emit component update
@@ -157,12 +173,19 @@ export default class RefreshServer {
         //if the parent component is a component
         } else if (dependant.component.type === 'component') {
           const { component } = dependant;
-          //the filePath was imported as a template 
-          // or file, update the parent component
-          const script = await update(component, {
-            extname: this._extname,
-            tsconfig: this._tsconfig
-          });
+          let script: string;
+          try { //to generate a script to update the component
+            //the filePath was imported as a template 
+            // or file, update the parent component
+            script = await update(component, {
+              extname: this._extname,
+              tsconfig: this._tsconfig
+            });
+          } catch(error) {
+            //notify the developer via client browser of the error
+            script = errorMessage(error as Error);
+          }
+
           //event params
           const params = { filePath, document, component, updates };
           //pre emit component update

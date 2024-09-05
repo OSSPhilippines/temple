@@ -50,12 +50,7 @@ export default class Component {
    * Returns abstract syntax tree
    */
   public get ast() {
-    if (!this._ast) {
-      //parse the source code
-      this._ast = Tokenizer.tokenize(this.contents);
-    }
-
-    return this._ast;
+    return this.tokenize();
   }
 
   /**
@@ -306,5 +301,22 @@ export default class Component {
     this._type = options.type || 'component';
     //parent component
     this._parent = parent;
+  }
+
+  /**
+   * Tokenenizes the source code and returns the AST
+   */
+  public tokenize(cache = true) {
+    //if cache is disabled or ast is not cached
+    if (!cache || !this._ast) {
+      //parse the source code
+      this._ast = Tokenizer.tokenize(
+        this._fs.readFileSync(this.absolute, 'utf-8')
+      );
+      //also reset components cache
+      this._components = undefined;
+    }
+
+    return this._ast;
   }
 }

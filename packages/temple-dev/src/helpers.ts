@@ -39,6 +39,8 @@ export function dependantsOf(
   component: Component, 
   dependants: Dependants = {}
 ) {
+  //retokenize with no cache
+  component.tokenize(false);
   const imported = component.dependencies.find(dependency => {
     const extname = path.extname(dependency.path);
     const end = dependency.path.length - extname.length;
@@ -199,9 +201,6 @@ export function transpile(component: Component) {
       };
       const Component = components['${classname}'];
       if (Component) {
-        Component.prototype.styles = styles;
-        Component.prototype.template = template;
-        
         //get elements and components from registry
         const components = Array
           .from(TempleRegistry.elements.keys())
@@ -210,7 +209,8 @@ export function transpile(component: Component) {
           //if the component part of the dom
           .filter(element => !!element.parentNode);
         //for each component
-        components.forEach(component => {
+        for (const component of components) {
+          const prev = data.get('current');
           //replace styles() and template()
           component.styles = styles;  
           component.template = template;
@@ -221,9 +221,17 @@ export function transpile(component: Component) {
           //cache the template
           component._template = template.call(component);
           data.delete('current');
-          //then re-render
-          component.render();
-        });
+          try { //to re-render
+            component.render();
+          } catch(e) {
+            //reset rendering before throwing error
+            component._rendering = false;
+            throw e;
+          }
+        };
+        //last, set static class
+        Component.prototype.styles = styles;
+        Component.prototype.template = template;
       }
     `)
   });
@@ -244,4 +252,8 @@ export async function update(
       esRefreshPlugin(component, options)
     ]
   });
+}
+
+export function errorMessage(error: Error) {
+  return `;console.error(\`${error.message}\`);`;
 }

@@ -232,6 +232,7 @@ export default abstract class TempleComponent extends HTMLElement {
       children.forEach(child => this.shadowRoot?.appendChild(child));
     }
     //reset the current component
+    //maybe we should do a queue later?
     if (prev) {
       __APP_DATA__.set('current', prev);
     } else {
