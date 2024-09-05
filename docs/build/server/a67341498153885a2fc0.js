@@ -1,5 +1,5 @@
-var TempleAPI=(()=>{var ee=Object.create;var E=Object.defineProperty;var te=Object.getOwnPropertyDescriptor;var ae=Object.getOwnPropertyNames;var re=Object.getPrototypeOf,se=Object.prototype.hasOwnProperty;var n=(a,t)=>()=>(t||a((t={exports:{}}).exports,t),t.exports),le=(a,t)=>{for(var r in t)E(a,r,{get:t[r],enumerable:!0})},R=(a,t,r,s)=>{if(t&&typeof t=="object"||typeof t=="function")for(let c of ae(t))!se.call(a,c)&&c!==r&&E(a,c,{get:()=>t[c],enumerable:!(s=te(t,c))||s.enumerable});return a};var F=(a,t,r)=>(r=a!=null?ee(re(a)):{},R(t||!a||!a.__esModule?E(r,"default",{value:a,enumerable:!0}):r,a)),ce=a=>R(E({},"__esModule",{value:!0}),a);var D=n(k=>{"use strict";Object.defineProperty(k,"__esModule",{value:!0});var j=class extends Error{static for(t,...r){return r.forEach(function(s){t=t.replace("%s",s)}),new this(t)}static forErrorsFound(t){let r=new this("Invalid Parameters");return r.errors=t,r}static require(t,r,...s){if(!t){for(let c of s)r=r.replace("%s",c);throw new this(r)}}constructor(t,r=500){super(),this.errors={},this.start=0,this.end=0,this.message=t,this.name=this.constructor.name,this.code=r}withCode(t){return this.code=t,this}withPosition(t,r){return this.start=t,this.end=r,this}toJSON(){return{error:!0,code:this.code,message:this.message}}};k.default=j});var N=n(S=>{"use strict";Object.defineProperty(S,"__esModule",{value:!0});var L=class{constructor(t=[]){this._elements=new Set,t.forEach(r=>this._elements.add(r))}add(t){this._elements.add(t)}toArray(){return Array.from(this._elements)}toString(){return Array.from(this._elements).filter(Boolean).map(t=>t.toString()).join("")}};S.default=L});var m=n(P=>{"use strict";Object.defineProperty(P,"__esModule",{value:!0});var ie=new Map;P.default=ie});var v=n(f=>{"use strict";var ne=f&&f.__importDefault||function(a){return a&&a.__esModule?a:{default:a}};Object.defineProperty(f,"__esModule",{value:!0});var oe=ne(N()),de=["area","base","br","col","embed","hr","img","input","link","meta","param","source","track","wbr"],A=class{static render(t){return t.filter(Boolean).map(r=>r.toString()).join("")}get name(){return this._name}get attributes(){return this._attributes}get children(){return this._children}constructor(t,r={},s=[]){this._attributes={},this._name=t,this._attributes=r,this._children=new oe.default(s)}toString(){let t=Object.entries(this._attributes),r=t.length>0?" "+t.map(([c,o])=>{if(typeof o=="string")return`${c}="${o}"`;if(typeof o=="boolean")return o?c:""}).join(" "):"";if(de.includes(this._name))return`<${this._name}${r} />`;let s=this._children.toString();return`<${this._name}${r}>${s}</${this._name}>`}};f.default=A});var I=n(q=>{"use strict";Object.defineProperty(q,"__esModule",{value:!0});var O=class{get value(){return this._escape?this._value.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"):this._value}constructor(t,r=!1){this._escape=r,this._value=t}toString(){return this.value}};q.default=O});var M=n(p=>{"use strict";var J=p&&p.__importDefault||function(a){return a&&a.__esModule?a:{default:a}};Object.defineProperty(p,"__esModule",{value:!0});var me=J(I()),fe=J(v()),C=class{static createElement(t,r,s=[]){return new fe.default(t,r,s)}static createText(t,r=!0){return new me.default(t,r)}};p.default=C});var G=n(u=>{"use strict";var y=u&&u.__importDefault||function(a){return a&&a.__esModule?a:{default:a}};Object.defineProperty(u,"__esModule",{value:!0});var pe=y(D()),$=y(m()),ue=y(v()),he=y(M()),B=class{render(t={}){$.default.set("props",t||{}),$.default.set("env",Object.assign(Object.assign({},process.env||{}),{BUILD_ID:this.id(),APP_DATA:btoa(JSON.stringify(Object.assign(Object.assign({},Object.fromEntries($.default.entries())),{env:Object.assign(Object.assign({},Object.fromEntries(Object.entries(process.env||{}).filter(c=>c[0].startsWith("PUBLIC_")))),{BUILD_ID:this.id()})})))}));let r=this.template(),s=ue.default.render(r).trim();if(!s.toLowerCase().startsWith("<html"))throw pe.default.for("Document must start with an <html> tag.");return`<!DOCTYPE html>
-${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:Array.isArray(t)&&t.every(r=>typeof r=="object"&&typeof r.nodeType=="number")?t:[he.default.createText(String(t))]}};u.default=B});var Y=n(h=>{"use strict";Object.defineProperty(h,"__esModule",{value:!0});h.TempleEmitter=void 0;var _=class{emit(t,r){return this}on(t,r){return this}once(t,r){return this}unbind(t,r){return this}};h.TempleEmitter=_;var Te=new _;h.default=Te});var z=n(T=>{"use strict";var xe=T&&T.__importDefault||function(a){return a&&a.__esModule?a:{default:a}};Object.defineProperty(T,"__esModule",{value:!0});var ge=xe(m());function be(a){let t=ge.default.get("env")||{};return a?t[a]||null:t}T.default=be});var H=n(x=>{"use strict";var Ee=x&&x.__importDefault||function(a){return a&&a.__esModule?a:{default:a}};Object.defineProperty(x,"__esModule",{value:!0});x.default=ye;var ve=Ee(m());function ye(){return ve.default.get("props")||{}}});var V=n(g=>{"use strict";var _e=g&&g.__importDefault||function(a){return a&&a.__esModule?a:{default:a}};Object.defineProperty(g,"__esModule",{value:!0});g.default=je;var we=_e(H());function je(){return(0,we.default)().class}});var K=n(U=>{"use strict";Object.defineProperty(U,"__esModule",{value:!0});U.default=ke;function ke(a){let t={getter:()=>r.raw,setter:s=>s},r={raw:a,getter(s){return t.getter=s,r},setter(s){return t.setter=s,r}};return Object.defineProperty(r,"value",{get(){return t.getter()},set(s){r.raw=t.setter(s)}}),r}});var X=n(l=>{"use strict";var De=l&&l.__createBinding||(Object.create?function(a,t,r,s){s===void 0&&(s=r);var c=Object.getOwnPropertyDescriptor(t,r);(!c||("get"in c?!t.__esModule:c.writable||c.configurable))&&(c={enumerable:!0,get:function(){return t[r]}}),Object.defineProperty(a,s,c)}:function(a,t,r,s){s===void 0&&(s=r),a[s]=t[r]}),Le=l&&l.__setModuleDefault||(Object.create?function(a,t){Object.defineProperty(a,"default",{enumerable:!0,value:t})}:function(a,t){a.default=t}),Se=l&&l.__importStar||function(a){if(a&&a.__esModule)return a;var t={};if(a!=null)for(var r in a)r!=="default"&&Object.prototype.hasOwnProperty.call(a,r)&&De(t,a,r);return Le(t,a),t},d=l&&l.__importDefault||function(a){return a&&a.__esModule?a:{default:a}};Object.defineProperty(l,"__esModule",{value:!0});l.TempleText=l.TempleException=l.TempleEmitter=l.TempleElement=l.TempleRegistry=l.TempleDocument=l.TempleCollection=l.signal=l.classnames=l.props=l.emitter=l.env=l.data=void 0;var Ne=d(D());l.TempleException=Ne.default;var Pe=d(N());l.TempleCollection=Pe.default;var Ae=d(G());l.TempleDocument=Ae.default;var Oe=d(M());l.TempleRegistry=Oe.default;var qe=d(v());l.TempleElement=qe.default;var Q=Se(Y());l.emitter=Q.default;Object.defineProperty(l,"TempleEmitter",{enumerable:!0,get:function(){return Q.TempleEmitter}});var Ie=d(I());l.TempleText=Ie.default;var Ce=d(m());l.data=Ce.default;var Me=d(z());l.env=Me.default;var $e=d(H());l.props=$e.default;var Be=d(V());l.classnames=Be.default;var He=d(K());l.signal=He.default});var W=n((st,Z)=>{Z.exports={...X()}});var We={};le(We,{default:()=>w});var e=F(W()),b=F(W());var i=function(a,...t){let r=Ue(a);for(let s=0;s<t.length;s++)r=r.replace("%s",String(t[s]));return r},Ue=function(a){return a};var w=class extends e.TempleDocument{id(){return"a67341498153885a2fc0"}styles(){return""}template(){let t="/docs/getting-started.html",r=i("Getting Started - Temple reactive web component template engine."),s=i("How to install, setup and use Temple in a project."),c=Re=>{document.body.classList.toggle("panel-left-open")},o="https://github.com/OSSPhilippines/temple/tree/main/examples";return[e.TempleRegistry.createText(`
+var TempleAPI=(()=>{var ee=Object.create;var b=Object.defineProperty;var te=Object.getOwnPropertyDescriptor;var ae=Object.getOwnPropertyNames;var re=Object.getPrototypeOf,se=Object.prototype.hasOwnProperty;var n=(a,t)=>()=>(t||a((t={exports:{}}).exports,t),t.exports),le=(a,t)=>{for(var r in t)b(a,r,{get:t[r],enumerable:!0})},J=(a,t,r,s)=>{if(t&&typeof t=="object"||typeof t=="function")for(let i of ae(t))!se.call(a,i)&&i!==r&&b(a,i,{get:()=>t[i],enumerable:!(s=te(t,i))||s.enumerable});return a};var R=(a,t,r)=>(r=a!=null?ee(re(a)):{},J(t||!a||!a.__esModule?b(r,"default",{value:a,enumerable:!0}):r,a)),ie=a=>J(b({},"__esModule",{value:!0}),a);var L=n(k=>{"use strict";Object.defineProperty(k,"__esModule",{value:!0});var j=class extends Error{static for(t,...r){return r.forEach(function(s){t=t.replace("%s",s)}),new this(t)}static forErrorsFound(t){let r=new this("Invalid Parameters");return r.errors=t,r}static require(t,r,...s){if(!t){for(let i of s)r=r.replace("%s",i);throw new this(r)}}constructor(t,r=500){super(),this.errors={},this.start=0,this.end=0,this.message=t,this.name=this.constructor.name,this.code=r}withCode(t){return this.code=t,this}withPosition(t,r){return this.start=t,this.end=r,this}toJSON(){return{error:!0,code:this.code,message:this.message}}};k.default=j});var S=n(N=>{"use strict";Object.defineProperty(N,"__esModule",{value:!0});var D=class{constructor(t=[]){this._elements=new Set,t.forEach(r=>this._elements.add(r))}add(t){this._elements.add(t)}toArray(){return Array.from(this._elements)}toString(){return Array.from(this._elements).filter(Boolean).map(t=>t.toString()).join("")}};N.default=D});var d=n(A=>{"use strict";Object.defineProperty(A,"__esModule",{value:!0});var ce=new Map;A.default=ce});var v=n(m=>{"use strict";var ne=m&&m.__importDefault||function(a){return a&&a.__esModule?a:{default:a}};Object.defineProperty(m,"__esModule",{value:!0});var oe=ne(S()),pe=["area","base","br","col","embed","hr","img","input","link","meta","param","source","track","wbr"],P=class{static render(t){return t.filter(Boolean).map(r=>r.toString()).join("")}get name(){return this._name}get attributes(){return this._attributes}get children(){return this._children}constructor(t,r={},s=[]){this._attributes={},this._name=t,this._attributes=r,this._children=new oe.default(s)}toString(){let t=Object.entries(this._attributes),r=t.length>0?" "+t.map(([i,o])=>{if(typeof o=="string")return`${i}="${o}"`;if(typeof o=="boolean")return o?i:""}).join(" "):"";if(pe.includes(this._name))return`<${this._name}${r} />`;let s=this._children.toString();return`<${this._name}${r}>${s}</${this._name}>`}};m.default=P});var q=n(I=>{"use strict";Object.defineProperty(I,"__esModule",{value:!0});var O=class{get value(){return this._escape?this._value.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"):this._value}constructor(t,r=!1){this._escape=r,this._value=t}toString(){return this.value}};I.default=O});var M=n(f=>{"use strict";var F=f&&f.__importDefault||function(a){return a&&a.__esModule?a:{default:a}};Object.defineProperty(f,"__esModule",{value:!0});var de=F(q()),me=F(v()),C=class{static createElement(t,r,s=[]){return new me.default(t,r,s)}static createText(t,r=!0){return new de.default(t,r)}};f.default=C});var V=n(u=>{"use strict";var w=u&&u.__importDefault||function(a){return a&&a.__esModule?a:{default:a}};Object.defineProperty(u,"__esModule",{value:!0});var fe=w(L()),$=w(d()),ue=w(v()),he=w(M()),B=class{render(t={}){$.default.set("props",t||{}),$.default.set("env",Object.assign(Object.assign({},process.env||{}),{BUILD_ID:this.id(),APP_DATA:btoa(JSON.stringify(Object.assign(Object.assign({},Object.fromEntries($.default.entries())),{env:Object.assign(Object.assign({},Object.fromEntries(Object.entries(process.env||{}).filter(i=>i[0].startsWith("PUBLIC_")))),{BUILD_ID:this.id()})})))}));let r=this.template(),s=ue.default.render(r).trim();if(!s.toLowerCase().startsWith("<html"))throw fe.default.for("Document must start with an <html> tag.");return`<!DOCTYPE html>
+${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:Array.isArray(t)&&t.every(r=>typeof r=="object"&&typeof r.nodeType=="number")?t:[he.default.createText(String(t))]}};u.default=B});var Y=n(h=>{"use strict";Object.defineProperty(h,"__esModule",{value:!0});h.TempleEmitter=void 0;var _=class{emit(t,r){return this}on(t,r){return this}once(t,r){return this}unbind(t,r){return this}};h.TempleEmitter=_;var xe=new _;h.default=xe});var z=n(x=>{"use strict";var Te=x&&x.__importDefault||function(a){return a&&a.__esModule?a:{default:a}};Object.defineProperty(x,"__esModule",{value:!0});var ge=Te(d());function Ee(a){let t=ge.default.get("env")||{};return a?t[a]||null:t}x.default=Ee});var H=n(T=>{"use strict";var be=T&&T.__importDefault||function(a){return a&&a.__esModule?a:{default:a}};Object.defineProperty(T,"__esModule",{value:!0});T.default=we;var ve=be(d());function we(){return ve.default.get("props")||{}}});var G=n(g=>{"use strict";var _e=g&&g.__importDefault||function(a){return a&&a.__esModule?a:{default:a}};Object.defineProperty(g,"__esModule",{value:!0});g.default=je;var ye=_e(H());function je(){return(0,ye.default)().class}});var K=n(U=>{"use strict";Object.defineProperty(U,"__esModule",{value:!0});U.default=ke;function ke(a){let t={getter:()=>r.raw,setter:s=>s},r={raw:a,getter(s){return t.getter=s,r},setter(s){return t.setter=s,r}};return Object.defineProperty(r,"value",{get(){return t.getter()},set(s){r.raw=t.setter(s)}}),r}});var X=n(l=>{"use strict";var Le=l&&l.__createBinding||(Object.create?function(a,t,r,s){s===void 0&&(s=r);var i=Object.getOwnPropertyDescriptor(t,r);(!i||("get"in i?!t.__esModule:i.writable||i.configurable))&&(i={enumerable:!0,get:function(){return t[r]}}),Object.defineProperty(a,s,i)}:function(a,t,r,s){s===void 0&&(s=r),a[s]=t[r]}),De=l&&l.__setModuleDefault||(Object.create?function(a,t){Object.defineProperty(a,"default",{enumerable:!0,value:t})}:function(a,t){a.default=t}),Ne=l&&l.__importStar||function(a){if(a&&a.__esModule)return a;var t={};if(a!=null)for(var r in a)r!=="default"&&Object.prototype.hasOwnProperty.call(a,r)&&Le(t,a,r);return De(t,a),t},p=l&&l.__importDefault||function(a){return a&&a.__esModule?a:{default:a}};Object.defineProperty(l,"__esModule",{value:!0});l.TempleText=l.TempleException=l.TempleEmitter=l.TempleElement=l.TempleRegistry=l.TempleDocument=l.TempleCollection=l.signal=l.classnames=l.props=l.emitter=l.env=l.data=void 0;var Se=p(L());l.TempleException=Se.default;var Ae=p(S());l.TempleCollection=Ae.default;var Pe=p(V());l.TempleDocument=Pe.default;var Oe=p(M());l.TempleRegistry=Oe.default;var Ie=p(v());l.TempleElement=Ie.default;var Q=Ne(Y());l.emitter=Q.default;Object.defineProperty(l,"TempleEmitter",{enumerable:!0,get:function(){return Q.TempleEmitter}});var qe=p(q());l.TempleText=qe.default;var Ce=p(d());l.data=Ce.default;var Me=p(z());l.env=Me.default;var $e=p(H());l.props=$e.default;var Be=p(G());l.classnames=Be.default;var He=p(K());l.signal=He.default});var W=n((st,Z)=>{Z.exports={...X()}});var We={};le(We,{default:()=>y});var e=R(W()),E=R(W());var c=function(a,...t){let r=Ue(a);for(let s=0;s<t.length;s++)r=r.replace("%s",String(t[s]));return r},Ue=function(a){return a};var y=class extends e.TempleDocument{id(){return"a67341498153885a2fc0"}styles(){return""}template(){let t="/docs/getting-started.html",r=c("Getting Started - Temple reactive web component template engine."),s=c("How to install, setup and use Temple in a project."),i=Je=>{document.body.classList.toggle("panel-left-open")},o="https://github.com/OSSPhilippines/temple/tree/main/examples";return[e.TempleRegistry.createText(`
 `,!1),e.TempleRegistry.createElement("html",{},[e.TempleRegistry.createText(`
   `,!1),e.TempleRegistry.createElement("head",{},[e.TempleRegistry.createText(`
   `,!1),e.TempleRegistry.createElement("meta",{charset:"utf-8"}),e.TempleRegistry.createText(`
@@ -20,16 +20,16 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
   `,!1),e.TempleRegistry.createElement("link",{rel:"shortcut icon",type:"image/png",href:"/temple/favicon.png"}),e.TempleRegistry.createText(`
   `,!1),e.TempleRegistry.createElement("link",{rel:"stylesheet",type:"text/css",href:"/temple/styles/fontawesome/all.css"}),e.TempleRegistry.createText(`
   `,!1),e.TempleRegistry.createElement("link",{rel:"stylesheet",type:"text/css",href:"/temple/styles/theme.css"}),e.TempleRegistry.createText(`
-  `,!1),e.TempleRegistry.createElement("link",{rel:"stylesheet",type:"text/css",href:`/temple/build/client/${(0,b.env)("BUILD_ID")}.css`}),e.TempleRegistry.createText(`
+  `,!1),e.TempleRegistry.createElement("link",{rel:"stylesheet",type:"text/css",href:`/temple/build/client/${(0,E.env)("BUILD_ID")}.css`}),e.TempleRegistry.createText(`
   
-  `,!1),e.TempleRegistry.createElement("script",{"data-app":(0,b.env)("APP_DATA"),src:`/temple/build/client/${(0,b.env)("BUILD_ID")}.js`}),e.TempleRegistry.createText(`
-  `,!1),...(0,b.env)("NODE_ENV")==="development"?[e.TempleRegistry.createText(`
+  `,!1),e.TempleRegistry.createElement("script",{"data-app":(0,E.env)("APP_DATA"),src:`/temple/build/client/${(0,E.env)("BUILD_ID")}.js`}),e.TempleRegistry.createText(`
+  `,!1),...(0,E.env)("NODE_ENV")==="development"?[e.TempleRegistry.createText(`
     `,!1),e.TempleRegistry.createElement("script",{src:"/dev.js"}),e.TempleRegistry.createText(`
   `,!1)]:[],e.TempleRegistry.createText(`
 `,!1)]),e.TempleRegistry.createText(`
   `,!1),e.TempleRegistry.createElement("body",{class:"dark panel with-head with-left with-right"},[e.TempleRegistry.createText(`
     `,!1),e.TempleRegistry.createElement("header",{class:"head panel-head"},[e.TempleRegistry.createText(`
-  `,!1),e.TempleRegistry.createElement("i",{class:"menu fas fa-fw fa-bars",click:c},[]),e.TempleRegistry.createText(`
+  `,!1),e.TempleRegistry.createElement("i",{class:"menu fas fa-fw fa-bars",click:i},[]),e.TempleRegistry.createText(`
   `,!1),e.TempleRegistry.createElement("a",{href:"/temple"},[e.TempleRegistry.createText(`
     `,!1),e.TempleRegistry.createElement("img",{src:"/temple/temple-icon.png",alt:"Temple Logo"}),e.TempleRegistry.createText(`
   `,!1)]),e.TempleRegistry.createText(`
@@ -53,7 +53,7 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
       `,!1),e.TempleRegistry.createElement("img",{src:"/temple/temple-icon.png",alt:"Temple Logo"}),e.TempleRegistry.createText(`
     `,!1)]),e.TempleRegistry.createText(`
     `,!1),e.TempleRegistry.createElement("h3",{},[e.TempleRegistry.createElement("a",{class:"tx-white",href:"/temple"},[e.TempleRegistry.createText("Temple",!1)])]),e.TempleRegistry.createText(`
-    `,!1),e.TempleRegistry.createElement("i",{class:"toggle fas fa-fw fa-chevron-left",click:c},[]),e.TempleRegistry.createText(`
+    `,!1),e.TempleRegistry.createElement("i",{class:"toggle fas fa-fw fa-chevron-left",click:i},[]),e.TempleRegistry.createText(`
   `,!1)]),e.TempleRegistry.createText(`
   `,!1),e.TempleRegistry.createElement("nav",{},[e.TempleRegistry.createText(`
     `,!1),e.TempleRegistry.createElement("h6",{},[e.TempleRegistry.createText("Introduction",!1)]),e.TempleRegistry.createText(`
@@ -76,17 +76,18 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
   `,!1)]),e.TempleRegistry.createText(`
 `,!1)]),e.TempleRegistry.createText(`
     `,!1),e.TempleRegistry.createElement("aside",{class:"panel-right right"},[e.TempleRegistry.createText(`
-      `,!1),e.TempleRegistry.createElement("h6",{},[...this._toNodeList(i("On this page"))]),e.TempleRegistry.createText(`
+      `,!1),e.TempleRegistry.createElement("h6",{},[...this._toNodeList(c("On this page"))]),e.TempleRegistry.createText(`
       `,!1),e.TempleRegistry.createElement("nav",{},[e.TempleRegistry.createText(`
-        `,!1),e.TempleRegistry.createElement("a",{href:"#http"},[...this._toNodeList(i("1. Add HTTP"))]),e.TempleRegistry.createText(`
-        `,!1),e.TempleRegistry.createElement("a",{href:"#develop"},[...this._toNodeList(i("2. Add Dev Tools"))]),e.TempleRegistry.createText(`
-        `,!1),e.TempleRegistry.createElement("a",{href:"#cache"},[...this._toNodeList(i("3. Add File Cache"))]),e.TempleRegistry.createText(`
-        `,!1),e.TempleRegistry.createElement("a",{href:"#tailwind"},[...this._toNodeList(i("4. Add TailwindCSS"))]),e.TempleRegistry.createText(`
+        `,!1),e.TempleRegistry.createElement("a",{href:"#http"},[...this._toNodeList(c("1. Add HTTP"))]),e.TempleRegistry.createText(`
+        `,!1),e.TempleRegistry.createElement("a",{href:"#develop"},[...this._toNodeList(c("2. Add Dev Tools"))]),e.TempleRegistry.createText(`
+        `,!1),e.TempleRegistry.createElement("a",{href:"#cache"},[...this._toNodeList(c("3. Add File Cache"))]),e.TempleRegistry.createText(`
+        `,!1),e.TempleRegistry.createElement("a",{href:"#tailwind"},[...this._toNodeList(c("4. Add TailwindCSS"))]),e.TempleRegistry.createText(`
+        `,!1),e.TempleRegistry.createElement("a",{href:"#express"},[...this._toNodeList(c("5. Add ExpressJS"))]),e.TempleRegistry.createText(`
       `,!1)]),e.TempleRegistry.createText(`
     `,!1)]),e.TempleRegistry.createText(`
     `,!1),e.TempleRegistry.createElement("panel-main",{class:"panel-main"},[e.TempleRegistry.createText(`
       `,!1),e.TempleRegistry.createElement("div",{class:"docs container"},[e.TempleRegistry.createText(`
-        `,!1),e.TempleRegistry.createElement("h1",{},[...this._toNodeList(i("Getting Started"))]),e.TempleRegistry.createText(`
+        `,!1),e.TempleRegistry.createElement("h1",{},[...this._toNodeList(c("Getting Started"))]),e.TempleRegistry.createText(`
 
         `,!1),e.TempleRegistry.createElement("i18n-translate",{p:!0,trim:!0},[e.TempleRegistry.createText(`
           To try out Temple, run the following commands in terminal: 
@@ -157,7 +158,7 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
         `,!1)]),e.TempleRegistry.createText(`
 
         `,!1),e.TempleRegistry.createElement("a",{name:"http"},[]),e.TempleRegistry.createText(`
-        `,!1),e.TempleRegistry.createElement("h2",{},[...this._toNodeList(i("1. Add HTTP"))]),e.TempleRegistry.createText(`
+        `,!1),e.TempleRegistry.createElement("h2",{},[...this._toNodeList(c("1. Add HTTP"))]),e.TempleRegistry.createText(`
 
         `,!1),e.TempleRegistry.createElement("i18n-translate",{p:!0,trim:!0},[e.TempleRegistry.createText(`
           In most cases Temple will be used to render a front end from 
@@ -313,7 +314,7 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
         `,!1),e.TempleRegistry.createElement("api-ui",{start:"Render Methods"}),e.TempleRegistry.createText(`
 
         `,!1),e.TempleRegistry.createElement("a",{name:"develop"},[]),e.TempleRegistry.createText(`
-        `,!1),e.TempleRegistry.createElement("h2",{},[...this._toNodeList(i("2. Add Developer Tools"))]),e.TempleRegistry.createText(`
+        `,!1),e.TempleRegistry.createElement("h2",{},[...this._toNodeList(c("2. Add Developer Tools"))]),e.TempleRegistry.createText(`
 
         `,!1),e.TempleRegistry.createElement("i18n-translate",{p:!0,trim:!0},[e.TempleRegistry.createText(`
           Temple provides a separate package for a better development 
@@ -356,6 +357,21 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
             //...listen on port 3000...
           `)]),e.TempleRegistry.createText(`
         `,!1)]),e.TempleRegistry.createText(`
+        `,!1),e.TempleRegistry.createElement("i18n-translate",{p:!0,trim:!0},[e.TempleRegistry.createText(`
+          The `,!1),e.TempleRegistry.createElement("ide-code",{inline:!0,lang:"js"},[...this._toNodeList("dev()")]),e.TempleRegistry.createText(` export 
+          from  `,!1),e.TempleRegistry.createElement("ide-code",{inline:!0,lang:"js"},[...this._toNodeList("@ossph/temple-dev")]),e.TempleRegistry.createText(`
+          exports tools that supports development mode and accepts the 
+          following options.
+        `,!1)]),e.TempleRegistry.createText(`
+
+        `,!1),e.TempleRegistry.createElement("api-ui",{start:"DeveloperOptions"}),e.TempleRegistry.createText(`
+
+        `,!1),e.TempleRegistry.createElement("i18n-translate",{p:!0,trim:!0},[e.TempleRegistry.createText(`
+          This returns several tools you can use in your server app.
+        `,!1)]),e.TempleRegistry.createText(`
+
+        `,!1),e.TempleRegistry.createElement("api-ui",{start:"Developer Tools"}),e.TempleRegistry.createText(`
+
         `,!1),e.TempleRegistry.createElement("i18n-translate",{p:!0,trim:!0},[e.TempleRegistry.createText(`
           Lastly, update the document file 
           `,!1),e.TempleRegistry.createElement("ide-code",{lang:"js",inline:!0},[...this._toNodeList("src/page.dtml")]),e.TempleRegistry.createText(` 
@@ -515,7 +531,7 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
         `,!1)]),e.TempleRegistry.createText(`
 
         `,!1),e.TempleRegistry.createElement("a",{name:"cache"},[]),e.TempleRegistry.createText(`
-        `,!1),e.TempleRegistry.createElement("h2",{},[...this._toNodeList(i("3. Add Cache Files"))]),e.TempleRegistry.createText(`
+        `,!1),e.TempleRegistry.createElement("h2",{},[...this._toNodeList(c("3. Add Cache Files"))]),e.TempleRegistry.createText(`
 
         `,!1),e.TempleRegistry.createElement("i18n-translate",{p:!0,trim:!0},[e.TempleRegistry.createText(`
           Temple has an out-of-the-box cache and build strategy that
@@ -702,7 +718,7 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
         `,!1),e.TempleRegistry.createElement("api-ui",{start:"EventEmitter"}),e.TempleRegistry.createText(`
 
         `,!1),e.TempleRegistry.createElement("a",{name:"tailwind"},[]),e.TempleRegistry.createText(`
-        `,!1),e.TempleRegistry.createElement("h2",{},[...this._toNodeList(i("4. Add TailwindCSS"))]),e.TempleRegistry.createText(`
+        `,!1),e.TempleRegistry.createElement("h2",{},[...this._toNodeList(c("4. Add TailwindCSS"))]),e.TempleRegistry.createText(`
 
         `,!1),e.TempleRegistry.createElement("i18n-translate",{p:!0,trim:!0},[e.TempleRegistry.createText(`
           Tailwind is an atomic CSS collection of styles that favours 
@@ -953,7 +969,273 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
           real-time without the page reloading.
         `,!1)]),e.TempleRegistry.createText(`
 
-        `,!1),e.TempleRegistry.createElement("h3",{},[e.TempleRegistry.createText("-- ",!1),...this._toNodeList(i("Read On")),e.TempleRegistry.createText(" --",!1)]),e.TempleRegistry.createText(`
+        `,!1),e.TempleRegistry.createElement("a",{name:"express"},[]),e.TempleRegistry.createText(`
+        `,!1),e.TempleRegistry.createElement("h2",{},[...this._toNodeList(c("5. Add ExpressJS"))]),e.TempleRegistry.createText(`
+
+        `,!1),e.TempleRegistry.createElement("i18n-translate",{p:!0,trim:!0},[e.TempleRegistry.createText(`
+          Temple has a separate package called
+          `,!1),e.TempleRegistry.createElement("ide-code",{inline:!0,lang:"js"},[...this._toNodeList("@ossph/temple-express")]),e.TempleRegistry.createText(`
+          to use Express with Temple. You can install this plugin by 
+          running the following command in terminal.
+        `,!1)]),e.TempleRegistry.createText(`
+
+        `,!1),e.TempleRegistry.createElement("ide-app",{title:"Terminal"},[e.TempleRegistry.createText(`
+          `,!1),e.TempleRegistry.createElement("ide-code",{lang:"bash"},[e.TempleRegistry.createText(`
+            npm install --save @ossph/temple-express express && npm install --save-dev @types/express
+          `,!1)]),e.TempleRegistry.createText(`
+        `,!1)]),e.TempleRegistry.createText(`
+
+        `,!1),e.TempleRegistry.createElement("i18n-translate",{p:!0,trim:!0},[e.TempleRegistry.createText(`
+          The package 
+          `,!1),e.TempleRegistry.createElement("ide-code",{inline:!0,lang:"js"},[...this._toNodeList("@ossph/temple-express")]),e.TempleRegistry.createText(`
+          exports two plugins for express.
+          `,!1),e.TempleRegistry.createElement("ide-code",{inline:!0,lang:"js"},[...this._toNodeList("view()")]),e.TempleRegistry.createText(` is the view 
+          engine for production (live) environments. It can be used with
+          an express app like 
+          `,!1),e.TempleRegistry.createElement("ide-code",{inline:!0,lang:"js"},[...this._toNodeList("app.use(view(compiler))")]),e.TempleRegistry.createText(`.
+          The other export, `,!1),e.TempleRegistry.createElement("ide-code",{inline:!0,lang:"js"},[...this._toNodeList("dev()")]),e.TempleRegistry.createText(` 
+          is the same export from the Developer Tools documentation above, 
+          but returns several tools used to integrate with express.
+        `,!1)]),e.TempleRegistry.createText(`
+
+        `,!1),e.TempleRegistry.createElement("api-ui",{start:"Express Developer Tools"}),e.TempleRegistry.createText(`
+
+        `,!1),e.TempleRegistry.createElement("i18n-translate",{p:!0,trim:!0},[e.TempleRegistry.createText(`
+          Example logic to use the all the Temple Express tools together
+          with Temple developer tools could look like the following code
+          that cases for 
+          `,!1),e.TempleRegistry.createElement("ide-code",{inline:!0,lang:"js"},[...this._toNodeList("development")]),e.TempleRegistry.createText(` and 
+          `,!1),e.TempleRegistry.createElement("ide-code",{inline:!0,lang:"js"},[...this._toNodeList("production")]),e.TempleRegistry.createText(` modes.
+        `,!1)]),e.TempleRegistry.createText(`
+
+        `,!1),e.TempleRegistry.createElement("ide-code",{numbers:!0,trim:!0,detab:10,lang:"js"},[...this._toNodeList(`
+          import { view, dev } from '@ossph/temple-express';
+
+          //create temple compiler
+          const compiler = temple({ cwd: __dirname, minify: false });
+          //create express app
+          const app = express();
+          //set the view engine to temple
+          app.set('views', path.join(__dirname, 'pages'));
+          app.set('view engine', 'dtml');
+
+          //if production (live)
+          if (process.env.NODE_ENV === 'production') {
+            //let's use express' template engine feature
+            app.engine('dtml', view(compiler));
+            //...other production settings...
+          //if development mode
+          } else {
+            //get development middleware
+            const { router, view } = dev({ cwd: __dirname });
+            //use development middleware
+            app.use(router);
+            //let's use express' template engine feature
+            app.engine('dtml', view(compiler));
+          }
+        `)]),e.TempleRegistry.createText(`
+
+        `,!1),e.TempleRegistry.createElement("i18n-translate",{p:!0,trim:!0},[e.TempleRegistry.createText(`
+          And you can now case for development mode in 
+          `,!1),e.TempleRegistry.createElement("ide-code",{inline:!0,lang:"js"},[...this._toNodeList("src/page.dtml")]),e.TempleRegistry.createText(`
+          like in the example below
+        `,!1)]),e.TempleRegistry.createText(`
+
+        `,!1),e.TempleRegistry.createElement("ide-code",{numbers:!0,trim:!0,detab:10},[...this._toNodeList(`
+          <style>
+            /* ... */
+          </style>
+          <script>
+            import { env } from '@ossph/temple';
+            const { NODE_ENV } = env();
+          </script>
+          <html>
+            <head>
+              <!-- ... -->
+              <if true={NODE_ENV !== 'production'}>
+                <script src="/dev.js"></script>
+              </if>
+            </head>
+            <body>
+              <!-- ... -->
+            </body>
+          </html>
+        `)]),e.TempleRegistry.createText(`
+
+        `,!1),e.TempleRegistry.createElement("i18n-translate",{p:!0,trim:!0},[e.TempleRegistry.createText(`
+          Check to see if the project files look like the example below.
+        `,!1)]),e.TempleRegistry.createText(`
+
+        `,!1),e.TempleRegistry.createElement("ide-app",{panel:410,title:"With ExpressJS"},[e.TempleRegistry.createText(`
+          `,!1),e.TempleRegistry.createElement("div",{class:"panel-head"},[e.TempleRegistry.createText(`
+            `,!1),e.TempleRegistry.createElement("div",{class:"tabs"},[e.TempleRegistry.createText(`
+              `,!1),e.TempleRegistry.createElement("tui-tab",{class:"tab active",group:"express",selector:"#index-ts"},[e.TempleRegistry.createText(`
+                src/index.ts
+              `,!1)]),e.TempleRegistry.createText(`
+              `,!1),e.TempleRegistry.createElement("tui-tab",{class:"tab",group:"express",selector:"#page-dtml"},[e.TempleRegistry.createText(`
+                src/page.dtml
+              `,!1)]),e.TempleRegistry.createText(`
+              `,!1),e.TempleRegistry.createElement("tui-tab",{class:"tab",group:"express",selector:"#package-json"},[e.TempleRegistry.createText(`
+                package.json
+              `,!1)]),e.TempleRegistry.createText(`
+            `,!1)]),e.TempleRegistry.createText(`
+          `,!1)]),e.TempleRegistry.createText(`
+          `,!1),e.TempleRegistry.createElement("div",{class:"panel-left"},[e.TempleRegistry.createText(`
+            `,!1),e.TempleRegistry.createElement("h5",{class:"folder"},[e.TempleRegistry.createText(`
+              `,!1),e.TempleRegistry.createElement("i",{class:"fas fa-fw fa-chevron-down"},[]),e.TempleRegistry.createText(`
+              `,!1),e.TempleRegistry.createElement("span",{},[e.TempleRegistry.createText("src",!1)]),e.TempleRegistry.createText(`
+            `,!1)]),e.TempleRegistry.createText(`
+            `,!1),e.TempleRegistry.createElement("tui-tab",{class:"shift-1 block active",group:"express",selector:"#index-ts"},[e.TempleRegistry.createText(`
+              `,!1),e.TempleRegistry.createElement("i",{class:"fas fa-fw fa-file"},[]),e.TempleRegistry.createText(`
+              index.ts
+            `,!1)]),e.TempleRegistry.createText(`
+            `,!1),e.TempleRegistry.createElement("tui-tab",{class:"shift-1 block",group:"express",selector:"#page-dtml"},[e.TempleRegistry.createText(`
+              `,!1),e.TempleRegistry.createElement("i",{class:"fas fa-fw fa-file"},[]),e.TempleRegistry.createText(`
+              page.dtml
+            `,!1)]),e.TempleRegistry.createText(`
+            `,!1),e.TempleRegistry.createElement("tui-tab",{class:"block",group:"express",selector:"#package-json"},[e.TempleRegistry.createText(`
+              `,!1),e.TempleRegistry.createElement("i",{class:"fas fa-fw fa-file"},[]),e.TempleRegistry.createText(`
+              package.json
+            `,!1)]),e.TempleRegistry.createText(`
+          `,!1)]),e.TempleRegistry.createText(`
+          `,!1),e.TempleRegistry.createElement("div",{class:"panel-main"},[e.TempleRegistry.createText(`
+            `,!1),e.TempleRegistry.createElement("main",{},[e.TempleRegistry.createText(`
+              `,!1),e.TempleRegistry.createElement("ide-code",{id:"index-ts",lang:"js",numbers:!0,trim:!0,detab:16},[...this._toNodeList(`
+                import path from 'path';
+                import express from 'express';
+                import temple, { cache } from '@ossph/temple/compiler';
+                import { view, dev } from '@ossph/temple-express';
+                import { tailwind } from '@ossph/temple-tailwind';
+
+                //create temple compiler
+                const compiler = temple();
+                //use tailwind
+                compiler.use(tailwind({
+                  darkMode: 'class',
+                  theme: { extend: {} },
+                  plugins: [],
+                  content: []
+                }));
+                //use build cache
+                compiler.use(cache({ 
+                  environment: process.env.NODE_ENV,
+                  buildPath: path.join(__dirname, '../build')
+                }));
+
+                //create express app
+                const app = express();
+                //set the view engine to temple
+                app.set('views', __dirname);
+                app.set('view engine', 'dtml');
+
+                //if production (live)
+                if (process.env.NODE_ENV === 'production') {
+                  //let's use express' template engine feature
+                  app.engine('dtml', view(compiler));
+                  //...other production settings...
+                //if development mode
+                } else {
+                  //get development middleware
+                  const { router, view } = dev({ cwd: __dirname });
+                  //use development middleware
+                  app.use(router);
+                  //let's use express' template engine feature
+                  app.engine('dtml', view(compiler));
+                }
+
+                //routes
+                app.get('/build/:build', async (req, res) => {
+                  //get filename ie. abc123.js
+                  const filename = req.params.build;
+                  //get asset
+                  const { type, content } = await compiler.asset(filename);
+                  //send response
+                  res.type(type).send(content);
+                });
+
+                app.get('/', (req, res) => {
+                  //now use the temple template engine
+                  res.render('page', { title: 'Hello World' });
+                  res.type('text/html');
+                });
+
+                //listen
+                app.listen(3000, () => {
+                  console.log('HTTP server is running on http://localhost:3000');
+                });
+              `)]),e.TempleRegistry.createText(`
+              `,!1),e.TempleRegistry.createElement("ide-code",{id:"page-dtml",style:"display:none",numbers:!0,trim:!0,detab:16},[...this._toNodeList(`
+                <style>
+                  @tailwind base;
+                  @tailwind components;
+                  @tailwind utilities;
+                </style>
+                <script>
+                  import { env, props } from '@ossph/temple';
+                  const { BUILD_ID, APP_DATA, NODE_ENV } = env();
+                  const { title } = props();
+                </script>
+                <html>
+                  <head>
+                    <title>{title}</title>
+                    <link rel="stylesheet" type="text/css" href={\`/build/\${BUILD_ID}.css\`} />
+                    <script data-app={APP_DATA} src={\`/build/\${BUILD_ID}.js\`}></script>
+                    <if true={NODE_ENV !== 'production'}>
+                      <script src="/dev.js"></script>
+                    </if>
+                  </head>
+                  <body>
+                    <h1 class="text-center">{title}</h1>
+                  </body>
+                </html>
+              `)]),e.TempleRegistry.createText(`
+              `,!1),e.TempleRegistry.createElement("ide-code",{id:"package-json",style:"display:none",lang:"js",numbers:!0,trim:!0,detab:16},[...this._toNodeList(`
+                {
+                  "name": "my-project",
+                  "version": "1.0.0",
+                  "private": true,
+                  "scripts": {
+                    "dev": "ts-node ./src/index.ts"
+                  },
+                  "dependencies": {
+                    "@ossph/temple": "^0.1.3",
+                    "@ossph/temple-express": "^0.1.3",
+                    "express": "^4.19.2"
+                  },
+                  "devDependencies": {
+                    "@ossph/temple-dev": "^0.1.3",
+                    "@ossph/temple-tailwind": "^0.1.3",
+                    "@types/express": "^4.17.21",
+                    "@types/node": "^22.5.3",
+                    "autoprefixer": "^10.4.20",
+                    "postcss": "^8.4.45",
+                    "tailwindcss": "^3.4.10",
+                    "ts-node": "^10.9.2",
+                    "typescript": "^5.5.4"
+                  }
+                }
+              `)]),e.TempleRegistry.createText(`
+            `,!1)]),e.TempleRegistry.createText(`
+          `,!1)]),e.TempleRegistry.createText(`
+        `,!1)]),e.TempleRegistry.createText(`
+
+        `,!1),e.TempleRegistry.createElement("i18n-translate",{p:!0,trim:!0},[e.TempleRegistry.createText(`
+          Re-run the following command in terminal to initialize the 
+          re-run your application using Express.
+        `,!1)]),e.TempleRegistry.createText(`
+        `,!1),e.TempleRegistry.createElement("ide-app",{title:"Terminal"},[e.TempleRegistry.createText(`
+          `,!1),e.TempleRegistry.createElement("ide-code",{lang:"bash"},[e.TempleRegistry.createText(`
+            npx ts-node src/index.ts
+          `,!1)]),e.TempleRegistry.createText(`
+        `,!1)]),e.TempleRegistry.createText(`
+        `,!1),e.TempleRegistry.createElement("i18n-translate",{p:!0,trim:!0},[e.TempleRegistry.createText(`
+          Load 
+          `,!1),e.TempleRegistry.createElement("ide-code",{lang:"js",inline:!0},[e.TempleRegistry.createText("http://localhost:3000/",!1)]),e.TempleRegistry.createText(` 
+          in your browser. After loading you should see everything is 
+          exactly as it was, but you now benefit from using ExpressJS.
+        `,!1)]),e.TempleRegistry.createText(`
+
+        `,!1),e.TempleRegistry.createElement("h3",{},[e.TempleRegistry.createText("-- ",!1),...this._toNodeList(c("Read On")),e.TempleRegistry.createText(" --",!1)]),e.TempleRegistry.createText(`
 
         `,!1),e.TempleRegistry.createElement("i18n-translate",{p:!0,trim:!0},[e.TempleRegistry.createText(`
           To see other getting started examples with various frameworks,
@@ -961,11 +1243,6 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
           official repository.
         `,!1)]),e.TempleRegistry.createText(`
         `,!1),e.TempleRegistry.createElement("ul",{},[e.TempleRegistry.createText(`
-          `,!1),e.TempleRegistry.createElement("li",{},[e.TempleRegistry.createText(`
-            `,!1),e.TempleRegistry.createElement("a",{target:"_blank",href:`${o}/with-express`},[e.TempleRegistry.createText(`
-              ExpressJS
-            `,!1)]),e.TempleRegistry.createText(`
-          `,!1)]),e.TempleRegistry.createText(`
           `,!1),e.TempleRegistry.createElement("li",{},[e.TempleRegistry.createText(`
             `,!1),e.TempleRegistry.createElement("a",{target:"_blank",href:`${o}/with-fastify`},[e.TempleRegistry.createText(`
               Fastify
@@ -1027,10 +1304,10 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
         `,!1),e.TempleRegistry.createElement("nav",{class:"pager"},[e.TempleRegistry.createText(`
           `,!1),e.TempleRegistry.createElement("a",{class:"prev",href:"/temple/docs/index.html"},[e.TempleRegistry.createText(`
             `,!1),e.TempleRegistry.createElement("i",{class:"fas fa-fw fa-chevron-left"},[]),e.TempleRegistry.createText(`
-            `,!1),...this._toNodeList(i("Documentation")),e.TempleRegistry.createText(`
+            `,!1),...this._toNodeList(c("Documentation")),e.TempleRegistry.createText(`
           `,!1)]),e.TempleRegistry.createText(`
           `,!1),e.TempleRegistry.createElement("a",{class:"next",href:"/temple/docs/markup-syntax.html"},[e.TempleRegistry.createText(`
-            `,!1),...this._toNodeList(i("Markup Syntax")),e.TempleRegistry.createText(`
+            `,!1),...this._toNodeList(c("Markup Syntax")),e.TempleRegistry.createText(`
             `,!1),e.TempleRegistry.createElement("i",{class:"fas fa-fw fa-chevron-right"},[]),e.TempleRegistry.createText(`
           `,!1)]),e.TempleRegistry.createText(`
         `,!1)]),e.TempleRegistry.createText(`
@@ -1038,4 +1315,4 @@ ${s}`}_toNodeList(t){return typeof t=="object"&&typeof t.nodeType=="number"?[t]:
       `,!1),e.TempleRegistry.createElement("footer",{class:"foot"},[]),e.TempleRegistry.createText(`
     `,!1)]),e.TempleRegistry.createText(`
   `,!1)]),e.TempleRegistry.createText(`
-`,!1)])]}};return ce(We);})();
+`,!1)])]}};return ie(We);})();

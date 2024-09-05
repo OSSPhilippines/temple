@@ -2048,5 +2048,193 @@
       "description": "Returns compiled css styles, given the the template source file.",
       "example": "await compiler.styles('./docs/api.dtml'); //css styles"
     }
+  },
+  "DeveloperOptions": {
+    "cwd?": {
+      "kind": "property",
+      "list": false,
+      "type": "string",
+      "description": "The current working directory",
+      "example": "const { refresh, router } = dev({ cwd: process.cwd() })"
+    },
+    "emitter?": {
+      "kind": "property",
+      "list": false,
+      "type": "EventEmitter",
+      "description": "The NodeJS EventEmitter instance being used.",
+      "example": "import emitter from 'events';\n\nconst { refresh, router } = dev({ emitter });'"
+    },
+    "include?": {
+      "kind": "property",
+      "list": true,
+      "type": "string",
+      "description": "An array of extension names to watch for",
+      "example": "const { refresh, router } = dev({ include: [ '.js', '.ts', '.tml', '.dtml' ] });'"
+    },
+    "ignore?": {
+      "kind": "property",
+      "list": true,
+      "type": "(string|RegExp)",
+      "description": "An array of extension names to ignore",
+      "example": "const { refresh, router } = dev({ ignore: [ '*.test.*' ] });'"
+    },
+    "route?": {
+      "kind": "property",
+      "list": false,
+      "type": "string",
+      "description": "The route path to use for the client watcher",
+      "example": "const { refresh, router } = dev({ route: '/__temple_dev__' })"
+    },
+    "tsconfig?": {
+      "kind": "property",
+      "list": false,
+      "type": "string",
+      "description": "The path to the tsconfig.json file",
+      "example": "const { refresh, router } = dev({ tsconfig: '/path/to/tsconfig.json' })"
+    },
+    "extname?": {
+      "kind": "property",
+      "list": false,
+      "type": "string",
+      "description": "the component file extension",
+      "example": "const { refresh, router } = dev({ extname: '.tml' })"
+    }
+  },
+  "RefreshServer": {
+    "cwd": {
+      "kind": "property",
+      "list": false,
+      "type": "string",
+      "description": "The current working directory",
+      "example": "refresh.cwd"
+    },
+    "emitter": {
+      "kind": "property",
+      "list": false,
+      "type": "EventEmitter",
+      "description": "The NodeJS EventEmitter instance being used.",
+      "example": "refresh.emitter.on('render', e => {\n  console.log(e.params);\n});"
+    },
+    "sync": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "name": "builder",
+          "list": false,
+          "type": "DocumentBuilder"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "void"
+      },
+      "description": "Registers a document builder to a client watcher list",
+      "example": "refresh.emitter.on('render', e => {\n  console.log(e.params);\n});"
+    },
+    "close": {
+      "kind": "function",
+      "args": [],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "RefreshServer"
+      },
+      "description": "Closes the server and stops the watchers.",
+      "example": "refresh.close();"
+    },
+    "refresh": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "filePath",
+          "type": "string"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "Promise<RefreshServer>"
+      },
+      "description": "Whenever a file is changed this will be called to instruct each client watcher how to update their document.",
+      "example": "await refresh.refresh('/some/file.tml');"
+    },
+    "wait": {
+      "kind": "function",
+      "args": [
+        {
+          "kind": "property",
+          "list": false,
+          "name": "req",
+          "type": "Request"
+        },
+        {
+          "kind": "property",
+          "list": false,
+          "name": "res",
+          "type": "Response"
+        }
+      ],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "RefreshServer"
+      },
+      "description": "Opens a connection to the server via SSE and waits for changes.",
+      "example": "refresh.wait(req, res);"
+    },
+    "watch": {
+      "kind": "function",
+      "args": [],
+      "returns": {
+        "kind": "property",
+        "list": false,
+        "type": "RefreshServer"
+      },
+      "description": "Starts the server that watches for file changes.",
+      "example": "refresh.watch();"
+    }
+  },
+  "Developer Tools": {
+    "refresh": {
+      "kind": "property",
+      "list": false,
+      "type": "RefreshServer",
+      "description": "The refresh server instance used to update clients.",
+      "example": "const { refresh } = dev();\nrefresh.sync(builder);"
+    },
+    "router": {
+      "kind": "property",
+      "list": false,
+      "type": "Function",
+      "description": "HTTP middleware to handle developer tool routes like '/dev.js' and '/__temple_dev__'.",
+      "example": "const { router } = dev();\napp.use(router);"
+    }
+  },
+  "Express Developer Tools": {
+    "refresh": {
+      "kind": "property",
+      "list": false,
+      "type": "RefreshServer",
+      "description": "The refresh server instance used to update clients.",
+      "example": "const { refresh } = dev();\nrefresh.sync(builder);"
+    },
+    "router": {
+      "kind": "property",
+      "list": false,
+      "type": "Function",
+      "description": "Express middleware to handle developer tool routes like '/dev.js' and '/__temple_dev__'.",
+      "example": "const { router } = dev();\napp.use(router);"
+    },
+    "view": {
+      "kind": "property",
+      "list": false,
+      "type": "Function",
+      "description": "Middleware used to setup an express view engine.",
+      "example": "const { view } = dev();\napp.engine('dtml', view(compiler));"
+    }
   }
 }

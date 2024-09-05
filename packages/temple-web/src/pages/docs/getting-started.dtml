@@ -32,6 +32,7 @@
         <a href="#develop">{_('2. Add Dev Tools')}</a>
         <a href="#cache">{_('3. Add File Cache')}</a>
         <a href="#tailwind">{_('4. Add TailwindCSS')}</a>
+        <a href="#express">{_('5. Add ExpressJS')}</a>
       </nav>
     </aside>
     <panel-main class="panel-main">
@@ -309,6 +310,21 @@
             //...listen on port 3000...
           `}</ide-code>
         </ide-app>
+        <i18n-translate p trim>
+          The <ide-code inline lang="js">{`dev()`}</ide-code> export 
+          from  <ide-code inline lang="js">{`@ossph/temple-dev`}</ide-code>
+          exports tools that supports development mode and accepts the 
+          following options.
+        </i18n-translate>
+
+        <api-ui start="DeveloperOptions" />
+
+        <i18n-translate p trim>
+          This returns several tools you can use in your server app.
+        </i18n-translate>
+
+        <api-ui start="Developer Tools" />
+
         <i18n-translate p trim>
           Lastly, update the document file 
           <ide-code lang="js" inline>{`src/page.dtml`}</ide-code> 
@@ -906,6 +922,272 @@
           real-time without the page reloading.
         </i18n-translate>
 
+        <a name="express"></a>
+        <h2>{_('5. Add ExpressJS')}</h2>
+
+        <i18n-translate p trim>
+          Temple has a separate package called
+          <ide-code inline lang="js">{`@ossph/temple-express`}</ide-code>
+          to use Express with Temple. You can install this plugin by 
+          running the following command in terminal.
+        </i18n-translate>
+
+        <ide-app title="Terminal">
+          <ide-code lang="bash">
+            npm install --save @ossph/temple-express express && npm install --save-dev @types/express
+          </ide-code>
+        </ide-app>
+
+        <i18n-translate p trim>
+          The package 
+          <ide-code inline lang="js">{`@ossph/temple-express`}</ide-code>
+          exports two plugins for express.
+          <ide-code inline lang="js">{`view()`}</ide-code> is the view 
+          engine for production (live) environments. It can be used with
+          an express app like 
+          <ide-code inline lang="js">{`app.use(view(compiler))`}</ide-code>.
+          The other export, <ide-code inline lang="js">{`dev()`}</ide-code> 
+          is the same export from the Developer Tools documentation above, 
+          but returns several tools used to integrate with express.
+        </i18n-translate>
+
+        <api-ui start="Express Developer Tools" />
+
+        <i18n-translate p trim>
+          Example logic to use the all the Temple Express tools together
+          with Temple developer tools could look like the following code
+          that cases for 
+          <ide-code inline lang="js">{`development`}</ide-code> and 
+          <ide-code inline lang="js">{`production`}</ide-code> modes.
+        </i18n-translate>
+
+        <ide-code numbers trim detab={10} lang="js">{`
+          import { view, dev } from '@ossph/temple-express';
+
+          //create temple compiler
+          const compiler = temple({ cwd: __dirname, minify: false });
+          //create express app
+          const app = express();
+          //set the view engine to temple
+          app.set('views', path.join(__dirname, 'pages'));
+          app.set('view engine', 'dtml');
+
+          //if production (live)
+          if (process.env.NODE_ENV === 'production') {
+            //let's use express' template engine feature
+            app.engine('dtml', view(compiler));
+            //...other production settings...
+          //if development mode
+          } else {
+            //get development middleware
+            const { router, view } = dev({ cwd: __dirname });
+            //use development middleware
+            app.use(router);
+            //let's use express' template engine feature
+            app.engine('dtml', view(compiler));
+          }
+        `}</ide-code>
+
+        <i18n-translate p trim>
+          And you can now case for development mode in 
+          <ide-code inline lang="js">{`src/page.dtml`}</ide-code>
+          like in the example below
+        </i18n-translate>
+
+        <ide-code numbers trim detab={10}>{`
+          <style>
+            /* ... */
+          </style>
+          <script>
+            import { env } from '@ossph/temple';
+            const { NODE_ENV } = env();
+          </script>
+          <html>
+            <head>
+              <!-- ... -->
+              <if true={NODE_ENV !== 'production'}>
+                <script src="/dev.js"></script>
+              </if>
+            </head>
+            <body>
+              <!-- ... -->
+            </body>
+          </html>
+        `}</ide-code>
+
+        <i18n-translate p trim>
+          Check to see if the project files look like the example below.
+        </i18n-translate>
+
+        <ide-app panel={410} title="With ExpressJS">
+          <div class="panel-head">
+            <div class="tabs">
+              <tui-tab class="tab active" group="express" selector="#index-ts">
+                src/index.ts
+              </tui-tab>
+              <tui-tab class="tab" group="express" selector="#page-dtml">
+                src/page.dtml
+              </tui-tab>
+              <tui-tab class="tab" group="express" selector="#package-json">
+                package.json
+              </tui-tab>
+            </div>
+          </div>
+          <div class="panel-left">
+            <h5 class="folder">
+              <i class="fas fa-fw fa-chevron-down"></i>
+              <span>src</span>
+            </h5>
+            <tui-tab class="shift-1 block active" group="express" selector="#index-ts">
+              <i class="fas fa-fw fa-file"></i>
+              index.ts
+            </tui-tab>
+            <tui-tab class="shift-1 block" group="express" selector="#page-dtml">
+              <i class="fas fa-fw fa-file"></i>
+              page.dtml
+            </tui-tab>
+            <tui-tab class="block" group="express" selector="#package-json">
+              <i class="fas fa-fw fa-file"></i>
+              package.json
+            </tui-tab>
+          </div>
+          <div class="panel-main">
+            <main>
+              <ide-code id="index-ts" lang="js" numbers trim detab={16}>{`
+                import path from 'path';
+                import express from 'express';
+                import temple, { cache } from '@ossph/temple/compiler';
+                import { view, dev } from '@ossph/temple-express';
+                import { tailwind } from '@ossph/temple-tailwind';
+
+                //create temple compiler
+                const compiler = temple();
+                //use tailwind
+                compiler.use(tailwind({
+                  darkMode: 'class',
+                  theme: { extend: {} },
+                  plugins: [],
+                  content: []
+                }));
+                //use build cache
+                compiler.use(cache({ 
+                  environment: process.env.NODE_ENV,
+                  buildPath: path.join(__dirname, '../build')
+                }));
+
+                //create express app
+                const app = express();
+                //set the view engine to temple
+                app.set('views', __dirname);
+                app.set('view engine', 'dtml');
+
+                //if production (live)
+                if (process.env.NODE_ENV === 'production') {
+                  //let's use express' template engine feature
+                  app.engine('dtml', view(compiler));
+                  //...other production settings...
+                //if development mode
+                } else {
+                  //get development middleware
+                  const { router, view } = dev({ cwd: __dirname });
+                  //use development middleware
+                  app.use(router);
+                  //let's use express' template engine feature
+                  app.engine('dtml', view(compiler));
+                }
+
+                //routes
+                app.get('/build/:build', async (req, res) => {
+                  //get filename ie. abc123.js
+                  const filename = req.params.build;
+                  //get asset
+                  const { type, content } = await compiler.asset(filename);
+                  //send response
+                  res.type(type).send(content);
+                });
+
+                app.get('/', (req, res) => {
+                  //now use the temple template engine
+                  res.render('page', { title: 'Hello World' });
+                  res.type('text/html');
+                });
+
+                //listen
+                app.listen(3000, () => {
+                  console.log('HTTP server is running on http://localhost:3000');
+                });
+              `}</ide-code>
+              <ide-code id="page-dtml" style="display:none" numbers trim detab={16}>{`
+                <style>
+                  @tailwind base;
+                  @tailwind components;
+                  @tailwind utilities;
+                </style>
+                <script>
+                  import { env, props } from '@ossph/temple';
+                  const { BUILD_ID, APP_DATA, NODE_ENV } = env();
+                  const { title } = props();
+                </script>
+                <html>
+                  <head>
+                    <title>{title}</title>
+                    <link rel="stylesheet" type="text/css" href={\`/build/\${BUILD_ID}.css\`} />
+                    <script data-app={APP_DATA} src={\`/build/\${BUILD_ID}.js\`}></script>
+                    <if true={NODE_ENV !== 'production'}>
+                      <script src="/dev.js"></script>
+                    </if>
+                  </head>
+                  <body>
+                    <h1 class="text-center">{title}</h1>
+                  </body>
+                </html>
+              `}</ide-code>
+              <ide-code id="package-json" style="display:none" lang="js" numbers trim detab={16}>{`
+                {
+                  "name": "my-project",
+                  "version": "1.0.0",
+                  "private": true,
+                  "scripts": {
+                    "dev": "ts-node ./src/index.ts"
+                  },
+                  "dependencies": {
+                    "@ossph/temple": "^0.1.3",
+                    "@ossph/temple-express": "^0.1.3",
+                    "express": "^4.19.2"
+                  },
+                  "devDependencies": {
+                    "@ossph/temple-dev": "^0.1.3",
+                    "@ossph/temple-tailwind": "^0.1.3",
+                    "@types/express": "^4.17.21",
+                    "@types/node": "^22.5.3",
+                    "autoprefixer": "^10.4.20",
+                    "postcss": "^8.4.45",
+                    "tailwindcss": "^3.4.10",
+                    "ts-node": "^10.9.2",
+                    "typescript": "^5.5.4"
+                  }
+                }
+              `}</ide-code>
+            </main>
+          </div>
+        </ide-app>
+
+        <i18n-translate p trim>
+          Re-run the following command in terminal to initialize the 
+          re-run your application using Express.
+        </i18n-translate>
+        <ide-app title="Terminal">
+          <ide-code lang="bash">
+            npx ts-node src/index.ts
+          </ide-code>
+        </ide-app>
+        <i18n-translate p trim>
+          Load 
+          <ide-code lang="js" inline>http://localhost:3000/</ide-code> 
+          in your browser. After loading you should see everything is 
+          exactly as it was, but you now benefit from using ExpressJS.
+        </i18n-translate>
+
         <h3>-- {_('Read On')} --</h3>
 
         <i18n-translate p trim>
@@ -914,11 +1196,6 @@
           official repository.
         </i18n-translate>
         <ul>
-          <li>
-            <a target="_blank" href={`${examples}/with-express`}>
-              ExpressJS
-            </a>
-          </li>
           <li>
             <a target="_blank" href={`${examples}/with-fastify`}>
               Fastify
