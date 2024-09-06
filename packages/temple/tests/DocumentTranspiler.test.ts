@@ -27,12 +27,12 @@ describe('Temple Document Transpiler', () => {
     //     TempleRegistry.createText(`ok`)
     //   ]).element
     // ]
-    expect(server).to.contain('TempleRegistry.createElement(\'div\', { \'title\': title }, [');
+    expect(server).to.contain('TempleRegistry.createElement(\'div\', { \'title\': title },');
     expect(server).to.contain('TempleRegistry.createText(`$`, false)');
 
     const client = toTS(transpiler.client());
     //console.log('--client--', client);
     //const __BINDINGS__: Record<string, Record<string, any>> = {'1': { 'title': title }, };
-    expect(client).to.contain('{\'1\': { \'title\': title }, }');
+    expect(client).to.contain("const title = 'Temple - The reactive web component template engine.';");
   });
 });

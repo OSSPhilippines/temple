@@ -220,7 +220,6 @@ export default class Transpiler {
           } else {
             expression += `TempleRegistry.createText(\`${child.value}\`, false)`;
           }
-          
         //null, true, false, number 
         } else {
           expression += `TempleRegistry.createText(String(${child.value}))`;

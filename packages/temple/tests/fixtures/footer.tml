@@ -1,0 +1,10 @@
+<link rel="import" type="component" href="./manifest.tml" />
+<style>
+  :host { display: block; }
+</style>
+<script>
+  import { props, children } from '@ossph/temple';
+  const { year, href } = props();
+  const company = children();
+</script>
+<manifest {year} {href} {company} />

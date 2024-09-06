@@ -8,7 +8,7 @@ import fs from 'fs';
 import Tokenizer from '../src/compiler/Tokenizer';
 
 describe('Temple Compiler Tokenizer', () => {
-  it('Should parse Temple Page', () => {
+  it('Should tokenize Temple Page', () => {
     const actual = Tokenizer.tokenize(
       fs.readFileSync(__dirname + '/fixtures/page.dtml', 'utf8')
     );
@@ -19,7 +19,17 @@ describe('Temple Compiler Tokenizer', () => {
     expect(actual.markup.length).to.equal(2);
   });
 
-  it('Should parse Temple App', () => {
+  it('Should tokenize No Markup', () => {
+    const actual = Tokenizer.tokenize(
+      fs.readFileSync(__dirname + '/fixtures/footer.tml', 'utf8')
+    );
+    expect(actual.components.length).to.equal(1);
+    expect(actual.scripts.length).to.equal(1);
+    expect(actual.styles.length).to.equal(1);
+    expect(actual.markup.length).to.equal(2);
+  });
+
+  it('Should tokenize Temple App', () => {
     const actual = Tokenizer.tokenize(
       fs.readFileSync(__dirname + '/fixtures/app.tml', 'utf8')
     );
@@ -30,7 +40,7 @@ describe('Temple Compiler Tokenizer', () => {
     expect(actual.markup.length).to.equal(8);
   });
 
-  it('Should parse link (inline) to style (block) issue', () => {
+  it('Should tokenize link (inline) to style (block) issue', () => {
     const actual = Tokenizer.tokenize(
       fs.readFileSync(__dirname + '/fixtures/components/header.tml', 'utf8')
     );
@@ -41,7 +51,7 @@ describe('Temple Compiler Tokenizer', () => {
     expect(actual.markup.length).to.equal(2);
   });
 
-  it('Should parse $', () => {
+  it('Should tokenize $', () => {
     const actual = Tokenizer.tokenize('<div><span>$</span>ok</div>');
     const markup = actual.markup[0].children?.[0] as MarkupToken;
     const literal = markup.children?.[0] as LiteralToken;

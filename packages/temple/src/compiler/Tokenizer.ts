@@ -232,6 +232,27 @@ export default class Tokenizer {
         this._addTextToChildren(this._markup, last.end, tag.start);
       }
     //there are no markup tokens
+    //check history
+    } else if (this._history.length > 0) {
+      //find the gap between the last markup token and the self closing tag
+      const last = this._history[this._history.length - 1];
+      //get the end index
+      let end = last.end;
+      //if the last type is a script
+      if (last.type === 'ProgramExpression') {
+        //type update
+        const script = last as ScriptToken;
+        //} is not included
+        //</script> is not included
+        end += script.inline ? 1: 9;
+      //if the last type is a style
+      } else if (last.type === 'StyleExpression') {
+        //</style> is not included
+        end += 8;
+      }
+      if (last.end < tag.start) {
+        this._addTextToChildren(this._markup, end, tag.start);
+      }
     //if there is a gap between the start and the self closing tag
     } else if (tag.start > 0) {
       //add it as a text node
