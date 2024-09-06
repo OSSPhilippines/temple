@@ -1,6 +1,6 @@
 //types
 import type { ProjectOptions } from 'ts-morph';
-import type { MarkupToken, MarkupChildToken } from '../types';
+import type { MarkupToken, MarkupChildToken, ObjectToken } from '../types';
 import type DirectiveInterface from '../directives/DirectiveInterface';
 import type Component from './Component';
 //file systems
@@ -235,6 +235,46 @@ export default class Transpiler {
   /**
    * Generates the markup for a standard element
    */
+  protected _markupAttributes(attributes: ObjectToken) {
+    return attributes.properties.map(property => {
+      if (property.value.type === 'Literal') {
+        if (typeof property.value.value === 'string') {
+          return `'${property.key.name}': \`${property.value.value}\``;
+        }
+        //null, true, false, number 
+        return `'${property.key.name}': ${property.value.value}`;
+      } else if (property.value.type === 'ObjectExpression') {
+        return `'${property.key.name}': ${
+          JSON.stringify(Parser.object(property.value))
+            .replace(/"([a-zA-Z0-9_]+)":/g, "$1:")
+            .replace(/"\${([a-zA-Z0-9_]+)}"/g, "$1")
+        }`;
+      } else if (property.value.type === 'ArrayExpression') {
+        return `'${property.key.name}': ${
+          JSON.stringify(Parser.array(property.value))
+            .replace(/"([a-zA-Z0-9_]+)":/g, "$1:")
+            .replace(/"\${([a-zA-Z0-9_]+)}"/g, "$1")
+        }`;
+      } else if (property.value.type === 'Identifier') {
+        if (property.spread) {
+          return `...${property.value.name}`;
+        }
+        return `'${property.key.name}': ${
+          property.value.name
+        }`;
+      } else if (property.value.type === 'ProgramExpression') {
+        return `'${property.key.name}': ${
+          property.value.source
+        }`;
+      }
+
+      return false;
+    }).filter(Boolean).join(', ');
+  }
+
+  /**
+   * Generates the markup for a standard element
+   */
   protected _markupElement(
     expression: string, 
     parent: MarkupToken|null,
@@ -273,40 +313,7 @@ export default class Transpiler {
     }
     
     if (token.attributes && token.attributes.properties.length > 0) {
-      expression += ' ' + token.attributes.properties.map(property => {
-        if (property.value.type === 'Literal') {
-          if (typeof property.value.value === 'string') {
-            return `'${property.key.name}': \`${property.value.value}\``;
-          }
-          //null, true, false, number 
-          return `'${property.key.name}': ${property.value.value}`;
-        } else if (property.value.type === 'ObjectExpression') {
-          return `'${property.key.name}': ${
-            JSON.stringify(Parser.object(property.value))
-              .replace(/"([a-zA-Z0-9_]+)":/g, "$1:")
-              .replace(/"\${([a-zA-Z0-9_]+)}"/g, "$1")
-          }`;
-        } else if (property.value.type === 'ArrayExpression') {
-          return `'${property.key.name}': ${
-            JSON.stringify(Parser.array(property.value))
-              .replace(/"([a-zA-Z0-9_]+)":/g, "$1:")
-              .replace(/"\${([a-zA-Z0-9_]+)}"/g, "$1")
-          }`;
-        } else if (property.value.type === 'Identifier') {
-          if (property.spread) {
-            return `...${property.value.name}`;
-          }
-          return `'${property.key.name}': ${
-            property.value.name
-          }`;
-        } else if (property.value.type === 'ProgramExpression') {
-          return `'${property.key.name}': ${
-            property.value.source
-          }`;
-        }
-
-        return false;
-      }).filter(Boolean).join(', ');
+      expression += ' ' + this._markupAttributes(token.attributes);
     }
     if (token.kind === 'inline') {
       expression += ' }).element';

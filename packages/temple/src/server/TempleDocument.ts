@@ -20,12 +20,23 @@ export default abstract class TempleDocument {
   public abstract template(): TempleElement[];
 
   /**
+   * Returns the document bindings for client
+   */
+  public bindings() {
+    const registry = TempleRegistry.registry(this.template());
+    const bindings = Array.from(registry.values()).map((element, id) => {
+      return element.props !== '{ }' ? `'${id}': ${element.props}`: '';
+    }).filter(binding => binding !== '').join(', ');
+    return `{ ${bindings} }`;
+  }
+
+  /**
    * Renders the redered document without injections
    */
   public render(props: Record<string, any> = {}) {
     //set server props (this is so template() can read it using props())
     data.set('props', props || {});
-    //set environment variables
+    //set environment variables (this is so template() can read it using env())
     data.set('env', {
       ...(process.env || {}),
       BUILD_ID: this.id(),
@@ -49,7 +60,7 @@ export default abstract class TempleDocument {
     //so there's no need to case for it...
 
     //this is the <html> tag
-    let document = TempleElement.render(children).trim();
+    let document = TempleRegistry.render(children).trim();
     //check if the root element is an <html> tag
     if (!document.toLowerCase().startsWith('<html')) {
       throw Exception.for('Document must start with an <html> tag.');

@@ -195,6 +195,7 @@ export function esWorkspacePlugin() {
 
 export function esTemplePlugin(options: TemplePluginOptions = {}) {
   const { 
+    bindings = '{}',
     tsconfig,
     cwd = process.cwd(), 
     fs = new FileSystem(),
@@ -268,7 +269,7 @@ export function esTemplePlugin(options: TemplePluginOptions = {}) {
         });
         const transpiler = new DocumentTranspiler(document, tsconfig);
         return {
-          contents: toTS(transpiler.client()),
+          contents: toTS(transpiler.client(bindings)),
           loader: 'ts'
         };
       });

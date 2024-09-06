@@ -4,6 +4,13 @@ export default class TempleCollection {
   protected _elements = new Set<Node>();
 
   /**
+   * Returns the length of the collection
+   */
+  public get length() {
+    return this._elements.size;
+  }
+
+  /**
    * Creates a new TempleCollection instance
    */
   public constructor(elements: Node[] = []) {

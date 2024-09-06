@@ -284,6 +284,7 @@ export type ComponentPluginOptions = FileOptions & {
 export type DocumentPluginOptions = ComponentPluginOptions;
 
 export type TemplePluginOptions = FileOptions & {
+  bindings?: string,
   brand?: string,
   mode?: 'client'|'server',
   tsconfig?: string,

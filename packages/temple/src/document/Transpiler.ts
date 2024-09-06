@@ -1,11 +1,10 @@
 //types
-import type { MarkupToken, MarkupChildToken } from '../types';
+import type { MarkupToken } from '../types';
 import type Component from '../compiler/Component';
 //file systems
 import path from 'path';
 //parsers
 import { VariableDeclarationKind } from 'ts-morph';
-import Parser from '../compiler/Parser';
 import ComponentTranspiler from '../compiler/Transpiler';
 
 export default class Transpiler extends ComponentTranspiler {
@@ -99,9 +98,11 @@ export default class Transpiler extends ComponentTranspiler {
   /**
    * Returns a client script to be passed into the transpiled
    * render(client, props) method generated in transpile()
+   * 
+   * Primarily used by esTemplePlugin which calls builder.client()
    */
-  public client() {
-    const { imports, scripts, ast } = this._component;
+  public client(bindings = '{}') {
+    const { imports, scripts } = this._component;
     //only components (vs templates)
     const components = this._component.components.filter(
       component => component.type === 'component'
@@ -194,12 +195,7 @@ export default class Transpiler extends ComponentTranspiler {
       //now serialize the props
       //this is predicting the order rendered on the server
       //with the order determined by doc.body.querySelectorAll
-      const __BINDINGS__: Record<string, Record<string, any>> = ${
-        this._bindings(
-          ast.markup, 
-          this._component.components
-        )
-      };
+      const __BINDINGS__: Record<string, Record<string, any>> = ${bindings};
       //loop through the initial elements before js manipulation
       for (const element of document.body.querySelectorAll('*')) {
         //pull the attributes from the rendered HTML
@@ -279,120 +275,6 @@ export default class Transpiler extends ComponentTranspiler {
   }
 
   /**
-   * Collect all the identifiers in markup so we know
-   * what to pass in window.__BINDINGS__
-   * object. We also need to get the component ids in order
-   * of discovered.
-   */
-  protected _bindings(
-    markup: MarkupChildToken[], 
-    components: Component[],
-    level = 0,
-    total = { current: 0 }
-  ) {
-    const attributes = markup.map(token => {
-      let expression = '';
-      if (token.type !== 'MarkupExpression') {
-        return expression;
-      } else if (token.name === 'if' || token.name === 'each') {
-        if (token.children) {
-          expression += this._bindings(
-            token.children, 
-            components, 
-            level + 1, 
-            total
-          );
-        }
-        return expression;
-      //ignore head tags
-      } else if (token.name === 'head') {
-        return expression;
-      //ignore body tag
-      } else if (token.name === 'html' || token.name === 'body') {
-        //but if it has children, we need to bind them
-        if (token.children) {
-          expression += this._bindings(
-            token.children, 
-            components, 
-            level + 1, 
-            total
-          );
-        }
-        return expression;
-      }
-      //check to see if the token refers to
-      //a component imported by this file
-      const child = components.find(
-        component => component.tagname === token.name
-      );
-      //we only hydrate elements and components
-      if (child && child.type === 'template') {
-        expression += this._bindings(
-          child.ast.markup, 
-          components, 
-          level + 1, 
-          total
-        );
-        return expression;
-      }
-      const id = total.current++;
-      if (token.attributes && token.attributes.properties.length > 0) {
-        expression += `'${id}': {`;
-        expression += ' ' + token.attributes.properties.map(property => {
-          if (property.value.type === 'Literal') {
-            if (typeof property.value.value === 'string') {
-              return `'${property.key.name}': \`${property.value.value}\``;
-            }
-            //null, true, false, number 
-            return `'${property.key.name}': ${property.value.value}`;
-          } else if (property.value.type === 'ObjectExpression') {
-            return `'${property.key.name}': ${
-              JSON.stringify(Parser.object(property.value))
-                .replace(/"([a-zA-Z0-9_]+)":/g, "$1:")
-                .replace(/"\${([a-zA-Z0-9_]+)}"/g, "$1")
-            }`;
-          } else if (property.value.type === 'ArrayExpression') {
-            return `'${property.key.name}': ${
-              JSON.stringify(Parser.array(property.value))
-                .replace(/"([a-zA-Z0-9_]+)":/g, "$1:")
-                .replace(/"\${([a-zA-Z0-9_]+)}"/g, "$1")
-            }`;
-          } else if (property.value.type === 'Identifier') {
-            if (property.spread) {
-              return `...${property.value.name}`;
-            }
-            return `'${property.key.name}': ${
-              property.value.name
-            }`;
-          } else if (property.value.type === 'ProgramExpression') {
-            return `'${property.key.name}': ${
-              property.value.source
-            }`;
-          }
-  
-          return false;
-        }).filter(Boolean).join(', ');
-        expression += ' }, ';
-      }
-      if (token.children) {
-        expression += this._bindings(
-          token.children, 
-          components, 
-          level + 1, 
-          total
-        );
-      }
-      return expression;
-    }).filter(Boolean).join('');
-
-    if (level === 0) {
-      return `{${attributes}}`;
-    }
-
-    return attributes;
-  }
-
-  /**
    * Generates the markup for a standard element
    */
   protected _markupElement(
@@ -454,45 +336,19 @@ export default class Transpiler extends ComponentTranspiler {
     }
     
     if (token.attributes && token.attributes.properties.length > 0) {
-      expression += ' ' + token.attributes.properties.map(property => {
-        if (property.value.type === 'Literal') {
-          if (typeof property.value.value === 'string') {
-            return `'${property.key.name}': \`${property.value.value}\``;
-          }
-          //null, true, false, number 
-          return `'${property.key.name}': ${property.value.value}`;
-        } else if (property.value.type === 'ObjectExpression') {
-          return `'${property.key.name}': ${
-            JSON.stringify(Parser.object(property.value))
-              .replace(/"([a-zA-Z0-9_]+)":/g, "$1:")
-              .replace(/"\${([a-zA-Z0-9_]+)}"/g, "$1")
-          }`;
-        } else if (property.value.type === 'ArrayExpression') {
-          return `'${property.key.name}': ${
-            JSON.stringify(Parser.array(property.value))
-              .replace(/"([a-zA-Z0-9_]+)":/g, "$1:")
-              .replace(/"\${([a-zA-Z0-9_]+)}"/g, "$1")
-          }`;
-        } else if (property.value.type === 'Identifier') {
-          if (property.spread) {
-            return `...${property.value.name}`;
-          }
-          return `'${property.key.name}': ${
-            property.value.name
-          }`;
-        } else if (property.value.type === 'ProgramExpression') {
-          return `'${property.key.name}': ${
-            property.value.source
-          }`;
-        }
-
-        return false;
-      }).filter(Boolean).join(', ');
+      expression += ' ' + this._markupAttributes(token.attributes);
     }
+
+    expression += ' }, \'{';
+
+    if (token.attributes && token.attributes.properties.length > 0) {
+      expression += ' ' + this._markupAttributes(token.attributes).replace(/'/g, '\\\'');
+    }
+
     if (token.kind === 'inline') {
-      expression += ' })';
+      expression += ' }\')';
     } else {
-      expression += ' }, ';
+      expression += ' }\', ';
       if (token.children) {
         expression += this._markup(token, token.children, components);
       }

@@ -7,29 +7,14 @@ const selfClosingTags = [
 ];
 
 export default class TempleElement {
-  /**
-   * Converts the markup to HTML
-   */
-  public static render(markup: Node[]) {
-    return markup
-      .filter(Boolean)
-      .map(child => child.toString())
-      .join('');
-  }
-
   //name of the element <div>
   protected _name: string;
   //attributes of the element <div id="app">
   protected _attributes: Record<string, any> = {};
+  //string props of the element used to bind data to the client
+  protected _props: string;
   //children of the element <div><p></p></div>
   protected _children: TempleCollection;
-
-  /**
-   * Returns the name of the element
-   */
-  public get name() {
-    return this._name;
-  }
 
   /**
    * Returns the attributes of the element
@@ -46,15 +31,31 @@ export default class TempleElement {
   }
 
   /**
+   * Returns the name of the element
+   */
+  public get name() {
+    return this._name;
+  }
+
+  /**
+   * Returns the props of the element
+   */
+  public get props() {
+    return this._props;
+  }
+
+  /**
    * Creates a new TempleElement instance
    */
   public constructor(
     name: string, 
     attributes: Record<string, any> = {},
+    props = '',
     children: Node[] = []
   ) {
     this._name = name;
     this._attributes = attributes;
+    this._props = props;
     this._children = new TempleCollection(children);
   }
 

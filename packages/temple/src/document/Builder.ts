@@ -132,6 +132,10 @@ export default class Builder {
    * Returns the client js
    */
   public async client() {
+    //we need to rebuild the server document
+    const { document } = await this.build();
+    //in order to get the bindings
+    const bindings = document.bindings();
     //emit build-client event
     const pre = await this._emitter.waitFor<string>('build-client', { 
       builder: this 
@@ -146,6 +150,7 @@ export default class Builder {
         globalName: 'TempleAPI',
         plugins: [ 
           esTemplePlugin({
+            bindings,
             mode: 'client',
             brand: this._document.brand,
             cwd: this._document.cwd,
