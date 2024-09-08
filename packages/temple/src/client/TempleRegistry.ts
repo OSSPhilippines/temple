@@ -54,34 +54,12 @@ export default class TempleRegistry {
     component.constructor = definition.constructor;
     //@ts-ignore set the component names
     component.constructor.component = definition.component;
-    //set attributes
-    for (const [ key, value ] of Object.entries(attributes)) {
-      if (typeof value === 'string') {
-        component.setAttribute(key, value);
-      } else if (value === true) {
-        component.setAttribute(key, key);
-      }
-    }
-    //@ts-ignore - if the component is registered via 
-    //customElements.define() then it will instantiate a new component 
-    //and not use the one we created here. We need a way map this 
-    //component with the one instantiated by customElements. 
-    component._TempleAttributes = attributes;
-    //also set props normally...
-    component.props = attributes;
     //append children (the original children)
     children.forEach(child => component.appendChild(child));
-    //normally an instantiated component would self register,
-    //but since we manually instantiated it to produce web component
-    //encapsulation, we need to manually register this component as well
-    component.register();
-    //if the component is not registered, then we need to manually
-    //connect the component
-    if (!customElements.get(tagname)) {
-      component.connectedCallback();
-    }
-    //last manually register the element
-    return this.register(component, attributes);
+    //not call the magic constructor
+    component.register(attributes);
+    //return the element
+    return component.element;
   }
 
   /**

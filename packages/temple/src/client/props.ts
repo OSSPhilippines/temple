@@ -1,4 +1,5 @@
 import type TempleComponent from './TempleComponent';
+import getComponent from './component';
 import data from './data';
 
 /**
@@ -8,18 +9,10 @@ import data from './data';
  */
 export default function props<
   T = Record<string, any>
->(component: TempleComponent|'document'|null = null) {
-  //if no component
-  if (!component) {
-    //try getting the current component from global
-    component = data.get('current') || null;
+>(pointer: TempleComponent|'document'|null = null) {
+  const component = getComponent(pointer, true);
+  if (typeof component === 'string') {
+    return data.get('props') || {};
   }
-
-  if (component) {
-    if (component === 'document') {
-      return data.get('props') || {};
-    }
-    return component.props as T;
-  }
-  return {} as T;
+  return component ? component.props as T : {} as T;
 }

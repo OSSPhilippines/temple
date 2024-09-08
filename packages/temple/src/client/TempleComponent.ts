@@ -1,5 +1,7 @@
 import type { Hash } from '../types';
+import type TempleElement from './TempleElement';
 
+import TempleException from '../Exception';
 import TempleRegistry from './TempleRegistry';
 import emitter from './TempleEmitter';
 import __APP_DATA__ from './data';
@@ -29,10 +31,6 @@ export default abstract class TempleComponent extends HTMLElement {
   //the callback to render just the children 
   //(wo initializing the variables again)
   protected _template: (() => (Element|false)[])|null = null;
-  //the initial attributes (string and true values)
-  protected _attributes: Record<string, string|true> = {};
-  //the initial props (all values)
-  protected _props: Hash = {};
   //the initial children
   protected _children: ChildNode[]|undefined = undefined;
   //prevents rendering loops
@@ -49,25 +47,26 @@ export default abstract class TempleComponent extends HTMLElement {
   public abstract template(): () => (Element|false)[];
 
   /**
-   * Returns the component attributes
+   * Returns the component native attributes in native object form
    */
   public get attr() {
-    return this._attributes;
+    return Object.fromEntries(
+      Array.from(this.attributes).map(
+        attr => [attr.name, attr.value]
+      )
+    );
   }
 
   /**
    * Returns the component's element registry
    */
-  public get element() {
+  public get element(): TempleElement {
+    //check to see if the registry has this component
     if (!TempleRegistry.has(this)) {
-      //@ts-ignore - This constructor is called when the component is 
-      //registered via customElements.define() and technically a new 
-      //instance from the virtual instantiation made in 
-      //TempleRegistry.createComponent(). We need a way map this component 
-      //with the virtually created in TempleRegistry.createComponent().
-      return TempleRegistry.register(this, this._TempleAttributes || {});
+      //it should have...
+      throw TempleException.for('Component not mapped.');
     }
-    return TempleRegistry.get(this);
+    return TempleRegistry.get(this) as TempleElement;
   }
 
   /**
@@ -99,21 +98,28 @@ export default abstract class TempleComponent extends HTMLElement {
    * Returns the component properties
    */
   public get props() {
-    return this._props;
+    return this.getAttributes();
   }
 
   /**
    * Sets the component properties
    */
   public set props(props: Hash) {
-    //shallow copy the props
-    this._props = Object.assign({}, props);
-    //only set the attributes that are strings or true
-    this._attributes = Object.fromEntries(
-      Object.entries(props).filter(
-        entry => typeof entry[1] === 'string' || entry[1] === true
-      )
-    );
+    this.setAttributes(props);
+  }
+
+  /**
+   * Constructor can only be called by native custom elements.
+   * Theoretically, this means that the server should have
+   * registered its attributes to TempleRegistry before hand.
+   */
+  public constructor() {
+    super();
+    //check to see if the registry has this component
+    if (!TempleRegistry.has(this)) {
+      //it should have...
+      throw TempleException.for('Component not mapped.');
+    }
   }
 
   /**
@@ -153,6 +159,20 @@ export default abstract class TempleComponent extends HTMLElement {
   }
 
   /**
+   * Returns the attribute value
+   */
+  public getAttribute(name: string) {
+    return this.element.getAttribute(name);
+  }
+
+  /**
+   * Returns the all the attributes
+   */
+  public getAttributes() {
+    return Object.assign({}, this.element.attributes);
+  }
+
+  /**
    * Returns the parent component (if any)
    */
   public getParentComponent() {
@@ -167,10 +187,52 @@ export default abstract class TempleComponent extends HTMLElement {
   }
 
   /**
-   * Registers this component to the global registry and caches the element
+   * Returns whether the attribute exists
    */
-  public register() {
-    TempleRegistry.register(this, this._props);
+  public hasAttribute(name: string) {
+    return this.element.hasAttribute(name);
+  }
+
+  /**
+   * This is used in TempleRegistry.createComponent() to
+   * create a monkey instance of the component. This is
+   * used components that are used by other components,
+   * but not registered in custom elements.
+   */
+  public register(attributes: Hash) {
+    //check to see if the registry already has this component
+    if (TempleRegistry.has(this)) {
+      //NOTE: this technically should not be possible...
+      const element = TempleRegistry.get(this) as TempleElement;
+      element.setAttributes(attributes);
+    } else {
+      //it is not registered, so register it
+      TempleRegistry.register(this, attributes) 
+    }
+    //set attributes natively so it shows 
+    //up in the markup when it's rendered
+    for (const [ key, value ] of Object.entries(attributes)) {
+      if (typeof value === 'string') {
+        super.setAttribute(key, value);
+      } else if (value === true) {
+        super.setAttribute(key, key);
+      }
+    }
+    //since this is a monkey instance, then we
+    //need to manually connect the component
+    this.connectedCallback();
+  }
+
+  /**
+   * Removes the attribute
+   */
+  public removeAttribute(name: string) {
+    if (this.hasAttribute(name)) {
+      this.element.removeAttribute(name);
+    }
+    if (super.hasAttribute(name)) {
+      super.removeAttribute(name);
+    }
   }
 
   /**
@@ -238,12 +300,31 @@ export default abstract class TempleComponent extends HTMLElement {
     } else {
       __APP_DATA__.delete('current');
     }
-    this._initiated = true;
+
     //emit the mounted event
     emitter.emit('mounted', this);
+    //set the initiated flag
+    this._initiated = true;
     //reset the rendering flag
     this._rendering = false;
     return this.shadowRoot ? this.shadowRoot.innerHTML :this.innerHTML;
+  }
+
+  /**
+   * Sets the attribute
+   */
+  public setAttribute(name: string, value: any) {
+    this.element.setAttribute(name, value);
+    if (typeof value === 'string' || value === true) {
+      super.setAttribute(name, value);
+    }
+  }
+
+  /**
+   * Sets all the attributes
+   */
+  public setAttributes(attributes: Hash) {
+    this.element.setAttributes(attributes);
   }
 
   /**
