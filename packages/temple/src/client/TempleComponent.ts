@@ -1,4 +1,5 @@
 import type { Hash } from '../types';
+//import type { TempleBrowserEvent } from '../types';
 import type TempleElement from './TempleElement';
 
 import TempleException from '../Exception';
@@ -35,6 +36,10 @@ export default abstract class TempleComponent extends HTMLElement {
   protected _children: ChildNode[]|undefined = undefined;
   //prevents rendering loops
   protected _rendering = false;
+  //attribute observer
+  protected _observer: MutationObserver|null = null;
+  //whether if this is a virtual component
+  protected _virtual = false;
 
   /**
    * Returns the component styles
@@ -102,6 +107,13 @@ export default abstract class TempleComponent extends HTMLElement {
   }
 
   /**
+   * Returns whether the component is a virtual component
+   */
+  public get virtual() {
+    return this._virtual;
+  }
+
+  /**
    * Sets the component properties
    */
   public set props(props: Hash) {
@@ -127,20 +139,8 @@ export default abstract class TempleComponent extends HTMLElement {
    */
   public adoptedCallback() {
     this.render();
-  }
-
-  /**
-   * Called when an attribute is added, removed, updated, or replaced
-   * but you need to set observedAttributes first.
-   * ie. static observedAttributes = ["color", "size"]; 
-   */
-  public attributeChangedCallback(
-    name: string, 
-    previous: string, 
-    value: string
-  ) {
-    this.props = { ...this.props, [name]: value };
-    this.render();
+    //emit the adopt event
+    emitter.emit('adopt', this);
   }
 
   /**
@@ -149,13 +149,16 @@ export default abstract class TempleComponent extends HTMLElement {
   public connectedCallback() {
     //attributes are ready here
     this.wait();
+    //emit the connect event
+    emitter.emit('connect', this);
   }
 
   /**
    * Called when the element is removed from a document
    */
   public disconnectedCallback() {
-    //remove listeners here
+    //emit the disconnect event
+    emitter.emit('disconnect', this);
   }
 
   /**
@@ -195,11 +198,11 @@ export default abstract class TempleComponent extends HTMLElement {
 
   /**
    * This is used in TempleRegistry.createComponent() to
-   * create a monkey instance of the component. This is
+   * create a virtual instance of the component. This is
    * used components that are used by other components,
    * but not registered in custom elements.
    */
-  public register(attributes: Hash) {
+  public register(attributes: Hash = {}, children: Element[] = []) {
     //check to see if the registry already has this component
     if (TempleRegistry.has(this)) {
       //NOTE: this technically should not be possible...
@@ -218,8 +221,16 @@ export default abstract class TempleComponent extends HTMLElement {
         super.setAttribute(key, key);
       }
     }
-    //since this is a monkey instance, then we
-    //need to manually connect the component
+    //set the original children
+    this._children = children;
+    //this is a virtual component
+    //virtual components suffer from :not(:defined) selectors
+    //because they are not registered in custom elements
+    //NOTE: this doesnt have a particular purpose right now
+    // but will be used to troubleshooting in the future
+    this._virtual = true;
+    //also virtual components do not auto render so
+    //we need to manually connect in order to do that
     this.connectedCallback();
   }
 
@@ -301,12 +312,12 @@ export default abstract class TempleComponent extends HTMLElement {
       __APP_DATA__.delete('current');
     }
 
-    //emit the mounted event
-    emitter.emit('mounted', this);
     //set the initiated flag
     this._initiated = true;
     //reset the rendering flag
     this._rendering = false;
+    //emit the mounted event
+    emitter.emit('mounted', this);
     return this.shadowRoot ? this.shadowRoot.innerHTML :this.innerHTML;
   }
 
@@ -368,12 +379,6 @@ export default abstract class TempleComponent extends HTMLElement {
     //if children are not set
     if (typeof this._children === 'undefined') {
       this._children = Array.from(this.childNodes || []);
-    }
-    //settings props will try to trigger a render
-    const element = this.element;
-    if (element) {
-      this.props = Object.assign({}, element.attributes);
-      this.render();
     }
     //only render if not initiated
     if (!this._initiated) {

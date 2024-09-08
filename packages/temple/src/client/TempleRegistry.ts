@@ -54,10 +54,8 @@ export default class TempleRegistry {
     component.constructor = definition.constructor;
     //@ts-ignore set the component names
     component.constructor.component = definition.component;
-    //append children (the original children)
-    children.forEach(child => component.appendChild(child));
     //not call the magic constructor
-    component.register(attributes);
+    component.register(attributes, children);
     //return the element
     return component.element;
   }
