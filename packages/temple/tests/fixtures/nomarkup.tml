@@ -1,0 +1,4 @@
+<script>
+  import { children } from '@ossph/temple';
+</script>
+{children()}

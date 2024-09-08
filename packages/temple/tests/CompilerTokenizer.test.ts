@@ -16,17 +16,27 @@ describe('Temple Compiler Tokenizer', () => {
     expect(actual.components.length).to.equal(1);
     expect(actual.scripts.length).to.equal(1);
     expect(actual.styles.length).to.equal(1);
-    expect(actual.markup.length).to.equal(2);
+    expect(actual.markup.length).to.equal(3);
   });
 
   it('Should tokenize No Markup', () => {
     const actual = Tokenizer.tokenize(
       fs.readFileSync(__dirname + '/fixtures/footer.tml', 'utf8')
     );
+    //console.log(JSON.stringify(actual, null, 2));
     expect(actual.components.length).to.equal(1);
     expect(actual.scripts.length).to.equal(1);
     expect(actual.styles.length).to.equal(1);
     expect(actual.markup.length).to.equal(2);
+
+    const actual2 = Tokenizer.tokenize(
+      fs.readFileSync(__dirname + '/fixtures/nomarkup.tml', 'utf8')
+    );
+    //console.log(JSON.stringify(actual2, null, 2));
+    expect(actual2.components.length).to.equal(0);
+    expect(actual2.scripts.length).to.equal(1);
+    expect(actual2.styles.length).to.equal(0);
+    expect(actual2.markup.length).to.equal(2);
   });
 
   it('Should tokenize Temple App', () => {
