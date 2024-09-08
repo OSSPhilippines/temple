@@ -8,6 +8,8 @@ export default class TempleElement {
   protected _element: Element;
   //the html element attributes (with any value)
   protected _attributes: Record<string, any>;
+  //map of events listening to
+  protected _events = new Set<string>();
 
   /**
    * Returns the attributes of the element
@@ -24,11 +26,33 @@ export default class TempleElement {
   }
 
   /**
+   * Returns the listeners
+   */
+  public get events() {
+    return this._events;
+  }
+
+  /**
    * Creates the HTML element
    */
   public constructor(element: Element, attributes: Record<string, any>) {
     this._element = element;
     this._attributes = attributes;
+  }
+
+  /**
+   * Adds an event this is listening to
+   */
+  public addEvent(event: string) {
+    this._events.add(event);
+    return this;
+  }
+
+  /**
+   * Returns the attribute value
+   */
+  public getAttribute<T = any>(key: string) {
+    return this._attributes[key] as T;
   }
 
   /**
@@ -39,10 +63,10 @@ export default class TempleElement {
   }
 
   /**
-   * Returns the attribute value
+   * Returns true if the listener exists
    */
-  public getAttribute<T = any>(key: string) {
-    return this._attributes[key] as T;
+  public hasEvent(event: string) {
+    return this._events.has(event);
   }
 
   /**
