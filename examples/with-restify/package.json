@@ -7,7 +7,7 @@
     "dev": "ts-node src/index.ts"
   },
   "dependencies": {
-    "@ossph/temple": "0.1.5",
+    "@ossph/temple": "0.1.6",
     "restify": "11.1.0",
     "restify-router": "0.6.2"
   },

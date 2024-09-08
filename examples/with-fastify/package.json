@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@fastify/static": "7.0.4",
-    "@ossph/temple": "0.1.5",
+    "@ossph/temple": "0.1.6",
     "fastify": "4.27.0"
   },
   "devDependencies": {
