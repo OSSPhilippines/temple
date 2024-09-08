@@ -107,6 +107,39 @@ export default class Tokenizer {
           break;
       }
     }
+
+    if (this._stack.length > 0) {
+      const open = this._stack[this._stack.length - 1];
+      throw Exception.for(
+        'Could not find closing tag for <%s>', 
+        open.type === 'ProgramExpression' ? 'script'
+        : open.type === 'StyleExpression' ? 'style'
+        : open.name || '??'
+      ).withPosition(open.start, open.end);
+    }
+
+    //there could be some text after the last tag
+    if (this._history.length > 0) {
+      //find the gap between the last markup token and the code length
+      const last = this._history[this._history.length - 1];
+      //get the end index
+      let end = last.end;
+      //if the last type is a script
+      if (last.type === 'ProgramExpression') {
+        //type update
+        const script = last as ScriptToken;
+        //} is not included
+        //</script> is not included
+        end += script.inline ? 1: 9;
+      //if the last type is a style
+      } else if (last.type === 'StyleExpression') {
+        //</style> is not included
+        end += 8;
+      }
+      if (last.end < this._code.length) {
+        this._addTextToChildren(this._markup, end, this._code.length);
+      }
+    }
     return {
       imports: this._imports,
       components: this._components,
