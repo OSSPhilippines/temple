@@ -1,7 +1,8 @@
 import type { SignalProps, SignalObserver } from '../types';
 import type TempleComponent from './TempleComponent';
+
+import getComponent from './component';
 import Exception from '../Exception';
-import data from './data';
 
 /**
  * Signal registry
@@ -18,9 +19,13 @@ export class SignalRegistry {
       getter: () => property.raw as T,
       setter: (value: T) => value
     };
+    const listeners = new Set<(value: T) => void>();
     //make a new payload
     const property = { 
       raw: value,
+      change(callback: (value: T) => void) {
+        listeners.add(callback);
+      },
       getter(callback: () => T) {
         methods.getter = callback;
         return property;
@@ -41,6 +46,9 @@ export class SignalRegistry {
           !== SignalRegistry.serialize(property.raw);
         property.raw = formatted;
         if (rerender) {
+          //notify listeners
+          listeners.forEach(listener => listener(formatted));
+          //now re-render the component
           component.render();
         }
       }
@@ -86,18 +94,9 @@ export class SignalRegistry {
  */
 export default function signal<T = any>(
   value: T,
-  component: TempleComponent|null = null
+  pointer: TempleComponent|null = null
 ) {
-  if (!component) {
-    //try getting the current component from global
-    component = data.get('current') || null;
-  }
-  //if still no current component
-  if (!component) {
-    throw Exception.for(
-      'Signals can only be created within a Temple component'
-    );
-  }
+  const component = getComponent(pointer) as TempleComponent;
   //if component is not initiated
   if (!component.initiated) {
     //then add value to observer
@@ -113,7 +112,7 @@ export default function signal<T = any>(
   //for a component that has initiated, but we should
   //still case for it...
   if (!observer) {
-    throw Exception.for('State mismatch');
+    throw Exception.for('Signal state mismatch');
   }
   //get the property...
   //we are relying on JS single threaded nature to figure out 
