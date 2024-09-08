@@ -212,6 +212,48 @@ export default (() => {
     }
   });
 
+  //ex. <div connect=callback>Hello World</div>
+  bindAttribute('connect', element => {
+    const callback = element.getAttribute('connect');
+    if (typeof callback === 'function' ) {
+      const event = new CustomEvent('connect', { 
+        detail: {
+          node: element,
+          target: element.element
+        }
+      });
+      callback(event);
+    }
+  });
+
+  //ex. <div disconnect=callback>Hello World</div>
+  bindAttribute('disconnect', element => {
+    const callback = element.getAttribute('disconnect');
+    if (typeof callback === 'function' ) {
+      const event = new CustomEvent('disconnect', { 
+        detail: {
+          node: element,
+          target: element.element
+        }
+      });
+      callback(event);
+    }
+  });
+
+  //ex. <div adopt=callback>Hello World</div>
+  bindAttribute('adopt', element => {
+    const callback = element.getAttribute('adopt');
+    if (typeof callback === 'function' ) {
+      const event = new CustomEvent('adopt', { 
+        detail: {
+          node: element,
+          target: element.element
+        }
+      });
+      callback(event);
+    }
+  });
+
   //ex. <div if={count > 0}>Hello World</div>
   bindAttribute('if', element => {
     const condition = element.getAttribute('if');
