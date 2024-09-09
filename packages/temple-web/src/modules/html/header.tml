@@ -1,0 +1,44 @@
+<menu class="flex flex-center-y px-20 py-15 m-0 bg-t-1">
+  <if true={url !== '/temple/index.html'}>
+    <i 
+      class="fas fa-fw fa-bars cursor-pointer py-5 pr-10 none md-inline-block tx-t-1" 
+      click=toggle
+    ></i>
+    <div class="flex-grow"></div>
+  <else />
+    <a href="/temple">
+      <img 
+        alt="Temple Logo" 
+        class="h-26 mr-10" 
+        src="/temple/temple-icon.png" 
+      />
+    </a>
+    <h3 class="flex-grow tx-uppercase">
+      <a class="tx-white" href="/temple">Temple</a>
+    </h3>
+  </if>
+  <nav class="flex flex-center-y">
+    <a class="tx-white" href="/temple/docs/index.html">Docs</a>
+    <a 
+      class="tx-t-1 tx-5xl ml-10" 
+      href="https://github.com/OSSPhilippines/temple" 
+      target="_blank"
+    >
+      <i class="fab fa-github"></i>
+    </a>
+    <a 
+      class="bg-h-cb3837 b-rad-full tx-t-1 tx-lg ml-5 p-5 tx-center" 
+      href="https://www.npmjs.com/package/@ossph/temple"
+      target="_blank"
+    >
+      <i class="fab fa-npm text-white"></i>
+    </a>
+    <a 
+      class="bg-h-7289da b-rad-full tx-t-1 tx-lg ml-5 p-5 tx-center" 
+      href="https://discord.gg/open-source-software-ph-905496362982981723"
+      target="_blank"
+    >
+      <i class="fab fa-discord text-white"></i>
+    </a>
+  </nav>
+</menu>

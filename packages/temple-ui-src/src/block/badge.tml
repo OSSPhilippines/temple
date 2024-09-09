@@ -1,170 +1,83 @@
-<style>
-  :host {
-    --black: #222222;
-    --white: #FCFCFC;
-    --info: #1474FC;
-    --error: #DC3545;
-    --warning: #FF7B07;
-    --success: #28A745;
-    --muted: #999999;
-  }
-
-  /* Text Colors
-  ---------------------------------*/
-  .tx-info {
-    color: var(--info);
-  }
-  .tx-error {
-    color: var(--error);
-  }
-  .tx-warning {
-    color: var(--warning);
-  }
-  .tx-success {
-    color: var(--success);
-  }
-  .tx-muted {
-    color: var(--muted);
-  }
-
-  /* Borders
-  ---------------------------------*/
-  .curved {
-    border-radius: 5px;
-  }
-  .rounded {
-    border-radius:12px;
-  }
-  .pill {
-    border-radius: 10000px;
-  }
-  .solid {
-    border-style: solid;
-  }
-  .thin {
-    border-width: 1px;
-  }
-
-  .bd-info {
-    border-color: var(--info);
-  }
-  .bd-error {
-    border-color: var(--error);
-  }
-  .bd-warning {
-    border-color: var(--warning);
-  }
-  .bd-success {
-    border-color: var(--success);
-  }
-  .bd-muted {
-    border-color: var(--muted);
-  }
-
-  /* Backgrounds
-  ---------------------------------*/
-  .bg-white {
-    background-color: var(--white);
-  }
-  .bg-info {
-    background-color: var(--info);
-  }
-  .bg-error {
-    background-color: var(--error);
-  }
-  .bg-warning {
-    background-color: var(--warning);
-  }
-  .bg-success {
-    background-color: var(--success);
-  }
-  .bg-muted {
-    background-color: var(--muted);
-  }
-
-  /* Badge
-  ---------------------------------*/
-  .badge {
-    padding: 2px 8px;
-  }
-</style>
 <script>
-  import { props, classnames, children } from '@ossph/temple';
+  import { props, children, component } from '@ossph/temple';
   // Separate component related props from field attributes
   const { 
-    color,     info,    warning, success,     
-    error,     muted,   solid,   outline,     
-    curved,    rounded, pill,    style
-  } = props<{
-    color?: string,
-    info?: boolean, 
-    warning?: boolean, 
-    success?: boolean, 
-    error?: boolean, 
-    muted?: boolean, 
-    solid?: boolean, 
-    outline?: boolean,
-    curved?: boolean,
-    rounded?: boolean, 
-    pill?: boolean,
-    style?: string
-  }>();
+    curved,      rounded,   pill,    
+    info,        warning,   success, 
+    error,       muted,     primary, 
+    color,       secondary, outline, 
+    transparent, solid,
+    //dont need these
+    style,     'class': _,
+    //get the rest
+    ...attributes 
+  } = props();
 
-  const config = {
-    classes: [ 'badge' ],
-    styles: ''
+  //get the host element
+  const host = component();
+  //make a badge
+  const badge = document.createElement('span');
+  //add children to the badge
+  children().forEach(child => badge.appendChild(child));
+
+  host.classList.add('inline-block');
+  badge.classList.add('inline-block', 'px-8', 'py-2');
+
+  if (curved) {
+    badge.classList.add('curved');
+  } else if (rounded) {
+    badge.classList.add('rounded');
+  } else if (pill) {
+    badge.classList.add('pill');
   }
 
   const layout = outline ? 'outline' 
-    : solid ? 'solid'
+    : transparent ? 'transparent'
+    : solid  ? 'solid'
     : 'solid';
 
-  if (curved) {
-    defaults.classes.push('curved');
-  } else if (rounded) {
-    defaults.classes.push('rounded');
-  } else if (pill) {
-    defaults.classes.push('pill');
-  }
-
-  if (layout === 'outline') {
-    defaults.classes.push('solid', 'thin');
+  if (layout === 'outline' || layout === 'transparent') {
+    badge.classList.add('bd-solid', 'bd-thin');
+    if (layout === 'outline') {
+      badge.classList.add('bg-white');
+    }
     if (color) {
-      defaults.styles += `border-color: ${color};`;
-      defaults.styles += `color: ${color};`;
+      badge.style.color = color;
+      badge.style.borderColor = color;
     } else if (info) {
-      config.classes.push('bd-info', 'tx-info');
+      badge.classList.add('bd-info', 'tx-info');
     } else if (warning) {
-      config.classes.push('bd-warning', 'tx-warning');
+      badge.classList.add('bd-warning', 'tx-warning');
     } else if (success) {
-      config.classes.push('bd-success', 'tx-success');
+      badge.classList.add('bd-success', 'tx-success');
     } else if (error) {
-      config.classes.push('bd-error', 'tx-error');
+      badge.classList.add('bd-error', 'tx-error');
     } else if (muted) {
-      config.classes.push('bd-muted', 'tx-muted');
+      badge.classList.add('bd-muted', 'tx-muted');
+    } else if (primary) {
+      badge.classList.add('bd-primary', 'tx-primary');
+    } else if (secondary) {
+      badge.classList.add('bd-secondary', 'tx-secondary');
     }
   } else {
-    defaults.styles += `color: ${colors.white};`;
+    badge.classList.add('tx-white');
     if (color) {
-      defaults.styles += `background-color: ${color};`;
+      badge.style.backgroundColor = color;
     } else if (info) {
-      config.classes.push('bg-info');
+      badge.classList.add('bg-info');
     } else if (warning) {
-      config.classes.push('bg-warning');
+      badge.classList.add('bg-warning');
     } else if (success) {
-      config.classes.push('bg-success');
+      badge.classList.add('bg-success');
     } else if (error) {
-      config.classes.push('bg-error');
+      badge.classList.add('bg-error');
     } else if (muted) {
-      config.classes.push('bg-muted');
+      badge.classList.add('bg-muted');
+    } else if (primary) {
+      badge.classList.add('bg-primary');
+    } else if (secondary) {
+      badge.classList.add('bg-secondary');
     }
   } 
-
-  const map = {
-    classes: [ ...defaults.classes, classnames() ].join(' '),
-    styles: { ...defaults.styles, ...style }
-  };
 </script>
-<div class={map.classes} style={map.styles}>
-  {children()}
-</div>
+{[ badge ]}

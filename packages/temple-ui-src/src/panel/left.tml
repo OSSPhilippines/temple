@@ -1,0 +1,18 @@
+<script>
+  import { children, classlist } from '@ossph/temple';
+  const { layout, show } = this.element.attributes;
+  const classes = classlist();
+  const setClassNames = _ => {
+    this.classList.add('w-226', 'absolute', 'bottom-0', 'left-0', 'top-0', 'transition-500');
+    if (show.left) {
+      this.classList.remove('md-left--226');
+      this.classList.add('md-left-0');
+    } else {
+      this.classList.add('md-left--226');
+    }
+  };
+
+  show.change(setClassNames);
+  setClassNames();
+</script>
+<aside class="block w-full h-full relative">{children()}</aside>

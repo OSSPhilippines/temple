@@ -1,1076 +1,136 @@
-var TempleAPI = (() => {
-  var __create = Object.create;
-  var __defProp = Object.defineProperty;
-  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-  var __getOwnPropNames = Object.getOwnPropertyNames;
-  var __getProtoOf = Object.getPrototypeOf;
-  var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __commonJS = (cb, mod) => function __require() {
-    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-  };
-  var __export = (target, all) => {
-    for (var name in all)
-      __defProp(target, name, { get: all[name], enumerable: true });
-  };
-  var __copyProps = (to, from, except, desc) => {
-    if (from && typeof from === "object" || typeof from === "function") {
-      for (let key of __getOwnPropNames(from))
-        if (!__hasOwnProp.call(to, key) && key !== except)
-          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-    }
-    return to;
-  };
-  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-    // If the importer is in node compatibility mode or this is not an ESM
-    // file that has been converted to a CommonJS file using a Babel-
-    // compatible transform (i.e. "__esModule" has not been set), then set
-    // "default" to the CommonJS "module.exports" for node compatibility.
-    isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-    mod
-  ));
-  var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var TempleAPI=(()=>{var $t=Object.create;var ke=Object.defineProperty;var Nt=Object.getOwnPropertyDescriptor;var Rt=Object.getOwnPropertyNames;var qt=Object.getPrototypeOf,It=Object.prototype.hasOwnProperty;var M=(t,e)=>()=>(e||t((e={exports:{}}).exports,e),e.exports),Ht=(t,e)=>{for(var n in e)ke(t,n,{get:e[n],enumerable:!0})},ut=(t,e,n,i)=>{if(e&&typeof e=="object"||typeof e=="function")for(let r of Rt(e))!It.call(t,r)&&r!==n&&ke(t,r,{get:()=>e[r],enumerable:!(i=Nt(e,r))||i.enumerable});return t};var P=(t,e,n)=>(n=t!=null?$t(qt(t)):{},ut(e||!t||!t.__esModule?ke(n,"default",{value:t,enumerable:!0}):n,t)),zt=t=>ut(ke({},"__esModule",{value:!0}),t);var pe=M(Ye=>{"use strict";Object.defineProperty(Ye,"__esModule",{value:!0});var Xe=class extends Error{static for(e,...n){return n.forEach(function(i){e=e.replace("%s",i)}),new this(e)}static forErrorsFound(e){let n=new this("Invalid Parameters");return n.errors=e,n}static require(e,n,...i){if(!e){for(let r of i)n=n.replace("%s",r);throw new this(n)}}constructor(e,n=500){super(),this.errors={},this.start=0,this.end=0,this.message=e,this.name=this.constructor.name,this.code=n}withCode(e){return this.code=e,this}withPosition(e,n){return this.start=e,this.end=n,this}toJSON(){return{error:!0,code:this.code,message:this.message}}};Ye.default=Xe});var Ce=M(O=>{"use strict";var Bt=O&&O.__importDefault||function(t){return t&&t.__esModule?t:{default:t}};Object.defineProperty(O,"__esModule",{value:!0});O.match=O.TempleEmitter=O.events=void 0;O.bindAttribute=W;O.unbindAttribute=dt;var ct=Bt(Me());O.events=["click","dblclick","mousedown","mouseup","mousemove","mouseover","mouseout","wheel","keydown","keypress","keyup","blur","change","contextmenu","focus","input","submit","invalid","reset","search","select","copy","cut","paste","drag","dragstart","dragend","dragover","dragenter","dragleave","drop","scroll","durationchange","ended","error","loadeddata","loadedmetadata","loadstart","pause","play","playing","progress","ratechange","seeked","seeking","stalled","suspend","timeupdate","volumechange","waiting","animationstart","animationend","animationiteration","transitionend","toggle"];var Pe=class extends EventTarget{emit(e,n){return this.dispatchEvent(new CustomEvent(e,{detail:n})),this}on(e,n){if(e==="ready"&&document.readyState!=="loading"){let i=new CustomEvent("ready");return setTimeout(()=>n(i),1),this}return this.addEventListener(e,n),this}once(e,n){let i=r=>{this.unbind(e,i),n(r)};return this.on(e,i),this}unbind(e,n){return this.removeEventListener(e,n),this}};O.TempleEmitter=Pe;var Gt=(t,e)=>Array.from(t.querySelectorAll("*")).filter(n=>{let i=ct.default.get(n),r=i&&i.hasAttribute(e)&&!i.hasEvent(e);return r&&i.addEvent(e),r}).map(n=>ct.default.get(n));O.match=Gt;function W(t,e){Se.on("mounted",n=>{if(!n.detail)return;let i=n.detail;(0,O.match)(i.shadowRoot||i,t).forEach(e)})}function dt(t,e){Se.on("unmounted",n=>{if(!n.detail)return;let i=n.detail;(0,O.match)(i.shadowRoot||i,t).forEach(e)})}var Se=new Pe;O.default=(document.onreadystatechange=()=>{document.readyState!=="loading"&&Se.emit("ready")},W("mount",t=>{let e=t.getAttribute("mount");if(typeof e=="function"){let n=new CustomEvent("mount",{detail:{node:t,target:t.element}});e(n)}}),dt("unmount",t=>{let e=t.getAttribute("unmount");if(typeof e=="function"){let n=new CustomEvent("unmount",{detail:{node:t,target:t.element}});e(n)}}),W("connect",t=>{let e=t.getAttribute("connect");if(typeof e=="function"){let n=new CustomEvent("connect",{detail:{node:t,target:t.element}});e(n)}}),W("disconnect",t=>{let e=t.getAttribute("disconnect");if(typeof e=="function"){let n=new CustomEvent("disconnect",{detail:{node:t,target:t.element}});e(n)}}),W("adopt",t=>{let e=t.getAttribute("adopt");if(typeof e=="function"){let n=new CustomEvent("adopt",{detail:{node:t,target:t.element}});e(n)}}),W("if",t=>{let e=t.getAttribute("if");(e===!1||e==="false"||typeof e=="function"&&!e())&&t.element.remove()}),O.events.forEach(t=>W(t,e=>{let n=e.getAttribute(t);typeof n=="function"&&(e.element.removeEventListener(t,n),e.element.addEventListener(t,n))})),Se)});var Qe=M(he=>{"use strict";var Wt=he&&he.__importDefault||function(t){return t&&t.__esModule?t:{default:t}};Object.defineProperty(he,"__esModule",{value:!0});var Ve=Wt(Ce()),Ke=class{get attributes(){return Object.assign({},this._attributes)}get element(){return this._element}get events(){return this._events}constructor(e,n){this._events=new Set,this._element=e,this._attributes=n}addEvent(e){return this._events.add(e),this}getAttribute(e){return this._attributes[e]}hasAttribute(e){return e in this._attributes}hasEvent(e){return this._events.has(e)}removeAttribute(e,n=!1){let i=this.getAttribute(e);return typeof i>"u"?this:(delete this._attributes[e],this._element.removeAttribute(e),n||Ve.default.emit("attribute-remove",{element:this,key:e,previous:i}),this)}setAttribute(e,n,i=!1){if(typeof n>"u")return this.removeAttribute(e,i);let r=this.getAttribute(e);return r===n?this:(this._attributes[e]=n,typeof n=="string"&&this._element.setAttribute(e,n),i||(typeof r>"u"?Ve.default.emit("attribute-create",{element:this,key:e,value:n}):Ve.default.emit("attribute-update",{element:this,key:e,value:n,previous:r})),this)}setAttributes(e,n=!1){for(let[r,d]of Object.entries(e))this.setAttribute(r,d,n);let i=Object.keys(e);for(let r of Object.keys(this._attributes))i.includes(r)||this.removeAttribute(r,n);return this}};he.default=Ke});var Me=M(ge=>{"use strict";var Ut=ge&&ge.__importDefault||function(t){return t&&t.__esModule?t:{default:t}};Object.defineProperty(ge,"__esModule",{value:!0});var Zt=Ut(Qe()),ft=document.createElement("textarea"),Jt=t=>(ft.innerHTML=t,ft.value),Oe=class{static get elements(){return this._elements}static createComponent(e,n,i,r=[]){let d=document.createElement("template");d.innerHTML=`<${e}></${e}>`;let m=d.content.querySelector(`${e}`);return Object.setPrototypeOf(m,n.prototype),m.constructor=n.constructor,m.constructor.component=n.component,m.register(i,r),m.element}static createElement(e,n,i=[]){let r=document.createElement(e);for(let[d,_]of Object.entries(n))typeof _=="string"?r.setAttribute(d,_):_===!0&&r.setAttribute(d,d);return i.filter(d=>typeof d<"u").forEach(d=>r.appendChild(d)),this.register(r,n)}static createText(e,n=!0){return document.createTextNode(Jt(e))}static filter(e){let n=[];return this._elements.forEach((i,r)=>{e(i,r)&&n.push(i)}),n}static get(e){return this._elements.get(e)||null}static has(e){return this._elements.has(e)}static map(e){let n=[];return this._elements.forEach((i,r)=>{n.push(e(i,r))}),n}static register(e,n){if(this.has(e))return this.get(e);let i=new Zt.default(e,n||{});return this._elements.set(e,i),i}};Oe._elements=new Map;ge.default=Oe});var Q=M(me=>{"use strict";Object.defineProperty(me,"__esModule",{value:!0});me.TempleDataMap=void 0;var De=class{constructor(){window.__APP_DATA__||(window.__APP_DATA__={})}clear(){return window.__APP_DATA__={},this}delete(e){return this.has(e)?(delete window.__APP_DATA__[e],!0):!1}entries(){return Object.entries(window.__APP_DATA__)}has(e){return e in window.__APP_DATA__}get(e){return window.__APP_DATA__[e]}keys(){return Object.keys(window.__APP_DATA__)}set(e,n){return window.__APP_DATA__[e]=n,this}values(){return Object.values(window.__APP_DATA__)}};me.TempleDataMap=De;var Xt=new De;me.default=Xt});var ht=M(be=>{"use strict";var $e=be&&be.__importDefault||function(t){return t&&t.__esModule?t:{default:t}};Object.defineProperty(be,"__esModule",{value:!0});var pt=$e(pe()),U=$e(Me()),Z=$e(Ce()),je=$e(Q()),et=class t extends HTMLElement{static register(){customElements.define(this.component[0],this)}get attr(){return Object.fromEntries(Array.from(this.attributes).map(e=>[e.name,e.value]))}get element(){if(!U.default.has(this))throw pt.default.for("Component not mapped.");return U.default.get(this)}get metadata(){let[e,n]=this.constructor.component;return{tagname:e,classname:n}}get originalChildren(){return this._children}get initiated(){return this._initiated}get props(){return this.getAttributes()}get virtual(){return this._virtual}set props(e){this.setAttributes(e)}constructor(){if(super(),this._initiated=!1,this._template=null,this._children=void 0,this._rendering=!1,this._observer=null,this._virtual=!1,!U.default.has(this))throw pt.default.for("Component not mapped.")}adoptedCallback(){this.render(),Z.default.emit("adopt",this)}connectedCallback(){this.wait(),Z.default.emit("connect",this)}disconnectedCallback(){Z.default.emit("disconnect",this)}getAttribute(e){return this.element.getAttribute(e)}getAttributes(){return Object.assign({},this.element.attributes)}getParentComponent(){let e=this.parentElement;for(;e;){if(e instanceof t)return e;e=e.parentElement}return null}hasAttribute(e){return this.element.hasAttribute(e)}register(e={},n=[]){U.default.has(this)?U.default.get(this).setAttributes(e):U.default.register(this,e);for(let[i,r]of Object.entries(e))typeof r=="string"?super.setAttribute(i,r):r===!0&&super.setAttribute(i,i);this._children=n,this._virtual=!0,this.connectedCallback()}removeAttribute(e){this.hasAttribute(e)&&this.element.removeAttribute(e),super.hasAttribute(e)&&super.removeAttribute(e)}render(){let e=this.getParentComponent();if(e&&!e.initiated)return;if(this._rendering)return;this._rendering=!0;let n=je.default.get("current");je.default.set("current",this);let i=this.styles();this._template?Z.default.emit("unmounted",this):this._template=this.template();let r=this._template().filter(Boolean);if(i.length===0)this.textContent="",r.forEach(d=>this.appendChild(d));else{this.shadowRoot||this.attachShadow({mode:"open"});let d=this.shadowRoot;this.textContent="",d.textContent="";let _=document.createElement("style");_.innerText=i,d.appendChild(_),r.forEach(m=>{var y;return(y=this.shadowRoot)===null||y===void 0?void 0:y.appendChild(m)})}return n?je.default.set("current",n):je.default.delete("current"),this._initiated=!0,this._rendering=!1,Z.default.emit("mounted",this),this.shadowRoot?this.shadowRoot.innerHTML:this.innerHTML}setAttribute(e,n){this.element.setAttribute(e,n),(typeof n=="string"||n===!0)&&super.setAttribute(e,n)}setAttributes(e){this.element.setAttributes(e)}wait(){if(document.readyState!=="loading")this._update();else{let e=()=>{this._update(),Z.default.unbind("ready",e)};Z.default.on("ready",e)}}_toNodeList(e){return e instanceof Node?[e]:Array.isArray(e)&&e.every(n=>n instanceof Node)?e:[U.default.createText(String(e))]}_update(){typeof this._children>"u"&&(this._children=Array.from(this.childNodes||[])),this._initiated||this.render()}};be.default=et});var ee=M(_e=>{"use strict";var gt=_e&&_e.__importDefault||function(t){return t&&t.__esModule?t:{default:t}};Object.defineProperty(_e,"__esModule",{value:!0});_e.default=Kt;var Yt=gt(pe()),Vt=gt(Q());function Kt(t=null,e=!1){if(!t&&(t=Vt.default.get("current"),!t)){if(!e)throw Yt.default.for("Not called within a Temple component");return null}return t}});var mt=M(ve=>{"use strict";var Qt=ve&&ve.__importDefault||function(t){return t&&t.__esModule?t:{default:t}};Object.defineProperty(ve,"__esModule",{value:!0});var en=Qt(Q());function tn(t){let e=en.default.get("env")||{};return t?e[t]||null:e}ve.default=tn});var tt=M(ye=>{"use strict";var bt=ye&&ye.__importDefault||function(t){return t&&t.__esModule?t:{default:t}};Object.defineProperty(ye,"__esModule",{value:!0});ye.default=sn;var nn=bt(ee()),rn=bt(Q());function sn(t=null){let e=(0,nn.default)(t,!0);return typeof e=="string"?rn.default.get("props")||{}:e?e.props:{}}});var vt=M(te=>{"use strict";var _t=te&&te.__importDefault||function(t){return t&&t.__esModule?t:{default:t}};Object.defineProperty(te,"__esModule",{value:!0});te.classlist=on;te.default=un;var an=_t(ee()),ln=_t(tt());function on(t=null){var e;if(t==="body")return document.body.classList;if(t==="head")return document.head.classList;if(t==="document")return(e=document.body.parentElement)===null||e===void 0?void 0:e.classList;let n=(0,an.default)(t);return n?.classList}function un(t=null){return(0,ln.default)(t).class}});var yt=M(J=>{"use strict";var cn=J&&J.__importDefault||function(t){return t&&t.__esModule?t:{default:t}};Object.defineProperty(J,"__esModule",{value:!0});J.innerHTML=fn;J.innerText=pn;J.default=nt;var dn=cn(ee());function fn(t=null){let e=nt(t),n=document.createElement("template");return n.append(...e.map(i=>i.cloneNode(!0))),n.innerHTML}function pn(t=null){let e=nt(t),n=document.createElement("template");return n.append(...e.map(i=>i.cloneNode(!0))),n.innerText}function nt(t=null){let e=(0,dn.default)(t,!0);return typeof e!="string"&&e?e.originalChildren||[]:[]}});var wt=M(X=>{"use strict";var xt=X&&X.__importDefault||function(t){return t&&t.__esModule?t:{default:t}};Object.defineProperty(X,"__esModule",{value:!0});X.SignalRegistry=void 0;X.default=mn;var hn=xt(ee()),gn=xt(pe()),ne=class t{static observe(e,n){let i={getter:()=>d.raw,setter:m=>m},r=new Set,d={raw:n,change(m){r.add(m)},getter(m){return i.getter=m,d},setter(m){return i.setter=m,d}};Object.defineProperty(d,"value",{get(){return i.getter()},set(m){let y=i.setter(m),w=t.serialize(y)!==t.serialize(d.raw);d.raw=y,w&&(r.forEach(b=>b(y)),e.render())}});let _=this._observers.get(e);return _?(_.observed++,_.values.push(d)):this._observers.set(e,{observed:1,values:[d]}),d}static observer(e){return this._observers.get(e)||null}static serialize(e){return JSON.stringify(e)}};X.SignalRegistry=ne;ne._observers=new Map;function mn(t,e=null){let n=(0,hn.default)(e);if(!n.initiated)return ne.observe(n,t);let i=ne.observer(n);if(!i)throw gn.default.for("Signal state mismatch");return i.values[i.observed++%i.values.length]}});var st=M(g=>{"use strict";var bn=g&&g.__createBinding||(Object.create?function(t,e,n,i){i===void 0&&(i=n);var r=Object.getOwnPropertyDescriptor(e,n);(!r||("get"in r?!e.__esModule:r.writable||r.configurable))&&(r={enumerable:!0,get:function(){return e[n]}}),Object.defineProperty(t,i,r)}:function(t,e,n,i){i===void 0&&(i=n),t[i]=e[n]}),_n=g&&g.__setModuleDefault||(Object.create?function(t,e){Object.defineProperty(t,"default",{enumerable:!0,value:e})}:function(t,e){t.default=e}),xe=g&&g.__importStar||function(t){if(t&&t.__esModule)return t;var e={};if(t!=null)for(var n in t)n!=="default"&&Object.prototype.hasOwnProperty.call(t,n)&&bn(e,t,n);return _n(e,t),e},Y=g&&g.__importDefault||function(t){return t&&t.__esModule?t:{default:t}};Object.defineProperty(g,"__esModule",{value:!0});g.SignalRegistry=g.TempleException=g.TempleEmitter=g.TempleElement=g.TempleRegistry=g.TempleComponent=g.TempleDataMap=g.emitter=g.signal=g.innerHTML=g.innerText=g.children=g.classnames=g.classlist=g.props=g.env=g.data=g.component=void 0;var vn=Y(pe());g.TempleException=vn.default;var yn=Y(ht());g.TempleComponent=yn.default;var xn=Y(Me());g.TempleRegistry=xn.default;var wn=Y(Qe());g.TempleElement=wn.default;var At=xe(Ce());g.emitter=At.default;Object.defineProperty(g,"TempleEmitter",{enumerable:!0,get:function(){return At.TempleEmitter}});var An=Y(ee());g.component=An.default;var Tt=xe(Q());g.data=Tt.default;Object.defineProperty(g,"TempleDataMap",{enumerable:!0,get:function(){return Tt.TempleDataMap}});var Tn=Y(mt());g.env=Tn.default;var En=Y(tt());g.props=En.default;var Et=xe(vt());g.classnames=Et.default;Object.defineProperty(g,"classlist",{enumerable:!0,get:function(){return Et.classlist}});var rt=xe(yt());g.children=rt.default;Object.defineProperty(g,"innerHTML",{enumerable:!0,get:function(){return rt.innerHTML}});Object.defineProperty(g,"innerText",{enumerable:!0,get:function(){return rt.innerText}});var Lt=xe(wt());g.signal=Lt.default;Object.defineProperty(g,"SignalRegistry",{enumerable:!0,get:function(){return Lt.SignalRegistry}})});var q=M((Wn,Ft)=>{Ft.exports={...st()}});var z=M((Un,kt)=>{kt.exports={...st()}});var St=M((Kn,He)=>{var Ln=typeof window<"u"?window:typeof WorkerGlobalScope<"u"&&self instanceof WorkerGlobalScope?self:{};var c=function(t){var e=/(?:^|\s)lang(?:uage)?-([\w-]+)(?=\s|$)/i,n=0,i={},r={manual:t.Prism&&t.Prism.manual,disableWorkerMessageHandler:t.Prism&&t.Prism.disableWorkerMessageHandler,util:{encode:function a(s){return s instanceof d?new d(s.type,a(s.content),s.alias):Array.isArray(s)?s.map(a):s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\u00a0/g," ")},type:function(a){return Object.prototype.toString.call(a).slice(8,-1)},objId:function(a){return a.__id||Object.defineProperty(a,"__id",{value:++n}),a.__id},clone:function a(s,l){l=l||{};var o,u;switch(r.util.type(s)){case"Object":if(u=r.util.objId(s),l[u])return l[u];o={},l[u]=o;for(var h in s)s.hasOwnProperty(h)&&(o[h]=a(s[h],l));return o;case"Array":return u=r.util.objId(s),l[u]?l[u]:(o=[],l[u]=o,s.forEach(function(v,p){o[p]=a(v,l)}),o);default:return s}},getLanguage:function(a){for(;a;){var s=e.exec(a.className);if(s)return s[1].toLowerCase();a=a.parentElement}return"none"},setLanguage:function(a,s){a.className=a.className.replace(RegExp(e,"gi"),""),a.classList.add("language-"+s)},currentScript:function(){if(typeof document>"u")return null;if("currentScript"in document)return document.currentScript;try{throw new Error}catch(o){var a=(/at [^(\r\n]*\((.*):[^:]+:[^:]+\)$/i.exec(o.stack)||[])[1];if(a){var s=document.getElementsByTagName("script");for(var l in s)if(s[l].src==a)return s[l]}return null}},isActive:function(a,s,l){for(var o="no-"+s;a;){var u=a.classList;if(u.contains(s))return!0;if(u.contains(o))return!1;a=a.parentElement}return!!l}},languages:{plain:i,plaintext:i,text:i,txt:i,extend:function(a,s){var l=r.util.clone(r.languages[a]);for(var o in s)l[o]=s[o];return l},insertBefore:function(a,s,l,o){o=o||r.languages;var u=o[a],h={};for(var v in u)if(u.hasOwnProperty(v)){if(v==s)for(var p in l)l.hasOwnProperty(p)&&(h[p]=l[p]);l.hasOwnProperty(v)||(h[v]=u[v])}var E=o[a];return o[a]=h,r.languages.DFS(r.languages,function(C,I){I===E&&C!=a&&(this[C]=h)}),h},DFS:function a(s,l,o,u){u=u||{};var h=r.util.objId;for(var v in s)if(s.hasOwnProperty(v)){l.call(s,v,s[v],o||v);var p=s[v],E=r.util.type(p);E==="Object"&&!u[h(p)]?(u[h(p)]=!0,a(p,l,null,u)):E==="Array"&&!u[h(p)]&&(u[h(p)]=!0,a(p,l,v,u))}}},plugins:{},highlightAll:function(a,s){r.highlightAllUnder(document,a,s)},highlightAllUnder:function(a,s,l){var o={callback:l,container:a,selector:'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'};r.hooks.run("before-highlightall",o),o.elements=Array.prototype.slice.apply(o.container.querySelectorAll(o.selector)),r.hooks.run("before-all-elements-highlight",o);for(var u=0,h;h=o.elements[u++];)r.highlightElement(h,s===!0,o.callback)},highlightElement:function(a,s,l){var o=r.util.getLanguage(a),u=r.languages[o];r.util.setLanguage(a,o);var h=a.parentElement;h&&h.nodeName.toLowerCase()==="pre"&&r.util.setLanguage(h,o);var v=a.textContent,p={element:a,language:o,grammar:u,code:v};function E(I){p.highlightedCode=I,r.hooks.run("before-insert",p),p.element.innerHTML=p.highlightedCode,r.hooks.run("after-highlight",p),r.hooks.run("complete",p),l&&l.call(p.element)}if(r.hooks.run("before-sanity-check",p),h=p.element.parentElement,h&&h.nodeName.toLowerCase()==="pre"&&!h.hasAttribute("tabindex")&&h.setAttribute("tabindex","0"),!p.code){r.hooks.run("complete",p),l&&l.call(p.element);return}if(r.hooks.run("before-highlight",p),!p.grammar){E(r.util.encode(p.code));return}if(s&&t.Worker){var C=new Worker(r.filename);C.onmessage=function(I){E(I.data)},C.postMessage(JSON.stringify({language:p.language,code:p.code,immediateClose:!0}))}else E(r.highlight(p.code,p.grammar,p.language))},highlight:function(a,s,l){var o={code:a,grammar:s,language:l};if(r.hooks.run("before-tokenize",o),!o.grammar)throw new Error('The language "'+o.language+'" has no grammar.');return o.tokens=r.tokenize(o.code,o.grammar),r.hooks.run("after-tokenize",o),d.stringify(r.util.encode(o.tokens),o.language)},tokenize:function(a,s){var l=s.rest;if(l){for(var o in l)s[o]=l[o];delete s.rest}var u=new y;return w(u,u.head,a),m(a,u,s,u.head,0),T(u)},hooks:{all:{},add:function(a,s){var l=r.hooks.all;l[a]=l[a]||[],l[a].push(s)},run:function(a,s){var l=r.hooks.all[a];if(!(!l||!l.length))for(var o=0,u;u=l[o++];)u(s)}},Token:d};t.Prism=r;function d(a,s,l,o){this.type=a,this.content=s,this.alias=l,this.length=(o||"").length|0}d.stringify=function a(s,l){if(typeof s=="string")return s;if(Array.isArray(s)){var o="";return s.forEach(function(E){o+=a(E,l)}),o}var u={type:s.type,content:a(s.content,l),tag:"span",classes:["token",s.type],attributes:{},language:l},h=s.alias;h&&(Array.isArray(h)?Array.prototype.push.apply(u.classes,h):u.classes.push(h)),r.hooks.run("wrap",u);var v="";for(var p in u.attributes)v+=" "+p+'="'+(u.attributes[p]||"").replace(/"/g,"&quot;")+'"';return"<"+u.tag+' class="'+u.classes.join(" ")+'"'+v+">"+u.content+"</"+u.tag+">"};function _(a,s,l,o){a.lastIndex=s;var u=a.exec(l);if(u&&o&&u[1]){var h=u[1].length;u.index+=h,u[0]=u[0].slice(h)}return u}function m(a,s,l,o,u,h){for(var v in l)if(!(!l.hasOwnProperty(v)||!l[v])){var p=l[v];p=Array.isArray(p)?p:[p];for(var E=0;E<p.length;++E){if(h&&h.cause==v+","+E)return;var C=p[E],I=C.inside,V=!!C.lookbehind,Ge=!!C.greedy,lt=C.alias;if(Ge&&!C.pattern.global){var We=C.pattern.toString().match(/[imsuy]*$/)[0];C.pattern=RegExp(C.pattern.source,We+"g")}for(var K=C.pattern||C,f=o.next,R=u;f!==s.tail&&!(h&&R>=h.reach);R+=f.value.length,f=f.next){var H=f.value;if(s.length>a.length)return;if(!(H instanceof d)){var B=1,j;if(Ge){if(j=_(K,R,a,V),!j||j.index>=a.length)break;var Ee=j.index,Dt=j.index+j[0].length,G=R;for(G+=f.value.length;Ee>=G;)f=f.next,G+=f.value.length;if(G-=f.value.length,R=G,f.value instanceof d)continue;for(var fe=f;fe!==s.tail&&(G<Dt||typeof fe.value=="string");fe=fe.next)B++,G+=fe.value.length;B--,H=a.slice(R,G),j.index-=R}else if(j=_(K,0,H,V),!j)continue;var Ee=j.index,Le=j[0],Ue=H.slice(0,Ee),ot=H.slice(Ee+Le.length),Ze=R+H.length;h&&Ze>h.reach&&(h.reach=Ze);var Fe=f.prev;Ue&&(Fe=w(s,Fe,Ue),R+=Ue.length),b(s,Fe,B);var jt=new d(v,I?r.tokenize(Le,I):Le,lt,Le);if(f=w(s,Fe,jt),ot&&w(s,f,ot),B>1){var Je={cause:v+","+E,reach:Ze};m(a,s,l,f.prev,R,Je),h&&Je.reach>h.reach&&(h.reach=Je.reach)}}}}}}function y(){var a={value:null,prev:null,next:null},s={value:null,prev:a,next:null};a.next=s,this.head=a,this.tail=s,this.length=0}function w(a,s,l){var o=s.next,u={value:l,prev:s,next:o};return s.next=u,o.prev=u,a.length++,u}function b(a,s,l){for(var o=s.next,u=0;u<l&&o!==a.tail;u++)o=o.next;s.next=o,o.prev=s,a.length-=u}function T(a){for(var s=[],l=a.head.next;l!==a.tail;)s.push(l.value),l=l.next;return s}if(!t.document)return t.addEventListener&&(r.disableWorkerMessageHandler||t.addEventListener("message",function(a){var s=JSON.parse(a.data),l=s.language,o=s.code,u=s.immediateClose;t.postMessage(r.highlight(o,r.languages[l],l)),u&&t.close()},!1)),r;var L=r.util.currentScript();L&&(r.filename=L.src,L.hasAttribute("data-manual")&&(r.manual=!0));function x(){r.manual||r.highlightAll()}if(!r.manual){var F=document.readyState;F==="loading"||F==="interactive"&&L&&L.defer?document.addEventListener("DOMContentLoaded",x):window.requestAnimationFrame?window.requestAnimationFrame(x):window.setTimeout(x,16)}return r}(Ln);typeof He<"u"&&He.exports&&(He.exports=c);typeof global<"u"&&(global.Prism=c);c.languages.markup={comment:{pattern:/<!--(?:(?!<!--)[\s\S])*?-->/,greedy:!0},prolog:{pattern:/<\?[\s\S]+?\?>/,greedy:!0},doctype:{pattern:/<!DOCTYPE(?:[^>"'[\]]|"[^"]*"|'[^']*')+(?:\[(?:[^<"'\]]|"[^"]*"|'[^']*'|<(?!!--)|<!--(?:[^-]|-(?!->))*-->)*\]\s*)?>/i,greedy:!0,inside:{"internal-subset":{pattern:/(^[^\[]*\[)[\s\S]+(?=\]>$)/,lookbehind:!0,greedy:!0,inside:null},string:{pattern:/"[^"]*"|'[^']*'/,greedy:!0},punctuation:/^<!|>$|[[\]]/,"doctype-tag":/^DOCTYPE/i,name:/[^\s<>'"]+/}},cdata:{pattern:/<!\[CDATA\[[\s\S]*?\]\]>/i,greedy:!0},tag:{pattern:/<\/?(?!\d)[^\s>\/=$<%]+(?:\s(?:\s*[^\s>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))|(?=[\s/>])))+)?\s*\/?>/,greedy:!0,inside:{tag:{pattern:/^<\/?[^\s>\/]+/,inside:{punctuation:/^<\/?/,namespace:/^[^\s>\/:]+:/}},"special-attr":[],"attr-value":{pattern:/=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+)/,inside:{punctuation:[{pattern:/^=/,alias:"attr-equals"},{pattern:/^(\s*)["']|["']$/,lookbehind:!0}]}},punctuation:/\/?>/,"attr-name":{pattern:/[^\s>\/]+/,inside:{namespace:/^[^\s>\/:]+:/}}}},entity:[{pattern:/&[\da-z]{1,8};/i,alias:"named-entity"},/&#x?[\da-f]{1,8};/i]};c.languages.markup.tag.inside["attr-value"].inside.entity=c.languages.markup.entity;c.languages.markup.doctype.inside["internal-subset"].inside=c.languages.markup;c.hooks.add("wrap",function(t){t.type==="entity"&&(t.attributes.title=t.content.replace(/&amp;/,"&"))});Object.defineProperty(c.languages.markup.tag,"addInlined",{value:function(e,n){var i={};i["language-"+n]={pattern:/(^<!\[CDATA\[)[\s\S]+?(?=\]\]>$)/i,lookbehind:!0,inside:c.languages[n]},i.cdata=/^<!\[CDATA\[|\]\]>$/i;var r={"included-cdata":{pattern:/<!\[CDATA\[[\s\S]*?\]\]>/i,inside:i}};r["language-"+n]={pattern:/[\s\S]+/,inside:c.languages[n]};var d={};d[e]={pattern:RegExp(/(<__[^>]*>)(?:<!\[CDATA\[(?:[^\]]|\](?!\]>))*\]\]>|(?!<!\[CDATA\[)[\s\S])*?(?=<\/__>)/.source.replace(/__/g,function(){return e}),"i"),lookbehind:!0,greedy:!0,inside:r},c.languages.insertBefore("markup","cdata",d)}});Object.defineProperty(c.languages.markup.tag,"addAttribute",{value:function(t,e){c.languages.markup.tag.inside["special-attr"].push({pattern:RegExp(/(^|["'\s])/.source+"(?:"+t+")"+/\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))/.source,"i"),lookbehind:!0,inside:{"attr-name":/^[^\s=]+/,"attr-value":{pattern:/=[\s\S]+/,inside:{value:{pattern:/(^=\s*(["']|(?!["'])))\S[\s\S]*(?=\2$)/,lookbehind:!0,alias:[e,"language-"+e],inside:c.languages[e]},punctuation:[{pattern:/^=/,alias:"attr-equals"},/"|'/]}}}})}});c.languages.html=c.languages.markup;c.languages.mathml=c.languages.markup;c.languages.svg=c.languages.markup;c.languages.xml=c.languages.extend("markup",{});c.languages.ssml=c.languages.xml;c.languages.atom=c.languages.xml;c.languages.rss=c.languages.xml;(function(t){var e=/(?:"(?:\\(?:\r\n|[\s\S])|[^"\\\r\n])*"|'(?:\\(?:\r\n|[\s\S])|[^'\\\r\n])*')/;t.languages.css={comment:/\/\*[\s\S]*?\*\//,atrule:{pattern:RegExp("@[\\w-](?:"+/[^;{\s"']|\s+(?!\s)/.source+"|"+e.source+")*?"+/(?:;|(?=\s*\{))/.source),inside:{rule:/^@[\w-]+/,"selector-function-argument":{pattern:/(\bselector\s*\(\s*(?![\s)]))(?:[^()\s]|\s+(?![\s)])|\((?:[^()]|\([^()]*\))*\))+(?=\s*\))/,lookbehind:!0,alias:"selector"},keyword:{pattern:/(^|[^\w-])(?:and|not|only|or)(?![\w-])/,lookbehind:!0}}},url:{pattern:RegExp("\\burl\\((?:"+e.source+"|"+/(?:[^\\\r\n()"']|\\[\s\S])*/.source+")\\)","i"),greedy:!0,inside:{function:/^url/i,punctuation:/^\(|\)$/,string:{pattern:RegExp("^"+e.source+"$"),alias:"url"}}},selector:{pattern:RegExp(`(^|[{}\\s])[^{}\\s](?:[^{};"'\\s]|\\s+(?![\\s{])|`+e.source+")*(?=\\s*\\{)"),lookbehind:!0},string:{pattern:e,greedy:!0},property:{pattern:/(^|[^-\w\xA0-\uFFFF])(?!\s)[-_a-z\xA0-\uFFFF](?:(?!\s)[-\w\xA0-\uFFFF])*(?=\s*:)/i,lookbehind:!0},important:/!important\b/i,function:{pattern:/(^|[^-a-z0-9])[-a-z0-9]+(?=\()/i,lookbehind:!0},punctuation:/[(){};:,]/},t.languages.css.atrule.inside.rest=t.languages.css;var n=t.languages.markup;n&&(n.tag.addInlined("style","css"),n.tag.addAttribute("style","css"))})(c);c.languages.clike={comment:[{pattern:/(^|[^\\])\/\*[\s\S]*?(?:\*\/|$)/,lookbehind:!0,greedy:!0},{pattern:/(^|[^\\:])\/\/.*/,lookbehind:!0,greedy:!0}],string:{pattern:/(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,greedy:!0},"class-name":{pattern:/(\b(?:class|extends|implements|instanceof|interface|new|trait)\s+|\bcatch\s+\()[\w.\\]+/i,lookbehind:!0,inside:{punctuation:/[.\\]/}},keyword:/\b(?:break|catch|continue|do|else|finally|for|function|if|in|instanceof|new|null|return|throw|try|while)\b/,boolean:/\b(?:false|true)\b/,function:/\b\w+(?=\()/,number:/\b0x[\da-f]+\b|(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:e[+-]?\d+)?/i,operator:/[<>]=?|[!=]=?=?|--?|\+\+?|&&?|\|\|?|[?*/~^%]/,punctuation:/[{}[\];(),.:]/};c.languages.javascript=c.languages.extend("clike",{"class-name":[c.languages.clike["class-name"],{pattern:/(^|[^$\w\xA0-\uFFFF])(?!\s)[_$A-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\.(?:constructor|prototype))/,lookbehind:!0}],keyword:[{pattern:/((?:^|\})\s*)catch\b/,lookbehind:!0},{pattern:/(^|[^.]|\.\.\.\s*)\b(?:as|assert(?=\s*\{)|async(?=\s*(?:function\b|\(|[$\w\xA0-\uFFFF]|$))|await|break|case|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally(?=\s*(?:\{|$))|for|from(?=\s*(?:['"]|$))|function|(?:get|set)(?=\s*(?:[#\[$\w\xA0-\uFFFF]|$))|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|static|super|switch|this|throw|try|typeof|undefined|var|void|while|with|yield)\b/,lookbehind:!0}],function:/#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*(?:\.\s*(?:apply|bind|call)\s*)?\()/,number:{pattern:RegExp(/(^|[^\w$])/.source+"(?:"+(/NaN|Infinity/.source+"|"+/0[bB][01]+(?:_[01]+)*n?/.source+"|"+/0[oO][0-7]+(?:_[0-7]+)*n?/.source+"|"+/0[xX][\dA-Fa-f]+(?:_[\dA-Fa-f]+)*n?/.source+"|"+/\d+(?:_\d+)*n/.source+"|"+/(?:\d+(?:_\d+)*(?:\.(?:\d+(?:_\d+)*)?)?|\.\d+(?:_\d+)*)(?:[Ee][+-]?\d+(?:_\d+)*)?/.source)+")"+/(?![\w$])/.source),lookbehind:!0},operator:/--|\+\+|\*\*=?|=>|&&=?|\|\|=?|[!=]==|<<=?|>>>?=?|[-+*/%&|^!=<>]=?|\.{3}|\?\?=?|\?\.?|[~:]/});c.languages.javascript["class-name"][0].pattern=/(\b(?:class|extends|implements|instanceof|interface|new)\s+)[\w.\\]+/;c.languages.insertBefore("javascript","keyword",{regex:{pattern:RegExp(/((?:^|[^$\w\xA0-\uFFFF."'\])\s]|\b(?:return|yield))\s*)/.source+/\//.source+"(?:"+/(?:\[(?:[^\]\\\r\n]|\\.)*\]|\\.|[^/\\\[\r\n])+\/[dgimyus]{0,7}/.source+"|"+/(?:\[(?:[^[\]\\\r\n]|\\.|\[(?:[^[\]\\\r\n]|\\.|\[(?:[^[\]\\\r\n]|\\.)*\])*\])*\]|\\.|[^/\\\[\r\n])+\/[dgimyus]{0,7}v[dgimyus]{0,7}/.source+")"+/(?=(?:\s|\/\*(?:[^*]|\*(?!\/))*\*\/)*(?:$|[\r\n,.;:})\]]|\/\/))/.source),lookbehind:!0,greedy:!0,inside:{"regex-source":{pattern:/^(\/)[\s\S]+(?=\/[a-z]*$)/,lookbehind:!0,alias:"language-regex",inside:c.languages.regex},"regex-delimiter":/^\/|\/$/,"regex-flags":/^[a-z]+$/}},"function-variable":{pattern:/#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*[=:]\s*(?:async\s*)?(?:\bfunction\b|(?:\((?:[^()]|\([^()]*\))*\)|(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*)\s*=>))/,alias:"function"},parameter:[{pattern:/(function(?:\s+(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*)?\s*\(\s*)(?!\s)(?:[^()\s]|\s+(?![\s)])|\([^()]*\))+(?=\s*\))/,lookbehind:!0,inside:c.languages.javascript},{pattern:/(^|[^$\w\xA0-\uFFFF])(?!\s)[_$a-z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*=>)/i,lookbehind:!0,inside:c.languages.javascript},{pattern:/(\(\s*)(?!\s)(?:[^()\s]|\s+(?![\s)])|\([^()]*\))+(?=\s*\)\s*=>)/,lookbehind:!0,inside:c.languages.javascript},{pattern:/((?:\b|\s|^)(?!(?:as|async|await|break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|set|static|super|switch|this|throw|try|typeof|undefined|var|void|while|with|yield)(?![$\w\xA0-\uFFFF]))(?:(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*\s*)\(\s*|\]\s*\(\s*)(?!\s)(?:[^()\s]|\s+(?![\s)])|\([^()]*\))+(?=\s*\)\s*\{)/,lookbehind:!0,inside:c.languages.javascript}],constant:/\b[A-Z](?:[A-Z_]|\dx?)*\b/});c.languages.insertBefore("javascript","string",{hashbang:{pattern:/^#!.*/,greedy:!0,alias:"comment"},"template-string":{pattern:/`(?:\\[\s\S]|\$\{(?:[^{}]|\{(?:[^{}]|\{[^}]*\})*\})+\}|(?!\$\{)[^\\`])*`/,greedy:!0,inside:{"template-punctuation":{pattern:/^`|`$/,alias:"string"},interpolation:{pattern:/((?:^|[^\\])(?:\\{2})*)\$\{(?:[^{}]|\{(?:[^{}]|\{[^}]*\})*\})+\}/,lookbehind:!0,inside:{"interpolation-punctuation":{pattern:/^\$\{|\}$/,alias:"punctuation"},rest:c.languages.javascript}},string:/[\s\S]+/}},"string-property":{pattern:/((?:^|[,{])[ \t]*)(["'])(?:\\(?:\r\n|[\s\S])|(?!\2)[^\\\r\n])*\2(?=\s*:)/m,lookbehind:!0,greedy:!0,alias:"property"}});c.languages.insertBefore("javascript","operator",{"literal-property":{pattern:/((?:^|[,{])[ \t]*)(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*:)/m,lookbehind:!0,alias:"property"}});c.languages.markup&&(c.languages.markup.tag.addInlined("script","javascript"),c.languages.markup.tag.addAttribute(/on(?:abort|blur|change|click|composition(?:end|start|update)|dblclick|error|focus(?:in|out)?|key(?:down|up)|load|mouse(?:down|enter|leave|move|out|over|up)|reset|resize|scroll|select|slotchange|submit|unload|wheel)/.source,"javascript"));c.languages.js=c.languages.javascript;(function(){if(typeof c>"u"||typeof document>"u")return;Element.prototype.matches||(Element.prototype.matches=Element.prototype.msMatchesSelector||Element.prototype.webkitMatchesSelector);var t="Loading\u2026",e=function(L,x){return"\u2716 Error "+L+" while fetching file: "+x},n="\u2716 Error: File does not exist or is empty",i={js:"javascript",py:"python",rb:"ruby",ps1:"powershell",psm1:"powershell",sh:"bash",bat:"batch",h:"c",tex:"latex"},r="data-src-status",d="loading",_="loaded",m="failed",y="pre[data-src]:not(["+r+'="'+_+'"]):not(['+r+'="'+d+'"])';function w(L,x,F){var a=new XMLHttpRequest;a.open("GET",L,!0),a.onreadystatechange=function(){a.readyState==4&&(a.status<400&&a.responseText?x(a.responseText):a.status>=400?F(e(a.status,a.statusText)):F(n))},a.send(null)}function b(L){var x=/^\s*(\d+)\s*(?:(,)\s*(?:(\d+)\s*)?)?$/.exec(L||"");if(x){var F=Number(x[1]),a=x[2],s=x[3];return a?s?[F,Number(s)]:[F,void 0]:[F,F]}}c.hooks.add("before-highlightall",function(L){L.selector+=", "+y}),c.hooks.add("before-sanity-check",function(L){var x=L.element;if(x.matches(y)){L.code="",x.setAttribute(r,d);var F=x.appendChild(document.createElement("CODE"));F.textContent=t;var a=x.getAttribute("data-src"),s=L.language;if(s==="none"){var l=(/\.(\w+)$/.exec(a)||[,"none"])[1];s=i[l]||l}c.util.setLanguage(F,s),c.util.setLanguage(x,s);var o=c.plugins.autoloader;o&&o.loadLanguages(s),w(a,function(u){x.setAttribute(r,_);var h=b(x.getAttribute("data-range"));if(h){var v=u.split(/\r\n?|\n/g),p=h[0],E=h[1]==null?v.length:h[1];p<0&&(p+=v.length),p=Math.max(0,Math.min(p-1,v.length)),E<0&&(E+=v.length),E=Math.max(0,Math.min(E,v.length)),u=v.slice(p,E).join(`
+`),x.hasAttribute("data-start")||x.setAttribute("data-start",String(p+1))}F.textContent=u,c.highlightElement(F)},function(u){x.setAttribute(r,m),F.textContent=u})}}),c.plugins.fileHighlight={highlight:function(x){for(var F=(x||document).querySelectorAll(y),a=0,s;s=F[a++];)c.highlightElement(s)}};var T=!1;c.fileHighlight=function(){T||(console.warn("Prism.fileHighlight is deprecated. Use `Prism.plugins.fileHighlight.highlight` instead."),T=!0),c.plugins.fileHighlight.highlight.apply(this,arguments)}})()});var Sn={};Ht(Sn,{BUILD_ID:()=>Pn,TempleComponent:()=>S.TempleComponent,TempleElement:()=>S.TempleElement,TempleEmitter:()=>S.TempleEmitter,TempleException:()=>S.TempleException,TempleRegistry:()=>S.TempleRegistry,children:()=>S.children,components:()=>kn,data:()=>S.data,emitter:()=>S.emitter,props:()=>S.props,signal:()=>S.signal});var $=P(q());var Pt=P(q()),N=P(z()),re=class extends Pt.TempleComponent{static component=["layout","Layout_9f3ab204ce271feaf6f7"];styles(){return""}template(){(0,N.classlist)().add("relative","w-full","vh","scroll-hidden");let e=(0,N.children)(),n=e.find(b=>b.nodeName.endsWith("PANEL-MAIN")),i=e.find(b=>b.nodeName.endsWith("PANEL-HEAD")),r=e.find(b=>b.nodeName.endsWith("PANEL-FOOT")),d=e.find(b=>b.nodeName.endsWith("PANEL-LEFT")),_=e.find(b=>b.nodeName.endsWith("PANEL-RIGHT")),m={head:!!i,foot:!!r,left:!!d,right:!!_},y=new Set,w={left:!1,right:!1,change:b=>y.add(b)};return n&&N.TempleRegistry.get(n).setAttribute("show",w).setAttribute("layout",m),i&&N.TempleRegistry.get(i).setAttribute("show",w).setAttribute("layout",m),r&&N.TempleRegistry.get(r).setAttribute("show",w).setAttribute("layout",m),d&&N.TempleRegistry.get(d).setAttribute("show",w).setAttribute("layout",m),_&&N.TempleRegistry.get(_).setAttribute("show",w).setAttribute("layout",m),this.toggle=b=>{w[b]=!w[b],y.forEach(T=>T())},()=>[N.TempleRegistry.createText(`
+`,!1),...this._toNodeList(e)]}};var we=P(q()),Ne=P(z()),se=class extends we.TempleComponent{static component=["head","Head_2bf4dff19bc88ba4138b"];styles(){return""}template(){let{layout:e,show:n}=this.element.attributes,i=(0,Ne.classlist)(),r=d=>{this.classList.add("absolute","top-0","right-0","h-60","transition-500"),e?.left?(this.classList.remove("left-0"),this.classList.add("left-226")):this.classList.add("left-0"),n.left?(this.classList.remove("md-left-0"),this.classList.add("md-left-226")):(this.classList.remove("md-left-226"),this.classList.add("md-left-0"))};return n.change(r),r(),()=>[we.TempleRegistry.createText(`
+`,!1),we.TempleRegistry.createElement("header",{class:"block w-full h-full relative"},[...this._toNodeList((0,Ne.children)())]).element]}};var Ae=P(q()),Re=P(z()),ae=class extends Ae.TempleComponent{static component=["main","Main_847772763f4518728ede"];styles(){return""}template(){let{layout:e,show:n}=this.element.attributes,i=(0,Re.classlist)(),r=d=>{this.classList.add("absolute","transition-500"),e?.head?(this.classList.remove("top-0"),this.classList.add("top-60")):this.classList.add("top-0"),e?.foot?(this.classList.remove("bottom-0"),this.classList.add("bottom-60")):this.classList.add("bottom-0"),e?.left?(this.classList.remove("left-0"),this.classList.add("left-226")):this.classList.add("left-0"),e?.right?(this.classList.remove("right-0"),this.classList.add("right-200")):this.classList.add("right-0"),n.left?(this.classList.remove("md-left-0"),this.classList.add("md-left-226")):(this.classList.remove("md-left-226"),this.classList.add("md-left-0")),n.right?(this.classList.remove("md-right-0"),this.classList.add("md-right-200")):(this.classList.remove("md-right-200"),this.classList.add("md-right-0"))};return n.change(r),r(),()=>[Ae.TempleRegistry.createText(`
+`,!1),Ae.TempleRegistry.createElement("main",{class:"block w-full h-full relative"},[...this._toNodeList((0,Re.children)())]).element]}};var qe=P(q()),le=P(z()),ie=class extends qe.TempleComponent{static component=["button","Button_d798a3059463b9c4868b"];styles(){return""}template(){let{block:e,full:n,color:i,xs:r,sm:d,md:_,lg:m,xl:y,xl2:w,xl3:b,xl4:T,xl5:L,curved:x,rounded:F,pill:a,info:s,warning:l,success:o,error:u,muted:h,primary:v,secondary:p,outline:E,transparent:C,solid:I,href:V,style:Ge,class:lt,...We}=(0,le.props)(),K=(0,le.component)(),f=document.createElement(V?"a":"button");Object.entries(We).forEach(([B,j])=>f.setAttribute(B,j)),V&&f.setAttribute("href",V),(0,le.children)().forEach(B=>f.appendChild(B)),f.classList.add("inline-block","tx-center","tx-nodecor","cursor-pointer"),e?(K.classList.add("block"),f.classList.add("block")):(K.classList.add("inline-block"),f.classList.add("inline-block")),n&&(K.classList.add("w-full"),f.classList.add("w-full"));let R=r?f.classList.add("py-2","px-4"):d?f.classList.add("py-4","px-8"):_?f.classList.add("py-6","px-12"):m?f.classList.add("py-8","px-16"):y?f.classList.add("py-10","px-20"):w?f.classList.add("py-12","px-24"):b?f.classList.add("py-14","px-28"):T?f.classList.add("py-16","px-32"):L?f.classList.add("py-18","px-36"):f.classList.add("py-6","px-12");x?f.classList.add("curved"):F?f.classList.add("rounded"):a&&f.classList.add("pill");let H=E?"outline":C?"transparent":"solid";return H==="outline"||H==="transparent"?(f.classList.add("bd-solid","bd-thin"),H==="outline"&&f.classList.add("bg-white"),i?(f.style.color=i,f.style.borderColor=i):s?f.classList.add("bd-info","tx-info"):l?f.classList.add("bd-warning","tx-warning"):o?f.classList.add("bd-success","tx-success"):u?f.classList.add("bd-error","tx-error"):h?f.classList.add("bd-muted","tx-muted"):v?f.classList.add("bd-primary","tx-primary"):p&&f.classList.add("bd-secondary","tx-secondary")):(f.classList.add("tx-white"),i?f.style.backgroundColor=i:s?f.classList.add("bg-info"):l?f.classList.add("bg-warning"):o?f.classList.add("bg-success"):u?f.classList.add("bg-error"):h?f.classList.add("bg-muted"):v?f.classList.add("bg-primary"):p&&f.classList.add("bg-secondary")),()=>[qe.TempleRegistry.createText(`
+`,!1),...this._toNodeList([f])]}};var k=P(q()),Ie=P(z()),oe=class extends k.TempleComponent{static component=["app","App_381239c61b65b86a1c20"];styles(){return""}template(){let{title:e,height:n}=(0,Ie.props)(),i=n?`height:${n}px`:"";return()=>[k.TempleRegistry.createText(`
+`,!1),k.TempleRegistry.createElement("div",{class:"bd-rad-curved scroll-hidden shadow-0-0-10-0-0-0-5"},[k.TempleRegistry.createText(`
+  `,!1),k.TempleRegistry.createElement("div",{class:"relative flex flex-center-y gap-10 p-10 bg-t-1 tx-c-999999 tx-16"},[k.TempleRegistry.createText(`
+    `,!1),k.TempleRegistry.createElement("span",{class:"bg-h-999999 pill h-10 w-10"},[]).element,k.TempleRegistry.createText(`
+    `,!1),k.TempleRegistry.createElement("span",{class:"bg-h-999999 pill h-10 w-10"},[]).element,k.TempleRegistry.createText(`
+    `,!1),k.TempleRegistry.createElement("span",{class:"bg-h-999999 pill h-10 w-10"},[]).element,k.TempleRegistry.createText(`
+    `,!1),k.TempleRegistry.createElement("span",{class:"flex flex-center h-full w-full absolute top-0 left-0"},[k.TempleRegistry.createText(`
+      `,!1),...this._toNodeList(e),k.TempleRegistry.createText(`
+    `,!1)]).element,k.TempleRegistry.createText(`
+  `,!1)]).element,k.TempleRegistry.createText(`
+  `,!1),k.TempleRegistry.createElement("div",{class:"bg-black tx-t-1 relative",style:i},[...this._toNodeList((0,Ie.children)())]).element,k.TempleRegistry.createText(`
+`,!1)]).element]}};var A=P(q()),at=P(St()),Ct=P(z()),ue=class extends A.TempleComponent{static component=["code","Code_5294df1c620ef5ddbd2f"];styles(){return`:host {
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  :host([inline]) {
+    display: inline !important;
+  }
+  :host([inline]),
+  :host([inline]) > pre,
+  :host([inline]) > pre > code {
+    display: inline !important;
+  }
+  .snippet {
+    background-color: #000000;
+    color: #ABB2BF;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
 
-  // ../temple/dist/Exception.js
-  var require_Exception = __commonJS({
-    "../temple/dist/Exception.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      var TempleException3 = class extends Error {
-        static for(message, ...values) {
-          values.forEach(function(value) {
-            message = message.replace("%s", value);
-          });
-          return new this(message);
-        }
-        static forErrorsFound(errors) {
-          const exception = new this("Invalid Parameters");
-          exception.errors = errors;
-          return exception;
-        }
-        static require(condition, message, ...values) {
-          if (!condition) {
-            for (const value of values) {
-              message = message.replace("%s", value);
-            }
-            throw new this(message);
-          }
-        }
-        constructor(message, code = 500) {
-          super();
-          this.errors = {};
-          this.start = 0;
-          this.end = 0;
-          this.message = message;
-          this.name = this.constructor.name;
-          this.code = code;
-        }
-        withCode(code) {
-          this.code = code;
-          return this;
-        }
-        withPosition(start, end) {
-          this.start = start;
-          this.end = end;
-          return this;
-        }
-        toJSON() {
-          return {
-            error: true,
-            code: this.code,
-            message: this.message
-          };
-        }
-      };
-      exports.default = TempleException3;
-    }
-  });
+  .line-numbers {
+    position: relative;
+    padding-left: 3.8em;
+    counter-reset: linenumber;
+  }
+  :host([inline]) .line-numbers {
+    position: static;
+    padding-left: 0;
+  }
 
-  // ../temple/dist/client/TempleEmitter.js
-  var require_TempleEmitter = __commonJS({
-    "../temple/dist/client/TempleEmitter.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.TempleEmitter = void 0;
-      var TempleEmitter2 = class extends EventTarget {
-        emit(event, target) {
-          this.dispatchEvent(new CustomEvent(event, { detail: target }));
-          return this;
-        }
-        on(event, callback) {
-          if (event === "ready") {
-            if (document.readyState !== "loading") {
-              const event2 = new CustomEvent("ready");
-              setTimeout(() => callback(event2), 1);
-              return this;
-            }
-          }
-          this.addEventListener(event, callback);
-          return this;
-        }
-        once(event, callback) {
-          const unbinder = (e) => {
-            this.unbind(event, unbinder);
-            callback(e);
-          };
-          this.on(event, unbinder);
-          return this;
-        }
-        unbind(event, callback) {
-          this.removeEventListener(event, callback);
-          return this;
-        }
-      };
-      exports.TempleEmitter = TempleEmitter2;
-      var emitter3 = new TempleEmitter2();
-      document.onreadystatechange = () => {
-        if (document.readyState !== "loading") {
-          emitter3.emit("ready");
-        }
-      };
-      exports.default = emitter3;
-    }
-  });
+  .line-numbers > code {
+    position: relative;
+    white-space: inherit;
+  }
 
-  // ../temple/dist/client/TempleElement.js
-  var require_TempleElement = __commonJS({
-    "../temple/dist/client/TempleElement.js"(exports) {
-      "use strict";
-      var __importDefault = exports && exports.__importDefault || function(mod) {
-        return mod && mod.__esModule ? mod : { "default": mod };
-      };
-      Object.defineProperty(exports, "__esModule", { value: true });
-      var TempleEmitter_1 = __importDefault(require_TempleEmitter());
-      var TempleElement2 = class {
-        get attributes() {
-          return Object.assign({}, this._attributes);
-        }
-        get element() {
-          return this._element;
-        }
-        constructor(element, attributes) {
-          this._element = element;
-          this._attributes = attributes;
-        }
-        hasAttribute(key) {
-          return key in this._attributes;
-        }
-        getAttribute(key) {
-          return this._attributes[key];
-        }
-        removeAttribute(key, silent = false) {
-          const current = this.getAttribute(key);
-          if (typeof current === "undefined") {
-            return this;
-          }
-          delete this._attributes[key];
-          this._element.removeAttribute(key);
-          if (!silent) {
-            TempleEmitter_1.default.emit("attribute-remove", {
-              element: this,
-              key,
-              previous: current
-            });
-          }
-          return this;
-        }
-        setAttribute(key, value, silent = false) {
-          if (typeof value === "undefined") {
-            return this.removeAttribute(key, silent);
-          }
-          const current = this.getAttribute(key);
-          if (current === value) {
-            return this;
-          }
-          this._attributes[key] = value;
-          if (typeof value === "string") {
-            this._element.setAttribute(key, value);
-          }
-          if (!silent) {
-            if (typeof current === "undefined") {
-              TempleEmitter_1.default.emit("attribute-create", { element: this, key, value });
-            } else {
-              TempleEmitter_1.default.emit("attribute-update", {
-                element: this,
-                key,
-                value,
-                previous: current
-              });
-            }
-          }
-          return this;
-        }
-        setAttributes(attributes, silent = false) {
-          for (const [key, value] of Object.entries(attributes)) {
-            this.setAttribute(key, value, silent);
-          }
-          const names = Object.keys(attributes);
-          for (const key of Object.keys(this._attributes)) {
-            if (!names.includes(key)) {
-              this.removeAttribute(key, silent);
-            }
-          }
-          return this;
-        }
-      };
-      exports.default = TempleElement2;
-    }
-  });
+  .line-numbers .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em; /* works for line-numbers below 1000 lines */
+    letter-spacing: -1px;
+    border-right: 1px solid #999;
 
-  // ../temple/dist/client/TempleRegistry.js
-  var require_TempleRegistry = __commonJS({
-    "../temple/dist/client/TempleRegistry.js"(exports) {
-      "use strict";
-      var __importDefault = exports && exports.__importDefault || function(mod) {
-        return mod && mod.__esModule ? mod : { "default": mod };
-      };
-      Object.defineProperty(exports, "__esModule", { value: true });
-      var TempleElement_1 = __importDefault(require_TempleElement());
-      var TempleRegistry5 = class {
-        static get elements() {
-          return this._elements;
-        }
-        static createComponent(tagname, definition, attributes, children3 = []) {
-          const template = document.createElement("template");
-          template.innerHTML = `<${tagname}></${tagname}>`;
-          const fragment = template.content;
-          const component = fragment.querySelector(`${tagname}`);
-          Object.setPrototypeOf(component, definition.prototype);
-          component.constructor = definition.constructor;
-          component.constructor.component = definition.component;
-          for (const [key, value] of Object.entries(attributes)) {
-            if (typeof value === "string") {
-              component.setAttribute(key, value);
-            } else if (value === true) {
-              component.setAttribute(key, key);
-            }
-          }
-          component._TempleAttributes = attributes;
-          component.props = attributes;
-          children3.forEach((child) => component.appendChild(child));
-          component.register();
-          if (!customElements.get(tagname)) {
-            component.connectedCallback();
-          }
-          return this.register(component, attributes);
-        }
-        static createElement(name, attributes, children3 = []) {
-          const element = document.createElement(name);
-          for (const [key, value] of Object.entries(attributes)) {
-            if (typeof value === "string") {
-              element.setAttribute(key, value);
-            } else if (value === true) {
-              element.setAttribute(key, key);
-            }
-          }
-          children3.filter((child) => typeof child !== "undefined").forEach((child) => element.appendChild(child));
-          return this.register(element, attributes);
-        }
-        static createText(value, escape = false) {
-          return document.createTextNode(value);
-        }
-        static filter(callback) {
-          const elements = [];
-          this._elements.forEach((temple, html) => {
-            if (callback(temple, html)) {
-              elements.push(temple);
-            }
-          });
-          return elements;
-        }
-        static get(element) {
-          return this._elements.get(element) || null;
-        }
-        static has(element) {
-          return this._elements.has(element);
-        }
-        static map(callback) {
-          const elements = [];
-          this._elements.forEach((temple, html) => {
-            elements.push(callback(temple, html));
-          });
-          return elements;
-        }
-        static register(element, attributes) {
-          if (this.has(element)) {
-            return this.get(element);
-          }
-          const node = new TempleElement_1.default(element, attributes || {});
-          this._elements.set(element, node);
-          return node;
-        }
-      };
-      TempleRegistry5._elements = /* @__PURE__ */ new Map();
-      exports.default = TempleRegistry5;
-    }
-  });
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 
-  // ../temple/dist/client/data.js
-  var require_data = __commonJS({
-    "../temple/dist/client/data.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.TempleDataMap = void 0;
-      var TempleDataMap = class {
-        constructor() {
-          if (!window.__APP_DATA__) {
-            window.__APP_DATA__ = {};
-          }
-        }
-        clear() {
-          window.__APP_DATA__ = {};
-          return this;
-        }
-        delete(key) {
-          if (this.has(key)) {
-            delete window.__APP_DATA__[key];
-            return true;
-          }
-          return false;
-        }
-        entries() {
-          return Object.entries(window.__APP_DATA__);
-        }
-        has(key) {
-          return key in window.__APP_DATA__;
-        }
-        get(key) {
-          return window.__APP_DATA__[key];
-        }
-        keys() {
-          return Object.keys(window.__APP_DATA__);
-        }
-        set(key, value) {
-          window.__APP_DATA__[key] = value;
-          return this;
-        }
-        values() {
-          return Object.values(window.__APP_DATA__);
-        }
-      };
-      exports.TempleDataMap = TempleDataMap;
-      var data2 = new TempleDataMap();
-      exports.default = data2;
-    }
-  });
+  }
 
-  // ../temple/dist/client/TempleComponent.js
-  var require_TempleComponent = __commonJS({
-    "../temple/dist/client/TempleComponent.js"(exports) {
-      "use strict";
-      var __importDefault = exports && exports.__importDefault || function(mod) {
-        return mod && mod.__esModule ? mod : { "default": mod };
-      };
-      Object.defineProperty(exports, "__esModule", { value: true });
-      var TempleRegistry_1 = __importDefault(require_TempleRegistry());
-      var TempleEmitter_1 = __importDefault(require_TempleEmitter());
-      var data_1 = __importDefault(require_data());
-      var TempleComponent4 = class _TempleComponent extends HTMLElement {
-        constructor() {
-          super(...arguments);
-          this._initiated = false;
-          this._template = null;
-          this._attributes = {};
-          this._props = {};
-          this._children = void 0;
-          this._rendering = false;
-        }
-        static register() {
-          customElements.define(this.component[0], this);
-        }
-        get attr() {
-          return this._attributes;
-        }
-        get element() {
-          if (!TempleRegistry_1.default.has(this)) {
-            return TempleRegistry_1.default.register(this, this._TempleAttributes || {});
-          }
-          return TempleRegistry_1.default.get(this);
-        }
-        get metadata() {
-          const [tagname, classname] = this.constructor.component;
-          return { tagname, classname };
-        }
-        get originalChildren() {
-          return this._children;
-        }
-        get initiated() {
-          return this._initiated;
-        }
-        get props() {
-          return this._props;
-        }
-        set props(props4) {
-          this._props = Object.assign({}, props4);
-          this._attributes = Object.fromEntries(Object.entries(props4).filter((entry) => typeof entry[1] === "string" || entry[1] === true));
-        }
-        adoptedCallback() {
-          this.render();
-        }
-        attributeChangedCallback(name, previous, value) {
-          this.props = Object.assign(Object.assign({}, this.props), { [name]: value });
-          this.render();
-        }
-        connectedCallback() {
-          this.wait();
-        }
-        disconnectedCallback() {
-        }
-        getParentComponent() {
-          let parent = this.parentElement;
-          while (parent) {
-            if (parent instanceof _TempleComponent) {
-              return parent;
-            }
-            parent = parent.parentElement;
-          }
-          return null;
-        }
-        register() {
-          TempleRegistry_1.default.register(this, this._props);
-        }
-        render() {
-          const parent = this.getParentComponent();
-          if (parent && !parent.initiated) {
-            return;
-          } else if (this._rendering) {
-            return;
-          }
-          this._rendering = true;
-          data_1.default.set("current", this);
-          const styles = this.styles();
-          if (!this._template) {
-            this._template = this.template();
-          } else {
-            TempleEmitter_1.default.emit("unmounted", this);
-          }
-          const children3 = this._template().filter(Boolean);
-          if (styles.length === 0) {
-            this.textContent = "";
-            children3.forEach((child) => this.appendChild(child));
-          } else {
-            if (!this.shadowRoot) {
-              this.attachShadow({ mode: "open" });
-            }
-            const shadowRoot = this.shadowRoot;
-            this.textContent = "";
-            shadowRoot.textContent = "";
-            const style = document.createElement("style");
-            style.innerText = styles;
-            shadowRoot.appendChild(style);
-            children3.forEach((child) => {
-              var _a;
-              return (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.appendChild(child);
-            });
-          }
-          data_1.default.delete("current");
-          this._initiated = true;
-          TempleEmitter_1.default.emit("mounted", this);
-          this._rendering = false;
-          return this.shadowRoot ? this.shadowRoot.innerHTML : this.innerHTML;
-        }
-        wait() {
-          if (document.readyState !== "loading") {
-            this._update();
-          } else {
-            const next = () => {
-              this._update();
-              TempleEmitter_1.default.unbind("ready", next);
-            };
-            TempleEmitter_1.default.on("ready", next);
-          }
-        }
-        _toNodeList(value) {
-          if (value instanceof Node) {
-            return [value];
-          }
-          if (Array.isArray(value)) {
-            if (value.every((item) => item instanceof Node)) {
-              return value;
-            }
-          }
-          return [TempleRegistry_1.default.createText(String(value))];
-        }
-        _update() {
-          if (typeof this._children === "undefined") {
-            this._children = Array.from(this.childNodes || []);
-          }
-          const element = this.element;
-          if (element) {
-            this.props = Object.assign({}, element.attributes);
-            this.render();
-          }
-          if (!this._initiated) {
-            this.render();
-          }
-        }
-      };
-      exports.default = TempleComponent4;
-    }
-  });
+  :host([inline]) .line-numbers .line-numbers-rows {
+    display: none;
+  }
 
-  // ../temple/dist/client/env.js
-  var require_env = __commonJS({
-    "../temple/dist/client/env.js"(exports) {
-      "use strict";
-      var __importDefault = exports && exports.__importDefault || function(mod) {
-        return mod && mod.__esModule ? mod : { "default": mod };
-      };
-      Object.defineProperty(exports, "__esModule", { value: true });
-      var data_1 = __importDefault(require_data());
-      function env2(name) {
-        const env3 = data_1.default.get("env") || {};
-        if (name) {
-          return env3[name] || null;
-        }
-        return env3;
-      }
-      exports.default = env2;
-    }
-  });
+  .line-numbers-rows > span {
+    display: block;
+    counter-increment: linenumber;
+  }
 
-  // ../temple/dist/client/props.js
-  var require_props = __commonJS({
-    "../temple/dist/client/props.js"(exports) {
-      "use strict";
-      var __importDefault = exports && exports.__importDefault || function(mod) {
-        return mod && mod.__esModule ? mod : { "default": mod };
-      };
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.default = props4;
-      var data_1 = __importDefault(require_data());
-      function props4(component = null) {
-        if (!component) {
-          component = data_1.default.get("current") || null;
-        }
-        if (component) {
-          if (component === "document") {
-            return data_1.default.get("props") || {};
-          }
-          return component.props;
-        }
-        return {};
-      }
-    }
-  });
+  .line-numbers-rows > span:before {
+    content: counter(linenumber);
+    color: #999;
+    display: block;
+    padding-right: 0.8em;
+    text-align: right;
+  }
+  .pad {
+    padding: 5px;
+  }
 
-  // ../temple/dist/client/classnames.js
-  var require_classnames = __commonJS({
-    "../temple/dist/client/classnames.js"(exports) {
-      "use strict";
-      var __importDefault = exports && exports.__importDefault || function(mod) {
-        return mod && mod.__esModule ? mod : { "default": mod };
-      };
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.default = classnames;
-      var props_1 = __importDefault(require_props());
-      function classnames(component = null) {
-        return (0, props_1.default)(component)["class"];
-      }
-    }
-  });
+  .terminal {
+    background-color: #000000;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 15px;
+    height: 100%;
+    padding: 10px;
+  }
+  .terminal span {
+    color: #00FF00;
+  }`}template(){let e=this.props,{lang:n="markup",numbers:i=!1,inline:r=!1,trim:d=!1,ltrim:_=!1,rtrim:m=!1,detab:y=0}=e,w=(0,Ct.children)(),b=w[0]?.textContent||"";y&&(b=b.replace(new RegExp(`\\n {${y}}`,"g"),`
+`)),d?b=b.trim():_?b=b.replace(/^\s+/,""):m&&(b=b.replace(/\s+$/,""));let T=L=>{if(!b)return;let x=at.default.highlight(b,at.default.languages[n],n);if(L.detail.target.innerHTML=x,i){let F=x.match(/\n(?!$)/g),a=F?F.length+1:1,s=new Array(a+1).join("<span></span>"),l=document.createElement("span");l.setAttribute("aria-hidden","true"),l.className="line-numbers-rows",l.innerHTML=s,L.detail.target.appendChild(l)}};return()=>[A.TempleRegistry.createElement("link",{rel:"stylesheet",href:"https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css"}).element,A.TempleRegistry.createText(`
+`,!1),A.TempleRegistry.createElement("link",{rel:"stylesheet",href:"https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-tomorrow.min.css"}).element,A.TempleRegistry.createText(`
+`,!1),...n==="bash"?[A.TempleRegistry.createText(`
+  `,!1),A.TempleRegistry.createElement("div",{class:"terminal"},[A.TempleRegistry.createElement("span",{},[A.TempleRegistry.createText("$",!1)]).element,A.TempleRegistry.createText(" ",!1),...this._toNodeList(w)]).element,A.TempleRegistry.createText(`
+`,!1)]:b?[,A.TempleRegistry.createText(`
+  `,!1),...i?[A.TempleRegistry.createText(`
+    `,!1),A.TempleRegistry.createElement("pre",{class:"snippet line-numbers"},[A.TempleRegistry.createElement("code",{mount:T},[]).element]).element,A.TempleRegistry.createText(`
+  `,!1)]:[,A.TempleRegistry.createText(`
+    `,!1),A.TempleRegistry.createElement("pre",{class:"snippet pad"},[A.TempleRegistry.createElement("code",{mount:T},[]).element]).element,A.TempleRegistry.createText(`
+  `,!1)],A.TempleRegistry.createText(`
+`,!1)]:[,A.TempleRegistry.createText(`
+  `,!1),A.TempleRegistry.createElement("span",{},[A.TempleRegistry.createText("????",!1)]).element,A.TempleRegistry.createText(`
+`,!1)],A.TempleRegistry.createText(`
 
-  // ../temple/dist/client/children.js
-  var require_children = __commonJS({
-    "../temple/dist/client/children.js"(exports) {
-      "use strict";
-      var __importDefault = exports && exports.__importDefault || function(mod) {
-        return mod && mod.__esModule ? mod : { "default": mod };
-      };
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.innerHTML = innerHTML;
-      exports.default = children3;
-      var data_1 = __importDefault(require_data());
-      function innerHTML(component = null) {
-        const inner = children3(component);
-        const wrapper = document.createElement("template");
-        wrapper.append(...inner);
-        return wrapper.innerHTML;
-      }
-      function children3(component = null) {
-        if (!component) {
-          component = data_1.default.get("current") || null;
-        }
-        return component ? component.originalChildren || [] : [];
-      }
-    }
-  });
+`,!1)]}};var Te=P(q()),ze=P(z()),ce=class extends Te.TempleComponent{static component=["preview","Preview_ab5776d356e4ce3da5d5"];styles(){return""}template(){return(0,ze.classlist)().add("block","w-full","h-full","scroll-auto"),()=>[Te.TempleRegistry.createText(`
+`,!1),Te.TempleRegistry.createElement("div",{class:"bg-white tx-black arial p-10 h-full"},[...this._toNodeList((0,ze.children)())]).element]}};var D=P(q());var Mt=function(t){return t};var Be=P(z()),de=class extends D.TempleComponent{static component=["translate","Translate_0014b007fc91289b2776"];styles(){return""}template(){let{trim:e=!1,p:n=!1,li:i=!1,div:r=!1}=(0,Be.props)(),d=(0,Be.children)(),_=[],m=[];for(let T of d)typeof T=="string"?_.push(T):T instanceof Node&&T.textContent?_.push(T.textContent):(_.push("%s"),m.push(T));let y=_.join("");e&&(y=y.replace(/\s+/," ").trim());let w=Mt(y).split("%s"),b=[];for(let T=0;T<w.length;T++)b.push(document.createTextNode(w[T])),m[T]&&b.push(m[T]);return()=>[D.TempleRegistry.createText(`
+    `,!1),...n?[D.TempleRegistry.createText(`
+      `,!1),D.TempleRegistry.createElement("p",{},[...this._toNodeList(b)]).element,D.TempleRegistry.createText(`
+    `,!1)]:i?[,D.TempleRegistry.createText(`
+      `,!1),D.TempleRegistry.createElement("li",{},[...this._toNodeList(b)]).element,D.TempleRegistry.createText(`
+    `,!1)]:r?[,D.TempleRegistry.createText(`
+      `,!1),D.TempleRegistry.createElement("div",{},[...this._toNodeList(b)]).element,D.TempleRegistry.createText(`
+    `,!1)]:[,D.TempleRegistry.createText(`
+      `,!1),...this._toNodeList(b),D.TempleRegistry.createText(`
+    `,!1)]]}};var Ot=P(z());var it=function(t,...e){let n=Fn(t);for(let i=0;i<e.length;i++)n=n.replace("%s",String(e[i]));return n},Fn=function(t){return t};var S=P(q());$.emitter.once("ready",()=>{let t=document.querySelector("script[data-app]");if(!t)throw $.TempleException.for("APP_DATA not found");try{let _=atob(t.getAttribute("data-app"));window.__APP_DATA__=JSON.parse(_),Object.entries(window.__APP_DATA__).forEach(([m,y])=>{$.data.set(m,y)})}catch{throw $.TempleException.for("APP_DATA is not a valid JSON")}$.data.set("current","document");let e="/temple/500.html",n=it("Oops... - Temple - The reactive web component template engine."),i=it("Temple is a template engine hat generates web components and support reactivity."),{error:r="Unknown Error"}=(0,Ot.props)();$.data.delete("current");let d={2:{class:"flex flex-center-y px-20 py-15 m-0 bg-t-1"},3:{href:"/temple"},4:{alt:"Temple Logo",class:"h-26 mr-10",src:"/temple/temple-icon.png"},5:{class:"flex-grow tx-uppercase"},6:{class:"tx-white",href:"/temple"},7:{class:"flex flex-center-y"},8:{class:"tx-white",href:"/temple/docs/index.html"},9:{class:"tx-t-1 tx-5xl ml-10",href:"https://github.com/OSSPhilippines/temple",target:"_blank"},10:{class:"fab fa-github"},11:{class:"bg-h-cb3837 pill tx-t-1 tx-lg ml-5 p-5 tx-center",href:"https://www.npmjs.com/package/@ossph/temple",target:"_blank"},12:{class:"fab fa-npm text-white"},13:{class:"bg-h-7289da pill tx-t-1 tx-lg ml-5 p-5 tx-center",href:"https://discord.gg/open-source-software-ph-905496362982981723",target:"_blank"},14:{class:"fab fa-discord text-white"},15:{class:"scroll-auto"},16:{class:"p-20 w-calc-full-40"},17:{class:"pt-10 pb-20"},18:{p:!0,trim:!0},19:{class:"bg-black courier tx-lh-22 tx-word-wrap p-10 scroll-x-auto tx-prewrap"}};for(let _ of document.body.querySelectorAll("*")){let m=Object.fromEntries(Array.from(_.attributes).map(w=>[w.nodeName,w.nodeValue.length>0?w.nodeValue:!0])),y=String($.TempleRegistry.elements.size);d[y]&&(Object.assign(m,d[y]),_.TempleAttributes=d[y]),$.TempleRegistry.register(_,m)}customElements.define("panel-layout",re),customElements.define("panel-head",se),customElements.define("panel-main",ae),customElements.define("tui-button",ie),customElements.define("ide-app",oe),customElements.define("ide-code",ue),customElements.define("ide-preview",ce),customElements.define("i18n-translate",de),$.emitter.emit("mounted",document.body)});var kn={PanelLayout_9f3ab204ce271feaf6f7:re,PanelHead_2bf4dff19bc88ba4138b:se,PanelMain_847772763f4518728ede:ae,TuiButton_d798a3059463b9c4868b:ie,IdeApp_381239c61b65b86a1c20:oe,IdeCode_5294df1c620ef5ddbd2f:ue,IdePreview_ab5776d356e4ce3da5d5:ce,I18nTranslate_0014b007fc91289b2776:de},Pn="055f1a2f37d39d4fe92a";return zt(Sn);})();
+/*! Bundled license information:
 
-  // ../temple/dist/client/signal.js
-  var require_signal = __commonJS({
-    "../temple/dist/client/signal.js"(exports) {
-      "use strict";
-      var __importDefault = exports && exports.__importDefault || function(mod) {
-        return mod && mod.__esModule ? mod : { "default": mod };
-      };
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.SignalRegistry = void 0;
-      exports.default = signal2;
-      var Exception_1 = __importDefault(require_Exception());
-      var data_1 = __importDefault(require_data());
-      var SignalRegistry = class _SignalRegistry {
-        static observe(component, value) {
-          const methods = {
-            getter: () => property.raw,
-            setter: (value2) => value2
-          };
-          const property = {
-            raw: value,
-            getter(callback) {
-              methods.getter = callback;
-              return property;
-            },
-            setter(callback) {
-              methods.setter = callback;
-              return property;
-            }
-          };
-          Object.defineProperty(property, "value", {
-            get() {
-              return methods.getter();
-            },
-            set(value2) {
-              const formatted = methods.setter(value2);
-              const rerender = _SignalRegistry.serialize(formatted) !== _SignalRegistry.serialize(property.raw);
-              property.raw = formatted;
-              if (rerender) {
-                component.render();
-              }
-            }
-          });
-          const observer = this._observers.get(component);
-          if (!observer) {
-            this._observers.set(component, {
-              observed: 1,
-              values: [property]
-            });
-          } else {
-            observer.observed++;
-            observer.values.push(property);
-          }
-          return property;
-        }
-        static observer(component) {
-          return this._observers.get(component) || null;
-        }
-        static serialize(value) {
-          return JSON.stringify(value);
-        }
-      };
-      exports.SignalRegistry = SignalRegistry;
-      SignalRegistry._observers = /* @__PURE__ */ new Map();
-      function signal2(value, component = null) {
-        if (!component) {
-          component = data_1.default.get("current") || null;
-        }
-        if (!component) {
-          throw Exception_1.default.for("Signals can only be created within a Temple component");
-        }
-        if (!component.initiated) {
-          return SignalRegistry.observe(component, value);
-        }
-        const observer = SignalRegistry.observer(component);
-        if (!observer) {
-          throw Exception_1.default.for("State mismatch");
-        }
-        const values = observer.values;
-        return values[observer.observed++ % observer.values.length];
-      }
-    }
-  });
-
-  // ../temple/dist/client/helpers.js
-  var require_helpers = __commonJS({
-    "../temple/dist/client/helpers.js"(exports) {
-      "use strict";
-      var __importDefault = exports && exports.__importDefault || function(mod) {
-        return mod && mod.__esModule ? mod : { "default": mod };
-      };
-      Object.defineProperty(exports, "__esModule", { value: true });
-      var TempleRegistry_1 = __importDefault(require_TempleRegistry());
-      var TempleEmitter_1 = __importDefault(require_TempleEmitter());
-      var match = (element, attribute) => {
-        return Array.from(element.querySelectorAll("*")).filter((element2) => {
-          const node = TempleRegistry_1.default.get(element2);
-          return node && node.hasAttribute(attribute);
-        }).map((element2) => TempleRegistry_1.default.get(element2));
-      };
-      function bindAttribute(name, bind) {
-        TempleEmitter_1.default.on("mounted", (e) => {
-          if (!e.detail)
-            return;
-          const element = e.detail;
-          match(element.shadowRoot || element, name).forEach(bind);
-        });
-      }
-      function unbindAttribute(name, bind) {
-        TempleEmitter_1.default.on("unmounted", (e) => {
-          if (!e.detail)
-            return;
-          const element = e.detail;
-          match(element.shadowRoot || element, name).forEach(bind);
-        });
-      }
-      bindAttribute("mount", (element) => {
-        const callback = element.getAttribute("mount");
-        if (typeof callback === "function") {
-          const event = new CustomEvent("mount", {
-            detail: {
-              node: element,
-              target: element.element
-            }
-          });
-          callback(event);
-        }
-      });
-      unbindAttribute("unmount", (element) => {
-        const callback = element.getAttribute("unmount");
-        if (typeof callback === "function") {
-          const event = new CustomEvent("unmount", {
-            detail: {
-              node: element,
-              target: element.element
-            }
-          });
-          callback(event);
-        }
-      });
-      bindAttribute("if", (element) => {
-        const condition = element.getAttribute("if");
-        if (condition === false || condition === "false") {
-          element.element.remove();
-        } else if (typeof condition === "function" && !condition()) {
-          element.element.remove();
-        }
-      });
-      [
-        "click",
-        "dblclick",
-        "mousedown",
-        "mouseup",
-        "mousemove",
-        "mouseover",
-        "mouseout",
-        "wheel",
-        "keydown",
-        "keypress",
-        "keyup",
-        "blur",
-        "change",
-        "contextmenu",
-        "focus",
-        "input",
-        "submit",
-        "invalid",
-        "reset",
-        "search",
-        "select",
-        "copy",
-        "cut",
-        "paste",
-        "drag",
-        "dragstart",
-        "dragend",
-        "dragover",
-        "dragenter",
-        "dragleave",
-        "drop",
-        "scroll",
-        "durationchange",
-        "ended",
-        "error",
-        "loadeddata",
-        "loadedmetadata",
-        "loadstart",
-        "pause",
-        "play",
-        "playing",
-        "progress",
-        "ratechange",
-        "seeked",
-        "seeking",
-        "stalled",
-        "suspend",
-        "timeupdate",
-        "volumechange",
-        "waiting",
-        "animationstart",
-        "animationend",
-        "animationiteration",
-        "transitionend",
-        "toggle"
-      ].forEach((event) => bindAttribute(event, (element) => {
-        const callback = element.getAttribute(event);
-        if (typeof callback === "function") {
-          element.element.removeEventListener(event, callback);
-          element.element.addEventListener(event, callback);
-        }
-      }));
-    }
-  });
-
-  // ../temple/dist/client.js
-  var require_client = __commonJS({
-    "../temple/dist/client.js"(exports) {
-      "use strict";
-      var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
-        if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-          desc = { enumerable: true, get: function() {
-            return m[k];
-          } };
-        }
-        Object.defineProperty(o, k2, desc);
-      } : function(o, m, k, k2) {
-        if (k2 === void 0) k2 = k;
-        o[k2] = m[k];
-      });
-      var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o, v) {
-        Object.defineProperty(o, "default", { enumerable: true, value: v });
-      } : function(o, v) {
-        o["default"] = v;
-      });
-      var __importStar = exports && exports.__importStar || function(mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) {
-          for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-        }
-        __setModuleDefault(result, mod);
-        return result;
-      };
-      var __importDefault = exports && exports.__importDefault || function(mod) {
-        return mod && mod.__esModule ? mod : { "default": mod };
-      };
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.SignalRegistry = exports.TempleException = exports.TempleEmitter = exports.TempleElement = exports.TempleRegistry = exports.TempleComponent = exports.TempleDataMap = exports.emitter = exports.signal = exports.innerHTML = exports.children = exports.classnames = exports.props = exports.env = exports.data = void 0;
-      var Exception_1 = __importDefault(require_Exception());
-      exports.TempleException = Exception_1.default;
-      var TempleComponent_1 = __importDefault(require_TempleComponent());
-      exports.TempleComponent = TempleComponent_1.default;
-      var TempleRegistry_1 = __importDefault(require_TempleRegistry());
-      exports.TempleRegistry = TempleRegistry_1.default;
-      var TempleElement_1 = __importDefault(require_TempleElement());
-      exports.TempleElement = TempleElement_1.default;
-      var TempleEmitter_1 = __importStar(require_TempleEmitter());
-      exports.emitter = TempleEmitter_1.default;
-      Object.defineProperty(exports, "TempleEmitter", { enumerable: true, get: function() {
-        return TempleEmitter_1.TempleEmitter;
-      } });
-      var data_1 = __importStar(require_data());
-      exports.data = data_1.default;
-      Object.defineProperty(exports, "TempleDataMap", { enumerable: true, get: function() {
-        return data_1.TempleDataMap;
-      } });
-      var env_1 = __importDefault(require_env());
-      exports.env = env_1.default;
-      var props_1 = __importDefault(require_props());
-      exports.props = props_1.default;
-      var classnames_1 = __importDefault(require_classnames());
-      exports.classnames = classnames_1.default;
-      var children_1 = __importStar(require_children());
-      exports.children = children_1.default;
-      Object.defineProperty(exports, "innerHTML", { enumerable: true, get: function() {
-        return children_1.innerHTML;
-      } });
-      var signal_1 = __importStar(require_signal());
-      exports.signal = signal_1.default;
-      Object.defineProperty(exports, "SignalRegistry", { enumerable: true, get: function() {
-        return signal_1.SignalRegistry;
-      } });
-      require_helpers();
-    }
-  });
-
-  // ../temple/client.js
-  var require_client2 = __commonJS({
-    "../temple/client.js"(exports, module) {
-      module.exports = { ...require_client() };
-    }
-  });
-
-  // ../temple/index.js
-  var require_temple = __commonJS({
-    "../temple/index.js"(exports, module) {
-      module.exports = { ...require_client() };
-    }
-  });
-
-  // temple-document-client-resolver:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/500.dtml
-  var __exports = {};
-  __export(__exports, {
-    BUILD_ID: () => BUILD_ID,
-    TempleComponent: () => import_client4.TempleComponent,
-    TempleElement: () => import_client4.TempleElement,
-    TempleEmitter: () => import_client4.TempleEmitter,
-    TempleException: () => import_client4.TempleException,
-    TempleRegistry: () => import_client4.TempleRegistry,
-    children: () => import_client4.children,
-    components: () => components,
-    data: () => import_client4.data,
-    emitter: () => import_client4.emitter,
-    props: () => import_client4.props,
-    signal: () => import_client4.signal
-  });
-  var import_client3 = __toESM(require_client2());
-
-  // temple-component-resolver:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/modules/panel/main.tml
-  var import_client = __toESM(require_client2());
-  var Main_fd7f1af6410c5b5c8e1f = class extends import_client.TempleComponent {
-    static component = ["main", "Main_fd7f1af6410c5b5c8e1f"];
-    styles() {
-      return ``;
-    }
-    template() {
-      const props4 = this.props;
-      const children3 = () => this.originalChildren;
-      return () => [
-        import_client.TempleRegistry.createElement("main", {}, [
-          ...this._toNodeList(children3())
-        ]).element
-      ];
-    }
-  };
-
-  // temple-component-resolver:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/modules/i18n/translate.tml
-  var import_client2 = __toESM(require_client2());
-
-  // src/modules/i18n/index.ts
-  var _ = function(phrase, ...variables) {
-    let translation = translate(phrase);
-    for (let i = 0; i < variables.length; i++) {
-      translation = translation.replace("%s", String(variables[i]));
-    }
-    return translation;
-  };
-  var translate = function(phrase) {
-    return phrase;
-  };
-
-  // temple-component-resolver:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/modules/i18n/translate.tml
-  var import_temple = __toESM(require_temple());
-  var Translate_7d25e372f5ffb5e39dad = class extends import_client2.TempleComponent {
-    static component = ["translate", "Translate_7d25e372f5ffb5e39dad"];
-    styles() {
-      return ``;
-    }
-    template() {
-      const { trim = false, p = false, li = false, div = false } = (0, import_temple.props)();
-      const childlist = (0, import_temple.children)();
-      const phrase = [];
-      const variables = [];
-      for (const child of childlist) {
-        if (typeof child === "string") {
-          phrase.push(child);
-        } else if (child instanceof Node && child.textContent) {
-          phrase.push(child.textContent);
-        } else {
-          phrase.push("%s");
-          variables.push(child);
-        }
-      }
-      let words = phrase.join("");
-      if (trim) {
-        words = words.replace(/\s+/, " ").trim();
-      }
-      const chunks = translate(words).split("%s");
-      const translations = [];
-      for (let i = 0; i < chunks.length; i++) {
-        translations.push(document.createTextNode(chunks[i]));
-        if (variables[i]) {
-          translations.push(variables[i]);
-        }
-      }
-      return () => [
-        import_client2.TempleRegistry.createText(`
-    `, false),
-        ...!!p ? [
-          import_client2.TempleRegistry.createText(`
-      `, false),
-          import_client2.TempleRegistry.createElement("p", {}, [
-            ...this._toNodeList(translations)
-          ]).element,
-          import_client2.TempleRegistry.createText(`
-    `, false)
-        ] : !!li ? [
-          ,
-          import_client2.TempleRegistry.createText(`
-      `, false),
-          import_client2.TempleRegistry.createElement("li", {}, [
-            ...this._toNodeList(translations)
-          ]).element,
-          import_client2.TempleRegistry.createText(`
-    `, false)
-        ] : !!div ? [
-          ,
-          import_client2.TempleRegistry.createText(`
-      `, false),
-          import_client2.TempleRegistry.createElement("div", {}, [
-            ...this._toNodeList(translations)
-          ]).element,
-          import_client2.TempleRegistry.createText(`
-    `, false)
-        ] : true ? [
-          ,
-          import_client2.TempleRegistry.createText(`
-      `, false),
-          ...this._toNodeList(translations),
-          import_client2.TempleRegistry.createText(`
-    `, false)
-        ] : []
-      ];
-    }
-  };
-
-  // temple-document-client-resolver:/Users/cblanquera/server/projects/ossph/temple/packages/temple-web/src/pages/500.dtml
-  var import_temple2 = __toESM(require_temple());
-  var import_client4 = __toESM(require_client2());
-  import_client3.emitter.once("ready", () => {
-    const script = document.querySelector("script[data-app]");
-    if (!script) {
-      throw import_client3.TempleException.for("APP_DATA not found");
-    }
-    try {
-      const data2 = atob(script.getAttribute("data-app"));
-      window.__APP_DATA__ = JSON.parse(data2);
-      Object.entries(window.__APP_DATA__).forEach(([key, value]) => {
-        import_client3.data.set(key, value);
-      });
-    } catch (error2) {
-      throw import_client3.TempleException.for("APP_DATA is not a valid JSON");
-    }
-    import_client3.data.set("current", "document");
-    const url = "/temple/500.html";
-    const title = _("Oops... - Temple - The reactive web component template engine.");
-    const description = _("Temple is a template engine hat generates web components and support reactivity.");
-    const { error } = (0, import_temple2.props)();
-    const toggle = (_2) => {
-      document.body.classList.toggle("panel-left-open");
-    };
-    import_client3.data.delete("current");
-    const __BINDINGS__ = { "0": { "class": `head panel-head` }, "1": { "class": `menu fas fa-fw fa-bars`, "click": toggle }, "2": { "href": `/temple` }, "3": { "src": `/temple/temple-icon.png`, "alt": `Temple Logo` }, "5": { "class": `tx-white`, "href": `/temple` }, "7": { "href": `/temple/docs/index.html` }, "8": { "class": `github`, "href": `https://github.com/OSSPhilippines/temple`, "target": `_blank` }, "9": { "class": `fab fa-github` }, "10": { "class": `npm`, "href": `https://www.npmjs.com/package/@ossph/temple`, "target": `_blank` }, "11": { "class": `fab fa-npm text-white` }, "12": { "class": `discord`, "href": `https://discord.gg/open-source-software-ph-905496362982981723`, "target": `_blank` }, "13": { "class": `fab fa-discord text-white` }, "14": { "class": `panel-main` }, "15": { "class": `container` }, "19": { "class": `error` } };
-    for (const element of document.body.querySelectorAll("*")) {
-      const attributes = Object.fromEntries(
-        Array.from(element.attributes).map((attribute) => [
-          attribute.nodeName,
-          attribute.nodeValue.length > 0 ? attribute.nodeValue : true
-        ])
-      );
-      const id = String(import_client3.TempleRegistry.elements.size);
-      if (__BINDINGS__[id]) {
-        Object.assign(attributes, __BINDINGS__[id]);
-        element.TempleAttributes = __BINDINGS__[id];
-      }
-      import_client3.TempleRegistry.register(element, attributes);
-    }
-    customElements.define("panel-main", Main_fd7f1af6410c5b5c8e1f);
-    customElements.define("i18n-translate", Translate_7d25e372f5ffb5e39dad);
-    import_client3.emitter.emit("mounted", document.body);
-  });
-  var components = {
-    "PanelMain_fd7f1af6410c5b5c8e1f": Main_fd7f1af6410c5b5c8e1f,
-    "I18nTranslate_7d25e372f5ffb5e39dad": Translate_7d25e372f5ffb5e39dad
-  };
-  var BUILD_ID = "055f1a2f37d39d4fe92a";
-  return __toCommonJS(__exports);
-})();
+prismjs/prism.js:
+  (**
+   * Prism: Lightweight, robust, elegant syntax highlighting
+   *
+   * @license MIT <https://opensource.org/licenses/MIT>
+   * @author Lea Verou <https://lea.verou.me>
+   * @namespace
+   * @public
+   *)
+*/

@@ -1,10 +1,21 @@
-<link rel="import" type="template" href="@/modules/html/head.tml" name="html-head" />
-<link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
-<link rel="import" type="template" href="@/modules/panel/left.tml" name="panel-left" />
-<link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
-<link rel="import" type="component" href="@/modules/ide/code.tml" name="ide-code" />
-<link rel="import" type="component" href="@/modules/api/ui.tml" name="api-ui" />
-<link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+<link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
+<link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/layout.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/head.tml" name="panel-head" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/left.tml" name="panel-left" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
+<link rel="import" type="component" href="@/components/api/ui.tml" name="api-ui" />
+<link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
+<link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
+<style>
+  @tui reset;
+  @tui fouc-opacity;
+  @tui theme;
+  @tui block;
+  @tui utilities;
+</style>
 <script>
   import { env } from '@ossph/temple';
   import { _ } from '@/modules/i18n';
@@ -12,55 +23,59 @@
   const url = '/docs/compiler-api.html';
   const title = _('Compiler API - Temple reactive web component template engine.');
   const description = _('Compiler documentation for Temple.');
-  const toggle = _ => {
-    document.body.classList.toggle('panel-left-open');
+  const toggle = () => {
+    document.getElementsByTagName('panel-layout')[0].toggle('left');
   };
 </script>
 <html>
   <html-head />
-  <body class="dark panel with-head with-left">
-    <panel-head />
-    <panel-left />
-    <panel-main class="panel-main">
-      <div class="docs container">
-        <h1>{_('Compiler API')}</h1>
+  <body class="dark bg-t-0 tx-t1 arial">
+    <panel-layout>
+      <panel-head><html-header /></panel-head>
+      <panel-left><html-aside /></panel-left>
+      <panel-main>
+        <api-docs>
+          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+            {_('Compiler API')}
+          </h1>
 
-        <i18n-translate p trim>
-          The developer interface for the Temple compiler is designed 
-          to be expressive and easily access the Temple library in most 
-          scenarios. To create a new temple compiler you can follow the 
-          code below.
-        </i18n-translate>
-        <ide-code lang="js" trim detab={10}>
-          import temple from '@ossph/temple';
-          const compiler = temple();
-        </ide-code> 
-        <i18n-translate p trim>  
-          The <ide-code lang="js" inline>temple()</ide-code> 
-          function itself takes in the following options, all of 
-          which are optional.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The developer interface for the Temple compiler is designed 
+            to be expressive and easily access the Temple library in most 
+            scenarios. To create a new temple compiler you can follow the 
+            code below.
+          </i18n-translate>
+          <ide-code lang="js" trim detab={10}>
+            import temple from '@ossph/temple';
+            const compiler = temple();
+          </ide-code> 
+          <i18n-translate p trim class="tx-lh-36 py-20">  
+            The <ide-code lang="js" inline>temple()</ide-code> 
+            function itself takes in the following options, all of 
+            which are optional.
+          </i18n-translate>
 
-        <api-ui start="TempleOptions" />
-        <i18n-translate p trim>
-          Calling <ide-code lang="js" inline>{`temple()`}</ide-code> as in 
-          <ide-code lang="js" inline>{`compiler = temple({/*options*/})`}</ide-code> 
-          returns the Temple compiler which contains the following object.
-        </i18n-translate>
-        <api-ui />
-        
-        <nav class="pager">
-          <a class="prev" href="/temple/docs/component-strategy.html">
-            <i class="fas fa-fw fa-chevron-left"></i>
-            {_('Component Strategy')}
-          </a>
-          <a class="next" href="/temple/docs/client-api.html">
-            {_('Client API')}
-            <i class="fas fa-fw fa-chevron-right"></i>
-          </a>
-        </nav>
-      </div>
-      <footer class="foot"></footer>
-    </panel-main>
+          <api-ui start="TempleOptions" />
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Calling <ide-code lang="js" inline>{`temple()`}</ide-code> as in 
+            <ide-code lang="js" inline>{`compiler = temple({/*options*/})`}</ide-code> 
+            returns the Temple compiler which contains the following object.
+          </i18n-translate>
+          <api-ui />
+
+          <nav class="flex">
+            <a class="tx-primary py-40" href="/temple/docs/component-strategy.html">
+              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              {_('Component Strategy')}
+            </a>
+            <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/client-api.html">
+              {_('Client API')}
+              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
+            </a>
+          </nav>
+          <footer class="foot"></footer>
+        </api-docs>
+      </panel-main>
+    </panel-layout>
   </body>
 </html>

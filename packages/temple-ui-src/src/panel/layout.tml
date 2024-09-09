@@ -1,0 +1,54 @@
+<script>
+  import { children, classlist, TempleRegistry } from '@ossph/temple';
+
+  classlist().add('relative', 'w-full', 'vh', 'scroll-hidden');
+  
+  const panels = children();
+  
+  const main = panels.find(panel => panel.nodeName.endsWith('PANEL-MAIN'));
+  const head = panels.find(panel => panel.nodeName.endsWith('PANEL-HEAD'));
+  const foot = panels.find(panel => panel.nodeName.endsWith('PANEL-FOOT'));
+  const left = panels.find(panel => panel.nodeName.endsWith('PANEL-LEFT'));
+  const right = panels.find(panel => panel.nodeName.endsWith('PANEL-RIGHT'));
+
+  const layout = {
+    head: !!head,
+    foot: !!foot,
+    left: !!left,
+    right: !!right,
+  };
+
+  const listeners = new Set<() => void>();
+
+  const show = {
+    left: false,
+    right: false,
+    change: (listener: () => void) => listeners.add(listener),
+  };
+
+  main && TempleRegistry.get(main)
+    .setAttribute('show', show)
+    .setAttribute('layout', layout);
+
+  head && TempleRegistry.get(head)
+    .setAttribute('show', show)
+    .setAttribute('layout', layout);
+
+  foot && TempleRegistry.get(foot)
+    .setAttribute('show', show)
+    .setAttribute('layout', layout);
+  
+  left && TempleRegistry.get(left)
+    .setAttribute('show', show)
+    .setAttribute('layout', layout);
+
+  right && TempleRegistry.get(right)
+    .setAttribute('show', show)
+    .setAttribute('layout', layout);
+
+  this.toggle = panel => {
+    show[panel] = !show[panel];
+    listeners.forEach(listener => listener());
+  };
+</script>
+{panels}

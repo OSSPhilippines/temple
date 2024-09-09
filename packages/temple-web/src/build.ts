@@ -3,16 +3,18 @@ import type { TempleEvent, DocumentBuilder } from '@ossph/temple/compiler';
 import path from 'path';
 import { globSync as glob } from 'fast-glob';
 import temple, { cache } from '@ossph/temple/compiler';
+import { tui } from '@ossph/temple-ui';
 
 const docs = path.resolve(__dirname, '../../../docs');
 //create temple compiler
 const compiler = temple({ 
   brand: '',
   cwd: __dirname,
-  minify: false
-//enable cache
-})
-
+  minify: true
+});
+//use temple ui
+compiler.use(tui());
+//use cache
 compiler.use(cache({ 
   environment: 'production',
   buildPath: path.join(docs, 'build') 

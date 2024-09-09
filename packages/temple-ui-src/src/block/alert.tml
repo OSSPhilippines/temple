@@ -1,87 +1,83 @@
 <script>
-  import { props, classnames, children } from '@ossph/temple';
+  import { props, children, component } from '@ossph/temple';
   // Separate component related props from field attributes
   const { 
-    color,  info,    warning, success,     
-    error,  muted,   primary, secondary,
-    solid,  outline, curved,  rounded, 
-    pill,   style,   brand
+    curved,      rounded,   pill,    
+    info,        warning,   success, 
+    error,       muted,     primary, 
+    color,       secondary, outline, 
+    transparent, solid,
+    //dont need these
+    style,     'class': _,
+    //get the rest
+    ...attributes 
   } = props();
 
-  const prefix = typeof brand !== 'string' 
-    ? 'tui-' : brand 
-    ? `${brand}-`: '';
+  //get the host element
+  const host = component();
+  //make a alert
+  const alert = document.createElement('div');
+  //add children to the alert
+  children().forEach(child => alert.appendChild(child));
 
-  const config = {
-    classes: [ `${prefix}alert` ],
-    styles: ''
+  host.classList.add('block');
+  alert.classList.add('block', 'p-16');
+
+  if (curved) {
+    alert.classList.add('curved');
+  } else if (rounded) {
+    alert.classList.add('rounded');
+  } else if (pill) {
+    alert.classList.add('pill');
   }
 
   const layout = outline ? 'outline' 
-    : solid ? 'solid'
+    : transparent ? 'transparent'
+    : solid  ? 'solid'
     : 'solid';
 
-  if (curved) {
-    config.classes.push(`${prefix}bd-curved`);
-  } else if (rounded) {
-    config.classes.push(`${prefix}bd-rounded`);
-  } else if (pill) {
-    config.classes.push(`${prefix}bd-pill`);
-  }
-
-  if (layout === 'outline') {
-    config.classes.push(`${prefix}solid`, `${prefix}bd-xs`);
+  if (layout === 'outline' || layout === 'transparent') {
+    alert.classList.add('bd-solid', 'bd-thin');
+    if (layout === 'outline') {
+      alert.classList.add('bg-white');
+    }
     if (color) {
-      config.styles += `border-color: ${color};`;
-      config.styles += `color: ${color};`;
+      alert.style.color = color;
+      alert.style.borderColor = color;
     } else if (info) {
-      config.classes.push(`${prefix}bd-info`, `${prefix}tx-info`);
+      alert.classList.add('bd-info', 'tx-info');
     } else if (warning) {
-      config.classes.push(`${prefix}bd-warning`, `${prefix}tx-warning`);
+      alert.classList.add('bd-warning', 'tx-warning');
     } else if (success) {
-      config.classes.push(`${prefix}bd-success`, `${prefix}tx-success`);
+      alert.classList.add('bd-success', 'tx-success');
     } else if (error) {
-      config.classes.push(`${prefix}bd-error`, `${prefix}tx-error`);
+      alert.classList.add('bd-error', 'tx-error');
     } else if (muted) {
-      config.classes.push(`${prefix}bd-muted`, `${prefix}tx-muted`);
+      alert.classList.add('bd-muted', 'tx-muted');
     } else if (primary) {
-      config.classes.push(`${prefix}bd-primary`, `${prefix}tx-primary`);
+      alert.classList.add('bd-primary', 'tx-primary');
     } else if (secondary) {
-      config.classes.push(`${prefix}bd-secondary`, `${prefix}tx-secondary`);
+      alert.classList.add('bd-secondary', 'tx-secondary');
     }
   } else {
-    config.classes.push(`${prefix}tx-white`);
+    alert.classList.add('tx-white');
     if (color) {
-      config.styles += `background-color: ${color};`;
+      alert.style.backgroundColor = color;
     } else if (info) {
-      //tui-bg-info
-      config.classes.push(`${prefix}bg-info`);
+      alert.classList.add('bg-info');
     } else if (warning) {
-      //tui-bg-warning
-      config.classes.push(`${prefix}bg-warning`);
+      alert.classList.add('bg-warning');
     } else if (success) {
-      //tui-bg-success
-      config.classes.push(`${prefix}bg-success`);
+      alert.classList.add('bg-success');
     } else if (error) {
-      //tui-bg-error
-      config.classes.push(`${prefix}bg-error`);
+      alert.classList.add('bg-error');
     } else if (muted) {
-      //tui-bg-muted
-      config.classes.push(`${prefix}bg-muted`);
+      alert.classList.add('bg-muted');
     } else if (primary) {
-      //tui-bg-primary
-      config.classes.push(`${prefix}bg-primary`);
+      alert.classList.add('bg-primary');
     } else if (secondary) {
-      //tui-bg-secondary
-      config.classes.push(`${prefix}bg-secondary`);
+      alert.classList.add('bg-secondary');
     }
   } 
-
-  const map = {
-    classes: [ ...config.classes, classnames() ].join(' '),
-    styles: { ...config.styles, ...style }
-  };
 </script>
-<div class={map.classes} style={map.styles}>
-  {children()}
-</div>
+{[ alert ]}

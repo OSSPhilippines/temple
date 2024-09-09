@@ -1,11 +1,25 @@
-<link rel="import" type="template" href="@/modules/html/head.tml" name="html-head" />
-<link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
-<link rel="import" type="template" href="@/modules/panel/left.tml" name="panel-left" />
-<link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
-<link rel="import" type="component" href="@/modules/ide/code.tml" name="ide-code" />
-<link rel="import" type="component" href="@/modules/ide/app.tml" name="ide-app" />
-<link rel="import" type="component" href="@/modules/tui/tab.tml" name="tui-tab" />
-<link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+<link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
+<link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/layout.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/head.tml" name="panel-head" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/left.tml" name="panel-left" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@ossph/temple-ui/block/tab.tml" name="tui-tab" />
+<link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
+<link rel="import" type="component" href="@/components/ide/app/head.tml" name="app-head" />
+<link rel="import" type="component" href="@/components/ide/app/left.tml" name="app-left" />
+<link rel="import" type="component" href="@/components/ide/app/main.tml" name="app-main" />
+<link rel="import" type="component" href="@/components/ide/app.tml" name="ide-app" />
+<link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
+<link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
+<style>
+  @tui reset;
+  @tui fouc-opacity;
+  @tui theme;
+  @tui block;
+  @tui utilities;
+</style>
 <script>
   import { env } from '@ossph/temple';
   import { _ } from '@/modules/i18n';
@@ -13,71 +27,107 @@
   const url = '/docs/static-site.html';
   const title = _('Static Site Generator - Temple reactive web component template engine.');
   const description = _('How to use Temple to generate static sites.');
-  const toggle = _ => {
-    document.body.classList.toggle('panel-left-open');
+  const toggle = () => {
+    document.getElementsByTagName('panel-layout')[0].toggle('left');
   };
 </script>
 <html>
   <html-head />
-  <body class="dark panel with-head with-left">
-    <panel-head />
-    <panel-left />
-    <panel-main class="panel-main">
-      <div class="docs container">
-        <h1>{_('Static Site Generator')}</h1>
+  <body class="dark bg-t-0 tx-t1 arial">
+    <panel-layout>
+      <panel-head><html-header /></panel-head>
+      <panel-left><html-aside /></panel-left>
+      <panel-main>
+        <api-docs>
+          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+            {_('Static Site Generator')}
+          </h1>
 
-        <i18n-translate p trim>
-          A static site generator is a tool that generates a full static 
-          HTML website based on raw data and a set of templates. 
-          Essentially, a static site generator automates the task of 
-          coding individual HTML pages and gets those pages ready to 
-          serve to users ahead of time. Because these HTML pages are 
-          pre-built, they can load very quickly in browsers. You can use 
-          Temple, TypeScript and the native Node.js HTTP server to 
-          generate HTML documents in order to be served statically.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            A static site generator is a tool that generates a full static 
+            HTML website based on raw data and a set of templates. 
+            Essentially, a static site generator automates the task of 
+            coding individual HTML pages and gets those pages ready to 
+            serve to users ahead of time. Because these HTML pages are 
+            pre-built, they can load very quickly in browsers. You can use 
+            Temple, TypeScript and the native Node.js HTTP server to 
+            generate HTML documents in order to be served statically.
+          </i18n-translate>
 
-        <i18n-translate p trim>
-          First, create a project with the following structure and files.
-        </i18n-translate>
-        <ide-app panel={410} title="My Project">
-          <div class="panel-head">
-            <div class="tabs">
-              <tui-tab class="tab active" group="project" selector="#index-ts">
-                src/index.ts
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            First, create a project with the following structure and files.
+          </i18n-translate>
+          <ide-app height={410} title="My Project">
+            <app-head>
+              <div class="flex scroll-x-auto pt-5 pl-5">
+                <tui-tab 
+                  on
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="static" 
+                  selector="#index-ts"
+                >
+                  src/index.ts
+                </tui-tab>
+                <tui-tab 
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="static" 
+                  selector="#page-dtml"
+                >
+                  src/page.dtml
+                </tui-tab>
+                <tui-tab 
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="static" 
+                  selector="#package-json"
+                >
+                  package.json
+                </tui-tab>
+              </div>
+            </app-head>
+            <app-left>
+              <h5 class="p-5">
+                <i class="fas fa-fw fa-chevron-down"></i>
+                <span>src</span>
+              </h5>
+              <tui-tab 
+                on
+                class="pl-15 pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted"  
+                group="static" 
+                selector="#index-ts"
+              >
+                <i class="fas fa-fw fa-file"></i>
+                index.ts
               </tui-tab>
-              <tui-tab class="tab" group="project" selector="#index-dtml">
-                src/pages/index.dtml
+              <tui-tab 
+                class="pl-15 pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted" 
+                group="static" 
+                selector="#page-dtml"
+              >
+                <i class="fas fa-fw fa-file"></i>
+                page.dtml
               </tui-tab>
-              <tui-tab class="tab" group="project" selector="#package-json">
+              <tui-tab 
+                class="pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted" 
+                group="static" 
+                selector="#package-json"
+              >
+                <i class="fas fa-fw fa-file"></i>
                 package.json
               </tui-tab>
-            </div>
-          </div>
-          <div class="panel-left">
-            <h5 class="folder">
-              <i class="fas fa-fw fa-chevron-down"></i>
-              <span>src</span>
-            </h5>
-            <tui-tab class="shift-1 block active" group="project" selector="#index-ts">
-              <i class="fas fa-fw fa-file"></i>
-              index.ts
-            </tui-tab>
-            <h5 class="folder shift-1">
-              <i class="fas fa-fw fa-chevron-down" style="margin-left:4px"></i>
-              <span>pages</span>
-            </h5>
-            <tui-tab class="shift-2 block" group="project" selector="#index-dtml">
-              <i class="fas fa-fw fa-file"></i>
-              index.dtml
-            </tui-tab>
-            <tui-tab class="block" group="project" selector="#package-json">
-              <i class="fas fa-fw fa-file"></i>
-              package.json
-            </tui-tab>
-          </div>
-          <div class="panel-main">
-            <main>
+            </app-left>
+            <app-main>
               <ide-code id="index-ts" lang="js" numbers trim detab={16}>{`
                 import http from 'http';
                 import temple, { cache } from '@ossph/temple/compiler';
@@ -160,46 +210,46 @@
                     "dev": "ts-node ./src/index.ts"
                   },
                   "dependencies": {
-                    "@ossph/temple": "0.1.4"
+                    "@ossph/temple": "0.1.6"
                   },
                   "devDependencies": {
-                    "@ossph/temple-dev": "0.1.4",
+                    "@ossph/temple-dev": "0.1.6",
                     "@types/node": "22.1.0",
                     "ts-node": "10.9.2",
                     "typescript": "5.5.4"
                   }
                 }
               `}</ide-code>
-            </main>
-          </div>
-        </ide-app>
+            </app-main>
+          </ide-app>
 
-        <i18n-translate p trim>
-          To test the script and see the results, run the following 
-          command in terminal.
-        </i18n-translate>
-        <ide-code lang="bash">
-          npm run dev
-        </ide-code>
-        <i18n-translate p trim>
-          Load 
-          <ide-code lang="js" inline>'http://localhost:3000/'</ide-code> 
-          in your browser. After loading you should see files that were 
-          generated in a new build folder found in your project root. 
-        </i18n-translate>
-        
-        <nav class="pager">
-          <a class="prev" href="/temple/docs/single-page.html">
-            <i class="fas fa-fw fa-chevron-left"></i>
-            {_('Single Page App')}
-          </a>
-          <a class="next" href="/temple/docs/component-publisher.html">
-            {_('Component Publisher')}
-            <i class="fas fa-fw fa-chevron-right"></i>
-          </a>
-        </nav>
-      </div>
-      <footer class="foot"></footer>
-    </panel-main>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            To test the script and see the results, run the following 
+            command in terminal.
+          </i18n-translate>
+          <ide-code lang="bash">
+            npm run dev
+          </ide-code>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Load 
+            <ide-code lang="js" inline>http://localhost:3000/</ide-code> 
+            in your browser. After loading you should see files that were 
+            generated in a new build folder found in your project root. 
+          </i18n-translate>
+          
+          <nav class="flex">
+            <a class="tx-primary py-40" href="/temple/docs/single-page.html">
+              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              {_('Single Page App')}
+            </a>
+            <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/component-publisher.html">
+              {_('Component Publisher')}
+              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
+            </a>
+          </nav>
+          <footer class="foot"></footer>
+        </api-docs>
+      </panel-main>
+    </panel-layout>
   </body>
 </html>

@@ -18,597 +18,692 @@
   <link rel="favicon" href="/temple/favicon.ico" />
   <link rel="shortcut icon" type="image/png" href="/temple/favicon.png" />
   <link rel="stylesheet" type="text/css" href="/temple/styles/fontawesome/all.css" />
-  <link rel="stylesheet" type="text/css" href="/temple/styles/theme.css" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/global.css" />
   <link rel="stylesheet" type="text/css" href="/temple/build/client/57e37fa233b38c87fe71.css" />
   
   <script data-app="eyJwcm9wcyI6eyJ0aXRsZSI6IlRlbXBsZSBEb2N1bWVudGF0aW9uIn0sImVudiI6eyJCVUlMRF9JRCI6IjU3ZTM3ZmEyMzNiMzhjODdmZTcxIn19" src="/temple/build/client/57e37fa233b38c87fe71.js"></script>
   
 </head>
-  <body class="dark panel with-head with-left with-right">
-    <header class="head panel-head">
-  <i class="menu fas fa-fw fa-bars" ></i>
-  <a href="/temple">
-    <img src="/temple/temple-icon.png" alt="Temple Logo" />
-  </a>
-  <h3><a class="tx-white" href="/temple">Temple</a></h3>
-  <nav>
+  <body class="dark bg-t-0 tx-t1 arial">
+    <panel-layout>
+      <panel-head><menu class="flex flex-center-y px-20 py-15 m-0 bg-t-1">
+  
+    <i class="fas fa-fw fa-bars cursor-pointer py-5 pr-10 none md-inline-block tx-t-1" ></i>
+    <div class="flex-grow"></div>
+  
+  <nav class="flex flex-center-y">
     <a class="tx-white" href="/temple/docs/index.html">Docs</a>
-    <a class="github" href="https://github.com/OSSPhilippines/temple" target="_blank">
+    <a class="tx-t-1 tx-5xl ml-10" href="https://github.com/OSSPhilippines/temple" target="_blank">
       <i class="fab fa-github"></i>
     </a>
-    <a class="npm" href="https://www.npmjs.com/package/@ossph/temple" target="_blank">
+    <a class="bg-h-cb3837 pill tx-t-1 tx-lg ml-5 p-5 tx-center" href="https://www.npmjs.com/package/@ossph/temple" target="_blank">
       <i class="fab fa-npm text-white"></i>
     </a>
-    <a class="discord" href="https://discord.gg/open-source-software-ph-905496362982981723" target="_blank">
+    <a class="bg-h-7289da pill tx-t-1 tx-lg ml-5 p-5 tx-center" href="https://discord.gg/open-source-software-ph-905496362982981723" target="_blank">
       <i class="fab fa-discord text-white"></i>
     </a>
   </nav>
+</menu></panel-head>
+      <panel-left><header class="flex flex-center-y bg-t-2 py-15 pr-5 pl-10">
+  <a href="/temple">
+    <img class="h-26 mr-10" src="/temple/temple-icon.png" alt="Temple Logo" />
+  </a>
+  <h3 class="flex-grow m-0 tx-uppercase">
+    <a class="tx-white" href="/temple">Temple</a>
+  </h3>
+  <i class="fas fa-fw fa-chevron-left cursor-pointer none md-inline-block" ></i>
 </header>
-    <aside class="left panel-left">
-  <header>
-    <a href="/temple">
-      <img src="/temple/temple-icon.png" alt="Temple Logo" />
+<nav class="bg-t-1 scroll-auto h-calc-full-60">
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-0 pt-20 pb-10 pl-10 tx-uppercase">
+    Introduction
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/index.html">
+      Documentation
     </a>
-    <h3><a class="tx-white" href="/temple">Temple</a></h3>
-    <i class="toggle fas fa-fw fa-chevron-left" ></i>
-  </header>
-  <nav>
-    <h6>Introduction</h6>
-    <a href="/temple/docs/index.html">Documentation</a>
-    <a href="/temple/docs/getting-started.html">Getting Started</a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/getting-started.html">
+      Getting Started
+    </a>
+  
 
-    <h6>Features</h6>
-    <a href="/temple/docs/markup-syntax.html">Markup Syntax</a>
-    <a href="/temple/docs/state-management.html">State Management</a>
-    <a href="/temple/docs/component-strategy.html">Component Strategy</a>
-    <a href="/temple/docs/compiler-api.html">Compiler API</a>
-    <a href="/temple/docs/client-api.html">Client API</a>
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-20 pt-20 pb-10 pl-10 tx-uppercase">
+    Features
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10 tx-bold" href="/temple/docs/markup-syntax.html">
+      Markup Syntax
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/state-management.html">
+      State Management
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/component-strategy.html">
+      Component Strategy
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/compiler-api.html">
+      Compiler API
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/client-api.html">
+      Client API
+    </a>
+  
 
-    <h6>Usage</h6>
-    <a href="/temple/docs/template-engine.html">Template Engine</a>
-    <a href="/temple/docs/single-page.html">Single Page App</a>
-    <a href="/temple/docs/static-site.html">Static Site Generator</a>
-    <a href="/temple/docs/component-publisher.html">Component Publisher</a>
-    <a href="/temple/docs/developer-tools.html">Developer Tools</a>
-  </nav>
-</aside>
-    <aside class="panel-right right">
-      <h6>On this page</h6>
-      <nav>
-        <a href="#imports">Imports</a>
-        <a href="#styles">Styles</a>
-        <a href="#scripts">Scripts</a>
-        <a href="#markup">Markup</a>
-        <nav>
-          <a href="#tagnames">Tag Names</a>
-          <a href="#attributes">Attributes</a>
-          <a href="#conditionals">Conditionals</a>
-          <a href="#iterations">Iterations</a>
-          <a href="#trycatch">Try/Catch</a>
-        </nav>
-      </nav>
-    </aside>
-    <panel-main class="panel-main">
-      <div class="docs container">
-        <h1>Markup Syntax</h1>
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-20 pt-20 pb-10 pl-10 tx-uppercase">
+    Usage
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/template-engine.html">
+      Template Engine
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/single-page.html">
+      Single Page App
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/static-site.html">
+      Static Site Generator
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/component-publisher.html">
+      Component Publisher
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10 mb-100" href="/temple/docs/developer-tools.html">
+      Developer Tools
+    </a>
+  
+</nav></panel-left>
+      <panel-right>
+        <menu class="m-0 px-10 py-20 h-calc-full-40 bg-t-2 scroll-auto">
+          <h6 class="tx-muted tx-14 mb-0 mt-0 pb-10 tx-uppercase">
+            On this page
+          </h6>
+          <nav class="tx-14 tx-lh-32">
+            <a class="block tx-t-0" href="#imports">Imports</a>
+            <a class="block tx-t-0" href="#styles">Styles</a>
+            <a class="block tx-t-0" href="#scripts">Scripts</a>
+            <a class="block tx-t-0" href="#markup">Markup</a>
+            <nav class="pl-20">
+              <a class="block tx-t-1" href="#tagnames">Tag Names</a>
+              <a class="block tx-t-1" href="#attributes">Attributes</a>
+              <a class="block tx-t-1" href="#conditionals">Conditionals</a>
+              <a class="block tx-t-1" href="#iterations">Iterations</a>
+              <a class="block tx-t-1" href="#trycatch">Try/Catch</a>
+            </nav>
+          </nav>
+        </menu>
+      </panel-right>
+      <panel-main>
+        <api-docs>
+          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+            Markup Syntax
+          </h1>
 
-        <i18n-translate p trim>
-          Components are the building blocks of Temple files. Documents 
-          and page level markup are written in 
-          <ide-code inline>.dtml</ide-code> files. Components 
-          and templates are written in 
-          <ide-code inline>.tml</ide-code> files. In both 
-          cases, the code is written in a superset of HTML.
-        </i18n-translate>
-        <i18n-translate p trim>
-          The four sections that make up a temple file — imports, 
-          script, styles and markup — are all optional and can be 
-          used in any order.
-        </i18n-translate>
-        <ide-app title="Code Structure">
-          <ide-code numbers >
-            &lt;!-- imports go here --&gt;
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Components are the building blocks of Temple files. Documents 
+            and page level markup are written in 
+            <ide-code inline>.dtml</ide-code> files. Components 
+            and templates are written in 
+            <ide-code inline>.tml</ide-code> files. In both 
+            cases, the code is written in a superset of HTML.
+          </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The four sections that make up a temple file — imports, 
+            script, styles and markup — are all optional and can be 
+            used in any order.
+          </i18n-translate>
+          <ide-app title="Code Structure" class="py-20">
+            <ide-code numbers >
+              &lt;!-- imports go here --&gt;
 
-            &lt;style&gt;
-              /* styles go here */
-            &lt;/style&gt;
+              &lt;style&gt;
+                /* styles go here */
+              &lt;/style&gt;
 
-            &lt;script&gt;
-              // logic goes here
-            &lt;/script&gt;
+              &lt;script&gt;
+                // logic goes here
+              &lt;/script&gt;
+              
+              &lt;!-- HTML goes here --&gt;
+            </ide-code>
+          </ide-app>
+
+          <a name="imports"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            Imports
+          </h2>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Imports are used to include additional components, templates 
+            and stylesheets in the current component. Components can 
+            be imported as a <ide-code inline>template</ide-code> or 
+            <ide-code inline>component</ide-code> type.
+          </i18n-translate>
+
+          <ide-app title="Import Examples" class="py-20">
+            <ide-code class="scroll-auto" numbers trim >
+              &lt;link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/prism.min.css" /&gt;
+              &lt;link rel="stylesheet" type="text/css" href="/styles/layout.css" /&gt;
+              &lt;link rel="import" type="template" href="@/modules/html-head.tml" /&gt;
+              &lt;link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" /&gt;
+
+              &lt;style&gt;
+                /* styles go here */
+              &lt;/style&gt;
+
+              &lt;script&gt;
+                // logic goes here
+              &lt;/script&gt;
+              
+              &lt;!-- HTML goes here --&gt;
+            </ide-code>
+          </ide-app>
+          
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The <ide-code inline>rel</ide-code> attribute 
+            specifies the relationship between the current document and 
+            the linked resource. 
             
-            &lt;!-- HTML goes here --&gt;
-          </ide-code>
-        </ide-app>
-
-        <a name="imports"></a>
-        <h2>Imports</h2>
-
-        <i18n-translate p trim>
-          Imports are used to include additional components, templates 
-          and stylesheets in the current component. Components can 
-          be imported as a <ide-code inline>template</ide-code> or 
-          <ide-code inline>component</ide-code> type.
-        </i18n-translate>
-
-        <ide-app title="Import Examples">
-          <ide-code numbers trim >
-            &lt;link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/prism.min.css" /&gt;
-            &lt;link rel="stylesheet" type="text/css" href="/styles/layout.css" /&gt;
-            &lt;link rel="import" type="template" href="@/modules/html-head.tml" /&gt;
-            &lt;link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" /&gt;
-
-            &lt;style&gt;
-              /* styles go here */
-            &lt;/style&gt;
-
-            &lt;script&gt;
-              // logic goes here
-            &lt;/script&gt;
+            <ide-code inline>rel="import"</ide-code> denotes
+            that the imported resource is a component or template.
+          </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The <ide-code inline>type</ide-code> 
+            attribute specifies the type of the linked resource. 
             
-            &lt;!-- HTML goes here --&gt;
+            <ide-code inline>type="component"</ide-code> 
+            imports a web component that can be used as regular markup
+            with attributes and children. 
+            
+            <ide-code inline>type="template"</ide-code> 
+            imports a template partial that can be included in the current 
+            markup. Template partials do not process attributes or children
+            if given.
+          </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The 
+            <ide-code inline>href</ide-code> attribute specifies
+            the URL of the linked resource. The 
+            <ide-code inline>name</ide-code>
+            attribute specifies the tag name of the imported component or template.
+          </i18n-translate>
+
+          <a name="styles"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            Styles
+          </h2>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            CSS styles inside a <ide-code inline>&lt;style&gt;</ide-code> 
+            block enables the native <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM">shadow DOM</a> and will be scoped only to that component. 
+            Additionally styles defined outside of the component such as 
+            global styles will not affect the component.
+          </i18n-translate>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            External stylesheets can be imported using the 
+            <ide-code inline>&lt;link&gt;</ide-code> tag or using 
+            <ide-code inline>@import()</ide-code> CSS directive. 
+          </i18n-translate>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            You can use host selectors to style an element from within 
+            a component. The <ide-code inline>:host</ide-code> 
+            pseudo-class always applies styles to the root element of the 
+            web component.
+          </i18n-translate>
+
+          <ide-app title="Using :host" class="py-20">
+            <ide-code numbers trim >
+              &lt;style&gt;
+                :host {
+                  display: block;
+                }
+              &lt;/style&gt;
+            </ide-code>
+          </ide-app>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            You can also add conditional styles using the 
+            <ide-code inline>:host</ide-code> selector function. 
+            This can be used to style the host so long as it matches the 
+            given selector. For example, it can be used to select for 
+            hosts that have a given attribute or class.
+          </i18n-translate>
+
+          <ide-app title=":host Conditionals" class="py-20">
+            <ide-code numbers trim >
+              &lt;style&gt;
+                :host([active]) {
+                  background-color: #333;
+                  color: #FFF;
+                }
+                :host(.active) {
+                  background-color: #333;
+                  color: #FFF;
+                }
+              &lt;/style&gt;
+            </ide-code>
+          </ide-app>
+
+          <a name="scripts"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            Scripts
+          </h2>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The <ide-code inline>&lt;script&gt;</ide-code> block is used 
+            to write TypeScript logic for the component. The script block 
+            can be used to define variables, functions, and event listeners.
+            Variables declared (or imported) at the top level are 
+            'visible' from the component's markup. 
+          </i18n-translate>
+
+          <ide-app title="Top-Level Variables" class="py-20">
+            <ide-code numbers trim >
+              &lt;script&gt;
+                const title = 'Hello World';
+              &lt;/script&gt;
+
+              &lt;h1&gt;{title}&lt;/h1&gt;
+            </ide-code>
+          </ide-app>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The <ide-code inline>&lt;script&gt;</ide-code> block can also 
+            be used to import variables from other components to be used
+            in the markup.
+          </i18n-translate>
+
+          <ide-app title="Importing Files" class="py-20">
+            <ide-code class="scroll-auto" numbers trim >
+              &lt;script&gt;
+                import getTitle from './getTitle';
+                const title = getTitle();
+              &lt;/script&gt;
+
+              &lt;h1 title={title}&gt;{title}&lt;/h1&gt;
+            </ide-code>
+          </ide-app>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            You can use <ide-code inline>@/</ide-code> to prefix the 
+            current working directory. This is useful when importing
+            files completely in a separate directory in your project
+          </i18n-translate>
+
+          <ide-app title="@ Imports" class="py-20">
+            <ide-code class="scroll-auto" numbers trim >
+              &lt;script&gt;
+                import getTitle from '@/data/getTitle';
+                const title = getTitle();
+              &lt;/script&gt;
+
+              &lt;h1 title={title}&gt;{title}&lt;/h1&gt;
+            </ide-code>
+          </ide-app>
+
+          <a name="markup"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            Markup
+          </h2>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            In order to be closer to the native, Temple follows the same 
+            standards and conventions as HTML5 web components. Temple 
+            components are compiled to native web components that possibly 
+            can be used in other projects any modern browser.
+          </i18n-translate>
+
+          <a name="tagnames"></a>
+          <h3 class="tx-t-1 tx-uppercase tx-22 pt-40 pb-20">
+            Tag Names
+          </h3>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            For web components it's recommended that tag names must have 
+            at least one dash (-) in them. As such you probably want to 
+            name your element with two distinct words like 
+            <ide-code inline>i18n-translate</ide-code>. You can 
+            use as many dashes as you want, you're not limited to one. 
+            Some specific rules to follow in order to make a valid tag 
+            name:
+          </i18n-translate>
+
+          <ul>
+            <i18n-translate li trim class="my-10 tx-lh-24">
+              It must use all lowercase characters of the alphabet (a-z).
+            </i18n-translate>
+            <i18n-translate li trim class="my-10 tx-lh-24">
+              It must contain at least one dash (-). Temple will 
+              auto prefix component names based on your configuration.
+            </i18n-translate>
+            <i18n-translate li trim class="my-10 tx-lh-24">
+              It must not be an already reserved tag name including 
+              <ide-code inline>annotation-xml</ide-code>,
+              <ide-code inline>color-profile</ide-code>,
+              <ide-code inline>font-face</ide-code>,
+              <ide-code inline>font-face-src</ide-code>,
+              <ide-code inline>font-face-uri</ide-code>,
+              <ide-code inline>font-face-format</ide-code>,
+              <ide-code inline>font-face-name</ide-code>, and 
+              <ide-code inline>missing-glyph</ide-code>.
+            </i18n-translate>
+            <i18n-translate li trim class="my-10 tx-lh-24">
+              It must not contain symbols, like =, @, $.
+            </i18n-translate>
+            <i18n-translate li trim class="my-10 tx-lh-24">
+              It can contain underscores, and numbers.
+            </i18n-translate>
+            <i18n-translate li trim class="my-10 tx-lh-24">
+              It can contain characters from different alphabets, 
+              such as é, ð, ö, 爱.
+            </i18n-translate>
+          </ul>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Additionally, Temple works best with correct markup. The 
+            following standards should be followed:
+          </i18n-translate>
+
+          <ul>
+            <i18n-translate li trim class="my-10 tx-lh-24">
+              Self closing tags like 
+              <ide-code inline>&lt;img /&gt;</ide-code>,
+              <ide-code inline>&lt;link /&gt;</ide-code>,
+              <ide-code inline>&lt;meta /&gt;</ide-code>,
+              <ide-code inline>&lt;input /&gt;</ide-code>
+              must have a slash before the closing.
+            </i18n-translate>
+            <i18n-translate li trim class="my-10 tx-lh-24">
+              When using tables, rows should be wrapped in a 
+              <ide-code inline>&lt;tbody&gt;</ide-code> tag and cells
+              should be wrapped in a <ide-code inline>&lt;tr&gt;</ide-code> 
+              tag. ie. <ide-code inline>&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;</ide-code>
+            </i18n-translate>
+            <i18n-translate li trim class="my-10 tx-lh-24">
+              When using lists, items should be wrapped in a 
+              <ide-code inline>&lt;ul&gt;</ide-code> or 
+              <ide-code inline>&lt;ol&gt;</ide-code> tags.
+              ie. <ide-code inline>&lt;ul&gt;&lt;li&gt;</ide-code>
+            </i18n-translate>
+          </ul>
+
+          <tui-alert solid curved secondary class="py-20 tx-lh-24">
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>Warning:</strong> Any markup auto corrected by browser will cause data syncing 
+            issues with Temple.
+          </tui-alert>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Temple components can loosely be self closing
+            <ide-code inline>&lt;i18n-translate /&gt;</ide-code>
+            or expressed as a block
+            <ide-code inline>&lt;i18n-translate&gt;&lt;/i18n-translate&gt;</ide-code>.
+          </i18n-translate>
+
+          <a name="attributes"></a>
+          <h3 class="tx-t-1 tx-uppercase tx-22 pt-40 pb-20">
+            Attributes
+          </h3>
+
+          <ide-app title="Markup Expressions">
+            <ide-code class="scroll-auto" numbers trim >
+              &lt;a title={title} {href} {...attributes}&gt;
+                {title}
+              &lt;/a&gt;
+              &lt;i18n-translate title=title&gt;
+                {detail}
+              &lt;/i18n-translate&gt;
+            </ide-code>
+          </ide-app>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Attributes can be bound to expressions using the 
+            <ide-code inline>{}</ide-code> syntax. 
+            Expressions can be variables, functions, or any valid 
+            JavaScript expression. By default, attributes work exactly 
+            like their HTML counterparts.
+          </i18n-translate>
+
+          <div class="scroll-auto bg-black">
+            <ide-code trim>
+              &lt;button type="button" disabled&gt;Submit&lt;/button&gt;
+            </ide-code>
+          </div>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Traditional HTML attributes can be assigned string values or 
+            no value evaluates as <ide-code inline>true</ide-code>.
+          </i18n-translate>
+
+          <ide-code trim>
+            &lt;a title={title}&gt;Click&lt;/a&gt;
           </ide-code>
-        </ide-app>
-        
-        <i18n-translate p trim>
-          The <ide-code inline>rel</ide-code> attribute 
-          specifies the relationship between the current document and 
-          the linked resource. 
-          
-          <ide-code inline>rel="import"</ide-code> denotes
-          that the imported resource is a component or template.
-        </i18n-translate>
-        <i18n-translate p trim>
-          The <ide-code inline>type</ide-code> 
-          attribute specifies the type of the linked resource. 
-          
-          <ide-code inline>type="component"</ide-code> 
-          imports a web component that can be used as regular markup
-          with attributes and children. 
-          
-          <ide-code inline>type="template"</ide-code> 
-          imports a template partial that can be included in the current 
-          markup. Template partials do not process attributes or children
-          if given.
-        </i18n-translate>
-        <i18n-translate p trim>
-          The 
-          <ide-code inline>href</ide-code> attribute specifies
-          the URL of the linked resource. The 
-          <ide-code inline>name</ide-code>
-          attribute specifies the tag name of the imported component or template.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Attributes can be assigned variable names.
+          </i18n-translate>
 
-        <a name="styles"></a>
-        <h2>Styles</h2>
-
-        <i18n-translate p trim>
-          CSS styles inside a <ide-code inline>&lt;style&gt;</ide-code> 
-          block enables the native <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM">shadow DOM</a> and will be scoped only to that component. 
-          Additionally styles defined outside of the component such as 
-          global styles will not affect the component.
-        </i18n-translate>
-
-        <i18n-translate p trim>
-          External stylesheets can be imported using the 
-          <ide-code inline>&lt;link&gt;</ide-code> tag or using 
-          <ide-code inline>@import()</ide-code> CSS directive. 
-        </i18n-translate>
-
-        <i18n-translate p trim>
-          You can use host selectors to style an element from within 
-          a component. The <ide-code inline>:host</ide-code> 
-          pseudo-class always applies styles to the root element of the 
-          web component.
-        </i18n-translate>
-
-        <ide-app title="Using :host">
-          <ide-code numbers trim >
-            &lt;style&gt;
-              :host {
-                display: block;
-              }
-            &lt;/style&gt;
+          <ide-code trim>
+            &lt;a title=title&gt;Click&lt;/a&gt;
           </ide-code>
-        </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Variable names do not need to be wrapped in curly braces
+            <ide-code inline>{}</ide-code>.
+          </i18n-translate>
 
-        <i18n-translate p trim>
-          You can also add conditional styles using the 
-          <ide-code inline>:host</ide-code> selector function. 
-          This can be used to style the host so long as it matches the 
-          given selector. For example, it can be used to select for 
-          hosts that have a given attribute or class.
-        </i18n-translate>
-
-        <ide-app title=":host Conditionals">
-          <ide-code numbers trim >
-            &lt;style&gt;
-              :host([active]) {
-                background-color: #333;
-                color: #FFF;
-              }
-              :host(.active) {
-                background-color: #333;
-                color: #FFF;
-              }
-            &lt;/style&gt;
+          <ide-code trim>
+            &lt;a {title}&gt;Click&lt;/a&gt;
           </ide-code>
-        </ide-app>
-
-        <a name="scripts"></a>
-        <h2>Scripts</h2>
-
-        <i18n-translate p trim>
-          The <ide-code inline>&lt;script&gt;</ide-code> block is used 
-          to write TypeScript logic for the component. The script block 
-          can be used to define variables, functions, and event listeners.
-          Variables declared (or imported) at the top level are 
-          'visible' from the component's markup. 
-        </i18n-translate>
-
-        <ide-app title="Top-Level Variables">
-          <ide-code numbers trim >
-            &lt;script&gt;
-              const title = 'Hello World';
-            &lt;/script&gt;
-
-            &lt;h1&gt;{title}&lt;/h1&gt;
-          </ide-code>
-        </ide-app>
-
-        <i18n-translate p trim>
-          The <ide-code inline>&lt;script&gt;</ide-code> block can also 
-          be used to import variables from other components to be used
-          in the markup.
-        </i18n-translate>
-
-        <ide-app title="Importing Files">
-          <ide-code numbers trim >
-            &lt;script&gt;
-              import getTitle from './getTitle';
-              const title = getTitle();
-            &lt;/script&gt;
-
-            &lt;h1 title={title}&gt;{title}&lt;/h1&gt;
-          </ide-code>
-        </ide-app>
-
-        <i18n-translate p trim>
-          You can use <ide-code inline>@/</ide-code> to prefix the 
-          current working directory. This is useful when importing
-          files completely in a separate directory in your project
-        </i18n-translate>
-
-        <ide-app title="@ Imports">
-          <ide-code numbers trim >
-            &lt;script&gt;
-              import getTitle from '@/data/getTitle';
-              const title = getTitle();
-            &lt;/script&gt;
-
-            &lt;h1 title={title}&gt;{title}&lt;/h1&gt;
-          </ide-code>
-        </ide-app>
-
-        <a name="markup"></a>
-        <h2>Markup</h2>
-
-        <i18n-translate p trim>
-          In order to be closer to the native, Temple follows the same 
-          standards and conventions as HTML5 web components. Temple 
-          components are compiled to native web components that possibly 
-          can be used in other projects any modern browser.
-        </i18n-translate>
-
-        <a name="tagnames"></a>
-        <h3>Tag Names</h3>
-
-        <i18n-translate p trim>
-          Tag names must have at least one dash (-) in them. As such 
-          you probably want to name your element with two distinct words 
-          like <ide-code inline>i18n-translate</ide-code>. You can 
-          use as many dashes as you want, you're not limited to one. 
-          Some specific rules to follow in order to make a valid tag 
-          name:
-        </i18n-translate>
-
-        <ul>
-          <i18n-translate li trim>
-            It must use all lowercase characters of the alphabet (a-z).
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Attributes with the same name as a variable can be assigned
+            by just wrapping curly braces. ie. 
+            <ide-code inline>{title}</ide-code>.
           </i18n-translate>
-          <i18n-translate li trim>
-            t must contain at least one dash (-).
+
+          <div class="scroll-auto bg-black">
+            <ide-code trim >
+              &lt;script&gt;
+                const attributes = { target: '_blank' };
+              &lt;/script&gt;
+              &lt;a {...attributes}&gt;Click&lt;/a&gt;
+            </ide-code>
+          </div>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Spread operators can be used to assign multiple attributes.
           </i18n-translate>
-          <i18n-translate li trim>
-            It must not be an already reserved tag name including 
-            <ide-code inline>annotation-xml</ide-code>,
-            <ide-code inline>color-profile</ide-code>,
-            <ide-code inline>font-face</ide-code>,
-            <ide-code inline>font-face-src</ide-code>,
-            <ide-code inline>font-face-uri</ide-code>,
-            <ide-code inline>font-face-format</ide-code>,
-            <ide-code inline>font-face-name</ide-code>, and 
-            <ide-code inline>missing-glyph</ide-code>.
+
+          <div class="scroll-auto bg-black">
+            <ide-code numbers trim >
+              &lt;script&gt;
+                let count = 10
+                const metadata = { foo: 'bar', baz: 1, qux: true };
+                const data = () =&gt; metadata
+              &lt;/script&gt;
+              &lt;a {count} get={data} data-meta={metadata} disable={count &lt; 10}&gt;
+                Click
+              &lt;/a&gt;
+            </ide-code>
+          </div>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            You can assign any valid JavaScript expression to an attribute.
           </i18n-translate>
-          <i18n-translate li trim>
-            It must not contain symbols, like =, @, $.
+
+          <a name="conditionals"></a>
+          <h3 class="tx-t-1 tx-uppercase tx-22 pt-40 pb-20">
+            Conditionals
+          </h3>
+
+          <ide-app title="Conditionals" class="py-20">
+            <ide-code class="scroll-auto" numbers trim >
+              &lt;if true={count &gt; 10}&gt;
+                &lt;p&gt;Count is greater than 10&lt;/p&gt;
+              &lt;elif true={count &lt; 5} /&gt;
+                &lt;p&gt;Count is less than 5&lt;/p&gt;
+              &lt;else /&gt;
+                &lt;p&gt;Count is between 5 and 10&lt;/p&gt;
+              &lt;/if&gt;
+            </ide-code>
+          </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Conditionals can be used to show or hide elements based on 
+            the value of a variable.
           </i18n-translate>
-          <i18n-translate li trim>
-            It can contain underscores, and numbers.
+
+          <div class="scroll-auto bg-black">
+            <ide-code numbers trim >
+              &lt;if true={count &gt; 10}&gt;
+                &lt;p&gt;Count is greater than 10&lt;/p&gt;
+              &lt;/if&gt;
+            </ide-code>
+          </div>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The basic syntax for an if statement looks like this and can be 
+            <ide-code inline>truesy</ide-code> or 
+            <ide-code inline>falsey</ide-code>.
           </i18n-translate>
-          <i18n-translate li trim>
-            It can contain characters from different alphabets, 
-            such as é, ð, ö, 爱.
+
+          <div class="scroll-auto bg-black">
+            <ide-code numbers trim >
+              &lt;if false={count &gt; 10}&gt;
+                &lt;p&gt;Count is not greater than 10&lt;/p&gt;
+              &lt;/if&gt;
+            </ide-code>
+          </div>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            You can also use the <ide-code inline>false</ide-code>
+            attribute to negate the condition.
           </i18n-translate>
-        </ul>
 
-        <i18n-translate p trim>
-          Additionally, Temple works best with correct markup. The 
-          following standards should be followed:
-        </i18n-translate>
-
-        <ul>
-          <i18n-translate li trim>
-            Self closing tags like 
-            <ide-code inline>&lt;img /&gt;</ide-code>,
-            <ide-code inline>&lt;link /&gt;</ide-code>,
-            <ide-code inline>&lt;meta /&gt;</ide-code>,
-            <ide-code inline>&lt;input /&gt;</ide-code>
-            must have a slash before the closing.
+          <div class="scroll-auto bg-black">
+            <ide-code numbers trim >
+              &lt;if true={count &gt; 10}&gt;
+                &lt;p&gt;Count is greater than 10&lt;/p&gt;
+              &lt;else /&gt;
+                &lt;p&gt;Count is less than or equal to 10&lt;/p&gt;
+              &lt;/if&gt;
+            </ide-code>
+          </div>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            You can use the <ide-code inline>else</ide-code> block to 
+            show content when the condition is false.
           </i18n-translate>
-          <i18n-translate li trim>
-            When using tables, rows should be wrapped in a 
-            <ide-code inline>&lt;tbody&gt;</ide-code> tag and cells
-            should be wrapped in a <ide-code inline>&lt;tr&gt;</ide-code> 
-            tag. ie. <ide-code inline>&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;</ide-code>
-          </i18n-translate>
-          <i18n-translate li trim>
-            When using lists, items should be wrapped in a 
-            <ide-code inline>&lt;ul&gt;</ide-code> or 
-            <ide-code inline>&lt;ol&gt;</ide-code> tags.
-            ie. <ide-code inline>&lt;ul&gt;&lt;li&gt;</ide-code>
-          </i18n-translate>
-        </ul>
 
-        <tui-alert solid curved secondary>
-          <i class="fas fa-exclamation-triangle"></i>
-          <strong>Warning:</strong> Any markup auto corrected by browser will cause data syncing 
-          issues with Temple.
-        </tui-alert>
-
-        <i18n-translate p trim>
-          Temple components can loosely be self closing
-          <ide-code inline>&lt;i18n-translate /&gt;</ide-code>
-          or expressed as a block
-          <ide-code inline>&lt;i18n-translate&gt;&lt;/i18n-translate&gt;</ide-code>.
-        </i18n-translate>
-
-        <a name="attributes"></a>
-        <h3>Attributes</h3>
-
-        <ide-app title="Markup Expressions">
-          <ide-code numbers trim >
-            &lt;a title={title} {href} {...attributes}&gt;
-              {title}
-            &lt;/a&gt;
-            &lt;i18n-translate title=title&gt;
-              {detail}
-            &lt;/i18n-translate&gt;
-          </ide-code>
-        </ide-app>
-
-        <i18n-translate p trim>
-          Attributes can be bound to expressions using the 
-          <ide-code inline>{}</ide-code> syntax. 
-          Expressions can be variables, functions, or any valid 
-          JavaScript expression. By default, attributes work exactly 
-          like their HTML counterparts.
-        </i18n-translate>
-
-        <ide-code trim >
-          &lt;button type="button" disabled&gt;Submit&lt;/button&gt;
-        </ide-code>
-        <i18n-translate p trim>
-          Traditional HTML attributes can be assigned string values or 
-          no value evaluates as <ide-code inline>true</ide-code>.
-        </i18n-translate>
-
-        <ide-code trim >
-          &lt;a title={title}&gt;Click&lt;/a&gt;
-        </ide-code>
-        <i18n-translate p trim>
-          Attributes can be assigned variable names.
-        </i18n-translate>
-
-        <ide-code trim >
-          &lt;a title=title&gt;Click&lt;/a&gt;
-        </ide-code>
-        <i18n-translate p trim>
-          Variable names do not need to be wrapped in curly braces
-          <ide-code inline>{}</ide-code>.
-        </i18n-translate>
-
-        <ide-code trim >
-          &lt;a {title}&gt;Click&lt;/a&gt;
-        </ide-code>
-        <i18n-translate p trim>
-          Attributes with the same name as a variable can be assigned
-          by just wrapping curly braces. ie. 
-          <ide-code inline>{title}</ide-code>.
-        </i18n-translate>
-
-        <ide-code trim >
-          &lt;script&gt;
-            const attributes = { target: '_blank' };
-          &lt;/script&gt;
-          &lt;a {...attributes}&gt;Click&lt;/a&gt;
-        </ide-code>
-        <i18n-translate p trim>
-          Spread operators can be used to assign multiple attributes.
-        </i18n-translate>
-
-        <ide-code numbers trim >
-          &lt;script&gt;
-            let count = 10
-            const metadata = { foo: 'bar', baz: 1, qux: true };
-            const data = () =&gt; metadata
-          &lt;/script&gt;
-          &lt;a {count} get={data} data-meta={metadata} disable={count &lt; 10}&gt;
-            Click
-          &lt;/a&gt;
-        </ide-code>
-        <i18n-translate p trim>
-          You can assign any valid JavaScript expression to an attribute.
-        </i18n-translate>
-
-        <a name="conditionals"></a>
-        <h3>Conditionals</h3>
-
-        <ide-app title="Conditionals">
           <ide-code numbers trim >
             &lt;if true={count &gt; 10}&gt;
               &lt;p&gt;Count is greater than 10&lt;/p&gt;
             &lt;elif true={count &lt; 5} /&gt;
               &lt;p&gt;Count is less than 5&lt;/p&gt;
-            &lt;else /&gt;
-              &lt;p&gt;Count is between 5 and 10&lt;/p&gt;
             &lt;/if&gt;
           </ide-code>
-        </ide-app>
-        <i18n-translate p trim>
-          Conditionals can be used to show or hide elements based on 
-          the value of a variable.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            You can use the <ide-code inline>elif</ide-code> block to 
+            show content when the previous condition is false.
+          </i18n-translate>
 
-        <ide-code numbers trim >
-          &lt;if true={count &gt; 10}&gt;
-            &lt;p&gt;Count is greater than 10&lt;/p&gt;
-          &lt;/if&gt;
-        </ide-code>
-        <i18n-translate p trim>
-          The basic syntax for an if statement looks like this and can be 
-          <ide-code inline>truesy</ide-code> or 
-          <ide-code inline>falsey</ide-code>.
-        </i18n-translate>
+          <a name="iterations"></a>
+          <h3 class="tx-t-1 tx-uppercase tx-22 pt-40 pb-20">
+            Iterations
+          </h3>
 
-        <ide-code numbers trim >
-          &lt;if false={count &gt; 10}&gt;
-            &lt;p&gt;Count is not greater than 10&lt;/p&gt;
-          &lt;/if&gt;
-        </ide-code>
-        <i18n-translate p trim>
-          You can also use the <ide-code inline>false</ide-code>
-          attribute to negate the condition.
-        </i18n-translate>
+          <ide-app title="Each" class="py-20">
+            <ide-code class="scroll-auto" numbers trim >
+              &lt;each key=index value=article from=articles&gt;
+                &lt;h1&gt;#{index + 1} {article.title}&lt;/h1&gt;
+                &lt;p&gt;{article.body}&lt;/p&gt;
+              &lt;/each&gt;
+            </ide-code>
+          </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The <ide-code inline>&lt;each&gt;</ide-code> block can be used 
+            to iterate over an array of items or objects.
+            The <ide-code inline>from</ide-code> attribute value is 
+            required and can be an array, object or JavaScript expression 
+            that evaluates to an array or object. Both the 
+            <ide-code inline>key</ide-code> and 
+            <ide-code inline>value</ide-code> attributes are optional.
+          </i18n-translate>
 
-        <ide-code numbers trim >
-          &lt;if true={count &gt; 10}&gt;
-            &lt;p&gt;Count is greater than 10&lt;/p&gt;
-          &lt;else /&gt;
-            &lt;p&gt;Count is less than or equal to 10&lt;/p&gt;
-          &lt;/if&gt;
-        </ide-code>
-        <i18n-translate p trim>
-          You can use the <ide-code inline>else</ide-code> block to 
-          show content when the condition is false.
-        </i18n-translate>
+          <div class="scroll-auto bg-black">
+            <ide-code numbers trim >
+              &lt;each value={article} from={articles}&gt;
+                &lt;h1&gt;{article.title}&lt;/h1&gt;
+                &lt;p&gt;{article.body}&lt;/p&gt;
+              &lt;/each&gt;
+            </ide-code>
+          </div>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The value of <ide-code inline>value</ide-code>, in this 
+            case <ide-code inline>article</ide-code> can be used 
+            only with in the block. This can be any valid JavaScript 
+            variable name.
+          </i18n-translate>
 
-        <ide-code numbers trim >
-          &lt;if true={count &gt; 10}&gt;
-            &lt;p&gt;Count is greater than 10&lt;/p&gt;
-          &lt;elif true={count &lt; 5} /&gt;
-            &lt;p&gt;Count is less than 5&lt;/p&gt;
-          &lt;/if&gt;
-        </ide-code>
-        <i18n-translate p trim>
-          You can use the <ide-code inline>elif</ide-code> block to 
-          show content when the previous condition is false.
-        </i18n-translate>
-
-        <a name="iterations"></a>
-        <h3>Iterations</h3>
-
-        <ide-app title="Each">
           <ide-code numbers trim >
-            &lt;each key=index value=article from=articles&gt;
-              &lt;h1&gt;#{index + 1} {article.title}&lt;/h1&gt;
-              &lt;p&gt;{article.body}&lt;/p&gt;
+            &lt;each key={index} from={[1, 2, 3]}&gt;
+              &lt;h1&gt;#{index} ???&lt;/h1&gt;
             &lt;/each&gt;
           </ide-code>
-        </ide-app>
-        <i18n-translate p trim>
-          The <ide-code inline>&lt;each&gt;</ide-code> block can be used 
-          to iterate over an array of items or objects.
-          The <ide-code inline>from</ide-code> attribute value is 
-          required and can be an array, object or JavaScript expression 
-          that evaluates to an array or object. Both the 
-          <ide-code inline>key</ide-code> and 
-          <ide-code inline>value</ide-code> attributes are optional.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The value of <ide-code inline>key</ide-code>, in this 
+            case <ide-code inline>index</ide-code> can be used 
+            only with in the block. This can be any valid JavaScript 
+            variable name.
+          </i18n-translate>
 
-        <ide-code numbers trim >
-          &lt;each value={article} from={articles}&gt;
-            &lt;h1&gt;{article.title}&lt;/h1&gt;
-            &lt;p&gt;{article.body}&lt;/p&gt;
-          &lt;/each&gt;
-        </ide-code>
-        <i18n-translate p trim>
-          The value of <ide-code inline>value</ide-code>, in this 
-          case <ide-code inline>article</ide-code> can be used 
-          only with in the block. This can be any valid JavaScript 
-          variable name.
-        </i18n-translate>
+          <a name="trycatch"></a>
+          <h3 class="tx-t-1 tx-uppercase tx-22 pt-40 pb-20">
+            Try/Catch
+          </h3>
 
-        <ide-code numbers trim >
-          &lt;each key={index} from={[1, 2, 3]}&gt;
-            &lt;h1&gt;#{index} ???&lt;/h1&gt;
-          &lt;/each&gt;
-        </ide-code>
-        <i18n-translate p trim>
-          The value of <ide-code inline>key</ide-code>, in this 
-          case <ide-code inline>index</ide-code> can be used 
-          only with in the block. This can be any valid JavaScript 
-          variable name.
-        </i18n-translate>
+          <ide-app title="Try/Catch Example" class="py-20">
+            <ide-code numbers trim >
+              &lt;try&gt;
+                &lt;p&gt;{mayCauseError()}&lt;/p&gt;
+              &lt;catch error={e} /&gt;
+                &lt;p&gt;Error: {e.message}&lt;/p&gt;
+              &lt;/try&gt;
+            </ide-code>
+          </ide-app>
 
-        <a name="trycatch"></a>
-        <h3>Try/Catch</h3>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The <ide-code inline>&lt;try&gt;&lt;catch&gt;</ide-code> block can 
+            be used to catch errors that occur in the block. The 
+            <ide-code inline>&lt;catch&gt;</ide-code> block is required and 
+            can be used to handle the error.
 
-        <ide-app title="Try/Catch Example">
-          <ide-code numbers trim >
-            &lt;try&gt;
-              &lt;p&gt;{mayCauseError()}&lt;/p&gt;
-            &lt;catch error={e} /&gt;
-              &lt;p&gt;Error: {e.message}&lt;/p&gt;
-            &lt;/try&gt;
-          </ide-code>
-        </ide-app>
+            The value of <ide-code inline>error</ide-code>, in the  
+            <ide-code inline>&lt;catch&gt;</ide-code> block in this case
+            <ide-code inline>e</ide-code> is an 
+            <ide-code lang="js" inline>Error</ide-code> object
+            that can only be used with in the block. 
+          </i18n-translate>
 
-        <i18n-translate p trim>
-          The <ide-code inline>&lt;try&gt;&lt;catch&gt;</ide-code> block can 
-          be used to catch errors that occur in the block. The 
-          <ide-code inline>&lt;catch&gt;</ide-code> block is required and 
-          can be used to handle the error.
-
-          The value of <ide-code inline>error</ide-code>, in the  
-          <ide-code inline>&lt;catch&gt;</ide-code> block in this case
-          <ide-code inline>e</ide-code> is an 
-          <ide-code lang="js" inline>Error</ide-code> object
-          that can only be used with in the block. 
-        </i18n-translate>
-
-        <nav class="pager">
-          <a class="prev" href="/temple/docs/getting-started.html">
-            <i class="fas fa-fw fa-chevron-left"></i>
-            Getting Started
-          </a>
-          <a class="next" href="/temple/docs/state-management.html">
-            State Management
-            <i class="fas fa-fw fa-chevron-right"></i>
-          </a>
-        </nav>
-      </div>
-      <footer class="foot"></footer>
-    </panel-main>
+          <nav class="flex">
+            <a class="tx-primary py-40" href="/temple/docs/getting-started.html">
+              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              Getting Started
+            </a>
+            <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/state-management.html">
+              State Management
+              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
+            </a>
+          </nav>
+          <footer class="foot"></footer>
+        </api-docs>
+      </panel-main>
+    </panel-layout>
   </body>
 </html>

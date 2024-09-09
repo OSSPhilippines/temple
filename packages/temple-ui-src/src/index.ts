@@ -1,33 +1,22 @@
-import type { TempleCompiler, DocumentBuilder } from '@ossph/temple/compiler';
+import type { 
+  TempleCompiler, 
+  DocumentBuilder 
+} from '@ossph/temple/compiler';
 
 import fs from 'fs';
 import path from 'path';
 
-import uis from './data/components.json';
-import utilities from './data/utilities.json';
+import utilities from './utilities';
+import uis from './assets/components.json';
+import {
+  getMatches,
+  getStyle,
+  addStaticStyles,
+  addRangeStyles,
+  addRegExpStyles
+} from './helpers';
 
-const extname = '.css';
-const vfs = new Map<string, string>(); 
-
-export function getStyle(group: string, directive: string) {
-  //ex. node_modules/@ossph/temple-ui/styles/block/alert.css
-  const file = path.join(__dirname, group, directive + extname);
-  //if the file is not registered
-  if (!vfs.has(file)) {
-    //register the file either way
-    vfs.set(file, fs.existsSync(file) 
-      ? fs.readFileSync(file, 'utf-8')
-      : ''
-    );
-  }
-  //return the cached contents
-  return vfs.get(file) as string;
-};
-
-export function tui(options: { brand?: string } = {}) {
-  const brand = typeof options.brand === 'string' ? options.brand : 'tui';
-  const prefix = brand.length ? `${brand}-` : '';
-
+export function tui() {
   return function withTui(compiler: TempleCompiler) {
     //whenever a component is updated, refresh the document stylesheet
     compiler.emitter.on('dev-updated-component', async e => {
@@ -53,7 +42,7 @@ export function tui(options: { brand?: string } = {}) {
       if (sourceCode.includes('@tui reset;')) {
         //determine reset file path 
         //ie. [root]/styles/common/reset.css
-        const reset = path.join(__dirname, 'common', 'reset.css');
+        const reset = path.join(__dirname, 'assets', 'reset.css');
         //emit pre insert reset styles event
         const pre = await compiler.emitter.waitFor(
           'tui-insert-reset', 
@@ -64,10 +53,7 @@ export function tui(options: { brand?: string } = {}) {
           fs.existsSync(reset) ? fs.readFileSync(reset, 'utf-8') : ''
         );
         //replace @tui theme; with the contents of the theme file
-        sourceCode = sourceCode.replace(
-          '@tui reset;', 
-          contents.trim().replaceAll('.tui-', `.${prefix}`)
-        );
+        sourceCode = sourceCode.replace('@tui reset;', contents.trim());
         //emit post inserted reset styles event
         const post = await compiler.emitter.waitFor(
           'tui-inserted-reset', 
@@ -80,7 +66,7 @@ export function tui(options: { brand?: string } = {}) {
       if (sourceCode.includes('@tui theme;')) {
         //determine theme file path 
         //ie. [root]/styles/common/theme.css
-        const theme = path.join(__dirname, 'common', 'theme.css');
+        const theme = path.join(__dirname, 'assets', 'theme.css');
         //emit pre insert theme styles event
         const pre = await compiler.emitter.waitFor(
           'tui-insert-theme', 
@@ -91,10 +77,7 @@ export function tui(options: { brand?: string } = {}) {
           fs.existsSync(theme) ? fs.readFileSync(theme, 'utf-8') : ''
         );
         //replace @tui theme; with the contents of the theme file
-        sourceCode = sourceCode.replace(
-          '@tui theme;', 
-          contents.trim().replaceAll('.tui-', `.${prefix}`)
-        );
+        sourceCode = sourceCode.replace('@tui theme;', contents.trim());
         //emit post inserted theme styles event
         const post = await compiler.emitter.waitFor(
           'tui-inserted-theme', 
@@ -103,39 +86,95 @@ export function tui(options: { brand?: string } = {}) {
         sourceCode = post.data as string || sourceCode;
       }
 
+      //if the source code includes @tui block;
+      if (sourceCode.includes('@tui block;')) {
+        const blocks = Object.values(document.registry).map(
+          component => component.brand 
+            ? `${component.brand}-${component.tagname}` 
+            : component.tagname
+        ).flat().map(tagname => `${tagname} { display: block; }`);
+        //replace the utilities with the insertion
+        sourceCode = sourceCode.replace(
+          '@tui block;', 
+          blocks.join('\n')
+        );
+       //if the source code includes @tui inline-block;
+      } else if (sourceCode.includes('@tui inline-block;')) {
+        const blocks = Object.values(document.registry).map(
+          component => component.brand 
+            ? `${component.brand}-${component.tagname}` 
+            : component.tagname
+        ).flat().map(tagname => `${tagname} { display: inline-block; }`);
+        //replace the utilities with the insertion
+        sourceCode = sourceCode.replace(
+          '@tui inline-block;', 
+          blocks.join('\n')
+        );
+      }
+
+      //if the source code includes @tui fouc-opacity;
+      if (sourceCode.includes('@tui fouc-opacity;')) {
+        const blocks = Object.values(document.components).map(
+          component => component.brand 
+            ? `${component.brand}-${component.tagname}` 
+            : component.tagname
+        ).flat().map(tagname => `${tagname}:not(:defined) { opacity: 0; }`);
+        //replace the utilities with the insertion
+        sourceCode = sourceCode.replace(
+          '@tui fouc-opacity;', 
+          blocks.join('\n')
+        );
+      //if the source code includes @tui fouc-visibility;
+      } else if (sourceCode.includes('@tui fouc-visibility;')) {
+        const blocks = Object.values(document.components).map(
+          component => component.brand 
+            ? `${component.brand}-${component.tagname}` 
+            : component.tagname
+        ).flat().map(tagname => `${tagname}:not(:defined) { visibility: hidden; }`);
+        //replace the utilities with the insertion
+        sourceCode = sourceCode.replace(
+          '@tui fouc-visibility;', 
+          blocks.join('\n')
+        );
+      //if the source code includes @tui fouc-none;
+      } else if (sourceCode.includes('@tui fouc-none;')) {
+        const blocks = Object.values(document.components).map(
+          component => component.brand 
+            ? `${component.brand}-${component.tagname}` 
+            : component.tagname
+        ).flat().map(tagname => `${tagname}:not(:defined) { display: none; }`);
+        //replace the utilities with the insertion
+        sourceCode = sourceCode.replace(
+          '@tui fouc-none;', 
+          blocks.join('\n')
+        );
+      //if the source code includes @tui fouc-opacity-all;
+      }
+
       //if the source code includes @tui utilities;
       if (sourceCode.includes('@tui utilities;')) {
         const stylesheet: Record<string, string[]> = {};
-        //find all the component files
-        const files = Object.values(document.registry).map(
-          component => component.absolute
-        );
-        //add the document to the files
-        files.push(document.absolute);
-        //loop through the files
-        for (const file of files) {
-          //read the file contents
-          const contents = fs.readFileSync(file, 'utf-8');
-          //loop through definitions in the utilities
-          for (const definition of utilities) {
-            //extract the media, selector, and style from the definition
-            const { media, selector, style } = definition;
-            //determine the query
-            const query = `${prefix}${selector}`;
-            //if the contents include the query
-            if (contents.includes(query)) {
-              //create the styles
-              const styles = `.${query} { ${style} }`;
-              //if the media is not in the stylesheet
-              if (!stylesheet[media]) {
-                //add the media to the stylesheet
-                stylesheet[media] = [];
-              }
-              //add the styles to the media
-              stylesheet[media].push(styles);
-            }
+        //remove duplicates values from matches
+        const matches = Array.from(new Set([
+          //find all the component matches
+          ...Object.values(document.registry).map(
+            component => getMatches(component.contents)
+          ).flat(),
+          //add the document to the matches
+          ...getMatches(document.contents)
+        ]));
+
+        //loop through definitions in the utilities
+        for (const definition of utilities) {
+          if (definition.type === 'static') {
+            addStaticStyles(definition, matches, stylesheet);
+          } else if (definition.type === 'range') {
+            addRangeStyles(definition, matches, stylesheet);
+          } else if (definition.type === 'regexp') {
+            addRegExpStyles(definition, matches, stylesheet);
           }
         }
+
         const insertions: string[] = [];
         //loop through the stylesheet
         for (const media in stylesheet) {
@@ -179,10 +218,8 @@ export function tui(options: { brand?: string } = {}) {
           //replace @tui block-alert; with the actual styles
           const styles =  pre.data as string 
             || getStyle(group, String(directive));
-          sourceCode = sourceCode.replace(
-            style, 
-            styles.replaceAll('.tui-', `.${prefix}`)
-          );
+          //add the styles to the source code
+          sourceCode = sourceCode.replace(style, styles);
           continue;
         }
         //@tui block-alert; is not in the styles...
@@ -203,7 +240,7 @@ export function tui(options: { brand?: string } = {}) {
           const styles =  pre.data as string 
             || getStyle(group, String(directive));
           //add the styles to the source code
-          sourceCode += styles.replaceAll('.tui-', `.${prefix}`);
+          sourceCode += styles;
         }
       }
 
@@ -211,4 +248,4 @@ export function tui(options: { brand?: string } = {}) {
       e.set(sourceCode);
     });
   };
-}
+};

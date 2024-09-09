@@ -7,17 +7,19 @@
     line-height: 20px;
   }
   :host([inline]) {
-    display: inline;
+    display: inline !important;
   }
   :host([inline]),
   :host([inline]) > pre,
   :host([inline]) > pre > code {
-    display: inline;
+    display: inline !important;
   }
   .snippet {
     background-color: #000000;
     color: #ABB2BF;
+    height: 100%;
     margin: 0;
+    overflow: auto;
     padding: 0;
   }
 
@@ -75,7 +77,10 @@
 
   .terminal {
     background-color: #000000;
+    font-family: 'Courier New', Courier, monospace;
     font-size: 15px;
+    height: 100%;
+    overflow: auto;
     padding: 10px;
   }
   .terminal span {
@@ -138,5 +143,7 @@
   <else />
     <pre class="snippet pad"><code mount=highlight></code></pre>
   </if>
+<else />
+  <span>????</span>
 </if>
 

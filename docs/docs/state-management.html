@@ -18,343 +18,444 @@
   <link rel="favicon" href="/temple/favicon.ico" />
   <link rel="shortcut icon" type="image/png" href="/temple/favicon.png" />
   <link rel="stylesheet" type="text/css" href="/temple/styles/fontawesome/all.css" />
-  <link rel="stylesheet" type="text/css" href="/temple/styles/theme.css" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/global.css" />
   <link rel="stylesheet" type="text/css" href="/temple/build/client/269f8b60f20cebb43be6.css" />
   
   <script data-app="eyJwcm9wcyI6eyJ0aXRsZSI6IlRlbXBsZSBEb2N1bWVudGF0aW9uIn0sImVudiI6eyJCVUlMRF9JRCI6IjI2OWY4YjYwZjIwY2ViYjQzYmU2In19" src="/temple/build/client/269f8b60f20cebb43be6.js"></script>
   
 </head>
-  <body class="dark panel with-head with-left with-right">
-    <header class="head panel-head">
-  <i class="menu fas fa-fw fa-bars" ></i>
-  <a href="/temple">
-    <img src="/temple/temple-icon.png" alt="Temple Logo" />
-  </a>
-  <h3><a class="tx-white" href="/temple">Temple</a></h3>
-  <nav>
+  <body class="dark bg-t-0 tx-t1 arial">
+    <panel-layout>
+      <panel-head><menu class="flex flex-center-y px-20 py-15 m-0 bg-t-1">
+  
+    <i class="fas fa-fw fa-bars cursor-pointer py-5 pr-10 none md-inline-block tx-t-1" ></i>
+    <div class="flex-grow"></div>
+  
+  <nav class="flex flex-center-y">
     <a class="tx-white" href="/temple/docs/index.html">Docs</a>
-    <a class="github" href="https://github.com/OSSPhilippines/temple" target="_blank">
+    <a class="tx-t-1 tx-5xl ml-10" href="https://github.com/OSSPhilippines/temple" target="_blank">
       <i class="fab fa-github"></i>
     </a>
-    <a class="npm" href="https://www.npmjs.com/package/@ossph/temple" target="_blank">
+    <a class="bg-h-cb3837 pill tx-t-1 tx-lg ml-5 p-5 tx-center" href="https://www.npmjs.com/package/@ossph/temple" target="_blank">
       <i class="fab fa-npm text-white"></i>
     </a>
-    <a class="discord" href="https://discord.gg/open-source-software-ph-905496362982981723" target="_blank">
+    <a class="bg-h-7289da pill tx-t-1 tx-lg ml-5 p-5 tx-center" href="https://discord.gg/open-source-software-ph-905496362982981723" target="_blank">
       <i class="fab fa-discord text-white"></i>
     </a>
   </nav>
+</menu></panel-head>
+      <panel-left><header class="flex flex-center-y bg-t-2 py-15 pr-5 pl-10">
+  <a href="/temple">
+    <img class="h-26 mr-10" src="/temple/temple-icon.png" alt="Temple Logo" />
+  </a>
+  <h3 class="flex-grow m-0 tx-uppercase">
+    <a class="tx-white" href="/temple">Temple</a>
+  </h3>
+  <i class="fas fa-fw fa-chevron-left cursor-pointer none md-inline-block" ></i>
 </header>
-    <aside class="left panel-left">
-  <header>
-    <a href="/temple">
-      <img src="/temple/temple-icon.png" alt="Temple Logo" />
+<nav class="bg-t-1 scroll-auto h-calc-full-60">
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-0 pt-20 pb-10 pl-10 tx-uppercase">
+    Introduction
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/index.html">
+      Documentation
     </a>
-    <h3><a class="tx-white" href="/temple">Temple</a></h3>
-    <i class="toggle fas fa-fw fa-chevron-left" ></i>
-  </header>
-  <nav>
-    <h6>Introduction</h6>
-    <a href="/temple/docs/index.html">Documentation</a>
-    <a href="/temple/docs/getting-started.html">Getting Started</a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/getting-started.html">
+      Getting Started
+    </a>
+  
 
-    <h6>Features</h6>
-    <a href="/temple/docs/markup-syntax.html">Markup Syntax</a>
-    <a href="/temple/docs/state-management.html">State Management</a>
-    <a href="/temple/docs/component-strategy.html">Component Strategy</a>
-    <a href="/temple/docs/compiler-api.html">Compiler API</a>
-    <a href="/temple/docs/client-api.html">Client API</a>
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-20 pt-20 pb-10 pl-10 tx-uppercase">
+    Features
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/markup-syntax.html">
+      Markup Syntax
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10 tx-bold" href="/temple/docs/state-management.html">
+      State Management
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/component-strategy.html">
+      Component Strategy
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/compiler-api.html">
+      Compiler API
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/client-api.html">
+      Client API
+    </a>
+  
 
-    <h6>Usage</h6>
-    <a href="/temple/docs/template-engine.html">Template Engine</a>
-    <a href="/temple/docs/single-page.html">Single Page App</a>
-    <a href="/temple/docs/static-site.html">Static Site Generator</a>
-    <a href="/temple/docs/component-publisher.html">Component Publisher</a>
-    <a href="/temple/docs/developer-tools.html">Developer Tools</a>
-  </nav>
-</aside>
-    <aside class="panel-right right">
-      <h6>On this page</h6>
-      <nav>
-        <a href="#props">Props</a>
-        <a href="#signals">Signals</a>
-        <a href="#events">Events</a>
-        <a href="#classnames">Class Names</a>
-        <a href="#children">Children</a>
-        <a href="#env">Env Variables</a>
-        <a href="#this">this</a>
-      </nav>
-    </aside>
-    <panel-main class="panel-main">
-      <div class="docs container">
-        <h1>State Management</h1>
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-20 pt-20 pb-10 pl-10 tx-uppercase">
+    Usage
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/template-engine.html">
+      Template Engine
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/single-page.html">
+      Single Page App
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/static-site.html">
+      Static Site Generator
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/component-publisher.html">
+      Component Publisher
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10 mb-100" href="/temple/docs/developer-tools.html">
+      Developer Tools
+    </a>
+  
+</nav></panel-left>
+      <panel-right>
+        <menu class="m-0 px-10 py-20 h-calc-full-40 bg-t-2 scroll-auto">
+          <h6 class="tx-muted tx-14 mb-0 mt-0 pb-10 tx-uppercase">
+            On this page
+          </h6>
+          <nav class="tx-14 tx-lh-32">
+            <a class="block tx-t-0" href="#props">Props</a>
+            <a class="block tx-t-0" href="#signals">Signals</a>
+            <a class="block tx-t-0" href="#events">Events</a>
+            <a class="block tx-t-0" href="#classnames">Class Names</a>
+            <a class="block tx-t-0" href="#children">Children</a>
+            <a class="block tx-t-0" href="#component">Component</a>
+            <a class="block tx-t-0" href="#env">Env Variables</a>
+            <a class="block tx-t-0" href="#this">this</a>
+          </nav>
+        </menu>
+      </panel-right>
+      <panel-main>
+        <api-docs>
+          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+            State Management
+          </h1>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Temple provides several ways to manage properties and states 
+            in your components.
+          </i18n-translate>
 
-        <i18n-translate p trim>
-          Temple provides several ways to manage properties and states 
-          in your components.
-        </i18n-translate>
+          <a name="props"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            Props
+          </h2>
 
-        <a name="props"></a>
-        <h2>Props</h2>
-
-        <ide-code lang="js" trim >
-          import { props } from '@ossph/temple';
-          const { title, description } = props();
-        </ide-code>
-
-        <i18n-translate p trim>
-          The <code>props</code> function can be used to access the 
-          properties of a component.
-        </i18n-translate>
-
-        <a name="signals"></a>
-        <h2>Signals</h2>
-
-        <p>
-          Temple provides a reactive state management system that allows 
-          you to manage states in your components. The system is based 
-          on signals, which are reactive variables that can be used to 
-          store and update data. Signals can be used to store any type 
-          of data, including numbers, strings, objects, arrays, and even 
-          functions.
-        </p>
-
-        <ide-code trim >
-          &lt;script&gt;
-            import { signal } from '@ossph/temple';
-            const count = signal&lt;number&gt;(1);
-          &lt;/script&gt;
-          &lt;em class=classlist&gt;Count #{count.value}&lt;/em&gt;
-        </ide-code>
-
-        <i18n-translate p trim>
-          To create a signal, you can use the 
-          <ide-code type="javascript" inline>signal()</ide-code> 
-          function, which takes an initial value as an argument. Signals 
-          can be read and updated using the <code>value</code> property. 
-          Setting the value will trigger a re-render of the component.
-        </i18n-translate>
-
-        <i18n-translate p trim>
-          Signals can be used in your components to manage states and 
-          trigger updates when the state changes. You can use signals to 
-          store data that needs to be shared between components, or to 
-          trigger side effects when the state changes. Signals can also 
-          be used to store data that needs to be persisted across page 
-          reloads, such as form data or user preferences.
-        </i18n-translate>
-
-        <a name="events"></a>
-        <h2>Events</h2>
-
-        <ide-code trim number >
-          &lt;script&gt;
-            import { signal } from '@ossph/temple';
-            const count = signal&lt;number&gt;(1);
-            const add = e =&gt; count.value++;
-          &lt;/script&gt;
-
-          &lt;button click=add&gt;{count.value}&lt;/button&gt;
-
-          &lt;button dblclick=add&gt;{count.value}&lt;/button&gt;
-          &lt;button mousedown=add&gt;{count.value}&lt;/button&gt;
-          &lt;button mouseup=add&gt;{count.value}&lt;/button&gt;
-          &lt;button mousemove=add&gt;{count.value}&lt;/button&gt;
-          &lt;button mouseover=add&gt;{count.value}&lt;/button&gt;
-          &lt;button mouseout=add&gt;{count.value}&lt;/button&gt;
-          &lt;button wheel=add&gt;{count.value}&lt;/button&gt;
-          &lt;button keydown=add&gt;{count.value}&lt;/button&gt;
-          &lt;button keypress=add&gt;{count.value}&lt;/button&gt;
-          &lt;button keyup=add&gt;{count.value}&lt;/button&gt;
-        </ide-code>
-
-        <i18n-translate p trim>
-          For example, you can use the <ide-code inline>click</ide-code> 
-          attribute assigned to a function to trigger a function when 
-          the element is clicked. In combination with updating a signal, 
-          can trigger a re-render of the component. The following event 
-          attributes are supported.
-        </i18n-translate>
-
-        <div class="col-2">
-          <div>
-            <h3>Mouse Events</h3>
-            <ul>
-              <li><ide-code inline>click</ide-code></li>
-              <li><ide-code inline>dblclick</ide-code></li>
-              <li><ide-code inline>mousedown</ide-code></li>
-              <li><ide-code inline>mouseup</ide-code></li>
-              <li><ide-code inline>mousemove</ide-code></li>
-              <li><ide-code inline>mouseover</ide-code></li>
-              <li><ide-code inline>mouseout</ide-code></li>
-              <li><ide-code inline>wheel</ide-code></li>
-            </ul>
-            <h3>Keyboard Events</h3>
-            <ul>
-              <li><ide-code inline>keydown</ide-code></li>
-              <li><ide-code inline>keypress</ide-code></li>
-              <li><ide-code inline>keyup</ide-code></li>
-            </ul>
-            <h3>Form Events</h3>
-            <ul>
-              <li><ide-code inline>blur</ide-code></li>
-              <li><ide-code inline>change</ide-code></li>
-              <li><ide-code inline>contextmenu</ide-code></li>
-              <li><ide-code inline>focus</ide-code></li>
-              <li><ide-code inline>input</ide-code></li>
-              <li><ide-code inline>submit</ide-code></li>
-              <li><ide-code inline>invalid</ide-code></li>
-              <li><ide-code inline>reset</ide-code></li>
-              <li><ide-code inline>search</ide-code></li>
-              <li><ide-code inline>select</ide-code></li>
-            </ul>
-            <h3>Clipboard Events</h3>
-            <ul>
-              <li><ide-code inline>copy</ide-code></li>
-              <li><ide-code inline>cut</ide-code></li>
-              <li><ide-code inline>paste</ide-code></li>
-            </ul>
-            <h3>Transition Events</h3>
-            <ul>
-              <li><ide-code inline>transitionend</ide-code></li>
-            </ul>
-          </div>
-          <div>
-            <h3>Drag Events</h3>
-            <ul>
-              <li><ide-code inline>drag</ide-code></li>
-              <li><ide-code inline>dragstart</ide-code></li>
-              <li><ide-code inline>dragend</ide-code></li>
-              <li><ide-code inline>dragover</ide-code></li>
-              <li><ide-code inline>dragenter</ide-code></li>
-              <li><ide-code inline>dragleave</ide-code></li>
-              <li><ide-code inline>drop</ide-code></li>
-              <li><ide-code inline>scroll</ide-code></li>
-            </ul>
-            <h3>Media Events</h3>
-            <ul>
-              <li><ide-code inline>durationchange</ide-code></li>
-              <li><ide-code inline>ended</ide-code></li>
-              <li><ide-code inline>error</ide-code></li>
-              <li><ide-code inline>loadeddata</ide-code></li>
-              <li><ide-code inline>loadedmetadata</ide-code></li>
-              <li><ide-code inline>loadstart</ide-code></li>
-              <li><ide-code inline>pause</ide-code></li>
-              <li><ide-code inline>play</ide-code></li>
-              <li><ide-code inline>playing</ide-code></li>
-              <li><ide-code inline>progress</ide-code></li>
-              <li><ide-code inline>ratechange</ide-code></li>
-              <li><ide-code inline>seeked</ide-code></li>
-              <li><ide-code inline>seeking</ide-code></li>
-              <li><ide-code inline>stalled</ide-code></li>
-              <li><ide-code inline>suspend</ide-code></li>
-              <li><ide-code inline>timeupdate</ide-code></li>
-              <li><ide-code inline>volumechange</ide-code></li>
-              <li><ide-code inline>waiting</ide-code></li>
-            </ul>
-            <h3>Animation Events</h3>
-            <ul>
-              <li><ide-code inline>animationstart</ide-code></li>
-              <li><ide-code inline>animationend</ide-code></li>
-              <li><ide-code inline>animationiteration</ide-code></li>
-            </ul>
-          </div>
-        </div>
-
-        <a name="classnames"></a>
-        <h2>Class Names</h2>
-
-        <ide-code lang="js" trim >
-          import { classnames } from '@ossph/temple';
-          const classlist = classnames(); //--&gt; 'class1 class2 class3'
-        </ide-code>
-
-        <i18n-translate p trim>
-          The <code>classnames</code> function can be used to generate 
-          a list of class names based on the properties of an object.
-        </i18n-translate>
-
-        <a name="children"></a>
-        <h2>Children</h2>
-
-        <ide-code lang="js" trim >
-          import { children } from '@ossph/temple';
-          const childlist = children(); //--&gt; Node[]
-        </ide-code>
-        <i18n-translate p trim>
-          The <code>children</code> function can be used to render 
-          child components in a parent component.
-        </i18n-translate>
-
-        <a name="env"></a>
-        <h2>Environment Variables</h2>
-
-        <ide-code trim >
-          &lt;script&gt;
-            import { env } from '@ossph/temple';
-            const { BUILD_ID, NODE_ENV } = env();
-          &lt;/script&gt;
-          &lt;if true={NODE_ENV === 'development'}&gt;
-            &lt;p&gt;Development mode&lt;/p&gt;
-          &lt;/if&gt;
-        </ide-code>
-        <i18n-translate p trim>
-          The <code>env</code> function can be used to access environment 
-          variables in a component.
-        </i18n-translate>
-
-        <a name="this"></a>
-        <h2>this</h2>
-
-        <ide-app title="What's this">
-          <ide-code numbers >
-            &lt;script&gt;
-              this.props;
-              this.style;
-              this.classList;
-              this.parentNode;
-              this.innerHTML;
-              this.appendChild();
-              this.querySelector('p');
-            &lt;/script&gt;
+          <ide-code lang="js" trim >
+            import { props } from '@ossph/temple';
+            const { title, description } = props();
           </ide-code>
-        </ide-app>
 
-        <i18n-translate p trim>
-          <ide-code inline>this</ide-code> refers to the 
-          <ide-code inline>TempleComponent</ide-code> that extends 
-          <ide-code inline>HTMLElement</ide-code>. This means all
-          components in Temple are in fact are HTML elements and has
-          access to the common functionality like 
-          <ide-code inline>innerHTML</ide-code> and
-          <ide-code inline>querySelector()</ide-code> to name a 
-          few. <ide-code inline>TempleComponent</ide-code> has the
-          additional following properties and methods that you can access
-          using <ide-code inline>this</ide-code>.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The <code>props</code> function can be used to access the 
+            properties of a component.
+          </i18n-translate>
 
-        <api-ui start="TempleComponent"></api-ui>
+          <a name="signals"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            Signals
+          </h2>
 
-        <tui-alert curved info>
-          <i class="fas fa-fw fa-info-circle"></i>
-          <strong>Info:</strong> You can discover more methods and properties
-          of the <code>HTMLElement</code> class on the
-          <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement">
-            MDN Web Docs
-          </a>.
-        </tui-alert>
-        
-        <nav class="pager">
-          <a class="prev" href="/temple/docs/markup-syntax.html">
-            <i class="fas fa-fw fa-chevron-left"></i>
-            Markup Syntax
-          </a>
-          <a class="next" href="/temple/docs/component-strategy.html">
-            Component Strategy
-            <i class="fas fa-fw fa-chevron-right"></i>
-          </a>
-        </nav>
-      </div>
-      <footer class="foot"></footer>
-    </panel-main>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Temple provides a reactive state management system that allows 
+            you to manage states in your components. The system is based 
+            on signals, which are reactive variables that can be used to 
+            store and update data. Signals can be used to store any type 
+            of data, including numbers, strings, objects, arrays, and even 
+            functions.
+          </i18n-translate>
+
+          <div class="scroll-auto bg-black">
+            <ide-code trim >
+              &lt;script&gt;
+                import { signal } from '@ossph/temple';
+                const count = signal&lt;number&gt;(1);
+              &lt;/script&gt;
+              &lt;em class=classlist&gt;Count #{count.value}&lt;/em&gt;
+            </ide-code>
+          </div>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            To create a signal, you can use the 
+            <ide-code type="javascript" inline>signal()</ide-code> 
+            function, which takes an initial value as an argument. Signals 
+            can be read and updated using the <code>value</code> property. 
+            Setting the value will trigger a re-render of the component.
+          </i18n-translate>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Signals can be used in your components to manage states and 
+            trigger updates when the state changes. You can use signals to 
+            store data that needs to be shared between components, or to 
+            trigger side effects when the state changes. Signals can also 
+            be used to store data that needs to be persisted across page 
+            reloads, such as form data or user preferences.
+          </i18n-translate>
+
+          <a name="events"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            Events
+          </h2>
+
+          <div class="scroll-auto bg-black">
+            <ide-code trim number >
+              &lt;script&gt;
+                import { signal } from '@ossph/temple';
+                const count = signal&lt;number&gt;(1);
+                const add = e =&gt; count.value++;
+              &lt;/script&gt;
+
+              &lt;button click=add&gt;{count.value}&lt;/button&gt;
+
+              &lt;button dblclick=add&gt;{count.value}&lt;/button&gt;
+              &lt;button mousedown=add&gt;{count.value}&lt;/button&gt;
+              &lt;button mouseup=add&gt;{count.value}&lt;/button&gt;
+              &lt;button mousemove=add&gt;{count.value}&lt;/button&gt;
+              &lt;button mouseover=add&gt;{count.value}&lt;/button&gt;
+              &lt;button mouseout=add&gt;{count.value}&lt;/button&gt;
+              &lt;button wheel=add&gt;{count.value}&lt;/button&gt;
+              &lt;button keydown=add&gt;{count.value}&lt;/button&gt;
+              &lt;button keypress=add&gt;{count.value}&lt;/button&gt;
+              &lt;button keyup=add&gt;{count.value}&lt;/button&gt;
+            </ide-code>
+          </div>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            For example, you can use the <ide-code inline>click</ide-code> 
+            attribute assigned to a function to trigger a function when 
+            the element is clicked. In combination with updating a signal, 
+            can trigger a re-render of the component. The following event 
+            attributes are supported.
+          </i18n-translate>
+
+          <div class="col-2">
+            <div>
+              <h3>Mouse Events</h3>
+              <ul class="tx-lh-36">
+                <li><ide-code inline>click</ide-code></li>
+                <li><ide-code inline>dblclick</ide-code></li>
+                <li><ide-code inline>mousedown</ide-code></li>
+                <li><ide-code inline>mouseup</ide-code></li>
+                <li><ide-code inline>mousemove</ide-code></li>
+                <li><ide-code inline>mouseover</ide-code></li>
+                <li><ide-code inline>mouseout</ide-code></li>
+                <li><ide-code inline>wheel</ide-code></li>
+              </ul>
+              <h3>Keyboard Events</h3>
+              <ul class="tx-lh-36">
+                <li><ide-code inline>keydown</ide-code></li>
+                <li><ide-code inline>keypress</ide-code></li>
+                <li><ide-code inline>keyup</ide-code></li>
+              </ul>
+              <h3>Form Events</h3>
+              <ul class="tx-lh-36">
+                <li><ide-code inline>blur</ide-code></li>
+                <li><ide-code inline>change</ide-code></li>
+                <li><ide-code inline>contextmenu</ide-code></li>
+                <li><ide-code inline>focus</ide-code></li>
+                <li><ide-code inline>input</ide-code></li>
+                <li><ide-code inline>submit</ide-code></li>
+                <li><ide-code inline>invalid</ide-code></li>
+                <li><ide-code inline>reset</ide-code></li>
+                <li><ide-code inline>search</ide-code></li>
+                <li><ide-code inline>select</ide-code></li>
+              </ul>
+              <h3>Clipboard Events</h3>
+              <ul class="tx-lh-36">
+                <li><ide-code inline>copy</ide-code></li>
+                <li><ide-code inline>cut</ide-code></li>
+                <li><ide-code inline>paste</ide-code></li>
+              </ul>
+              <h3>Transition Events</h3>
+              <ul class="tx-lh-36">
+                <li><ide-code inline>transitionend</ide-code></li>
+              </ul>
+            </div>
+            <div>
+              <h3>Drag Events</h3>
+              <ul class="tx-lh-36">
+                <li><ide-code inline>drag</ide-code></li>
+                <li><ide-code inline>dragstart</ide-code></li>
+                <li><ide-code inline>dragend</ide-code></li>
+                <li><ide-code inline>dragover</ide-code></li>
+                <li><ide-code inline>dragenter</ide-code></li>
+                <li><ide-code inline>dragleave</ide-code></li>
+                <li><ide-code inline>drop</ide-code></li>
+                <li><ide-code inline>scroll</ide-code></li>
+              </ul>
+              <h3>Media Events</h3>
+              <ul class="tx-lh-36">
+                <li><ide-code inline>durationchange</ide-code></li>
+                <li><ide-code inline>ended</ide-code></li>
+                <li><ide-code inline>error</ide-code></li>
+                <li><ide-code inline>loadeddata</ide-code></li>
+                <li><ide-code inline>loadedmetadata</ide-code></li>
+                <li><ide-code inline>loadstart</ide-code></li>
+                <li><ide-code inline>pause</ide-code></li>
+                <li><ide-code inline>play</ide-code></li>
+                <li><ide-code inline>playing</ide-code></li>
+                <li><ide-code inline>progress</ide-code></li>
+                <li><ide-code inline>ratechange</ide-code></li>
+                <li><ide-code inline>seeked</ide-code></li>
+                <li><ide-code inline>seeking</ide-code></li>
+                <li><ide-code inline>stalled</ide-code></li>
+                <li><ide-code inline>suspend</ide-code></li>
+                <li><ide-code inline>timeupdate</ide-code></li>
+                <li><ide-code inline>volumechange</ide-code></li>
+                <li><ide-code inline>waiting</ide-code></li>
+              </ul>
+              <h3>Animation Events</h3>
+              <ul class="tx-lh-36">
+                <li><ide-code inline>animationstart</ide-code></li>
+                <li><ide-code inline>animationend</ide-code></li>
+                <li><ide-code inline>animationiteration</ide-code></li>
+              </ul>
+            </div>
+          </div>
+
+          <a name="classnames"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            Class Names
+          </h2>
+
+          <div class="scroll-auto bg-black">
+            <ide-code lang="js" trim >
+              import { classnames } from '@ossph/temple';
+              const classlist = classnames(); //--&gt; 'class1 class2 class3'
+            </ide-code>
+          </div>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The <code>classnames</code> function can be used to generate 
+            a list of class names based on the properties of an object.
+          </i18n-translate>
+
+          <a name="children"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            Children
+          </h2>
+
+          <div class="scroll-auto bg-black">
+            <ide-code lang="js" trim >
+              import { children } from '@ossph/temple';
+              const childlist = children(); //--&gt; Node[]
+            </ide-code>
+          </div>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The <code>children</code> function can be used to render 
+            child components in a parent component.
+          </i18n-translate>
+
+          <a name="component"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            Component
+          </h2>
+
+          <div class="scroll-auto bg-black">
+            <ide-code lang="js" trim >
+              import { component } from '@ossph/temple';
+              const button = component(); //--&gt; HTMLElement
+              console.log(button.querySelector('span'));
+            </ide-code>
+          </div>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            For other edge cases, the <code>component</code> function 
+            can be used to get raw access to the component's 
+            functionality.
+          </i18n-translate>
+
+          <a name="env"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            Environment Variables
+          </h2>
+
+          <ide-code trim >
+            &lt;script&gt;
+              import { env } from '@ossph/temple';
+              const { BUILD_ID, NODE_ENV } = env();
+            &lt;/script&gt;
+            &lt;if true={NODE_ENV === 'development'}&gt;
+              &lt;p&gt;Development mode&lt;/p&gt;
+            &lt;/if&gt;
+          </ide-code>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The <code>env</code> function can be used to access environment 
+            variables in a component.
+          </i18n-translate>
+
+          <a name="this"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            this
+          </h2>
+
+          <ide-app title="What's this" class="py-20">
+            <ide-code numbers >
+              &lt;script&gt;
+                this.props;
+                this.style;
+                this.classList;
+                this.parentNode;
+                this.innerHTML;
+                this.appendChild();
+                this.querySelector('p');
+              &lt;/script&gt;
+            </ide-code>
+          </ide-app>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            <ide-code inline>this</ide-code> refers to the 
+            <ide-code inline>TempleComponent</ide-code> that extends 
+            <ide-code inline>HTMLElement</ide-code>. This means all
+            components in Temple are in fact are HTML elements and has
+            access to the common functionality like 
+            <ide-code inline>innerHTML</ide-code> and
+            <ide-code inline>querySelector()</ide-code> to name a 
+            few. <ide-code inline>TempleComponent</ide-code> has the
+            additional following properties and methods that you can access
+            using <ide-code inline>this</ide-code>.
+          </i18n-translate>
+
+          <api-ui start="TempleComponent"></api-ui>
+
+          <tui-alert curved info class="py-20 tx-lh-24">
+            <i class="fas fa-fw fa-info-circle"></i>
+            <strong>Info:</strong> You can discover more methods and properties
+            of the <code>HTMLElement</code> class on the
+            <a target="_blank" class="tx-white tx-underline" href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement">
+              MDN Web Docs
+            </a>.
+          </tui-alert>
+
+          <nav class="flex">
+            <a class="tx-primary py-40" href="/temple/docs/markup-syntax.html">
+              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              Markup Syntax
+            </a>
+            <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/component-strategy.html">
+              Component Strategy
+              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
+            </a>
+          </nav>
+          <footer class="foot"></footer>
+        </api-docs>
+      </panel-main>
+    </panel-layout>
   </body>
 </html>

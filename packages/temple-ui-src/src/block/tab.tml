@@ -1,0 +1,67 @@
+<script accept="group,">
+  import { props, component, children } from '@ossph/temple';
+  const { 
+    group, 
+    selector = '',
+    active = '',
+    inactive = '',
+    //dont need these
+    style, 
+    'class': _,
+    //get the rest
+    ...attributes 
+  } = props();
+
+  const tab = component();
+  const activeList = active.split(' ');
+  const inactiveList = inactive.split(' ');
+
+  tab.classList.add('cursor-pointer');
+
+  const init = () => {
+    const on = tab.hasAttribute('on');
+    tab.classList.remove(...(on ? inactiveList : activeList));
+    tab.classList.add(...(on ? activeList : inactiveList));
+    //find all the content elements that this tab controls
+    //and either show or hide it based on the active state
+    Array.from(document.querySelectorAll(selector)).forEach(content => {
+      content.style.display = on ? 'block' : 'none';
+    });
+  };
+  
+  const activate = () => {
+    //find all the tabs in the same group and remove the active class
+    Array.from(document.querySelectorAll(`[group="${group}"]`)).forEach(tab => {
+      //remember each tab is a TempleComponent...
+      //so we can get the selector using the props property
+      const subselector = tab.getAttribute('selector');
+      //if same selector
+      if (selector === subselector && !tab.hasAttribute('on')) {
+        //set this tab active
+        tab.setAttribute('on', '');
+        //find all the content elements that this tab controlsand show it
+        Array.from(document.querySelectorAll(selector)).forEach(content => {
+          content.style.display = 'block';
+        });
+        //render the tab, if we can.
+        typeof tab.render === 'function' && tab.render();
+      //not the same selector
+      } else if (selector !== subselector && tab.hasAttribute('on')) {
+        //remove active state
+        tab.removeAttribute('on');
+        //find all the content elements that this tab controls
+        Array.from(document.querySelectorAll(subselector)).forEach(content => {
+          //hide the content
+          content.style.display = 'none';
+        });
+        //render the tab, if we can.
+        typeof tab.render === 'function' && tab.render();
+      }
+      
+    });
+    
+  };
+</script>
+<a {...attributes} class="block h-full w-full" click=activate mount=init>
+  {children()}
+</a>

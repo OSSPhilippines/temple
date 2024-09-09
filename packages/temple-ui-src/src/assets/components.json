@@ -1,12 +1,8 @@
 [
-  { "group": "block", "name": "alert", "directive": "alert" },
-  { "group": "block", "name": "badge", "directive": "badge" },
-  { "group": "block", "name": "button", "directive": "button" },
   { "group": "block", "name": "loader", "directive": "loader" },
   { "group": "block", "name": "tab", "directive": "tab" },
   { "group": "table", "name": "grid", "directive": "grid" },
   { "group": "popup", "name": "modal", "directive": "modal" },
-  { "group": "form", "name": "control", "directive": "control" },
   { "group": "field", "name": "autocomplete", "directive": "autocomplete" },
   { "group": "field", "name": "checkbox", "directive": "checkbox" },
   { "group": "field", "name": "color", "directive": "color" },

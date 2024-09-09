@@ -1,0 +1,6 @@
+<script>
+  import { children } from '@ossph/temple';
+</script>
+<main class="absolute top-45 left-150 right-0 bottom-0 bg-black">
+  {children()}
+</main>

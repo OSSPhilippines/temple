@@ -1,147 +1,15 @@
-<link rel="stylesheet" type="text/css" href="/temple/styles/fontawesome/all.css" />
-<link rel="import" type="component" href="@/modules/ide/code.tml" name="ide-code" />
-<style>
-  :host {
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    display: block;
-    margin: 40px 0;
-    overflow: hidden;
-  }
-  a {
-    color: #007BFF;
-    cursor: pointer;
-  }
-  th {
-    padding: 10px;
-    text-align: left;
-    text-transform: uppercase;
-  }
-  td {
-    border-color: #666666;
-    border-top-style: solid;
-    border-top-width: 1px;
-    padding: 10px;
-  }
-  .tbl-container {
-    position: relative;
-    margin-bottom: 20px;
-    overflow: auto;
-  }
-  .tbl {
-    border-collapse: collapse;
-    display: table;
-    width: 100%;
-  }
-
-  .tbl-scroll {
-    overflow: auto;
-    flex-grow: 1;
-    height: 100%;
-    width: 100%;
-  }
-
-  .tbl-valign="top" nowrap {
-    white-space: valign="top" nowrap;
-  }
-
-  .tbl-z0 {
-    z-index: 0;
-  }
-  .tbl-z1 {
-    z-index: 1;
-  }
-  .tbl-z2 {
-    z-index: 2;
-  }
-  .tbl-z3 {
-    z-index: 3;
-  }
-  .tbl-z4 {
-    z-index: 4;
-  }
-
-  .tbl-sticky {
-    position: sticky;
-  }
-  .tbl-sticky-b {
-    bottom: 0;
-  }
-  .tbl-sticky-l {
-    left: 0;
-  }
-  .tbl-sticky-t {
-    top: 0;
-  }
-  .tbl-sticky-r {
-    right: 0;
-  }
-
-  .tbl-col {
-    border-color: black;
-    border-style: solid;
-    border-top-width: 1px;
-    padding-bottom: 16px;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 16px;
-  }
-
-  .tbl-foot {
-    border-color: black;
-    border-style: solid;
-    border-top-width: 1px;
-    padding-bottom: 16px;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 16px;
-  }
-
-  .tbl-row {
-    padding-bottom: 16px;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 16px;
-  }
-
-  .tbl-head {
-    border-color: black;
-    border-style: solid;
-    border-top-width: 1px;
-    padding-bottom: 16px;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 16px;
-  }
-
-  tr td:first-child {
-    color: #E49F1A;
-  }
-
-  h3 {
-    color: #DA532C;
-    background: #1A1A1A;
-    border-bottom: 1px solid #29252A;
-    font-size: 16px;
-    margin: 0;
-    padding: 10px;
-  }
-  h5 {
-    font-weight: normal;
-    margin: 15px 0 5px;
-    text-transform: uppercase;
-  }
-  td p {
-    margin: 0 0 10px;
-  }
-  .container {
-    background-color: #020202;
-    padding: 10px;
-  }
-</style>
+<link rel="import" type="component" href="@/modules/ide/code.tml" name="api-ide-code" />
 <script>
-  import { signal, props } from '@ossph/temple';
+  import { signal, props, classlist } from '@ossph/temple';
   import types from './types.json';
+
+  classlist().add(
+    'block', 
+    'my-40', 
+    'scroll-hidden', 
+    'b-rad-curved', 
+    'shadow-0-0-10-0-0-0-5'
+  );
 
   const { start = 'TempleCompiler' } = props();
 
@@ -159,80 +27,89 @@
     active.value = paths.value[paths.value.length - 1];
   };
 </script>
-<div>
-  <h3>
-    <if true={paths.value.length > 1}>
-      <a click=prev>
-        <i class="fas fa-arrow-left"></i>
-      </a>
-    </if>
-    API: {active.value}
-  </h3>
-  <div class="container">
-    <div class="tbl-container">
-      <table class="tbl">
-        <thead>
-          <th>Property</th>
-          <if false={active.value.includes('Emitter')}>
-            <th>Returns</th>
-          </if>
-          <th>Description</th>
-        </thead>
-        <tbody>
-          <each key=key value=prop from={types[active.value]}>
-            <tr>
-              <if true={prop.kind === 'property'}>
-                <td valign="top" nowrap>{key}</td>
-                <if true={types[prop.type]}>
-                  <td valign="top" nowrap>
-                    <a data-type={prop.type} click=next>
-                      {prop.type}
-                    </a>{prop.list ? '[]' :''}
-                  </td>
-                <else />
-                  <td valign="top" nowrap>{prop.type}{prop.list ? '[]' :''}</td>
-                </if>
-              <elif true={prop.kind === 'function'} />
-                <td valign="top" nowrap>
-                  {key}(
-                    <each key=index value=arg from={prop.args}>
-                      <if true={index > 0}>, </if>
-                      {arg.name}: 
-                      <if true={types[arg.type]}>
-                        <a data-type={arg.type} click=next>
-                          {arg.type}
-                        </a>{arg.list ? '[]' :''}
-                      <else />
-                        {arg.type}{arg.list ? '[]' :''}
-                      </if>
-                    </each>
-                  )
-                </td>
-                <if true={types[prop.returns.type]}>
-                  <td valign="top" nowrap>
-                    <a data-type={prop.returns.type} click=next>
-                      {prop.returns.type}
-                    </a>{prop.returns.list ? '[]' :''}
-                  </td>
-                <else />
-                  <td valign="top" nowrap>{prop.returns.type}{prop.returns.list ? '[]' :''}</td>
-                </if>
-              <elif true={prop.kind === 'event'} />
-                <td valign="top" nowrap>{`on('${key}', (event: Event) => void)`}</td>
-              </if>
-              <td>
-                <if true={prop.description}>
-                  <p>{prop.description}</p>
-                  <if true={prop.example}>
-                    <h5>Example</h5>
-                    <ide-code lang="js">{prop.example}</ide-code> 
-                  </if>
-                </if>
+<h3 class="tx-secondary bg-t-2 tx-16 m-0 p-10">
+  <if true={paths.value.length > 1}>
+    <a class="tx-t-1 cursor-pointer" click=prev>
+      <i class="fas fa-arrow-left"></i>
+    </a>
+  </if>
+  API: {active.value}
+</h3>
+<div class="bg-t-0 p-10">
+  <div class="relative mb-20 scroll-auto">
+    <table class="w-full b-collapse">
+      <thead>
+        <th class="p-10 tx-left tx-uppercase">Property</th>
+        <if false={active.value.includes('Emitter')}>
+          <th class="p-10 tx-left tx-uppercase">Returns</th>
+        </if>
+        <th class="p-10 tx-left tx-uppercase">Description</th>
+      </thead>
+      <tbody>
+        <each key=key value=prop from={types[active.value]}>
+          <tr>
+            <if true={prop.kind === 'property'}>
+              <td class="tx-primary tx-top tx-nowrap b-solid b-t-2 bx-0 bb-0 bt-1 p-10">
+                {key}
               </td>
-            </tr>
-          </each>
-        </tbody>
-      </table>
-    </div>
+              <if true={types[prop.type]}>
+                <td class="tx-top tx-nowrap b-solid b-t-2 bx-0 bb-0 bt-1 p-10">
+                  <a data-type={prop.type} click=next>
+                    {prop.type}
+                  </a>{prop.list ? '[]' :''}
+                </td>
+              <else />
+                <td class="tx-top tx-nowrap b-solid b-t-2 bx-0 bb-0 bt-1 p-10">
+                  {prop.type}{prop.list ? '[]' :''}
+                </td>
+              </if>
+            <elif true={prop.kind === 'function'} />
+              <td class="tx-primary tx-top b-solid b-t-2 bx-0 bb-0 bt-1 p-10" nowrap>
+                {key}(
+                  <each key=index value=arg from={prop.args}>
+                    <if true={index > 0}>, </if>
+                    {arg.name}: 
+                    <if true={types[arg.type]}>
+                      <a data-type={arg.type} click=next>
+                        {arg.type}
+                      </a>{arg.list ? '[]' :''}
+                    <else />
+                      {arg.type}{arg.list ? '[]' :''}
+                    </if>
+                  </each>
+                )
+              </td>
+              <if true={types[prop.returns.type]}>
+                <td class="tx-top tx-nowrap b-solid b-t-2 bx-0 bb-0 bt-1 p-10">
+                  <a data-type={prop.returns.type} click=next>
+                    {prop.returns.type}
+                  </a>{prop.returns.list ? '[]' :''}
+                </td>
+              <else />
+                <td class="tx-top tx-nowrap b-solid b-t-2 bx-0 bb-0 bt-1 p-10">
+                  {prop.returns.type}{prop.returns.list ? '[]' :''}
+                </td>
+              </if>
+            <elif true={prop.kind === 'event'} />
+              <td 
+                class="tx-primary tx-top b-solid b-t-2 bx-0 bb-0 bt-1 p-10" 
+                nowrap
+              >
+                {`on('${key}', (event: Event) => void)`}
+              </td>
+            </if>
+            <td class="tx-top b-solid b-t-2 bx-0 bb-0 bt-1 p-10">
+              <if true={prop.description}>
+                <p>{prop.description}</p>
+                <if true={prop.example}>
+                  <h5>Example</h5>
+                  <api-ide-code lang="js">{prop.example}</api-ide-code> 
+                </if>
+              </if>
+            </td>
+          </tr>
+        </each>
+      </tbody>
+    </table>
   </div>
 </div>

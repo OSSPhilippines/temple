@@ -18,157 +18,214 @@
   <link rel="favicon" href="/temple/favicon.ico" />
   <link rel="shortcut icon" type="image/png" href="/temple/favicon.png" />
   <link rel="stylesheet" type="text/css" href="/temple/styles/fontawesome/all.css" />
-  <link rel="stylesheet" type="text/css" href="/temple/styles/theme.css" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/global.css" />
   <link rel="stylesheet" type="text/css" href="/temple/build/client/13781afd4fbd704a9789.css" />
   
   <script data-app="eyJwcm9wcyI6eyJ0aXRsZSI6IlRlbXBsZSBEb2N1bWVudGF0aW9uIn0sImVudiI6eyJCVUlMRF9JRCI6IjEzNzgxYWZkNGZiZDcwNGE5Nzg5In19" src="/temple/build/client/13781afd4fbd704a9789.js"></script>
   
 </head>
-  <body class="dark panel with-head with-left">
-    <header class="head panel-head">
-  <i class="menu fas fa-fw fa-bars" ></i>
-  <a href="/temple">
-    <img src="/temple/temple-icon.png" alt="Temple Logo" />
-  </a>
-  <h3><a class="tx-white" href="/temple">Temple</a></h3>
-  <nav>
+  <body class="dark bg-t-0 tx-t1 arial">
+    <panel-layout>
+      <panel-head><menu class="flex flex-center-y px-20 py-15 m-0 bg-t-1">
+  
+    <i class="fas fa-fw fa-bars cursor-pointer py-5 pr-10 none md-inline-block tx-t-1" ></i>
+    <div class="flex-grow"></div>
+  
+  <nav class="flex flex-center-y">
     <a class="tx-white" href="/temple/docs/index.html">Docs</a>
-    <a class="github" href="https://github.com/OSSPhilippines/temple" target="_blank">
+    <a class="tx-t-1 tx-5xl ml-10" href="https://github.com/OSSPhilippines/temple" target="_blank">
       <i class="fab fa-github"></i>
     </a>
-    <a class="npm" href="https://www.npmjs.com/package/@ossph/temple" target="_blank">
+    <a class="bg-h-cb3837 pill tx-t-1 tx-lg ml-5 p-5 tx-center" href="https://www.npmjs.com/package/@ossph/temple" target="_blank">
       <i class="fab fa-npm text-white"></i>
     </a>
-    <a class="discord" href="https://discord.gg/open-source-software-ph-905496362982981723" target="_blank">
+    <a class="bg-h-7289da pill tx-t-1 tx-lg ml-5 p-5 tx-center" href="https://discord.gg/open-source-software-ph-905496362982981723" target="_blank">
       <i class="fab fa-discord text-white"></i>
     </a>
   </nav>
+</menu></panel-head>
+      <panel-left><header class="flex flex-center-y bg-t-2 py-15 pr-5 pl-10">
+  <a href="/temple">
+    <img class="h-26 mr-10" src="/temple/temple-icon.png" alt="Temple Logo" />
+  </a>
+  <h3 class="flex-grow m-0 tx-uppercase">
+    <a class="tx-white" href="/temple">Temple</a>
+  </h3>
+  <i class="fas fa-fw fa-chevron-left cursor-pointer none md-inline-block" ></i>
 </header>
-    <aside class="left panel-left">
-  <header>
-    <a href="/temple">
-      <img src="/temple/temple-icon.png" alt="Temple Logo" />
+<nav class="bg-t-1 scroll-auto h-calc-full-60">
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-0 pt-20 pb-10 pl-10 tx-uppercase">
+    Introduction
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/index.html">
+      Documentation
     </a>
-    <h3><a class="tx-white" href="/temple">Temple</a></h3>
-    <i class="toggle fas fa-fw fa-chevron-left" ></i>
-  </header>
-  <nav>
-    <h6>Introduction</h6>
-    <a href="/temple/docs/index.html">Documentation</a>
-    <a href="/temple/docs/getting-started.html">Getting Started</a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/getting-started.html">
+      Getting Started
+    </a>
+  
 
-    <h6>Features</h6>
-    <a href="/temple/docs/markup-syntax.html">Markup Syntax</a>
-    <a href="/temple/docs/state-management.html">State Management</a>
-    <a href="/temple/docs/component-strategy.html">Component Strategy</a>
-    <a href="/temple/docs/compiler-api.html">Compiler API</a>
-    <a href="/temple/docs/client-api.html">Client API</a>
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-20 pt-20 pb-10 pl-10 tx-uppercase">
+    Features
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/markup-syntax.html">
+      Markup Syntax
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/state-management.html">
+      State Management
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/component-strategy.html">
+      Component Strategy
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/compiler-api.html">
+      Compiler API
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/client-api.html">
+      Client API
+    </a>
+  
 
-    <h6>Usage</h6>
-    <a href="/temple/docs/template-engine.html">Template Engine</a>
-    <a href="/temple/docs/single-page.html">Single Page App</a>
-    <a href="/temple/docs/static-site.html">Static Site Generator</a>
-    <a href="/temple/docs/component-publisher.html">Component Publisher</a>
-    <a href="/temple/docs/developer-tools.html">Developer Tools</a>
-  </nav>
-</aside>
-    <panel-main class="panel-main">
-      <div class="docs container">
-        <h1>Developer Tools</h1>
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-20 pt-20 pb-10 pl-10 tx-uppercase">
+    Usage
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/template-engine.html">
+      Template Engine
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/single-page.html">
+      Single Page App
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/static-site.html">
+      Static Site Generator
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/component-publisher.html">
+      Component Publisher
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10 tx-bold mb-100" href="/temple/docs/developer-tools.html">
+      Developer Tools
+    </a>
+  
+</nav></panel-left>
+      <panel-main>
+        <api-docs>
+          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+            Developer Tools
+          </h1>
 
-        <i18n-translate p trim>
-          Temple provides a separate package for a better development 
-          experience when working with server frameworks that utilize 
-          the native http module. Start by installing adding 
-          <ide-code lang="js" inline>'@ossph/temple-dev'</ide-code>
-          to your project.
-        </i18n-translate>
-        <ide-app title="Terminal">
-          <ide-code lang="bash">
-            npm install --save-dev @ossph/temple-dev
-          </ide-code>
-        </ide-app>
-        <i18n-translate p trim>
-          Next, import the <ide-code lang="js" inline>dev()</ide-code> 
-          function from the package and use it in your existing 
-          <ide-code lang="js" inline>'src/index.ts'</ide-code> 
-          file to create a development server as shown in the example below.
-        </i18n-translate>
-        <ide-app title="src/index.ts">
-          <ide-code lang="js" numbers trim >
-            import http from 'http';
-            import temple from '@ossph/temple/compiler';
-            import { dev } from '@ossph/temple-dev';
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Temple provides a separate package for a better development 
+            experience when working with server frameworks that utilize 
+            the native http module. Start by installing adding 
+            <ide-code lang="js" inline>@ossph/temple-dev</ide-code>
+            to your project.
+          </i18n-translate>
+          <ide-app title="Terminal" class="py-20">
+            <ide-code lang="bash">
+              npm install --save-dev @ossph/temple-dev
+            </ide-code>
+          </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Next, import the <ide-code lang="js" inline>dev()</ide-code> 
+            function from the package and use it in your existing 
+            <ide-code lang="js" inline>src/index.ts</ide-code> 
+            file to create a development server as shown in the example below.
+          </i18n-translate>
+          <ide-app title="src/index.ts" class="py-20">
+            <ide-code lang="js" numbers trim >
+              import http from 'http';
+              import temple from '@ossph/temple/compiler';
+              import { dev } from '@ossph/temple-dev';
 
-            //create temple compiler
-            const compiler = temple({ cwd: __dirname });
-            //1. create dev tools
-            const { router, refresh } = dev({ cwd: __dirname });
+              //create temple compiler
+              const compiler = temple({ cwd: __dirname });
+              //1. create dev tools
+              const { router, refresh } = dev({ cwd: __dirname });
 
-            //create http server
-            const server = http.createServer(async (req, res) =&gt; {
-              //2. Add dev router
-              if (router(req, res)) return;
-              //if home page
-              if (req.url === '/') {
-                //3. sync builder with refresh server
-                refresh.sync(compiler.fromSource('./page.dtml'));
-                //compile the document
-                const html = await compiler.render('./page.dtml');
-                //... send response ...
-              }
-              //... other routes ...
-            });
-            //listen on port 3000
-            server.listen(3000);
-          </ide-code>
-        </ide-app>
-        <i18n-translate p trim>
-          Lastly, update the document file 
-          <ide-code lang="js" inline>'src/page.dtml'</ide-code> 
-          to include the development script 
-          <ide-code inline>&lt;script src="/dev.js"&gt;&lt;/script&gt;</ide-code> 
-          as shown below.
-        </i18n-translate>
-        <ide-app title="src/page.dtml">
-          <ide-code numbers trim >
-            &lt;script&gt;
-              //... 
-            &lt;/script&gt;
-            &lt;html&gt;
-              &lt;head&gt;
-                &lt;!-- ... --&gt;
-                &lt;!-- 4. include dev script --&gt;
-                &lt;script src="/dev.js"&gt;&lt;/script&gt;
-              &lt;/head&gt;
-              &lt;body&gt;
-                &lt;!-- ... --&gt;
-              &lt;/body&gt;
-            &lt;/html&gt;
-          </ide-code>
-        </ide-app>
-        <i18n-translate p trim>
-          Run the following command in terminal.
-        </i18n-translate>
-        <ide-app title="Terminal">
-          <ide-code lang="bash">
-            npx ts-node src/index.ts
-          </ide-code>
-        </ide-app>
-        <i18n-translate p trim>
-          Whenever <ide-code lang="js" inline>'src/page.dtml'</ide-code> 
-          is updated, the development server will automatically refresh 
-          the page. Components will also be updated in real-time.
-        </i18n-translate>
-        
-        <nav class="pager">
-          <a class="prev" href="/temple/docs/component-publisher.html">
-            <i class="fas fa-fw fa-chevron-left"></i>
-            Component Publisher
-          </a>
-        </nav>
-      </div>
-      <footer class="foot"></footer>
-    </panel-main>
+              //create http server
+              const server = http.createServer(async (req, res) =&gt; {
+                //2. Add dev router
+                if (router(req, res)) return;
+                //if home page
+                if (req.url === '/') {
+                  //3. sync builder with refresh server
+                  refresh.sync(compiler.fromSource('./page.dtml'));
+                  //compile the document
+                  const html = await compiler.render('./page.dtml');
+                  //... send response ...
+                }
+                //... other routes ...
+              });
+              //listen on port 3000
+              server.listen(3000);
+            </ide-code>
+          </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Lastly, update the document file 
+            <ide-code lang="js" inline>src/page.dtml</ide-code> 
+            to include the development script 
+            <ide-code inline>&lt;script src="/dev.js"&gt;&lt;/script&gt;</ide-code> 
+            as shown below.
+          </i18n-translate>
+          <ide-app title="src/page.dtml" class="py-20">
+            <ide-code numbers trim >
+              &lt;script&gt;
+                //... 
+              &lt;/script&gt;
+              &lt;html&gt;
+                &lt;head&gt;
+                  &lt;!-- ... --&gt;
+                  &lt;!-- 4. include dev script --&gt;
+                  &lt;script src="/dev.js"&gt;&lt;/script&gt;
+                &lt;/head&gt;
+                &lt;body&gt;
+                  &lt;!-- ... --&gt;
+                &lt;/body&gt;
+              &lt;/html&gt;
+            </ide-code>
+          </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Run the following command in terminal.
+          </i18n-translate>
+          <ide-app title="Terminal" class="py-20">
+            <ide-code lang="bash">
+              npx ts-node src/index.ts
+            </ide-code>
+          </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Whenever <ide-code lang="js" inline>src/page.dtml</ide-code> 
+            is updated, the development server will automatically refresh 
+            the page. Components will also be updated in real-time.
+          </i18n-translate>
+          
+          <nav class="flex">
+            <a class="tx-primary py-40" href="/temple/docs/component-publisher.html">
+              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              Component Publisher
+            </a>
+          </nav>
+          <footer class="foot"></footer>
+        </api-docs>
+      </panel-main>
+    </panel-layout>
   </body>
 </html>

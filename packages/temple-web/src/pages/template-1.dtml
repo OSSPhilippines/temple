@@ -1,0 +1,335 @@
+<link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
+<link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/layout.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/head.tml" name="panel-head" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/left.tml" name="panel-left" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/right.tml" name="panel-right" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@ossph/temple-ui/form/button.tml" name="tui-button" />
+<link rel="import" type="component" href="@ossph/temple-ui/block/alert.tml" name="tui-alert" />
+<link rel="import" type="component" href="@ossph/temple-ui/block/tab.tml" name="tui-tab" />
+<link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
+<link rel="import" type="component" href="@/components/api/ui.tml" name="api-ui" />
+<link rel="import" type="component" href="@/components/ide/app/head.tml" name="app-head" />
+<link rel="import" type="component" href="@/components/ide/app/left.tml" name="app-left" />
+<link rel="import" type="component" href="@/components/ide/app/main.tml" name="app-main" />
+<link rel="import" type="component" href="@/components/ide/app.tml" name="ide-app" />
+<link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
+<link rel="import" type="component" href="@/components/ide/preview.tml" name="ide-preview" />
+<link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
+<style>
+  @tui reset;
+  @tui fouc-opacity;
+  @tui theme;
+  @tui block;
+  @tui utilities;
+</style>
+<script>
+  import { env } from '@ossph/temple';
+  import { _ } from '@/components/i18n';
+
+  const url = '/temple/panel.html';
+  const title = _('Temple - The reactive web component template engine.');
+  const description = _('Temple is a template engine that generates web components and support reactivity.');
+
+  const toggle = () => {
+    document.getElementsByTagName('panel-layout')[0].toggle('left');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark bg-t-0 tx-t1 arial">
+    <panel-layout>
+      <panel-head><html-header /></panel-head>
+      <panel-left><html-aside /></panel-left>
+      <panel-right>
+        <menu class="m-0 px-10 py-20 h-calc-full-40 bg-t-2 scroll-auto">
+          <h6 class="tx-muted tx-14 mb-0 mt-0 pb-10 tx-uppercase">
+            {_('On this page')}
+          </h6>
+          <nav class="tx-14 tx-lh-32">
+            <a class="block tx-t-0" href="#http">
+              {_('1. Add HTTP')}
+            </a>
+            <a class="block tx-t-0" href="#develop">
+              {_('2. Add Dev Tools')}
+            </a>
+            <a class="block tx-t-0" href="#cache">
+              {_('3. Add File Cache')}
+            </a>
+            <a class="block tx-t-0" href="#tailwind">
+              {_('4. Add TailwindCSS')}
+            </a>
+            <a class="block tx-t-0" href="#express">
+              {_('5. Add ExpressJS')}
+            </a>
+            <nav class="pl-20">
+              <a class="block tx-t-1" href="#http">
+                {_('1. Add HTTP')}
+              </a>
+              <a class="block tx-t-1" href="#develop">
+                {_('2. Add Dev Tools')}
+              </a>
+              <a class="block tx-t-1" href="#cache">
+                {_('3. Add File Cache')}
+              </a>
+              <a class="block tx-t-1" href="#tailwind">
+                {_('4. Add TailwindCSS')}
+              </a>
+              <a class="block tx-t-1" href="#express">
+                {_('5. Add ExpressJS')}
+              </a>
+            </nav>
+          </nav>
+        </menu>
+      </panel-right>
+      <panel-main>
+        <api-docs>
+          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+            {_('Getting Started')}
+          </h1>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            In most cases Temple will be used to render a front end from 
+            a server framework. In this example, we will use the native
+            NodeJS HTTP module to create a server that renders a page
+            using Temple. Start by replacing the 
+            <ide-code inline>{`src/index.ts`}</ide-code>
+            file with the following code. 
+            <ide-code inline lang="js">{`function() {}`}</ide-code>
+          </i18n-translate>
+
+          <ide-app title="Terminal" class="py-20">
+            <ide-code lang="bash">
+              npm init -y && npm install --save @ossph/temple && npm install --save-dev ts-node typescript @types/node
+            </ide-code>
+          </ide-app>
+
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            {_('1. Add HTTP')}
+          </h2>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            In most cases Temple will be used to render a front end from 
+            a server framework. In this example, we will use the native
+            NodeJS HTTP module to create a server that renders a page
+            using Temple. Start by replacing the 
+            <ide-code inline>{`src/index.ts`}</ide-code>
+            file with the following code. 
+            <ide-code inline lang="js">{`function() {}`}</ide-code>
+          </i18n-translate>
+
+          <ide-app title="src/index.ts" class="py-20">
+            <ide-code lang="js" numbers trim detab={14}>{`
+              import temple from '@ossph/temple/compiler';
+              // make a temple compiler
+              const compiler = temple();
+              // render HTML
+              compiler.render('./src/page.dtml').then(console.log);
+              // render CSS
+              compiler.styles('./src/page.dtml').then(console.log);
+              // render JS
+              compiler.client('./src/page.dtml').then(console.log);
+            `}</ide-code>
+          </ide-app>
+
+          <h3 class="tx-t-1 tx-uppercase tx-22 pt-40 pb-20">
+            {_('1. Add HTTP')}
+          </h3>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            In most cases Temple will be used to render a front end from 
+            a server framework. In this example, we will use the native
+            NodeJS HTTP module to create a server that renders a page
+            using Temple. Start by replacing the 
+            <ide-code inline>{`src/index.ts`}</ide-code>
+            file with the following code. 
+            <ide-code inline lang="js">{`function() {}`}</ide-code>
+          </i18n-translate>
+
+          <ide-app title="Basic Example" class="py-20">
+            <div class="flex bg-h-EFEFEF h-full lg-block">
+              <ide-code class="basis-half" numbers trim detab={14}>{`
+                <style>
+                  h1 { font-weight: bold; }
+                </style>
+                <script>
+                  const name = 'world';
+                </script>
+                <h1>Hello {name}!</h1>
+              `}</ide-code>
+              <ide-preview class="bg-white basis-half h-140 lg-h-auto">
+                <h1>Hello world!</h1>
+              </ide-preview>
+            </div>
+          </ide-app>
+
+          <tui-alert solid curved info class="py-20 tx-lh-24">
+            <i class="fas fa-info-circle"></i>
+            <strong>Recommended:</strong>
+            Download the Temple editor plugin at the <a 
+              target="_blank" 
+              class="tx-white tx-underline"
+              href="https://marketplace.visualstudio.com/items?itemName=ossph.temple-language"
+            >Visual Studio Marketplace</a>.
+          </tui-alert>
+
+          <ide-app height={410} title="With NodeJS HTTP">
+            <app-head>
+              <div class="flex scroll-x-auto pt-5 pl-5">
+                <tui-tab 
+                  on
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="http" 
+                  selector="#index-ts"
+                >
+                  src/index.ts
+                </tui-tab>
+                <tui-tab 
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="http" 
+                  selector="#page-dtml"
+                >
+                  src/page.dtml
+                </tui-tab>
+                <tui-tab 
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="http" 
+                  selector="#package-json"
+                >
+                  package.json
+                </tui-tab>
+              </div>
+            </app-head>
+            <app-left>
+              <h5 class="p-5">
+                <i class="fas fa-fw fa-chevron-down"></i>
+                <span>src</span>
+              </h5>
+              <tui-tab 
+                on
+                class="pl-15 pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted"  
+                group="http" 
+                selector="#index-ts"
+              >
+                <i class="fas fa-fw fa-file"></i>
+                index.ts
+              </tui-tab>
+              <tui-tab 
+                class="pl-15 pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted" 
+                group="http" 
+                selector="#page-dtml"
+              >
+                <i class="fas fa-fw fa-file"></i>
+                page.dtml
+              </tui-tab>
+              <tui-tab 
+                class="pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted" 
+                group="http" 
+                selector="#package-json"
+              >
+                <i class="fas fa-fw fa-file"></i>
+                package.json
+              </tui-tab>
+            </app-left>
+            <app-main>
+              <ide-code id="index-ts" lang="js" numbers trim detab={16}>{`
+                import http from 'http';
+                import temple from '@ossph/temple/compiler';
+
+                // create temple compiler
+                const compiler = temple();
+                // create http server
+                const server = http.createServer(async (req, res) => {
+                  // if build asset...
+                  if (req.url?.startsWith('/build/')) {
+                    // get filename ie. abc123.js
+                    const filename = req.url.substring(7);
+                    // get asset
+                    const { type, content } = await compiler.asset(filename);
+                    // send response
+                    res.writeHead(200, { 'Content-Type': type });
+                    return res.end(content);
+                  // if home page
+                  } else if (req.url === '/') {
+                    // render and send response
+                    res.writeHead(200, { 'Content-Type': 'text/html' });
+                    return res.end(await compiler.render('./src/page.dtml', {
+                      title: 'Hello World'
+                    }));
+                  }
+                });
+                // listen on port 3000
+                server.listen(3000);
+              `}</ide-code>
+              <ide-code id="page-dtml" style="display:none" numbers trim detab={16}>{`
+                <style>
+                  .center { text-align: center; }
+                </style>
+                <script>
+                  import { env, props } from '@ossph/temple';
+                  const { BUILD_ID, APP_DATA } = env();
+                  const { title } = props();
+                </script>
+                <html>
+                  <head>
+                    <title>{title}</title>
+                    <link rel="stylesheet" type="text/css" href={\`/build/\${BUILD_ID}.css\`} />
+                    <script data-app={APP_DATA} src={\`/build/\${BUILD_ID}.js\`}></script>
+                  </head>
+                  <body>
+                    <h1 class="center">{title}</h1>
+                  </body>
+                </html>
+              `}</ide-code>
+              <ide-code id="package-json" style="display:none" lang="js" numbers trim detab={16}>{`
+                {
+                  "name": "my-project",
+                  "version": "1.0.0",
+                  "private": true,
+                  "scripts": {
+                    "dev": "ts-node ./src/index.ts"
+                  },
+                  "dependencies": {
+                    "@ossph/temple": "0.1.6"
+                  },
+                  "devDependencies": {
+                    "@types/node": "22.1.0",
+                    "ts-node": "10.9.2",
+                    "typescript": "5.5.4"
+                  }
+                }
+              `}</ide-code>
+            </app-main>
+          </ide-app>
+
+          <api-ui />
+
+          <nav class="flex">
+            <a class="tx-primary py-40" href="/temple/docs/getting-started.html">
+              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              {_('Getting Started')}
+            </a>
+            <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/getting-started.html">
+              {_('Getting Started')}
+              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
+            </a>
+          </nav>
+        </api-docs>
+      </panel-main>
+    </panel-layout>
+  </body>
+</html>

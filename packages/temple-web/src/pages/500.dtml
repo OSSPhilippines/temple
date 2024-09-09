@@ -1,17 +1,19 @@
-<link rel="import" type="template" href="@/modules/html/head.tml" name="html-head" />
-<link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
-<link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
-<link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+<link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/layout.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/head.tml" name="panel-head" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@ossph/temple-ui/form/button.tml" name="tui-button" />
+<link rel="import" type="component" href="@/components/ide/app.tml" name="ide-app" />
+<link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
+<link rel="import" type="component" href="@/components/ide/preview.tml" name="ide-preview" />
+<link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
 <style>
-  .container { padding: 20px; }
-  .error pre {
-    border: 1px solid #222222;
-    font-family: Courier, monospace;
-    line-height: 22px;
-    padding: 20px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
+  @tui reset;
+  @tui fouc-opacity;
+  @tui theme;
+  @tui block;
+  @tui utilities;
 </style>
 <script>
   import { env, props } from '@ossph/temple';
@@ -21,26 +23,24 @@
   const title = _('Oops... - Temple - The reactive web component template engine.');
   const description = _('Temple is a template engine hat generates web components and support reactivity.');
 
-  const { error } = props();
-
-  const toggle = _ => {
-    document.body.classList.toggle('panel-left-open');
-  };
+  const { error = 'Unknown Error' } = props();
 </script>
 <html>
   <html-head />
-  <body class="dark panel with-head">
-    <panel-head />
-    <panel-main class="panel-main">
-      <div class="container">
-        <h1>{_('Oops...')}</h1>
-        <p>
-          <i18n-translate>
+  <body class="dark bg-t-0 tx-t-1 arial">
+    <panel-layout>
+      <panel-head><html-header /></panel-head>
+      <panel-main class="scroll-auto">
+        <div class="p-20 w-calc-full-40">
+          <h1 class="pt-10 pb-20">{_('Oops...')}</h1>
+          <i18n-translate p trim>
             Something went wrong. Please try again later.
           </i18n-translate>
-        </p>
-        <div class="error"><pre>{error || ''}</pre></div>
-      </div>
-    </panel-main>
+          <if true={error}>
+            <pre class="bg-black courier tx-lh-22 tx-word-wrap p-10 scroll-x-auto tx-prewrap">{error}</pre>
+          </if>
+        </div>
+      </panel-main>
+    </panel-layout>
   </body>
 </html>

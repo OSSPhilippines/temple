@@ -1,12 +1,25 @@
-<link rel="import" type="template" href="@/modules/html/head.tml" name="html-head" />
-<link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
-<link rel="import" type="template" href="@/modules/panel/left.tml" name="panel-left" />
-<link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
-<link rel="import" type="component" href="@/modules/ide/code.tml" name="ide-code" />
-<link rel="import" type="component" href="@/modules/ide/app.tml" name="ide-app" />
-<link rel="import" type="component" href="@/modules/tui/tab.tml" name="tui-tab" />
-<link rel="import" type="component" href="@/modules/tui/alert.tml" name="tui-alert" />
-<link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+<link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
+<link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/layout.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/head.tml" name="panel-head" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/left.tml" name="panel-left" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@ossph/temple-ui/block/tab.tml" name="tui-tab" />
+<link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
+<link rel="import" type="component" href="@/components/ide/app/head.tml" name="app-head" />
+<link rel="import" type="component" href="@/components/ide/app/left.tml" name="app-left" />
+<link rel="import" type="component" href="@/components/ide/app/main.tml" name="app-main" />
+<link rel="import" type="component" href="@/components/ide/app.tml" name="ide-app" />
+<link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
+<link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
+<style>
+  @tui reset;
+  @tui fouc-opacity;
+  @tui theme;
+  @tui block;
+  @tui utilities;
+</style>
 <script>
   import { env } from '@ossph/temple';
   import { _ } from '@/modules/i18n';
@@ -14,78 +27,118 @@
   const url = '/docs/component-publisher.html';
   const title = _('Component Publisher - Temple reactive web component template engine.');
   const description = _('How to use Temple to publish web components.');
-  const toggle = _ => {
-    document.body.classList.toggle('panel-left-open');
+  const toggle = () => {
+    document.getElementsByTagName('panel-layout')[0].toggle('left');
   };
 </script>
 <html>
   <html-head />
-  <body class="dark panel with-head with-left">
-    <panel-head />
-    <panel-left />
-    <panel-main class="panel-main">
-      <div class="docs container">
-        <h1>{_('Component Publisher')}</h1>
+  <body class="dark bg-t-0 tx-t1 arial">
+    <panel-layout>
+      <panel-head><html-header /></panel-head>
+      <panel-left><html-aside /></panel-left>
+      <panel-main>
+        <api-docs>
+          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+            {_('Component Publisher')}
+          </h1>
 
-        <i18n-translate p trim>
-          Web components are a set of web platform APIs that allow you 
-          to create new custom, reusable, encapsulated HTML tags to use 
-          in web pages and web apps. Custom components and widgets build 
-          on the Web Component standards, will work across modern 
-          browsers, and can be used with any JavaScript library or 
-          framework that works with HTML.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Web components are a set of web platform APIs that allow you 
+            to create new custom, reusable, encapsulated HTML tags to use 
+            in web pages and web apps. Custom components and widgets build 
+            on the Web Component standards, will work across modern 
+            browsers, and can be used with any JavaScript library or 
+            framework that works with HTML.
+          </i18n-translate>
 
-        <i18n-translate p trim>
-          Web components are based on existing web standards. Features 
-          to support web components are currently being added to the 
-          HTML and DOM specs, letting web developers easily extend HTML 
-          with new elements with encapsulated styling and custom behavior.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Web components are based on existing web standards. Features 
+            to support web components are currently being added to the 
+            HTML and DOM specs, letting web developers easily extend HTML 
+            with new elements with encapsulated styling and custom behavior.
+          </i18n-translate>
 
-        <tui-alert solid curved info>
-          <i class="fas fa-info-circle"></i>
-          <strong>Note:</strong> Web components even work in React 
-          projects.
-        </tui-alert>
+          <tui-alert solid curved info>
+            <i class="fas fa-info-circle"></i>
+            <strong>Note:</strong> Web components even work in React 
+            projects.
+          </tui-alert>
 
-        <i18n-translate p trim>
-          First, create a project with the following structure and files.
-        </i18n-translate>
-        <ide-app panel={290} title="My Project">
-          <div class="panel-head">
-            <div class="tabs">
-              <tui-tab class="tab active" group="project" selector="#build-ts">
-                src/build.ts
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            First, create a project with the following structure and files.
+          </i18n-translate>
+          <ide-app height={290} title="My Project">
+            <app-head>
+              <div class="flex scroll-x-auto pt-5 pl-5">
+                <tui-tab 
+                  on
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="publisher" 
+                  selector="#build-ts"
+                >
+                  src/build.ts
+                </tui-tab>
+                <tui-tab 
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="publisher" 
+                  selector="#component-tml"
+                >
+                  src/component.tml
+                </tui-tab>
+                <tui-tab 
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="publisher" 
+                  selector="#package-json"
+                >
+                  package.json
+                </tui-tab>
+              </div>
+            </app-head>
+            <app-left>
+              <h5 class="p-5">
+                <i class="fas fa-fw fa-chevron-down"></i>
+                <span>src</span>
+              </h5>
+              <tui-tab 
+                on
+                class="pl-15 pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted"  
+                group="publisher" 
+                selector="#build-ts"
+              >
+                <i class="fas fa-fw fa-file"></i>
+                build.ts
               </tui-tab>
-              <tui-tab class="tab" group="project" selector="#component-tml">
-                src/component.tml
+              <tui-tab 
+                class="pl-15 pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted" 
+                group="publisher" 
+                selector="#component-tml"
+              >
+                <i class="fas fa-fw fa-file"></i>
+                component.tml
               </tui-tab>
-              <tui-tab class="tab" group="project" selector="#package-json">
+              <tui-tab 
+                class="pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted" 
+                group="publisher" 
+                selector="#package-json"
+              >
+                <i class="fas fa-fw fa-file"></i>
                 package.json
               </tui-tab>
-            </div>
-          </div>
-          <div class="panel-left">
-            <h5 class="folder">
-              <i class="fas fa-fw fa-chevron-down"></i>
-              <span>src</span>
-            </h5>
-            <tui-tab class="shift-1 block active" group="project" selector="#build-ts">
-              <i class="fas fa-fw fa-file"></i>
-              build.ts
-            </tui-tab>
-            <tui-tab class="shift-1 block" group="project" selector="#component-tml">
-              <i class="fas fa-fw fa-file"></i>
-              component.tml
-            </tui-tab>
-            <tui-tab class="block" group="project" selector="#package-json">
-              <i class="fas fa-fw fa-file"></i>
-              package.json
-            </tui-tab>
-          </div>
-          <div class="panel-main">
-            <main>
+            </app-left>
+            <app-main>
               <ide-code id="build-ts" lang="js" numbers trim detab={16}>{`
                 import http from 'http';
                 import temple from '@ossph/temple/compiler';
@@ -118,40 +171,40 @@
                     "build": "ts-node ./src/build.ts"
                   },
                   "dependencies": {
-                    "@ossph/temple": "0.1.4"
+                    "@ossph/temple": "0.1.6"
                   },
                   "devDependencies": {
-                    "@ossph/temple-dev": "0.1.4",
+                    "@ossph/temple-dev": "0.1.6",
                     "@types/node": "22.1.0",
                     "ts-node": "10.9.2",
                     "typescript": "5.5.4"
                   }
                 }
               `}</ide-code>
-            </main>
-          </div>
-        </ide-app>
+            </app-main>
+          </ide-app>
 
-        <i18n-translate p trim>
-          To test the build script and see the results, run the 
-          following command in terminal.
-        </i18n-translate>
-        <ide-code lang="bash">
-          npm run build
-        </ide-code>
-        
-        <nav class="pager">
-          <a class="prev" href="/temple/docs/static-site.html">
-            <i class="fas fa-fw fa-chevron-left"></i>
-            Static Site Generator
-          </a>
-          <a class="next" href="/temple/docs/developer-tools.html">
-            Developer Tools
-            <i class="fas fa-fw fa-chevron-right"></i>
-          </a>
-        </nav>
-      </div>
-      <footer class="foot"></footer>
-    </panel-main>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            To test the build script and see the results, run the 
+            following command in terminal.
+          </i18n-translate>
+          <ide-code lang="bash">
+            npm run build
+          </ide-code>
+          
+          <nav class="flex">
+            <a class="tx-primary py-40" href="/temple/docs/static-site.html">
+              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              {_('Static Site Generator')}
+            </a>
+            <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/developer-tools.html">
+              {_('Developer Tools')}
+              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
+            </a>
+          </nav>
+          <footer class="foot"></footer>
+        </api-docs>
+      </panel-main>
+    </panel-layout>
   </body>
 </html>

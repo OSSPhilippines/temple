@@ -12,10 +12,10 @@ type Next = () => void;
 const docs = path.join(__dirname, '../../../docs');
 
 //create temple compiler
-const compiler = temple({ brand: '', cwd: __dirname });
+const compiler = temple({ brand: '', cwd: __dirname, minify: false });
 
 //use temple ui
-compiler.use(tui({ brand: '' }));
+compiler.use(tui());
 
 //use build cache
 compiler.use(cache({ 

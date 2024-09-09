@@ -18,152 +18,207 @@
   <link rel="favicon" href="/temple/favicon.ico" />
   <link rel="shortcut icon" type="image/png" href="/temple/favicon.png" />
   <link rel="stylesheet" type="text/css" href="/temple/styles/fontawesome/all.css" />
-  <link rel="stylesheet" type="text/css" href="/temple/styles/theme.css" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/global.css" />
   <link rel="stylesheet" type="text/css" href="/temple/build/client/3550a936d66e61695120.css" />
   
   <script data-app="eyJwcm9wcyI6eyJ0aXRsZSI6IlRlbXBsZSBEb2N1bWVudGF0aW9uIn0sImVudiI6eyJCVUlMRF9JRCI6IjM1NTBhOTM2ZDY2ZTYxNjk1MTIwIn19" src="/temple/build/client/3550a936d66e61695120.js"></script>
   
 </head>
-  <body class="dark panel with-head with-left">
-    <header class="head panel-head">
-  <i class="menu fas fa-fw fa-bars" ></i>
-  <a href="/temple">
-    <img src="/temple/temple-icon.png" alt="Temple Logo" />
-  </a>
-  <h3><a class="tx-white" href="/temple">Temple</a></h3>
-  <nav>
+  <body class="dark bg-t-0 tx-t1 arial">
+    <panel-layout>
+      <panel-head><menu class="flex flex-center-y px-20 py-15 m-0 bg-t-1">
+  
+    <i class="fas fa-fw fa-bars cursor-pointer py-5 pr-10 none md-inline-block tx-t-1" ></i>
+    <div class="flex-grow"></div>
+  
+  <nav class="flex flex-center-y">
     <a class="tx-white" href="/temple/docs/index.html">Docs</a>
-    <a class="github" href="https://github.com/OSSPhilippines/temple" target="_blank">
+    <a class="tx-t-1 tx-5xl ml-10" href="https://github.com/OSSPhilippines/temple" target="_blank">
       <i class="fab fa-github"></i>
     </a>
-    <a class="npm" href="https://www.npmjs.com/package/@ossph/temple" target="_blank">
+    <a class="bg-h-cb3837 pill tx-t-1 tx-lg ml-5 p-5 tx-center" href="https://www.npmjs.com/package/@ossph/temple" target="_blank">
       <i class="fab fa-npm text-white"></i>
     </a>
-    <a class="discord" href="https://discord.gg/open-source-software-ph-905496362982981723" target="_blank">
+    <a class="bg-h-7289da pill tx-t-1 tx-lg ml-5 p-5 tx-center" href="https://discord.gg/open-source-software-ph-905496362982981723" target="_blank">
       <i class="fab fa-discord text-white"></i>
     </a>
   </nav>
+</menu></panel-head>
+      <panel-left><header class="flex flex-center-y bg-t-2 py-15 pr-5 pl-10">
+  <a href="/temple">
+    <img class="h-26 mr-10" src="/temple/temple-icon.png" alt="Temple Logo" />
+  </a>
+  <h3 class="flex-grow m-0 tx-uppercase">
+    <a class="tx-white" href="/temple">Temple</a>
+  </h3>
+  <i class="fas fa-fw fa-chevron-left cursor-pointer none md-inline-block" ></i>
 </header>
-    <aside class="left panel-left">
-  <header>
-    <a href="/temple">
-      <img src="/temple/temple-icon.png" alt="Temple Logo" />
+<nav class="bg-t-1 scroll-auto h-calc-full-60">
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-0 pt-20 pb-10 pl-10 tx-uppercase">
+    Introduction
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/index.html">
+      Documentation
     </a>
-    <h3><a class="tx-white" href="/temple">Temple</a></h3>
-    <i class="toggle fas fa-fw fa-chevron-left" ></i>
-  </header>
-  <nav>
-    <h6>Introduction</h6>
-    <a href="/temple/docs/index.html">Documentation</a>
-    <a href="/temple/docs/getting-started.html">Getting Started</a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/getting-started.html">
+      Getting Started
+    </a>
+  
 
-    <h6>Features</h6>
-    <a href="/temple/docs/markup-syntax.html">Markup Syntax</a>
-    <a href="/temple/docs/state-management.html">State Management</a>
-    <a href="/temple/docs/component-strategy.html">Component Strategy</a>
-    <a href="/temple/docs/compiler-api.html">Compiler API</a>
-    <a href="/temple/docs/client-api.html">Client API</a>
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-20 pt-20 pb-10 pl-10 tx-uppercase">
+    Features
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/markup-syntax.html">
+      Markup Syntax
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/state-management.html">
+      State Management
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/component-strategy.html">
+      Component Strategy
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/compiler-api.html">
+      Compiler API
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/client-api.html">
+      Client API
+    </a>
+  
 
-    <h6>Usage</h6>
-    <a href="/temple/docs/template-engine.html">Template Engine</a>
-    <a href="/temple/docs/single-page.html">Single Page App</a>
-    <a href="/temple/docs/static-site.html">Static Site Generator</a>
-    <a href="/temple/docs/component-publisher.html">Component Publisher</a>
-    <a href="/temple/docs/developer-tools.html">Developer Tools</a>
-  </nav>
-</aside>
-    <panel-main class="panel-main">
-      <div class="docs container">
-        <h1>Single Page App</h1>
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-20 pt-20 pb-10 pl-10 tx-uppercase">
+    Usage
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/template-engine.html">
+      Template Engine
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10 tx-bold" href="/temple/docs/single-page.html">
+      Single Page App
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/static-site.html">
+      Static Site Generator
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/component-publisher.html">
+      Component Publisher
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10 mb-100" href="/temple/docs/developer-tools.html">
+      Developer Tools
+    </a>
+  
+</nav></panel-left>
+      <panel-main>
+        <api-docs>
+          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+            Single Page App
+          </h1>
 
-        <i18n-translate p trim>
-          A single page application (SPA) is a website or web 
-          application that dynamically rewrites a current web page with 
-          new data from a web server, instead of the default method of 
-          a web browser loading entire new pages. Temple is capable of 
-          creating reactive SPAs using Webpack and TypeScript.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            A single page application (SPA) is a website or web 
+            application that dynamically rewrites a current web page with 
+            new data from a web server, instead of the default method of 
+            a web browser loading entire new pages. Temple is capable of 
+            creating reactive SPAs using Webpack and TypeScript.
+          </i18n-translate>
 
-        <i18n-translate p trim>
-          First install the following Temple packages.
-        </i18n-translate>
-        <ide-code lang="bash">
-          npm install --save-dev @ossph/temple @ossph/temple-loader
-        </ide-code>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            First install the following Temple packages.
+          </i18n-translate>
+          <ide-code lang="bash">
+            npm install --save-dev @ossph/temple @ossph/temple-loader
+          </ide-code>
 
-        <i18n-translate p trim>
-          Then, install the following TypeScript packages.
-        </i18n-translate>
-        <ide-code lang="bash">
-          npm install --save-dev @types/node ts-loader ts-node typescript
-        </ide-code>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Then, install the following TypeScript packages.
+          </i18n-translate>
+          <ide-code lang="bash">
+            npm install --save-dev @types/node ts-loader ts-node typescript
+          </ide-code>
 
-        <i18n-translate p trim>
-          Then, install the following Webpack packages.
-        </i18n-translate>
-        <ide-code lang="bash">
-          npm install --save-dev html-webpack-plugin webpack-dev-server webpack webpack-cli
-        </ide-code>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Then, install the following Webpack packages.
+          </i18n-translate>
+          <ide-code lang="bash">
+            npm install --save-dev html-webpack-plugin webpack-dev-server webpack webpack-cli
+          </ide-code>
 
-        <i18n-translate p trim>
-          Next create the following files and directories.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Next create the following files and directories.
+          </i18n-translate>
 
-        <ide-app  title="My Project">
-          <div class="panel-head">
-            <div class="tabs">
-              <tui-tab class="tab" group="project" selector="#client-ts">
-                src/client.ts
+          <ide-app  title="My Project">
+            <app-head>
+              <div class="flex scroll-x-auto pt-5 pl-5">
+                <tui-tab class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0" active="bg-black tx-white" inactive="bg-t-1 tx-muted" group="project" selector="#client-ts">
+                  src/client.ts
+                </tui-tab>
+                <tui-tab class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0" active="bg-black tx-white" inactive="bg-t-1 tx-muted" group="project" selector="#app-tml">
+                  src/app.tml
+                </tui-tab>
+                <tui-tab class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0" active="bg-black tx-white" inactive="bg-t-1 tx-muted" group="project" selector="#index-html">
+                  index.html
+                </tui-tab>
+                <tui-tab on class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0" active="bg-black tx-white" inactive="bg-t-1 tx-muted" group="project" selector="#webpack-js">
+                  webpack.config.js
+                </tui-tab>
+                <tui-tab class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0" active="bg-black tx-white" inactive="bg-t-1 tx-muted" group="project" selector="#tsconfig-json">
+                  tsconfig.json
+                </tui-tab>
+                <tui-tab class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0" active="bg-black tx-white" inactive="bg-t-1 tx-muted" group="project" selector="#package-json">
+                  package.json
+                </tui-tab>
+              </div>
+            </app-head>
+            <app-left>
+              <h5 class="folder">
+                <i class="fas fa-fw fa-chevron-down"></i>
+                <span>src</span>
+              </h5>
+              <tui-tab class="pl-15 pt-10 block" active="tx-white" inactive="tx-muted" group="project" selector="#app-tml">
+                <i class="fas fa-fw fa-file"></i>
+                app.tml
               </tui-tab>
-              <tui-tab class="tab" group="project" selector="#app-tml">
-                src/app.tml
+              <tui-tab class="pl-15 pt-10 block" active="tx-white" inactive="tx-muted" group="project" selector="#client-ts">
+                <i class="fas fa-fw fa-file"></i>
+                client.ts
               </tui-tab>
-              <tui-tab class="tab" group="project" selector="#index-html">
+              <tui-tab class="pt-10 block" active="tx-white" inactive="tx-muted" group="project" selector="#index-html">
+                <i class="fas fa-fw fa-file"></i>
                 index.html
               </tui-tab>
-              <tui-tab class="tab active" group="project" selector="#webpack-js">
-                webpack.config.js
-              </tui-tab>
-              <tui-tab class="tab" group="project" selector="#tsconfig-json">
-                tsconfig.json
-              </tui-tab>
-              <tui-tab class="tab" group="project" selector="#package-json">
+              <tui-tab class="pt-10 block" active="tx-white" inactive="tx-muted" group="project" selector="#package-json">
+                <i class="fas fa-fw fa-file"></i>
                 package.json
               </tui-tab>
-            </div>
-          </div>
-          <div class="panel-left">
-            <h5 class="folder">
-              <i class="fas fa-fw fa-chevron-down"></i>
-              <span>src</span>
-            </h5>
-            <tui-tab class="shift-1 block" group="project" selector="#app-tml">
-              <i class="fas fa-fw fa-file"></i>
-              app.tml
-            </tui-tab>
-            <tui-tab class="shift-1 block" group="project" selector="#client-ts">
-              <i class="fas fa-fw fa-file"></i>
-              client.ts
-            </tui-tab>
-            <tui-tab class="block" group="project" selector="#index-html">
-              <i class="fas fa-fw fa-file"></i>
-              index.html
-            </tui-tab>
-            <tui-tab class="block" group="project" selector="#package-json">
-              <i class="fas fa-fw fa-file"></i>
-              package.json
-            </tui-tab>
-            <tui-tab class="block" group="project" selector="#tsconfig-json">
-              <i class="fas fa-fw fa-file"></i>
-              tsconfig.json
-            </tui-tab>
-            <tui-tab class="block active" group="project" selector="#webpack-js">
-              <i class="fas fa-fw fa-file"></i>
-              webpack.config.js
-            </tui-tab>
-          </div>
-          <div class="panel-main">
-            <main>
+              <tui-tab class="pt-10 block" active="tx-white" inactive="tx-muted" group="project" selector="#tsconfig-json">
+                <i class="fas fa-fw fa-file"></i>
+                tsconfig.json
+              </tui-tab>
+              <tui-tab on class="pt-10 block" active="tx-white" inactive="tx-muted" group="project" selector="#webpack-js">
+                <i class="fas fa-fw fa-file"></i>
+                webpack.config.js
+              </tui-tab>
+            </app-left>
+            <app-main>
               <ide-code id="client-ts" style="display:none" lang="js" numbers trim >
                 import TempleComponent from './app.tml';
 
@@ -273,8 +328,8 @@
                     "build": "webpack --mode production"
                   },
                   "devDependencies": {
-                    "@ossph/temple": "0.1.4"
-                    "@ossph/temple-loader": "0.1.4",
+                    "@ossph/temple": "0.1.6"
+                    "@ossph/temple-loader": "0.1.6",
                     "@types/node": "22.1.0",
                     "html-webpack-plugin": "5.6.0",
                     "webpack-dev-server": "5.0.4",
@@ -286,30 +341,30 @@
                   }
                 }
               </ide-code>
-            </main>
-          </div>
-        </ide-app>
-        <i18n-translate p trim>
-          To test the SPA and see the results, run the following command in terminal.
-        </i18n-translate>
-        <ide-app title="Terminal">
-          <ide-code lang="bash">
-            npm run dev
-          </ide-code>
-        </ide-app>
-        
-        <nav class="pager">
-          <a class="prev" href="/temple/docs/template-engine.html">
-            <i class="fas fa-fw fa-chevron-left"></i>
-            Template Engine
-          </a>
-          <a class="next" href="/temple/docs/static-site.html">
-            Static Site Generator
-            <i class="fas fa-fw fa-chevron-right"></i>
-          </a>
-        </nav>
-      </div>
-      <footer class="foot"></footer>
-    </panel-main>
+            </app-main>
+          </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            To test the SPA and see the results, run the following command in terminal.
+          </i18n-translate>
+          <ide-app title="Terminal">
+            <ide-code lang="bash">
+              npm run dev
+            </ide-code>
+          </ide-app>
+          
+          <nav class="flex">
+            <a class="tx-primary py-40" href="/temple/docs/template-engine.html">
+              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              Template Engine
+            </a>
+            <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/static-site.html">
+              Static Site Generator
+              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
+            </a>
+          </nav>
+          <footer class="foot"></footer>
+        </api-docs>
+      </panel-main>
+    </panel-layout>
   </body>
 </html>

@@ -1,0 +1,11 @@
+<script>
+  import { children, classlist } from '@ossph/temple';
+  classlist().add(
+    'absolute', 'top-0', 'right-0', 
+    'left-170', 'h-45',  'bg-t-0',
+    'z-1'
+  );
+</script>
+<header class="w-full h-full scroll-x-auto">
+  {children()}
+</header>

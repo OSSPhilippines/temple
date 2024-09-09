@@ -1,11 +1,22 @@
-<link rel="import" type="template" href="@/modules/html/head.tml" name="html-head" />
-<link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
-<link rel="import" type="template" href="@/modules/panel/left.tml" name="panel-left" />
-<link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
-<link rel="import" type="component" href="@/modules/ide/code.tml" name="ide-code" />
-<link rel="import" type="component" href="@/modules/api/ui.tml" name="api-ui" />
-<link rel="import" type="component" href="@/modules/tui/alert.tml" name="tui-alert" />
-<link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+<link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
+<link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/layout.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/head.tml" name="panel-head" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/left.tml" name="panel-left" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@ossph/temple-ui/block/alert.tml" name="tui-alert" />
+<link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
+<link rel="import" type="component" href="@/components/api/ui.tml" name="api-ui" />
+<link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
+<link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
+<style>
+  @tui reset;
+  @tui fouc-opacity;
+  @tui theme;
+  @tui block;
+  @tui utilities;
+</style>
 <script>
   import { env } from '@ossph/temple';
   import { _ } from '@/modules/i18n';
@@ -13,46 +24,50 @@
   const url = '/docs/client-api.html';
   const title = _('Client API - Temple reactive web component template engine.');
   const description = _('Client API documentation for Temple.');
-  const toggle = _ => {
-    document.body.classList.toggle('panel-left-open');
+  const toggle = () => {
+    document.getElementsByTagName('panel-layout')[0].toggle('left');
   };
 </script>
 <html>
   <html-head />
-  <body class="dark panel with-head with-left">
-    <panel-head />
-    <panel-left />
-    <panel-main class="panel-main">
-      <div class="docs container">
-        <h1>{_('Client API')}</h1>
+  <body class="dark bg-t-0 tx-t1 arial">
+    <panel-layout>
+      <panel-head><html-header /></panel-head>
+      <panel-left><html-aside /></panel-left>
+      <panel-main>
+        <api-docs>
+          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+            {_('Client API')}
+          </h1>
 
-        <i18n-translate p trim>
-          Temple exposes a variable on the browser called 
-          <ide-code inline>TempleAPI</ide-code> that includes all the 
-          components, classes, functions and variables used to render
-          the document on the client-side. 
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Temple exposes a variable on the browser called 
+            <ide-code inline>TempleAPI</ide-code> that includes all the 
+            components, classes, functions and variables used to render
+            the document on the client-side. 
+          </i18n-translate>
 
-        <tui-alert curved secondary>
-          <i class="fas fa-exclamation-triangle"></i>
-          <strong>Warning:</strong> Using the client API in the wrong 
-          way could possibly break your client application.
-        </tui-alert>
+          <tui-alert curved secondary class="py-20 tx-lh-24">
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>Warning:</strong> Using the client API in the wrong 
+            way could possibly break your client application.
+          </tui-alert>
 
-        <api-ui start="TempleAPI" />
-        
-        <nav class="pager">
-          <a class="prev" href="/temple/docs/compiler-api.html">
-            <i class="fas fa-fw fa-chevron-left"></i>
-            {_('Compiler API')}
-          </a>
-          <a class="next" href="/temple/docs/template-engine.html">
-            {_('Template Engine')}
-            <i class="fas fa-fw fa-chevron-right"></i>
-          </a>
-        </nav>
-      </div>
-      <footer class="foot"></footer>
-    </panel-main>
+          <api-ui start="TempleAPI" />
+
+          <nav class="flex">
+            <a class="tx-primary py-40" href="/temple/docs/compiler-api.html">
+              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              {_('Compiler API')}
+            </a>
+            <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/template-engine.html">
+              {_('Template Engine')}
+              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
+            </a>
+          </nav>
+          <footer class="foot"></footer>
+        </api-docs>
+      </panel-main>
+    </panel-layout>
   </body>
 </html>

@@ -1,13 +1,28 @@
-<link rel="import" type="template" href="@/modules/html/head.tml" name="html-head" />
-<link rel="import" type="template" href="@/modules/panel/head.tml" name="panel-head" />
-<link rel="import" type="template" href="@/modules/panel/left.tml" name="panel-left" />
-<link rel="import" type="component" href="@/modules/panel/main.tml" name="panel-main" />
-<link rel="import" type="component" href="@/modules/ide/code.tml" name="ide-code" />
-<link rel="import" type="component" href="@/modules/ide/app.tml" name="ide-app" />
-<link rel="import" type="component" href="@/modules/tui/alert.tml" name="tui-alert" />
-<link rel="import" type="component" href="@/modules/tui/tab.tml" name="tui-tab" />
-<link rel="import" type="component" href="@/modules/api/ui.tml" name="api-ui" />
-<link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+<link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
+<link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/layout.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/head.tml" name="panel-head" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/left.tml" name="panel-left" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/right.tml" name="panel-right" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel/main.tml" name="panel-main" />
+<link rel="import" type="component" href="@ossph/temple-ui/block/alert.tml" name="tui-alert" />
+<link rel="import" type="component" href="@ossph/temple-ui/block/tab.tml" name="tui-tab" />
+<link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
+<link rel="import" type="component" href="@/components/api/ui.tml" name="api-ui" />
+<link rel="import" type="component" href="@/components/ide/app/head.tml" name="app-head" />
+<link rel="import" type="component" href="@/components/ide/app/left.tml" name="app-left" />
+<link rel="import" type="component" href="@/components/ide/app/main.tml" name="app-main" />
+<link rel="import" type="component" href="@/components/ide/app.tml" name="ide-app" />
+<link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
+<link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
+<style>
+  @tui reset;
+  @tui fouc-opacity;
+  @tui theme;
+  @tui block;
+  @tui utilities;
+</style>
 <script>
   import { env } from '@ossph/temple';
   import { _ } from '@/modules/i18n';
@@ -15,154 +30,212 @@
   const url = '/docs/getting-started.html';
   const title = _('Getting Started - Temple reactive web component template engine.');
   const description = _('How to install, setup and use Temple in a project.');
-  const toggle = _ => {
-    document.body.classList.toggle('panel-left-open');
+  const toggle = () => {
+    document.getElementsByTagName('panel-layout')[0].toggle('left');
   };
   const examples = 'https://github.com/OSSPhilippines/temple/tree/main/examples';
 </script>
 <html>
   <html-head />
-  <body class="dark panel with-head with-left with-right">
-    <panel-head />
-    <panel-left />
-    <aside class="panel-right right">
-      <h6>{_('On this page')}</h6>
-      <nav>
-        <a href="#http">{_('1. Add HTTP')}</a>
-        <a href="#develop">{_('2. Add Dev Tools')}</a>
-        <a href="#cache">{_('3. Add File Cache')}</a>
-        <a href="#tailwind">{_('4. Add TailwindCSS')}</a>
-        <a href="#express">{_('5. Add ExpressJS')}</a>
-      </nav>
-    </aside>
-    <panel-main class="panel-main">
-      <div class="docs container">
-        <h1>{_('Getting Started')}</h1>
+  <body class="dark bg-t-0 tx-t-1 arial">
+    <panel-layout>
+      <panel-head><html-header /></panel-head>
+      <panel-left><html-aside /></panel-left>
+      <panel-right>
+        <menu class="m-0 px-10 py-20 h-calc-full-40 bg-t-2 scroll-auto">
+          <h6 class="tx-muted tx-14 mb-0 mt-0 pb-10 tx-uppercase">
+            {_('On this page')}
+          </h6>
+          <nav class="tx-14 tx-lh-32">
+            <a class="block tx-t-0" href="#http">
+              {_('1. Add HTTP')}
+            </a>
+            <a class="block tx-t-0" href="#develop">
+              {_('2. Add Dev Tools')}
+            </a>
+            <a class="block tx-t-0" href="#cache">
+              {_('3. Add File Cache')}
+            </a>
+            <a class="block tx-t-0" href="#tailwind">
+              {_('4. Add TailwindCSS')}
+            </a>
+            <a class="block tx-t-0" href="#express">
+              {_('5. Add ExpressJS')}
+            </a>
+          </nav>
+        </menu>
+      </panel-right>
+      <panel-main>
+        <api-docs>
+          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+            {_('Getting Started')}
+          </h1>
 
-        <i18n-translate p trim>
-          To try out Temple, run the following commands in terminal: 
-        </i18n-translate>
-        <ide-app title="Terminal">
-          <ide-code lang="bash">
-            npm init -y && npm install --save @ossph/temple && npm install --save-dev ts-node typescript @types/node
-          </ide-code>
-        </ide-app>
-        <tui-alert solid curved info>
-          <i class="fas fa-info-circle"></i>
-          <strong>Recommended:</strong>
-          Download the Temple editor plugin at the <a 
-            target="_blank" 
-            href="https://marketplace.visualstudio.com/items?itemName=ossph.temple-language"
-          >Visual Studio Marketplace</a>.
-        </tui-alert>
-        <i18n-translate p trim>
-          Create a server file called
-          <ide-code inline>src/index.ts</ide-code> 
-          with the following code that uses the compiler.
-        </i18n-translate>
-        <ide-app title="src/index.ts">
-          <ide-code lang="js" numbers trim detab={12}>{`
-            import temple from '@ossph/temple/compiler';
-            // make a temple compiler
-            const compiler = temple();
-            // render HTML
-            compiler.render('./src/page.dtml').then(console.log);
-            // render CSS
-            compiler.styles('./src/page.dtml').then(console.log);
-            // render JS
-            compiler.client('./src/page.dtml').then(console.log);
-          `}</ide-code>
-        </ide-app>
-        <i18n-translate p trim>
-          Last, create a document file called
-          <ide-code inline>src/page.dtml</ide-code> 
-          with the following template code.
-        </i18n-translate>
-        <ide-app title="src/page.dtml">
-          <ide-code numbers trim detab={12}>{`
-            <style>
-              .center { text-align: center; }
-            </style>
-            <script>
-              import { env } from '@ossph/temple';
-              const { BUILD_ID, APP_DATA } = env();
-              const title = 'Hello World';
-            </script>
-            <html>
-              <head>
-                <title>{title}</title>
-                <link rel="stylesheet" type="text/css" href={\`/build/\${BUILD_ID}.css\`} />
-                <script data-app={APP_DATA} src={\`/build/\${BUILD_ID}.js\`}></script>
-              </head>
-              <body>
-                <h1 class="center">{title}</h1>
-              </body>
-            </html>
-          `}</ide-code>
-        </ide-app>
-        <i18n-translate p trim>
-          To try out the basic implementation of Temple and see the 
-          results, just run the following command in terminal.
-        </i18n-translate>
-        <ide-app title="Terminal">
-          <ide-code lang="bash">
-            npx ts-node src/index.ts
-          </ide-code>
-        </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            To try out Temple, run the following commands in terminal: 
+          </i18n-translate>
+          <ide-app title="Terminal" class="py-20">
+            <ide-code lang="bash">
+              npm init -y && npm install --save @ossph/temple && npm install --save-dev ts-node typescript @types/node
+            </ide-code>
+          </ide-app>
+          <tui-alert solid curved info class="py-20 tx-lh-24">
+            <i class="fas fa-info-circle"></i>
+            <strong>Recommended:</strong>
+            Download the Temple editor plugin at the <a 
+              target="_blank" 
+              class="tx-white tx-underline"
+              href="https://marketplace.visualstudio.com/items?itemName=ossph.temple-language"
+            >Visual Studio Marketplace</a>.
+          </tui-alert>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Create a server file called
+            <ide-code inline>src/index.ts</ide-code> 
+            with the following code that uses the compiler.
+          </i18n-translate>
 
-        <a name="http"></a>
-        <h2>{_('1. Add HTTP')}</h2>
+          <ide-app title="src/index.ts" class="py-20">
+            <ide-code class="scroll-auto" lang="js" numbers trim detab={14}>{`
+              import temple from '@ossph/temple/compiler';
+              // make a temple compiler
+              const compiler = temple();
+              // render HTML
+              compiler.render('./src/page.dtml').then(console.log);
+              // render CSS
+              compiler.styles('./src/page.dtml').then(console.log);
+              // render JS
+              compiler.client('./src/page.dtml').then(console.log);
+            `}</ide-code>
+          </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Last, create a document file called
+            <ide-code inline>src/page.dtml</ide-code> 
+            with the following template code.
+          </i18n-translate>
+          <ide-app title="src/page.dtml" class="py-20">
+            <ide-code class="scroll-auto" numbers trim detab={14}>{`
+              <style>
+                .center { text-align: center; }
+              </style>
+              <script>
+                import { env } from '@ossph/temple';
+                const { BUILD_ID, APP_DATA } = env();
+                const title = 'Hello World';
+              </script>
+              <html>
+                <head>
+                  <title>{title}</title>
+                  <link rel="stylesheet" type="text/css" href={\`/build/\${BUILD_ID}.css\`} />
+                  <script data-app={APP_DATA} src={\`/build/\${BUILD_ID}.js\`}></script>
+                </head>
+                <body>
+                  <h1 class="center">{title}</h1>
+                </body>
+              </html>
+            `}</ide-code>
+          </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            To try out the basic implementation of Temple and see the 
+            results, just run the following command in terminal.
+          </i18n-translate>
+          <ide-app title="Terminal" class="py-20">
+            <ide-code lang="bash">
+              npx ts-node src/index.ts
+            </ide-code>
+          </ide-app>
 
-        <i18n-translate p trim>
-          In most cases Temple will be used to render a front end from 
-          a server framework. In this example, we will use the native
-          NodeJS HTTP module to create a server that renders a page
-          using Temple. Start by replacing the 
-          <ide-code inline>{`'src/index.ts'`}</ide-code>
-          file with the following code. 
-        </i18n-translate>
+          <a name="http"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            {_('1. Add HTTP')}
+          </h2>
 
-        <tui-alert solid curved info>
-          <i class="fas fa-info-circle"></i>
-          <strong>Optional:</strong> You can also check your other 
-          files to make sure you are following along.
-        </tui-alert>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            In most cases Temple will be used to render a front end from 
+            a server framework. In this example, we will use the native
+            NodeJS HTTP module to create a server that renders a page
+            using Temple. Start by replacing the 
+            <ide-code inline>{`'src/index.ts'`}</ide-code>
+            file with the following code. 
+          </i18n-translate>
 
-        <ide-app panel={410} title="With NodeJS HTTP">
-          <div class="panel-head">
-            <div class="tabs">
-              <tui-tab class="tab active" group="http" selector="#index-ts">
-                src/index.ts
+          <tui-alert solid curved info class="py-20 tx-lh-24">
+            <i class="fas fa-info-circle"></i>
+            <strong>Optional:</strong> You can also check your other 
+            files to make sure you are following along.
+          </tui-alert>
+
+          <ide-app height={410} title="With NodeJS HTTP">
+            <app-head>
+              <div class="flex bd-h-333333 bd-solid bdx-0 bdt-0 bdl-1 scroll-x-auto pt-5 pl-5">
+                <tui-tab 
+                  on
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="http" 
+                  selector="#http-index-ts"
+                >
+                  src/index.ts
+                </tui-tab>
+                <tui-tab 
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="http" 
+                  selector="#http-page-dtml"
+                >
+                  src/page.dtml
+                </tui-tab>
+                <tui-tab 
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="http" 
+                  selector="#http-package-json"
+                >
+                  package.json
+                </tui-tab>
+              </div>
+            </app-head>
+            <app-left>
+              <h5 class="p-5">
+                <i class="fas fa-fw fa-chevron-down"></i>
+                <span>src</span>
+              </h5>
+              <tui-tab 
+                on
+                class="pl-15 pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted"  
+                group="http" 
+                selector="#http-index-ts"
+              >
+                <i class="fas fa-fw fa-file"></i>
+                index.ts
               </tui-tab>
-              <tui-tab class="tab" group="http" selector="#page-dtml">
-                src/page.dtml
+              <tui-tab 
+                class="pl-15 pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted" 
+                group="http" 
+                selector="#http-page-dtml"
+              >
+                <i class="fas fa-fw fa-file"></i>
+                page.dtml
               </tui-tab>
-              <tui-tab class="tab" group="http" selector="#package-json">
+              <tui-tab 
+                class="pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted" 
+                group="http" 
+                selector="#http-package-json"
+              >
+                <i class="fas fa-fw fa-file"></i>
                 package.json
               </tui-tab>
-            </div>
-          </div>
-          <div class="panel-left">
-            <h5 class="folder">
-              <i class="fas fa-fw fa-chevron-down"></i>
-              <span>src</span>
-            </h5>
-            <tui-tab class="shift-1 block active" group="http" selector="#index-ts">
-              <i class="fas fa-fw fa-file"></i>
-              index.ts
-            </tui-tab>
-            <tui-tab class="shift-1 block" group="http" selector="#page-dtml">
-              <i class="fas fa-fw fa-file"></i>
-              page.dtml
-            </tui-tab>
-            <tui-tab class="block" group="http" selector="#package-json">
-              <i class="fas fa-fw fa-file"></i>
-              package.json
-            </tui-tab>
-          </div>
-          <div class="panel-main">
-            <main>
-              <ide-code id="index-ts" lang="js" numbers trim detab={16}>{`
+            </app-left>
+            <app-main>
+              <ide-code id="http-index-ts" lang="js" numbers trim detab={16}>{`
                 import http from 'http';
                 import temple from '@ossph/temple/compiler';
 
@@ -191,7 +264,7 @@
                 // listen on port 3000
                 server.listen(3000);
               `}</ide-code>
-              <ide-code id="page-dtml" style="display:none" numbers trim detab={16}>{`
+              <ide-code id="http-page-dtml" style="display:none" numbers trim detab={16}>{`
                 <style>
                   .center { text-align: center; }
                 </style>
@@ -211,7 +284,7 @@
                   </body>
                 </html>
               `}</ide-code>
-              <ide-code id="package-json" style="display:none" lang="js" numbers trim detab={16}>{`
+              <ide-code id="http-package-json" style="display:none" lang="js" numbers trim detab={16}>{`
                 {
                   "name": "my-project",
                   "version": "1.0.0",
@@ -220,7 +293,7 @@
                     "dev": "ts-node ./src/index.ts"
                   },
                   "dependencies": {
-                    "@ossph/temple": "0.1.4"
+                    "@ossph/temple": "0.1.6"
                   },
                   "devDependencies": {
                     "@types/node": "22.1.0",
@@ -229,169 +302,195 @@
                   }
                 }
               `}</ide-code>
-            </main>
-          </div>
-        </ide-app>
+            </app-main>
+          </ide-app>
 
-        <i18n-translate p trim>
-          To run your first Temple web app, just run the following 
-          command in terminal.
-        </i18n-translate>
-        <ide-app title="Terminal">
-          <ide-code lang="bash">
-            npx ts-node src/index.ts
-          </ide-code>
-        </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            To run your first Temple web app, just run the following 
+            command in terminal.
+          </i18n-translate>
+          <ide-app title="Terminal" class="py-20">
+            <ide-code lang="bash">
+              npx ts-node src/index.ts
+            </ide-code>
+          </ide-app>
 
-        <i18n-translate p trim>
-          You can now check 
-          <ide-code lang="js" inline>http://localhost:3000/</ide-code> 
-          in your browser to see your Temple application. The 
-          <ide-code lang="js" inline>temple()</ide-code> 
-          function takes in the following options, all of 
-          which are optional.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            You can now check 
+            <ide-code lang="js" inline>http://localhost:3000/</ide-code> 
+            in your browser to see your Temple application. The 
+            <ide-code lang="js" inline>temple()</ide-code> 
+            function takes in the following options, all of 
+            which are optional.
+          </i18n-translate>
 
-        <api-ui start="TempleOptions" />
+          <api-ui start="Render Methods" />
 
-        <i18n-translate p trim>
-          The example above also uses two rendering methods
-          <ide-code lang="js" inline>async compiler.asset()</ide-code> which 
-          returns the rendered source code of a build file and 
-          <ide-code lang="js" inline>async compiler.render()</ide-code> which
-          returns the rendered source code of a template file.
-          The compiler provides several other methods for
-          generating source code in JavaScript, CSS, and HTML.
-        </i18n-translate>
+          <a name="develop"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            {_('2. Add Developer Tools')}
+          </h2>
 
-        <api-ui start="Render Methods" />
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Temple provides a separate package for a better development 
+            experience when working with server frameworks that utilize 
+            the native http module. Start by installing adding 
+            <ide-code lang="js" inline>{`@ossph/temple-dev`}</ide-code>
+            to your project.
+          </i18n-translate>
+          <ide-app title="Terminal" class="py-20">
+            <ide-code lang="bash">
+              npm install --save-dev @ossph/temple-dev
+            </ide-code>
+          </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Next, import the <ide-code lang="js" inline>{`dev()`}</ide-code> 
+            function from the package and use it in your existing 
+            <ide-code lang="js" inline>{`src/index.ts`}</ide-code> 
+            file to create a development server as shown in the example below.
+          </i18n-translate>
+          <ide-app title="src/index.ts" class="py-20">
+            <ide-code lang="js" numbers trim detab={14}>{`
+              // ...
+              import { dev } from '@ossph/temple-dev';
+              // ...create temple compiler...
+              // 1. create dev tools
+              const { router, refresh } = dev();
 
-        <a name="develop"></a>
-        <h2>{_('2. Add Developer Tools')}</h2>
+              const server = http.createServer(async (req, res) => {
+                // 2. Add dev router
+                if (router(req, res)) return;
 
-        <i18n-translate p trim>
-          Temple provides a separate package for a better development 
-          experience when working with server frameworks that utilize 
-          the native http module. Start by installing adding 
-          <ide-code lang="js" inline>{`@ossph/temple-dev`}</ide-code>
-          to your project.
-        </i18n-translate>
-        <ide-app title="Terminal">
-          <ide-code lang="bash">
-            npm install --save-dev @ossph/temple-dev
-          </ide-code>
-        </ide-app>
-        <i18n-translate p trim>
-          Next, import the <ide-code lang="js" inline>{`dev()`}</ide-code> 
-          function from the package and use it in your existing 
-          <ide-code lang="js" inline>{`src/index.ts`}</ide-code> 
-          file to create a development server as shown in the example below.
-        </i18n-translate>
-        <ide-app title="src/index.ts">
-          <ide-code lang="js" numbers trim detab={12}>{`
-            // ...
-            import { dev } from '@ossph/temple-dev';
-            // ...create temple compiler...
-            // 1. create dev tools
-            const { router, refresh } = dev();
+                if (req.url?.startsWith('/build/')) {
+                  // ...
+                } else if (req.url === '/') {
+                  // 3. sync builder with refresh server
+                  refresh.sync(compiler.fromSource('./src/page.dtml'));
+                  // ... compile and send response ...
+                }
+              });
+              //...listen on port 3000...
+            `}</ide-code>
+          </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The <ide-code inline lang="js">{`dev()`}</ide-code> export 
+            from  <ide-code inline lang="js">{`@ossph/temple-dev`}</ide-code>
+            exports tools that supports development mode and accepts the 
+            following options.
+          </i18n-translate>
 
-            const server = http.createServer(async (req, res) => {
-              // 2. Add dev router
-              if (router(req, res)) return;
+          <api-ui start="DeveloperOptions" />
 
-              if (req.url?.startsWith('/build/')) {
-                // ...
-              } else if (req.url === '/') {
-                // 3. sync builder with refresh server
-                refresh.sync(compiler.fromSource('./src/page.dtml'));
-                // ... compile and send response ...
-              }
-            });
-            //...listen on port 3000...
-          `}</ide-code>
-        </ide-app>
-        <i18n-translate p trim>
-          The <ide-code inline lang="js">{`dev()`}</ide-code> export 
-          from  <ide-code inline lang="js">{`@ossph/temple-dev`}</ide-code>
-          exports tools that supports development mode and accepts the 
-          following options.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            This returns several tools you can use in your server app.
+          </i18n-translate>
 
-        <api-ui start="DeveloperOptions" />
+          <api-ui start="Developer Tools" />
 
-        <i18n-translate p trim>
-          This returns several tools you can use in your server app.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Lastly, update the document file 
+            <ide-code lang="js" inline>{`src/page.dtml`}</ide-code> 
+            to include the development script 
+            <ide-code inline>{`<script src="/dev.js"></script>`}</ide-code> 
+            as shown below.
+          </i18n-translate>
+          <ide-app title="src/page.dtml" class="py-20">
+            <ide-code numbers trim detab={14}>{`
+              <style>
+                /* ... */
+              </style>
+              <script>
+                //... 
+              </script>
+              <html>
+                <head>
+                  <!-- ... -->
+                  <!-- 4. include dev script -->
+                  <script src="/dev.js"></script>
+                </head>
+                <body>
+                  <!-- ... -->
+                </body>
+              </html>
+            `}</ide-code>
+          </ide-app>
 
-        <api-ui start="Developer Tools" />
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The project should now look like the example below.
+          </i18n-translate>
 
-        <i18n-translate p trim>
-          Lastly, update the document file 
-          <ide-code lang="js" inline>{`src/page.dtml`}</ide-code> 
-          to include the development script 
-          <ide-code inline>{`<script src="/dev.js"></script>`}</ide-code> 
-          as shown below.
-        </i18n-translate>
-        <ide-app title="src/page.dtml">
-          <ide-code numbers trim detab={12}>{`
-            <style>
-              /* ... */
-            </style>
-            <script>
-              //... 
-            </script>
-            <html>
-              <head>
-                <!-- ... -->
-                <!-- 4. include dev script -->
-                <script src="/dev.js"></script>
-              </head>
-              <body>
-                <!-- ... -->
-              </body>
-            </html>
-          `}</ide-code>
-        </ide-app>
-
-        <i18n-translate p trim>
-          The project should now look like the example below.
-        </i18n-translate>
-
-        <ide-app panel={410} title="With Developer Tools">
-          <div class="panel-head">
-            <div class="tabs">
-              <tui-tab class="tab active" group="develop" selector="#index-ts">
-                src/index.ts
+          <ide-app height={410} title="With Developer Tools" class="py-20">
+            <app-head>
+              <div class="flex bd-h-333333 bd-solid bdx-0 bdt-0 bdl-1 scroll-x-auto pt-5 pl-5">
+                <tui-tab 
+                  on
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="develop" 
+                  selector="#develop-index-ts"
+                >
+                  src/index.ts
+                </tui-tab>
+                <tui-tab 
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="develop" 
+                  selector="#develop-page-dtml"
+                >
+                  src/page.dtml
+                </tui-tab>
+                <tui-tab 
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="develop" 
+                  selector="#develop-package-json"
+                >
+                  package.json
+                </tui-tab>
+              </div>
+            </app-head>
+            <app-left>
+              <h5 class="p-5">
+                <i class="fas fa-fw fa-chevron-down"></i>
+                <span>src</span>
+              </h5>
+              <tui-tab 
+                on
+                class="pl-15 pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted"  
+                group="develop" 
+                selector="#develop-index-ts"
+              >
+                <i class="fas fa-fw fa-file"></i>
+                index.ts
               </tui-tab>
-              <tui-tab class="tab" group="develop" selector="#page-dtml">
-                src/page.dtml
+              <tui-tab 
+                class="pl-15 pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted" 
+                group="develop" 
+                selector="#develop-page-dtml"
+              >
+                <i class="fas fa-fw fa-file"></i>
+                page.dtml
               </tui-tab>
-              <tui-tab class="tab" group="develop" selector="#package-json">
+              <tui-tab 
+                class="pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted" 
+                group="develop" 
+                selector="#develop-package-json"
+              >
+                <i class="fas fa-fw fa-file"></i>
                 package.json
               </tui-tab>
-            </div>
-          </div>
-          <div class="panel-left">
-            <h5 class="folder">
-              <i class="fas fa-fw fa-chevron-down"></i>
-              <span>src</span>
-            </h5>
-            <tui-tab class="shift-1 block active" group="develop" selector="#index-ts">
-              <i class="fas fa-fw fa-file"></i>
-              index.ts
-            </tui-tab>
-            <tui-tab class="shift-1 block" group="develop" selector="#page-dtml">
-              <i class="fas fa-fw fa-file"></i>
-              page.dtml
-            </tui-tab>
-            <tui-tab class="block" group="develop" selector="#package-json">
-              <i class="fas fa-fw fa-file"></i>
-              package.json
-            </tui-tab>
-          </div>
-          <div class="panel-main">
-            <main>
-              <ide-code id="index-ts" lang="js" numbers trim detab={16}>{`
+            </app-left>
+            <app-main>
+              <ide-code id="develop-index-ts" lang="js" numbers trim detab={16}>{`
                 import http from 'http';
                 import temple from '@ossph/temple/compiler';
                 import { dev } from '@ossph/temple-dev';
@@ -421,7 +520,7 @@
                 });
                 server.listen(3000);
               `}</ide-code>
-              <ide-code id="page-dtml" style="display:none" numbers trim detab={16}>{`
+              <ide-code id="develop-page-dtml" style="display:none" numbers trim detab={16}>{`
                 <style>
                   .center { text-align: center; }
                 </style>
@@ -442,7 +541,7 @@
                   </body>
                 </html>
               `}</ide-code>
-              <ide-code id="package-json" style="display:none" lang="js" numbers trim detab={16}>{`
+              <ide-code id="develop-package-json" style="display:none" lang="js" numbers trim detab={16}>{`
                 {
                   "name": "my-project",
                   "version": "1.0.0",
@@ -451,369 +550,409 @@
                     "dev": "ts-node ./src/index.ts"
                   },
                   "dependencies": {
-                    "@ossph/temple": "0.1.4"
+                    "@ossph/temple": "0.1.6"
                   },
                   "devDependencies": {
-                    "@ossph/temple-dev": "0.1.4",
+                    "@ossph/temple-dev": "0.1.6",
                     "@types/node": "22.1.0",
                     "ts-node": "10.9.2",
                     "typescript": "5.5.4"
                   }
                 }
               `}</ide-code>
-            </main>
-          </div>
-        </ide-app>
+            </app-main>
+          </ide-app>
 
-        <i18n-translate p trim>
-          Re-run the following command in terminal. It shouldn't look 
-          like anything has changed, but the development server is now
-          running in the background. Try to change
-          <ide-code lang="js" inline>{`src/page.dtml`}</ide-code>.
-        </i18n-translate>
-        <ide-app title="Terminal">
-          <ide-code lang="bash">
-            npx ts-node src/index.ts
-          </ide-code>
-        </ide-app>
-        <i18n-translate p trim>
-          Whenever <ide-code lang="js" inline>{`src/page.dtml`}</ide-code> 
-          is saved, the development server will automatically refresh 
-          the page. Components will also be updated in real-time without
-          the page reloading.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Re-run the following command in terminal. It shouldn't look 
+            like anything has changed, but the development server is now
+            running in the background. Try to change
+            <ide-code lang="js" inline>{`src/page.dtml`}</ide-code>.
+          </i18n-translate>
+          <ide-app title="Terminal" class="py-20">
+            <ide-code lang="bash">
+              npx ts-node src/index.ts
+            </ide-code>
+          </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Whenever <ide-code lang="js" inline>{`src/page.dtml`}</ide-code> 
+            is saved, the development server will automatically refresh 
+            the page. Components will also be updated in real-time without
+            the page reloading.
+          </i18n-translate>
 
-        <a name="cache"></a>
-        <h2>{_('3. Add Cache Files')}</h2>
+          <a name="cache"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            {_('3. Add Cache Files')}
+          </h2>
 
-        <i18n-translate p trim>
-          Temple has an out-of-the-box cache and build strategy that
-          can be used to store and serve pre-compiled files. To use the
-          cache, you just need to import it from the 
-          <ide-code lang="js" inline>{`@ossph/temple/compiler`}</ide-code> 
-          module and use it like the following example.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Temple has an out-of-the-box cache and build strategy that
+            can be used to store and serve pre-compiled files. To use the
+            cache, you just need to import it from the 
+            <ide-code lang="js" inline>{`@ossph/temple/compiler`}</ide-code> 
+            module and use it like the following example.
+          </i18n-translate>
 
-        <ide-app title="src/index.ts">
-          <ide-code lang="js" numbers trim detab={12}>{`
-            // ...
-            import path from 'path';
-            import { cache } from '@ossph/temple/compiler';
-            // ...create temple compiler...
-            // 1. use cache
-            compiler.use(cache({
-              buildPath: path.join(__dirname, '../build')
-            }));
-            // ...create dev tools...
-            // ...create http server...
-            // ...listen on port 3000...
-          `}</ide-code>
-        </ide-app>
+          <ide-app title="src/index.ts" class="py-20">
+            <ide-code lang="js" numbers trim detab={14}>{`
+              // ...
+              import path from 'path';
+              import { cache } from '@ossph/temple/compiler';
+              // ...create temple compiler...
+              // 1. use cache
+              compiler.use(cache({
+                buildPath: path.join(__dirname, '../build')
+              }));
+              // ...create dev tools...
+              // ...create http server...
+              // ...listen on port 3000...
+            `}</ide-code>
+          </ide-app>
 
-        <i18n-translate p trim>
-          The <ide-code lang="js" inline>{`src/index.ts`}</ide-code> 
-          file should now look like the example below.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The <ide-code lang="js" inline>{`src/index.ts`}</ide-code> 
+            file should now look like the example below.
+          </i18n-translate>
 
-        <ide-app title="src/index.ts">
-          <ide-code lang="js" numbers trim detab={12}>{`
-            import path from 'path';
-            import http from 'http';
-            import temple, { cache } from '@ossph/temple/compiler';
-            import { dev } from '@ossph/temple-dev';
+          <ide-app title="src/index.ts" class="py-20">
+            <ide-code lang="js" numbers trim detab={14}>{`
+              import path from 'path';
+              import http from 'http';
+              import temple, { cache } from '@ossph/temple/compiler';
+              import { dev } from '@ossph/temple-dev';
 
-            const compiler = temple();
-            // 1. use cache
-            compiler.use(cache({
-              buildPath: path.join(__dirname, '../build')
-            }));
-            const { router, refresh } = dev();
-            const server = http.createServer(async (req, res) => {
-              if (router(req, res)) return;
-              if (req.url?.startsWith('/build/')) {
-                const filename = req.url.substring(7);
-                const { type, content } = await compiler.asset(filename);
-                res.writeHead(200, { 'Content-Type': type });
-                return res.end(content);
-              } else if (req.url === '/') {
-                refresh.sync(compiler.fromSource('./src/page.dtml'));
-                res.writeHead(200, { 'Content-Type': 'text/html' });
-                return res.end(await compiler.render('./src/page.dtml', {
-                  title: 'Hello World'
-                }));
+              const compiler = temple();
+              // 1. use cache
+              compiler.use(cache({
+                buildPath: path.join(__dirname, '../build')
+              }));
+              const { router, refresh } = dev();
+              const server = http.createServer(async (req, res) => {
+                if (router(req, res)) return;
+                if (req.url?.startsWith('/build/')) {
+                  const filename = req.url.substring(7);
+                  const { type, content } = await compiler.asset(filename);
+                  res.writeHead(200, { 'Content-Type': type });
+                  return res.end(content);
+                } else if (req.url === '/') {
+                  refresh.sync(compiler.fromSource('./src/page.dtml'));
+                  res.writeHead(200, { 'Content-Type': 'text/html' });
+                  return res.end(await compiler.render('./src/page.dtml', {
+                    title: 'Hello World'
+                  }));
+                }
+              });
+              server.listen(3000);
+            `}</ide-code>
+          </ide-app>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Re-run the following command in terminal to start the cache 
+            server.
+          </i18n-translate>
+          <ide-app title="Terminal" class="py-20">
+            <ide-code lang="bash">
+              npx ts-node src/index.ts
+            </ide-code>
+          </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Load 
+            <ide-code lang="js" inline>http://localhost:3000/</ide-code> 
+            in your browser. After loading you should see files that were 
+            generated in a new build folder found in your project root. 
+            The <ide-code lang="js" inline>cache()</ide-code> plugin is 
+            just a wrapper that listens for build related events and
+            stores the generated files in the specified build path.
+          </i18n-translate>
+
+          <ide-app height={400} title="cache.ts (Internal)" class="py-20">
+            <ide-code lang="js" numbers trim detab={14}>{`
+              emitter.on('manifest-resolved', (event: Event<string>) => {
+                const manifest = event.params.manifest as Manifest
+                //write the manifest to the file system
+                writeFile(paths.manifest, manifest.toJson());
+              });
+
+              // on pre render, try to use cache if live
+              emitter.on('render', (event: Event<string>) => {
+                //if not live, dont retrieve from cache
+                if (environment !== 'production') return;
+                //extract props and builder from params
+                const props = (event.params.props || {}) as Hash;
+                const builder = event.params.builder as Builder;
+                //get fs and id ie. abc123c
+                const { fs, id } = builder.document;
+                //get cache file path ie. /path/to/docs/build/client/abc123c.js
+                const cache = path.join(paths.build, 'server', \`\${id}.js\`);
+                //if production and cache file exists
+                if (fs.existsSync(cache)) {
+                  //get the build object
+                  const build = compiler.fromCache(cache);
+                  //render the document
+                  const html = build.document.render(props);
+                  //return the cached content
+                  event.set(html);
+                }
+              });
+
+              // on post render, cache (dev and live)
+              emitter.on('rendered', (event: Event<string>) => {
+                //extract build and builder from params
+                const builder = event.params.builder as Builder;
+                const html = event.params.html as string;
+                //get fs and id ie. abc123c
+                const { id } = builder.document;
+                //get cache file path ie. /path/to/docs/build/client/abc123c.html
+                const cache = path.join(paths.build, 'client', \`\${id}.html\`);
+                //write the server source code to cache
+                writeFile(cache, html);
+              });
+
+              // on pre client build, try to use cache if live
+              emitter.on('build-client', (event: Event<string>) => {
+                //if not live, dont retrieve from cache
+                if (environment !== 'production') return;
+                //extract builder from params
+                const builder = event.params.builder as Builder;
+                //get fs and id ie. abc123c
+                const id = builder.document.id;
+                //get cache file path ie. /path/to/docs/build/client/abc123c.js
+                const cache = path.join(paths.build, 'client', \`\${id}.js\`);
+                //if cache file exists, send it
+                if (fs.existsSync(cache)) {
+                  event.set(fs.readFileSync(cache, 'utf8'));
+                }
+              });
+
+              // on post client build, cache (dev and live)
+              emitter.on('built-client', (event: Event<string>) => {
+                //extract builder and sourcecode from params
+                const builder = event.params.builder as Builder;
+                const sourceCode = event.params.sourceCode as string;
+                //get fs and id ie. abc123c
+                const id = builder.document.id;
+                //get cache file path ie. /path/to/docs/build/client/abc123c.js
+                const cache = path.join(paths.build, 'client', \`\${id}.js\`);
+                //write the client source code to cache
+                writeFile(cache, sourceCode);
+              });
+
+              // on pre markup build, try to use cache if live
+              emitter.on('build-markup', /* ... */);
+              //on post markup build, cache (dev and live)
+              emitter.on('built-markup', /* ... */);
+              //on pre server build, try to use cache if live
+              emitter.on('build-server', /* ... */);
+              //on post server build, cache (dev and live)
+              emitter.on('built-server', /* ... */);
+              //on pre styles build, try to use cache if live
+              emitter.on('build-styles', /* ... */);
+              //on post styles build, cache (dev and live)
+              emitter.on('built-styles', /* ... */);
+
+              // Initialize: if there's a manifest
+              if (fs.existsSync(paths.manifest)) {
+                //load the manifest file
+                compiler.manifest.load(
+                  JSON.parse(fs.readFileSync(paths.manifest, 'utf-8'))
+                );
               }
-            });
-            server.listen(3000);
-          `}</ide-code>
-        </ide-app>
+            `}</ide-code>
+          </ide-app>
 
-        <i18n-translate p trim>
-          Re-run the following command in terminal to start the cache 
-          server.
-        </i18n-translate>
-        <ide-app title="Terminal">
-          <ide-code lang="bash">
-            npx ts-node src/index.ts
-          </ide-code>
-        </ide-app>
-        <i18n-translate p trim>
-          Load 
-          <ide-code lang="js" inline>http://localhost:3000/</ide-code> 
-          in your browser. After loading you should see files that were 
-          generated in a new build folder found in your project root. 
-          The <ide-code lang="js" inline>cache()</ide-code> plugin is 
-          just a wrapper that listens for build related events and
-          stores the generated files in the specified build path.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            This means you can also use your own cache strategy by 
+            listening to the events emitted by the compiler. The
+            following table lists all the events that the compiler
+            emits during the build cycle of a document.
+          </i18n-translate>
 
-        <ide-app panel={400} title="cache.ts (Internal)">
-          <ide-code lang="js" numbers trim detab={12}>{`
-            emitter.on('manifest-resolved', (event: Event<string>) => {
-              const manifest = event.params.manifest as Manifest
-              //write the manifest to the file system
-              writeFile(paths.manifest, manifest.toJson());
-            });
+          <api-ui start="EventEmitter" />
 
-            // on pre render, try to use cache if live
-            emitter.on('render', (event: Event<string>) => {
-              //if not live, dont retrieve from cache
-              if (environment !== 'production') return;
-              //extract props and builder from params
-              const props = (event.params.props || {}) as Hash;
-              const builder = event.params.builder as Builder;
-              //get fs and id ie. abc123c
-              const { fs, id } = builder.document;
-              //get cache file path ie. /path/to/docs/build/client/abc123c.js
-              const cache = path.join(paths.build, 'server', \`\${id}.js\`);
-              //if production and cache file exists
-              if (fs.existsSync(cache)) {
-                //get the build object
-                const build = compiler.fromCache(cache);
-                //render the document
-                const html = build.document.render(props);
-                //return the cached content
-                event.set(html);
-              }
-            });
+          <a name="tailwind"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            {_('4. Add TailwindCSS')}
+          </h2>
 
-            // on post render, cache (dev and live)
-            emitter.on('rendered', (event: Event<string>) => {
-              //extract build and builder from params
-              const builder = event.params.builder as Builder;
-              const html = event.params.html as string;
-              //get fs and id ie. abc123c
-              const { id } = builder.document;
-              //get cache file path ie. /path/to/docs/build/client/abc123c.html
-              const cache = path.join(paths.build, 'client', \`\${id}.html\`);
-              //write the server source code to cache
-              writeFile(cache, html);
-            });
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Tailwind is an atomic CSS collection of styles that favours 
+            small, single-purpose classes with their selector names based 
+            on its visual function. It works by using a build process to
+            read your source files to generate its styles based only on 
+            what is being used. This makes using Tailwind optimal because
+            it doesn't bloat your CSS with unused styles.
+          </i18n-translate>
 
-            // on pre client build, try to use cache if live
-            emitter.on('build-client', (event: Event<string>) => {
-              //if not live, dont retrieve from cache
-              if (environment !== 'production') return;
-              //extract builder from params
-              const builder = event.params.builder as Builder;
-              //get fs and id ie. abc123c
-              const id = builder.document.id;
-              //get cache file path ie. /path/to/docs/build/client/abc123c.js
-              const cache = path.join(paths.build, 'client', \`\${id}.js\`);
-              //if cache file exists, send it
-              if (fs.existsSync(cache)) {
-                event.set(fs.readFileSync(cache, 'utf8'));
-              }
-            });
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            At the same time, web components with the
+            <ide-code inline>{`<style>`}</ide-code> tag imply using the 
+            component's shadow DOM which will encapsulate the styles within
+            the component and not be affected by global styles. Since 
+            Tailwind in turn implies that you do not need to (necessarily) 
+            define styles, you do not need to use the shadow DOM at all if
+            you are using Tailwind.
+          </i18n-translate>
 
-            // on post client build, cache (dev and live)
-            emitter.on('built-client', (event: Event<string>) => {
-              //extract builder and sourcecode from params
-              const builder = event.params.builder as Builder;
-              const sourceCode = event.params.sourceCode as string;
-              //get fs and id ie. abc123c
-              const id = builder.document.id;
-              //get cache file path ie. /path/to/docs/build/client/abc123c.js
-              const cache = path.join(paths.build, 'client', \`\${id}.js\`);
-              //write the client source code to cache
-              writeFile(cache, sourceCode);
-            });
+          <tui-alert solid curved warning class="py-20 tx-lh-24">
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>Warning:</strong>
+            The caveat for using TailwindCSS, means that web components 
+            using it will not be shippable to other projects that do not
+            use Tailwind. It all comes down to preference in the end.
+          </tui-alert>
 
-            // on pre markup build, try to use cache if live
-            emitter.on('build-markup', /* ... */);
-            //on post markup build, cache (dev and live)
-            emitter.on('built-markup', /* ... */);
-            //on pre server build, try to use cache if live
-            emitter.on('build-server', /* ... */);
-            //on post server build, cache (dev and live)
-            emitter.on('built-server', /* ... */);
-            //on pre styles build, try to use cache if live
-            emitter.on('build-styles', /* ... */);
-            //on post styles build, cache (dev and live)
-            emitter.on('built-styles', /* ... */);
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Temple has a separate package called
+            <ide-code inline lang="js">{`@ossph/temple-tailwind`}</ide-code>
+            to use TailwindCSS with Temple. This is just another wrapper 
+            class that listens to the compiler's build events. You can 
+            install this plugin by running the following command in terminal.
+          </i18n-translate>
 
-            // Initialize: if there's a manifest
-            if (fs.existsSync(paths.manifest)) {
-              //load the manifest file
-              compiler.manifest.load(
-                JSON.parse(fs.readFileSync(paths.manifest, 'utf-8'))
-              );
-            }
-          `}</ide-code>
-        </ide-app>
+          <ide-app title="Terminal" class="py-20">
+            <ide-code lang="bash">
+              npm install --save-dev @ossph/temple-tailwind autoprefixer postcss tailwindcss
+            </ide-code>
+          </ide-app>
 
-        <i18n-translate p trim>
-          This means you can also use your own cache strategy by 
-          listening to the events emitted by the compiler. The
-          following table lists all the events that the compiler
-          emits during the build cycle of a document.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Next, in <ide-code inline lang="js">{`src/index.ts`}</ide-code>
+            import the <ide-code inline lang="js">{`tailwind()`}</ide-code>
+            plugin from the package and use it in the compiler as shown
+            in the example below.
+          </i18n-translate>
 
-        <api-ui start="EventEmitter" />
+          <ide-app title="src/index.ts" class="py-20">
+            <ide-code lang="js" numbers trim detab={14}>{`
+              // ...
+              import { tailwind } from '@ossph/temple-tailwind';
+              // ...create temple compiler...
+              // ...use cache...
+              // 1. Use Tailwind
+              compiler.use(tailwind({
+                darkMode: 'class',
+                theme: { extend: {} },
+                plugins: [],
+                content: []
+              }));
 
-        <a name="tailwind"></a>
-        <h2>{_('4. Add TailwindCSS')}</h2>
+              // ...create dev tools...
+              // ...create http server...
+              // ...listen on port 3000...
+            `}</ide-code>
+          </ide-app>
 
-        <i18n-translate p trim>
-          Tailwind is an atomic CSS collection of styles that favours 
-          small, single-purpose classes with their selector names based 
-          on its visual function. It works by using a build process to
-          read your source files to generate its styles based only on 
-          what is being used. This makes using Tailwind optimal because
-          it doesn't bloat your CSS with unused styles.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Lastly, in <ide-code inline lang="js">{`src/page.dtml`}</ide-code>
+            add the Tailwind directives inside the 
+            <ide-code inline>{`<style>`}</ide-code> tag like the code 
+            below. Also add a tailwind class, (like 
+            <ide-code inline lang="js">{`<style>`}</ide-code>) to the 
+            markup to verify that the plugin is working and the styles 
+            are being applied.
+          </i18n-translate>
+          
+          <ide-app title="src/page.dtml" class="py-20">
+            <ide-code numbers trim detab={14}>{`
+              <style>
+                /* 2. Add tailwind directives */
+                @tailwind base;
+                @tailwind components;
+                @tailwind utilities;
 
-        <i18n-translate p trim>
-          At the same time, web components with the
-          <ide-code inline>{`<style>`}</ide-code> tag imply using the 
-          component's shadow DOM which will encapsulate the styles within
-          the component and not be affected by global styles. Since 
-          Tailwind in turn implies that you do not need to (necessarily) 
-          define styles, you do not need to use the shadow DOM at all if
-          you are using Tailwind.
-        </i18n-translate>
+                /* ...Other styles... */
+              </style>
+              <script>
+                //... 
+              </script>
+              <html>
+                <head>
+                  <!-- ... -->
+                </head>
+                <body>
+                  <h1 class="text-center">{title}</h1>
+                </body>
+              </html>
+            `}</ide-code>
+          </ide-app>
 
-        <tui-alert solid curved warning>
-          <i class="fas fa-exclamation-triangle"></i>
-          <strong>Warning:</strong>
-          The caveat for using TailwindCSS, means that web components 
-          using it will not be shippable to other projects that do not
-          use Tailwind. It all comes down to preference in the end.
-        </tui-alert>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Check to see if the project files look like the example below.
+          </i18n-translate>
 
-        <i18n-translate p trim>
-          Temple has a separate package called
-          <ide-code inline lang="js">{`@ossph/temple-tailwind`}</ide-code>
-          to use TailwindCSS with Temple. This is just another wrapper 
-          class that listens to the compiler's build events. You can 
-          install this plugin by running the following command in terminal.
-        </i18n-translate>
-
-        <ide-app title="Terminal">
-          <ide-code lang="bash">
-            npm install --save-dev @ossph/temple-tailwind autoprefixer postcss tailwindcss
-          </ide-code>
-        </ide-app>
-
-        <i18n-translate p trim>
-          Next, in <ide-code inline lang="js">{`src/index.ts`}</ide-code>
-          import the <ide-code inline lang="js">{`tailwind()`}</ide-code>
-          plugin from the package and use it in the compiler as shown
-          in the example below.
-        </i18n-translate>
-
-        <ide-app title="src/index.ts">
-          <ide-code lang="js" numbers trim detab={12}>{`
-            // ...
-            import { tailwind } from '@ossph/temple-tailwind';
-            // ...create temple compiler...
-            // ...use cache...
-            // 1. Use Tailwind
-            compiler.use(tailwind({
-              darkMode: 'class',
-              theme: { extend: {} },
-              plugins: [],
-              content: []
-            }));
-
-            // ...create dev tools...
-            // ...create http server...
-            // ...listen on port 3000...
-          `}</ide-code>
-        </ide-app>
-
-        <i18n-translate p trim>
-          Lastly, in <ide-code inline lang="js">{`src/page.dtml`}</ide-code>
-          add the Tailwind directives inside the 
-          <ide-code inline>{`<style>`}</ide-code> tag like the code 
-          below. Also add a tailwind class, (like 
-          <ide-code inline lang="js">{`<style>`}</ide-code>) to the 
-          markup to verify that the plugin is working and the styles 
-          are being applied.
-        </i18n-translate>
-        
-        <ide-app title="src/page.dtml">
-          <ide-code numbers trim detab={12}>{`
-            <style>
-              /* 2. Add tailwind directives */
-              @tailwind base;
-              @tailwind components;
-              @tailwind utilities;
-
-              /* ...Other styles... */
-            </style>
-            <script>
-              //... 
-            </script>
-            <html>
-              <head>
-                <!-- ... -->
-              </head>
-              <body>
-                <h1 class="text-center">{title}</h1>
-              </body>
-            </html>
-          `}</ide-code>
-        </ide-app>
-
-        <i18n-translate p trim>
-          Check to see if the project files look like the example below.
-        </i18n-translate>
-
-        <ide-app panel={410} title="With TailwindCSS">
-          <div class="panel-head">
-            <div class="tabs">
-              <tui-tab class="tab active" group="tailwind" selector="#index-ts">
-                src/index.ts
+          <ide-app height={410} title="With TailwindCSS" class="py-20">
+            <app-head>
+              <div class="flex bd-h-333333 bd-solid bdx-0 bdt-0 bdl-1 scroll-x-auto pt-5 pl-5">
+                <tui-tab 
+                  on
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="tailwind" 
+                  selector="#tailwind-index-ts"
+                >
+                  src/index.ts
+                </tui-tab>
+                <tui-tab 
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="tailwind" 
+                  selector="#tailwind-page-dtml"
+                >
+                  src/page.dtml
+                </tui-tab>
+                <tui-tab 
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="tailwind" 
+                  selector="#tailwind-package-json"
+                >
+                  package.json
+                </tui-tab>
+              </div>
+            </app-head>
+            <app-left>
+              <h5 class="p-5">
+                <i class="fas fa-fw fa-chevron-down"></i>
+                <span>src</span>
+              </h5>
+              <tui-tab 
+                on
+                class="pl-15 pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted"  
+                group="tailwind" 
+                selector="#tailwind-index-ts"
+              >
+                <i class="fas fa-fw fa-file"></i>
+                index.ts
               </tui-tab>
-              <tui-tab class="tab" group="tailwind" selector="#page-dtml">
-                src/page.dtml
+              <tui-tab 
+                class="pl-15 pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted" 
+                group="tailwind" 
+                selector="#tailwind-page-dtml"
+              >
+                <i class="fas fa-fw fa-file"></i>
+                page.dtml
               </tui-tab>
-              <tui-tab class="tab" group="tailwind" selector="#package-json">
+              <tui-tab 
+                class="pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted" 
+                group="tailwind" 
+                selector="#tailwind-package-json"
+              >
+                <i class="fas fa-fw fa-file"></i>
                 package.json
               </tui-tab>
-            </div>
-          </div>
-          <div class="panel-left">
-            <h5 class="folder">
-              <i class="fas fa-fw fa-chevron-down"></i>
-              <span>src</span>
-            </h5>
-            <tui-tab class="shift-1 block active" group="tailwind" selector="#index-ts">
-              <i class="fas fa-fw fa-file"></i>
-              index.ts
-            </tui-tab>
-            <tui-tab class="shift-1 block" group="tailwind" selector="#page-dtml">
-              <i class="fas fa-fw fa-file"></i>
-              page.dtml
-            </tui-tab>
-            <tui-tab class="block" group="tailwind" selector="#package-json">
-              <i class="fas fa-fw fa-file"></i>
-              package.json
-            </tui-tab>
-          </div>
-          <div class="panel-main">
-            <main>
-              <ide-code id="index-ts" lang="js" numbers trim detab={16}>{`
+            </app-left>
+            <app-main>
+              <ide-code id="tailwind-index-ts" lang="js" numbers trim detab={16}>{`
                 import path from 'path';
                 import http from 'http';
                 import temple, { cache } from '@ossph/temple/compiler';
@@ -850,7 +989,7 @@
                 });
                 server.listen(3000);
               `}</ide-code>
-              <ide-code id="page-dtml" style="display:none" numbers trim detab={16}>{`
+              <ide-code id="tailwind-page-dtml" style="display:none" numbers trim detab={16}>{`
                 <style>
                   /* 2. Add tailwind directives */
                   @tailwind base;
@@ -874,7 +1013,7 @@
                   </body>
                 </html>
               `}</ide-code>
-              <ide-code id="package-json" style="display:none" lang="js" numbers trim detab={16}>{`
+              <ide-code id="tailwind-package-json" style="display:none" lang="js" numbers trim detab={16}>{`
                 {
                   "name": "my-project",
                   "version": "1.0.0",
@@ -883,11 +1022,11 @@
                     "dev": "ts-node ./src/index.ts"
                   },
                   "dependencies": {
-                    "@ossph/temple": "0.1.4"
+                    "@ossph/temple": "0.1.6"
                   },
                   "devDependencies": {
-                    "@ossph/temple-dev": "0.1.4",
-                    "@ossph/temple-tailwind": "0.1.4",
+                    "@ossph/temple-dev": "0.1.6",
+                    "@ossph/temple-tailwind": "0.1.6",
                     "@types/node": "22.1.0",
                     "autoprefixer": "10.4.20",
                     "postcss": "8.4.44",
@@ -897,163 +1036,201 @@
                   }
                 }
               `}</ide-code>
-            </main>
-          </div>
-        </ide-app>
+            </app-main>
+          </ide-app>
 
-        <i18n-translate p trim>
-          Re-run the following command in terminal to initialize the 
-          tailwind plugin.
-        </i18n-translate>
-        <ide-app title="Terminal">
-          <ide-code lang="bash">
-            npx ts-node src/index.ts
-          </ide-code>
-        </ide-app>
-        <i18n-translate p trim>
-          Load 
-          <ide-code lang="js" inline>http://localhost:3000/</ide-code> 
-          in your browser. After loading you should see files that were 
-          generated in a new build folder found in your project root. 
-          Try to add a Tailwind class to the markup in
-          <ide-code lang="js" inline>{`src/page.dtml`}</ide-code> and 
-          save. The development server will automatically refresh 
-          the styles and component styles will also be update in 
-          real-time without the page reloading.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Re-run the following command in terminal to initialize the 
+            tailwind plugin.
+          </i18n-translate>
+          <ide-app title="Terminal" class="py-20">
+            <ide-code lang="bash">
+              npx ts-node src/index.ts
+            </ide-code>
+          </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Load 
+            <ide-code lang="js" inline>http://localhost:3000/</ide-code> 
+            in your browser. After loading you should see files that were 
+            generated in a new build folder found in your project root. 
+            Try to add a Tailwind class to the markup in
+            <ide-code lang="js" inline>{`src/page.dtml`}</ide-code> and 
+            save. The development server will automatically refresh 
+            the styles and component styles will also be update in 
+            real-time without the page reloading.
+          </i18n-translate>
 
-        <a name="express"></a>
-        <h2>{_('5. Add ExpressJS')}</h2>
+          <a name="express"></a>
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            {_('5. Add ExpressJS')}
+          </h2>
 
-        <i18n-translate p trim>
-          Temple has a separate package called
-          <ide-code inline lang="js">{`@ossph/temple-express`}</ide-code>
-          to use Express with Temple. You can install this plugin by 
-          running the following command in terminal.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Temple has a separate package called
+            <ide-code inline lang="js">{`@ossph/temple-express`}</ide-code>
+            to use Express with Temple. You can install this plugin by 
+            running the following command in terminal.
+          </i18n-translate>
 
-        <ide-app title="Terminal">
-          <ide-code lang="bash">
-            npm install --save @ossph/temple-express express && npm install --save-dev @types/express
-          </ide-code>
-        </ide-app>
+          <ide-app title="Terminal" class="py-20">
+            <ide-code lang="bash">
+              npm install --save @ossph/temple-express express && npm install --save-dev @types/express
+            </ide-code>
+          </ide-app>
 
-        <i18n-translate p trim>
-          The package 
-          <ide-code inline lang="js">{`@ossph/temple-express`}</ide-code>
-          exports two plugins for express.
-          <ide-code inline lang="js">{`view()`}</ide-code> is the view 
-          engine for production (live) environments. It can be used with
-          an express app like 
-          <ide-code inline lang="js">{`app.use(view(compiler))`}</ide-code>.
-          The other export, <ide-code inline lang="js">{`dev()`}</ide-code> 
-          is the same export from the Developer Tools documentation above, 
-          but returns several tools used to integrate with express.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            The package 
+            <ide-code inline lang="js">{`@ossph/temple-express`}</ide-code>
+            exports two plugins for express.
+            <ide-code inline lang="js">{`view()`}</ide-code> is the view 
+            engine for production (live) environments. It can be used with
+            an express app like 
+            <ide-code inline lang="js">{`app.use(view(compiler))`}</ide-code>.
+            The other export, <ide-code inline lang="js">{`dev()`}</ide-code> 
+            is the same export from the Developer Tools documentation above, 
+            but returns several tools used to integrate with express.
+          </i18n-translate>
 
-        <api-ui start="Express Developer Tools" />
+          <api-ui start="Express Developer Tools" />
 
-        <i18n-translate p trim>
-          Example logic to use the all the Temple Express tools together
-          with Temple developer tools could look like the following code
-          that cases for 
-          <ide-code inline lang="js">{`development`}</ide-code> and 
-          <ide-code inline lang="js">{`production`}</ide-code> modes.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Example logic to use the all the Temple Express tools together
+            with Temple developer tools could look like the following code
+            that cases for 
+            <ide-code inline lang="js">{`development`}</ide-code> and 
+            <ide-code inline lang="js">{`production`}</ide-code> modes.
+          </i18n-translate>
 
-        <ide-code numbers trim detab={10} lang="js">{`
-          import { view, dev } from '@ossph/temple-express';
+          <ide-code numbers trim detab={12} lang="js" class="py-20">{`
+            import { view, dev } from '@ossph/temple-express';
 
-          //create temple compiler
-          const compiler = temple({ cwd: __dirname, minify: false });
-          //create express app
-          const app = express();
-          //set the view engine to temple
-          app.set('views', path.join(__dirname, 'pages'));
-          app.set('view engine', 'dtml');
+            //create temple compiler
+            const compiler = temple({ cwd: __dirname, minify: false });
+            //create express app
+            const app = express();
+            //set the view engine to temple
+            app.set('views', path.join(__dirname, 'pages'));
+            app.set('view engine', 'dtml');
 
-          //if production (live)
-          if (process.env.NODE_ENV === 'production') {
-            //let's use express' template engine feature
-            app.engine('dtml', view(compiler));
-            //...other production settings...
-          //if development mode
-          } else {
-            //get development middleware
-            const { router, view } = dev({ cwd: __dirname });
-            //use development middleware
-            app.use(router);
-            //let's use express' template engine feature
-            app.engine('dtml', view(compiler));
-          }
-        `}</ide-code>
+            //if production (live)
+            if (process.env.NODE_ENV === 'production') {
+              //let's use express' template engine feature
+              app.engine('dtml', view(compiler));
+              //...other production settings...
+            //if development mode
+            } else {
+              //get development middleware
+              const { router, view } = dev({ cwd: __dirname });
+              //use development middleware
+              app.use(router);
+              //let's use express' template engine feature
+              app.engine('dtml', view(compiler));
+            }
+          `}</ide-code>
 
-        <i18n-translate p trim>
-          And you can now case for development mode in 
-          <ide-code inline lang="js">{`src/page.dtml`}</ide-code>
-          like in the example below
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            And you can now case for development mode in 
+            <ide-code inline lang="js">{`src/page.dtml`}</ide-code>
+            like in the example below
+          </i18n-translate>
 
-        <ide-code numbers trim detab={10}>{`
-          <style>
-            /* ... */
-          </style>
-          <script>
-            import { env } from '@ossph/temple';
-            const { NODE_ENV } = env();
-          </script>
-          <html>
-            <head>
-              <!-- ... -->
-              <if true={NODE_ENV !== 'production'}>
-                <script src="/dev.js"></script>
-              </if>
-            </head>
-            <body>
-              <!-- ... -->
-            </body>
-          </html>
-        `}</ide-code>
+          <ide-code numbers trim detab={12} class="py-20">{`
+            <style>
+              /* ... */
+            </style>
+            <script>
+              import { env } from '@ossph/temple';
+              const { NODE_ENV } = env();
+            </script>
+            <html>
+              <head>
+                <!-- ... -->
+                <if true={NODE_ENV !== 'production'}>
+                  <script src="/dev.js"></script>
+                </if>
+              </head>
+              <body>
+                <!-- ... -->
+              </body>
+            </html>
+          `}</ide-code>
 
-        <i18n-translate p trim>
-          Check to see if the project files look like the example below.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Check to see if the project files look like the example below.
+          </i18n-translate>
 
-        <ide-app panel={410} title="With ExpressJS">
-          <div class="panel-head">
-            <div class="tabs">
-              <tui-tab class="tab active" group="express" selector="#index-ts">
-                src/index.ts
+          <ide-app height={410} title="With ExpressJS" class="py-20">
+            <app-head>
+              <div class="flex bd-h-333333 bd-solid bdx-0 bdt-0 bdl-1 scroll-x-auto pt-5 pl-5">
+                <tui-tab 
+                  on
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="express" 
+                  selector="#express-index-ts"
+                >
+                  src/index.ts
+                </tui-tab>
+                <tui-tab 
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="express" 
+                  selector="#express-page-dtml"
+                >
+                  src/page.dtml
+                </tui-tab>
+                <tui-tab 
+                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="express" 
+                  selector="#express-package-json"
+                >
+                  package.json
+                </tui-tab>
+              </div>
+            </app-head>
+            <app-left>
+              <h5 class="p-5">
+                <i class="fas fa-fw fa-chevron-down"></i>
+                <span>src</span>
+              </h5>
+              <tui-tab 
+                on
+                class="pl-15 pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted"  
+                group="express" 
+                selector="#express-index-ts"
+              >
+                <i class="fas fa-fw fa-file"></i>
+                index.ts
               </tui-tab>
-              <tui-tab class="tab" group="express" selector="#page-dtml">
-                src/page.dtml
+              <tui-tab 
+                class="pl-15 pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted" 
+                group="express" 
+                selector="#express-page-dtml"
+              >
+                <i class="fas fa-fw fa-file"></i>
+                page.dtml
               </tui-tab>
-              <tui-tab class="tab" group="express" selector="#package-json">
+              <tui-tab 
+                class="pt-10 block" 
+                active="tx-white"
+                inactive="tx-muted" 
+                group="express" 
+                selector="#express-package-json"
+              >
+                <i class="fas fa-fw fa-file"></i>
                 package.json
               </tui-tab>
-            </div>
-          </div>
-          <div class="panel-left">
-            <h5 class="folder">
-              <i class="fas fa-fw fa-chevron-down"></i>
-              <span>src</span>
-            </h5>
-            <tui-tab class="shift-1 block active" group="express" selector="#index-ts">
-              <i class="fas fa-fw fa-file"></i>
-              index.ts
-            </tui-tab>
-            <tui-tab class="shift-1 block" group="express" selector="#page-dtml">
-              <i class="fas fa-fw fa-file"></i>
-              page.dtml
-            </tui-tab>
-            <tui-tab class="block" group="express" selector="#package-json">
-              <i class="fas fa-fw fa-file"></i>
-              package.json
-            </tui-tab>
-          </div>
-          <div class="panel-main">
-            <main>
-              <ide-code id="index-ts" lang="js" numbers trim detab={16}>{`
+            </app-left>
+            <app-main>
+              <ide-code id="express-index-ts" lang="js" numbers trim detab={16}>{`
                 import path from 'path';
                 import express from 'express';
                 import temple, { cache } from '@ossph/temple/compiler';
@@ -1117,7 +1294,7 @@
                   console.log('HTTP server is running on http://localhost:3000');
                 });
               `}</ide-code>
-              <ide-code id="page-dtml" style="display:none" numbers trim detab={16}>{`
+              <ide-code id="express-page-dtml" style="display:none" numbers trim detab={16}>{`
                 <style>
                   @tailwind base;
                   @tailwind components;
@@ -1142,7 +1319,7 @@
                   </body>
                 </html>
               `}</ide-code>
-              <ide-code id="package-json" style="display:none" lang="js" numbers trim detab={16}>{`
+              <ide-code id="express-package-json" style="display:none" lang="js" numbers trim detab={16}>{`
                 {
                   "name": "my-project",
                   "version": "1.0.0",
@@ -1151,13 +1328,13 @@
                     "dev": "ts-node ./src/index.ts"
                   },
                   "dependencies": {
-                    "@ossph/temple": "^0.1.4",
-                    "@ossph/temple-express": "^0.1.4",
+                    "@ossph/temple": "^0.1.6",
+                    "@ossph/temple-express": "^0.1.6",
                     "express": "^4.19.2"
                   },
                   "devDependencies": {
-                    "@ossph/temple-dev": "^0.1.4",
-                    "@ossph/temple-tailwind": "^0.1.4",
+                    "@ossph/temple-dev": "^0.1.6",
+                    "@ossph/temple-tailwind": "^0.1.6",
                     "@types/express": "^4.17.21",
                     "@types/node": "^22.5.3",
                     "autoprefixer": "^10.4.20",
@@ -1168,104 +1345,106 @@
                   }
                 }
               `}</ide-code>
-            </main>
-          </div>
-        </ide-app>
+            </app-main>
+          </ide-app>
 
-        <i18n-translate p trim>
-          Re-run the following command in terminal to initialize the 
-          re-run your application using Express.
-        </i18n-translate>
-        <ide-app title="Terminal">
-          <ide-code lang="bash">
-            npx ts-node src/index.ts
-          </ide-code>
-        </ide-app>
-        <i18n-translate p trim>
-          Load 
-          <ide-code lang="js" inline>http://localhost:3000/</ide-code> 
-          in your browser. After loading you should see everything is 
-          exactly as it was, but you now benefit from using ExpressJS.
-        </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Re-run the following command in terminal to initialize the 
+            re-run your application using Express.
+          </i18n-translate>
+          <ide-app title="Terminal" class="py-20">
+            <ide-code lang="bash">
+              npx ts-node src/index.ts
+            </ide-code>
+          </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Load 
+            <ide-code lang="js" inline>http://localhost:3000/</ide-code> 
+            in your browser. After loading you should see everything is 
+            exactly as it was, but you now benefit from using ExpressJS.
+          </i18n-translate>
 
-        <h3>-- {_('Read On')} --</h3>
+          <h3 class="tx-t-1 tx-uppercase tx-22 pt-40 pb-20">
+            -- {_('Read On')} --
+          </h3>
 
-        <i18n-translate p trim>
-          To see other getting started examples with various frameworks,
-          you can check out the following project examples in the 
-          official repository.
-        </i18n-translate>
-        <ul>
-          <li>
-            <a target="_blank" href={`${examples}/with-fastify`}>
-              Fastify
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            To see other getting started examples with various frameworks,
+            you can check out the following project examples in the 
+            official repository.
+          </i18n-translate>
+          <ul>
+            <li class="py-5">
+              <a class="tx-t-1 tx-underline" target="_blank" href={`${examples}/with-fastify`}>
+                Fastify
+              </a>
+            </li>
+            <li class="py-5">
+              <a class="tx-t-1 tx-underline" target="_blank" href={`${examples}/with-hapi`}>
+                Hapi
+              </a>
+            </li>
+            <li class="py-5">
+              <a class="tx-t-1 tx-underline" target="_blank" href={`${examples}/with-koa`}>
+                Koa
+              </a>
+            </li>
+            <li class="py-5">
+              <a class="tx-t-1 tx-underline" target="_blank" href={`${examples}/with-nest`}>
+                NestJS
+              </a>
+            </li>
+            <li class="py-5">
+              <a class="tx-t-1 tx-underline" target="_blank" href={`${examples}/with-restify`}>
+                Restify
+              </a>
+            </li>
+            <li class="py-5">
+              <a class="tx-t-1 tx-underline" target="_blank" href={`${examples}/with-webpack`}>
+                Webpack
+              </a>
+            </li>
+          </ul> 
+          <i18n-translate p trim class="tx-lh-36 py-10">
+            Depending on how you plan to use Temple, you can also look at 
+            the following project setups.
+          </i18n-translate>
+          <ul>
+            <li class="py-5">
+              <a class="tx-t-1 tx-underline" href="/temple/docs/template-engine.html">
+                Template Engine
+              </a>
+            </li>
+            <li class="py-5">
+              <a class="tx-t-1 tx-underline" href="/temple/docs/single-page.html">
+                Single Page App
+              </a>
+            </li>
+            <li class="py-5">
+              <a class="tx-t-1 tx-underline" href="/temple/docs/static-site.html">
+                Static Site Generator
+              </a>
+            </li>
+            <li class="py-5">
+              <a class="tx-t-1 tx-underline" href="/temple/docs/component-publisher.html">
+                Web Component Publisher
+              </a>
+            </li>
+          </ul>
+          
+          <nav class="flex">
+            <a class="tx-primary py-40" href="/temple/docs/index.html">
+              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              {_('Documentation')}
             </a>
-          </li>
-          <li>
-            <a target="_blank" href={`${examples}/with-hapi`}>
-              Hapi
+            <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/markup-syntax.html">
+              {_('Markup Syntax')}
+              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
             </a>
-          </li>
-          <li>
-            <a target="_blank" href={`${examples}/with-koa`}>
-              Koa
-            </a>
-          </li>
-          <li>
-            <a target="_blank" href={`${examples}/with-nest`}>
-              NestJS
-            </a>
-          </li>
-          <li>
-            <a target="_blank" href={`${examples}/with-restify`}>
-              Restify
-            </a>
-          </li>
-          <li>
-            <a target="_blank" href={`${examples}/with-webpack`}>
-              Webpack
-            </a>
-          </li>
-        </ul> 
-        <i18n-translate p trim>
-          Depending on how you plan to use Temple, you can also look at 
-          the following project setups.
-        </i18n-translate>
-        <ul>
-          <li>
-            <a href="/temple/docs/template-engine.html">
-              Template Engine
-            </a>
-          </li>
-          <li>
-            <a href="/temple/docs/single-page.html">
-              Single Page App
-            </a>
-          </li>
-          <li>
-            <a href="/temple/docs/static-site.html">
-              Static Site Generator
-            </a>
-          </li>
-          <li>
-            <a href="/temple/docs/component-publisher.html">
-              Web Component Publisher
-            </a>
-          </li>
-        </ul>
-        
-        <nav class="pager">
-          <a class="prev" href="/temple/docs/index.html">
-            <i class="fas fa-fw fa-chevron-left"></i>
-            {_('Documentation')}
-          </a>
-          <a class="next" href="/temple/docs/markup-syntax.html">
-            {_('Markup Syntax')}
-            <i class="fas fa-fw fa-chevron-right"></i>
-          </a>
-        </nav>
-      </div>
-      <footer class="foot"></footer>
-    </panel-main>
+          </nav>
+          <footer class="foot"></footer>
+        </api-docs>
+      </panel-main>
+    </panel-layout>
   </body>
 </html>

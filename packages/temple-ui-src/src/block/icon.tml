@@ -1,0 +1,10 @@
+<script>
+  import { props, classlist, children } from '@ossph/temple';
+  const { name, block = false } = props();
+  classlist().add(
+    'fa', 
+    'fa-fw', 
+    `fa-${name}`, 
+    block ? 'block' : 'inline-block'
+  );
+</script>

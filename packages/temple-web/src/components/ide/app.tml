@@ -1,0 +1,16 @@
+<script>
+  import { props, children } from '@ossph/temple';
+  const { title, height } = props();
+  const style = height ? `height:${height}px` : '';
+</script>
+<div class="bd-rad-curved scroll-hidden shadow-0-0-10-0-0-0-5">
+  <div class="relative flex flex-center-y gap-10 p-10 bg-t-1 tx-c-999999 tx-16">
+    <span class="bg-h-999999 pill h-10 w-10"></span>
+    <span class="bg-h-999999 pill h-10 w-10"></span>
+    <span class="bg-h-999999 pill h-10 w-10"></span>
+    <span class="flex flex-center h-full w-full absolute top-0 left-0">
+      {title}
+    </span>
+  </div>
+  <div class="bg-black tx-t-1 relative" {style}>{children()}</div>
+</div>

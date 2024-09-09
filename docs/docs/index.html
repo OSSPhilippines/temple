@@ -18,151 +18,208 @@
   <link rel="favicon" href="/temple/favicon.ico" />
   <link rel="shortcut icon" type="image/png" href="/temple/favicon.png" />
   <link rel="stylesheet" type="text/css" href="/temple/styles/fontawesome/all.css" />
-  <link rel="stylesheet" type="text/css" href="/temple/styles/theme.css" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/global.css" />
   <link rel="stylesheet" type="text/css" href="/temple/build/client/3e6a90cc5da3e950a902.css" />
   
   <script data-app="eyJwcm9wcyI6eyJ0aXRsZSI6IlRlbXBsZSBEb2N1bWVudGF0aW9uIn0sImVudiI6eyJCVUlMRF9JRCI6IjNlNmE5MGNjNWRhM2U5NTBhOTAyIn19" src="/temple/build/client/3e6a90cc5da3e950a902.js"></script>
   
 </head>
-  <body class="dark panel with-head with-left">
-    <header class="head panel-head">
-  <i class="menu fas fa-fw fa-bars" ></i>
-  <a href="/temple">
-    <img src="/temple/temple-icon.png" alt="Temple Logo" />
-  </a>
-  <h3><a class="tx-white" href="/temple">Temple</a></h3>
-  <nav>
+  <body class="dark bg-t-0 tx-t1 arial">
+    <panel-layout>
+      <panel-head><menu class="flex flex-center-y px-20 py-15 m-0 bg-t-1">
+  
+    <i class="fas fa-fw fa-bars cursor-pointer py-5 pr-10 none md-inline-block tx-t-1" ></i>
+    <div class="flex-grow"></div>
+  
+  <nav class="flex flex-center-y">
     <a class="tx-white" href="/temple/docs/index.html">Docs</a>
-    <a class="github" href="https://github.com/OSSPhilippines/temple" target="_blank">
+    <a class="tx-t-1 tx-5xl ml-10" href="https://github.com/OSSPhilippines/temple" target="_blank">
       <i class="fab fa-github"></i>
     </a>
-    <a class="npm" href="https://www.npmjs.com/package/@ossph/temple" target="_blank">
+    <a class="bg-h-cb3837 pill tx-t-1 tx-lg ml-5 p-5 tx-center" href="https://www.npmjs.com/package/@ossph/temple" target="_blank">
       <i class="fab fa-npm text-white"></i>
     </a>
-    <a class="discord" href="https://discord.gg/open-source-software-ph-905496362982981723" target="_blank">
+    <a class="bg-h-7289da pill tx-t-1 tx-lg ml-5 p-5 tx-center" href="https://discord.gg/open-source-software-ph-905496362982981723" target="_blank">
       <i class="fab fa-discord text-white"></i>
     </a>
   </nav>
+</menu></panel-head>
+      <panel-left><header class="flex flex-center-y bg-t-2 py-15 pr-5 pl-10">
+  <a href="/temple">
+    <img class="h-26 mr-10" src="/temple/temple-icon.png" alt="Temple Logo" />
+  </a>
+  <h3 class="flex-grow m-0 tx-uppercase">
+    <a class="tx-white" href="/temple">Temple</a>
+  </h3>
+  <i class="fas fa-fw fa-chevron-left cursor-pointer none md-inline-block" ></i>
 </header>
-    <aside class="left panel-left">
-  <header>
-    <a href="/temple">
-      <img src="/temple/temple-icon.png" alt="Temple Logo" />
+<nav class="bg-t-1 scroll-auto h-calc-full-60">
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-0 pt-20 pb-10 pl-10 tx-uppercase">
+    Introduction
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10 tx-bold" href="/temple/docs/index.html">
+      Documentation
     </a>
-    <h3><a class="tx-white" href="/temple">Temple</a></h3>
-    <i class="toggle fas fa-fw fa-chevron-left" ></i>
-  </header>
-  <nav>
-    <h6>Introduction</h6>
-    <a href="/temple/docs/index.html">Documentation</a>
-    <a href="/temple/docs/getting-started.html">Getting Started</a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/getting-started.html">
+      Getting Started
+    </a>
+  
 
-    <h6>Features</h6>
-    <a href="/temple/docs/markup-syntax.html">Markup Syntax</a>
-    <a href="/temple/docs/state-management.html">State Management</a>
-    <a href="/temple/docs/component-strategy.html">Component Strategy</a>
-    <a href="/temple/docs/compiler-api.html">Compiler API</a>
-    <a href="/temple/docs/client-api.html">Client API</a>
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-20 pt-20 pb-10 pl-10 tx-uppercase">
+    Features
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/markup-syntax.html">
+      Markup Syntax
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/state-management.html">
+      State Management
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/component-strategy.html">
+      Component Strategy
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/compiler-api.html">
+      Compiler API
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/client-api.html">
+      Client API
+    </a>
+  
 
-    <h6>Usage</h6>
-    <a href="/temple/docs/template-engine.html">Template Engine</a>
-    <a href="/temple/docs/single-page.html">Single Page App</a>
-    <a href="/temple/docs/static-site.html">Static Site Generator</a>
-    <a href="/temple/docs/component-publisher.html">Component Publisher</a>
-    <a href="/temple/docs/developer-tools.html">Developer Tools</a>
-  </nav>
-</aside>
-    <panel-main class="panel-main">
-      <div class="docs container">
-        <h1>Documentation</h1>
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-20 pt-20 pb-10 pl-10 tx-uppercase">
+    Usage
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/template-engine.html">
+      Template Engine
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/single-page.html">
+      Single Page App
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/static-site.html">
+      Static Site Generator
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/component-publisher.html">
+      Component Publisher
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10 mb-100" href="/temple/docs/developer-tools.html">
+      Developer Tools
+    </a>
+  
+</nav></panel-left>
+      <panel-main>
+        <api-docs>
+          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+            Documentation
+          </h1>
 
-        <i18n-translate p trim>
-          Temple is a template engine with a built-in compiler that 
-          generates HTML markup, web components and support reactivity. 
-        </i18n-translate>
-        <i18n-translate p trim>
-          Like React and Svelte, Temple is a modern approach to building
-          front-end code addressing state management and reactivity. 
-          Unlike React and Svelte that focus on keeping the developer 
-          experience mostly on the front-end, Temple focuses on being 
-          a modern templating solution for server side frameworks.
-        </i18n-translate>
-        <i18n-translate p trim>
-          Temple can be used as a template engine on the server side, 
-          as a site generator to make static websites and single page 
-          applications, or can be used to publish native HTML5 web 
-          components.
-        </i18n-translate>
-        <i18n-translate p trim>
-          Temple sticks closely to the classic web development model of 
-          HTML, CSS, and JS, just adding a few extensions to HTML and 
-          JavaScript. It arguably has fewer concepts and tools to learn 
-          than some of the other framework options.
-        </i18n-translate>
-        <ide-app title="Basic Example">
-          <div class="split-view">
-            <ide-code numbers trim >
-              &lt;style&gt;
-                h1 { font-weight: bold; }
-              &lt;/style&gt;
-              &lt;script&gt;
-                const name = 'world';
-              &lt;/script&gt;
-              &lt;h1&gt;Hello {name}!&lt;/h1&gt;
-            </ide-code>
-            <ide-preview>
-              <div>
-                <h1>Hello world!</h1>
-              </div>
-            </ide-preview>
-          </div>
-        </ide-app>
-        <i18n-translate p trim>
-          At it's core, a temple file is a special template file that 
-          allows HTML, JavaScript, CSS and importing of components and 
-          templates. All of which are transpiled to TypeScript or 
-          JavaScript source code.
-        </i18n-translate>
-        <ide-app title="Transpiler Example">
-          <div class="split-view">
-            <ide-code numbers ltrim >
-              &lt;style&gt;
-                h1 { font-weight: bold; }
-              &lt;/style&gt;
-              &lt;script&gt;
-                import { props } from '@ossph/temple';
-                const { name } = props();
-              &lt;/script&gt;
-              &lt;h1&gt;Hello {name}!!&lt;/h1&gt;
-              
-              
-
-            </ide-code>
-            <ide-code class="div" lang="js" trim >
-              import { props } from '@ossph/temple';
-              export default class Hello extends TempleComponent {
-                styles() {
-                  return 'h1 { font-weight: bold; }';
-                }
-                template() {
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Temple is a template engine with a built-in compiler that 
+            generates HTML markup, web components and support reactivity. 
+          </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Like React and Svelte, Temple is a modern approach to building
+            front-end code addressing state management and reactivity. 
+            Unlike React and Svelte that focus on keeping the developer 
+            experience mostly on the front-end, Temple focuses on being 
+            a modern templating solution for server side frameworks.
+          </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Temple can be used as a template engine on the server side, 
+            as a site generator to make static websites and single page 
+            applications, or can be used to publish native HTML5 web 
+            components.
+          </i18n-translate>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            Temple sticks closely to the classic web development model of 
+            HTML, CSS, and JS, just adding a few extensions to HTML and 
+            JavaScript. It arguably has fewer concepts and tools to learn 
+            than some of the other framework options.
+          </i18n-translate>
+          <ide-app title="Basic Example" class="py-20">
+            <div class="flex bg-h-EFEFEF h-full lg-block">
+              <ide-code class="basis-half" numbers trim >
+                &lt;style&gt;
+                  h1 { font-weight: bold; }
+                &lt;/style&gt;
+                &lt;script&gt;
+                  const name = 'world';
+                &lt;/script&gt;
+                &lt;h1&gt;Hello {name}!&lt;/h1&gt;
+              </ide-code>
+              <ide-preview class="bg-white basis-half h-140 lg-h-auto">
+                <div>
+                  <h1>Hello world!</h1>
+                </div>
+              </ide-preview>
+            </div>
+          </ide-app>
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            At it's core, a temple file is a special template file that 
+            allows HTML, JavaScript, CSS and importing of components and 
+            templates. All of which are transpiled to TypeScript or 
+            JavaScript source code.
+          </i18n-translate>
+          <ide-app title="Transpiler Example" class="py-20">
+            <div class="flex bg-h-EFEFEF h-full lg-block">
+              <ide-code class="basis-half scroll-auto" scroll numbers ltrim >
+                &lt;style&gt;
+                  h1 { font-weight: bold; }
+                &lt;/style&gt;
+                &lt;script&gt;
+                  import { props } from '@ossph/temple';
                   const { name } = props();
-                  return () =&gt; [
-                    TempleRegistry.createElement('h1', null, `Hello ${name}`)
-                  ]
+                &lt;/script&gt;
+                &lt;h1&gt;Hello {name}!!&lt;/h1&gt;
+                
+                
+
+              </ide-code>
+              <ide-code class="basis-half h-full bd-t-1 bd-solid bdy-0 bdl-1 bdr-0 lg-bd-0 lg-h-auto scroll-auto" lang="js" trim scroll >
+                import { props } from '@ossph/temple';
+                export default class Hello extends TempleComponent {
+                  styles() {
+                    return 'h1 { font-weight: bold; }';
+                  }
+                  template() {
+                    const { name } = props();
+                    return () =&gt; [
+                      TempleRegistry.createElement('h1', null, `Hello ${name}`)
+                    ]
+                  }
                 }
-              }
-            </ide-code>
-          </div>
-        </ide-app>
-        
-        <nav class="pager">
-          <a class="next" href="/temple/docs/getting-started.html">
-            Getting Started
-            <i class="fas fa-fw fa-chevron-right"></i>
-          </a>
-        </nav>
-      </div>
-      <footer class="foot"></footer>
-    </panel-main>
+              </ide-code>
+            </div>
+          </ide-app>
+
+          <nav class="flex">
+            <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/getting-started.html">
+              Getting Started
+              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
+            </a>
+          </nav>
+          <footer class="foot"></footer>
+        </api-docs>
+      </panel-main>
+    </panel-layout>
   </body>
 </html>

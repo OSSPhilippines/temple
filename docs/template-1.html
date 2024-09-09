@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Temple - The reactive web component template engine.</title>
+  <meta name="description" content="Temple is a template engine that generates web components and support reactivity." />
+  <meta property="og:title" content="Temple - The reactive web component template engine." />
+  <meta property="og:description" content="Temple is a template engine that generates web components and support reactivity." />
+  <meta property="og:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
+  <meta property="og:url" content="https://ossphilippines.github.io/temple/temple/panel.html" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@OSSPhilippines" />
+  <meta name="twitter:title" content="Temple - The reactive web component template engine." />
+  <meta name="twitter:description" content="Temple is a template engine that generates web components and support reactivity." />
+  <meta name="twitter:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
+  <link rel="favicon" href="/temple/favicon.ico" />
+  <link rel="shortcut icon" type="image/png" href="/temple/favicon.png" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/fontawesome/all.css" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/global.css" />
+  <link rel="stylesheet" type="text/css" href="/temple/build/client/a52462b5d1f8879f7b73.css" />
+  
+  <script data-app="eyJwcm9wcyI6eyJ0aXRsZSI6IlRlbXBsZSBEb2N1bWVudGF0aW9uIn0sImVudiI6eyJCVUlMRF9JRCI6ImE1MjQ2MmI1ZDFmODg3OWY3YjczIn19" src="/temple/build/client/a52462b5d1f8879f7b73.js"></script>
+  
+</head>
+  <body class="dark bg-t-0 tx-t1 arial">
+    <panel-layout>
+      <panel-head><menu class="flex flex-center-y px-20 py-15 m-0 bg-t-1">
+  
+    <i class="fas fa-fw fa-bars cursor-pointer py-5 pr-10 none md-inline-block tx-t-1" ></i>
+    <div class="flex-grow"></div>
+  
+  <nav class="flex flex-center-y">
+    <a class="tx-white" href="/temple/docs/index.html">Docs</a>
+    <a class="tx-t-1 tx-5xl ml-10" href="https://github.com/OSSPhilippines/temple" target="_blank">
+      <i class="fab fa-github"></i>
+    </a>
+    <a class="bg-h-cb3837 pill tx-t-1 tx-lg ml-5 p-5 tx-center" href="https://www.npmjs.com/package/@ossph/temple" target="_blank">
+      <i class="fab fa-npm text-white"></i>
+    </a>
+    <a class="bg-h-7289da pill tx-t-1 tx-lg ml-5 p-5 tx-center" href="https://discord.gg/open-source-software-ph-905496362982981723" target="_blank">
+      <i class="fab fa-discord text-white"></i>
+    </a>
+  </nav>
+</menu></panel-head>
+      <panel-left><header class="flex flex-center-y bg-t-2 py-15 pr-5 pl-10">
+  <a href="/temple">
+    <img class="h-26 mr-10" src="/temple/temple-icon.png" alt="Temple Logo" />
+  </a>
+  <h3 class="flex-grow m-0 tx-uppercase">
+    <a class="tx-white" href="/temple">Temple</a>
+  </h3>
+  <i class="fas fa-fw fa-chevron-left cursor-pointer none md-inline-block" ></i>
+</header>
+<nav class="bg-t-1 scroll-auto h-calc-full-60">
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-0 pt-20 pb-10 pl-10 tx-uppercase">
+    Introduction
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/index.html">
+      Documentation
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/getting-started.html">
+      Getting Started
+    </a>
+  
+
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-20 pt-20 pb-10 pl-10 tx-uppercase">
+    Features
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/markup-syntax.html">
+      Markup Syntax
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/state-management.html">
+      State Management
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/component-strategy.html">
+      Component Strategy
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/compiler-api.html">
+      Compiler API
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/client-api.html">
+      Client API
+    </a>
+  
+
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-20 pt-20 pb-10 pl-10 tx-uppercase">
+    Usage
+  </h6>
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/template-engine.html">
+      Template Engine
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/single-page.html">
+      Single Page App
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/static-site.html">
+      Static Site Generator
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10" href="/temple/docs/component-publisher.html">
+      Component Publisher
+    </a>
+  
+  
+    <a class="block tx-t-1 py-10 pl-10 mb-100" href="/temple/docs/developer-tools.html">
+      Developer Tools
+    </a>
+  
+</nav></panel-left>
+      <panel-right>
+        <menu class="m-0 px-10 py-20 h-calc-full-40 bg-t-2 scroll-auto">
+          <h6 class="tx-muted tx-14 mb-0 mt-0 pb-10 tx-uppercase">
+            On this page
+          </h6>
+          <nav class="tx-14 tx-lh-32">
+            <a class="block tx-t-0" href="#http">
+              1. Add HTTP
+            </a>
+            <a class="block tx-t-0" href="#develop">
+              2. Add Dev Tools
+            </a>
+            <a class="block tx-t-0" href="#cache">
+              3. Add File Cache
+            </a>
+            <a class="block tx-t-0" href="#tailwind">
+              4. Add TailwindCSS
+            </a>
+            <a class="block tx-t-0" href="#express">
+              5. Add ExpressJS
+            </a>
+            <nav class="pl-20">
+              <a class="block tx-t-1" href="#http">
+                1. Add HTTP
+              </a>
+              <a class="block tx-t-1" href="#develop">
+                2. Add Dev Tools
+              </a>
+              <a class="block tx-t-1" href="#cache">
+                3. Add File Cache
+              </a>
+              <a class="block tx-t-1" href="#tailwind">
+                4. Add TailwindCSS
+              </a>
+              <a class="block tx-t-1" href="#express">
+                5. Add ExpressJS
+              </a>
+            </nav>
+          </nav>
+        </menu>
+      </panel-right>
+      <panel-main>
+        <api-docs>
+          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+            Getting Started
+          </h1>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            In most cases Temple will be used to render a front end from 
+            a server framework. In this example, we will use the native
+            NodeJS HTTP module to create a server that renders a page
+            using Temple. Start by replacing the 
+            <ide-code inline>src/index.ts</ide-code>
+            file with the following code. 
+            <ide-code inline lang="js">function() {}</ide-code>
+          </i18n-translate>
+
+          <ide-app title="Terminal" class="py-20">
+            <ide-code lang="bash">
+              npm init -y && npm install --save @ossph/temple && npm install --save-dev ts-node typescript @types/node
+            </ide-code>
+          </ide-app>
+
+          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+            1. Add HTTP
+          </h2>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            In most cases Temple will be used to render a front end from 
+            a server framework. In this example, we will use the native
+            NodeJS HTTP module to create a server that renders a page
+            using Temple. Start by replacing the 
+            <ide-code inline>src/index.ts</ide-code>
+            file with the following code. 
+            <ide-code inline lang="js">function() {}</ide-code>
+          </i18n-translate>
+
+          <ide-app title="src/index.ts" class="py-20">
+            <ide-code lang="js" numbers trim >
+              import temple from '@ossph/temple/compiler';
+              // make a temple compiler
+              const compiler = temple();
+              // render HTML
+              compiler.render('./src/page.dtml').then(console.log);
+              // render CSS
+              compiler.styles('./src/page.dtml').then(console.log);
+              // render JS
+              compiler.client('./src/page.dtml').then(console.log);
+            </ide-code>
+          </ide-app>
+
+          <h3 class="tx-t-1 tx-uppercase tx-22 pt-40 pb-20">
+            1. Add HTTP
+          </h3>
+
+          <i18n-translate p trim class="tx-lh-36 py-20">
+            In most cases Temple will be used to render a front end from 
+            a server framework. In this example, we will use the native
+            NodeJS HTTP module to create a server that renders a page
+            using Temple. Start by replacing the 
+            <ide-code inline>src/index.ts</ide-code>
+            file with the following code. 
+            <ide-code inline lang="js">function() {}</ide-code>
+          </i18n-translate>
+
+          <ide-app title="Basic Example" class="py-20">
+            <div class="flex bg-h-EFEFEF h-full lg-block">
+              <ide-code class="basis-half" numbers trim >
+                &lt;style&gt;
+                  h1 { font-weight: bold; }
+                &lt;/style&gt;
+                &lt;script&gt;
+                  const name = 'world';
+                &lt;/script&gt;
+                &lt;h1&gt;Hello {name}!&lt;/h1&gt;
+              </ide-code>
+              <ide-preview class="bg-white basis-half h-140 lg-h-auto">
+                <h1>Hello world!</h1>
+              </ide-preview>
+            </div>
+          </ide-app>
+
+          <tui-alert solid curved info class="py-20 tx-lh-24">
+            <i class="fas fa-info-circle"></i>
+            <strong>Recommended:</strong>
+            Download the Temple editor plugin at the <a target="_blank" class="tx-white tx-underline" href="https://marketplace.visualstudio.com/items?itemName=ossph.temple-language">Visual Studio Marketplace</a>.
+          </tui-alert>
+
+          <ide-app  title="With NodeJS HTTP">
+            <app-head>
+              <div class="flex scroll-x-auto pt-5 pl-5">
+                <tui-tab on class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0" active="bg-black tx-white" inactive="bg-t-1 tx-muted" group="http" selector="#index-ts">
+                  src/index.ts
+                </tui-tab>
+                <tui-tab class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0" active="bg-black tx-white" inactive="bg-t-1 tx-muted" group="http" selector="#page-dtml">
+                  src/page.dtml
+                </tui-tab>
+                <tui-tab class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0" active="bg-black tx-white" inactive="bg-t-1 tx-muted" group="http" selector="#package-json">
+                  package.json
+                </tui-tab>
+              </div>
+            </app-head>
+            <app-left>
+              <h5 class="p-5">
+                <i class="fas fa-fw fa-chevron-down"></i>
+                <span>src</span>
+              </h5>
+              <tui-tab on class="pl-15 pt-10 block" active="tx-white" inactive="tx-muted" group="http" selector="#index-ts">
+                <i class="fas fa-fw fa-file"></i>
+                index.ts
+              </tui-tab>
+              <tui-tab class="pl-15 pt-10 block" active="tx-white" inactive="tx-muted" group="http" selector="#page-dtml">
+                <i class="fas fa-fw fa-file"></i>
+                page.dtml
+              </tui-tab>
+              <tui-tab class="pt-10 block" active="tx-white" inactive="tx-muted" group="http" selector="#package-json">
+                <i class="fas fa-fw fa-file"></i>
+                package.json
+              </tui-tab>
+            </app-left>
+            <app-main>
+              <ide-code id="index-ts" lang="js" numbers trim >
+                import http from 'http';
+                import temple from '@ossph/temple/compiler';
+
+                // create temple compiler
+                const compiler = temple();
+                // create http server
+                const server = http.createServer(async (req, res) =&gt; {
+                  // if build asset...
+                  if (req.url?.startsWith('/build/')) {
+                    // get filename ie. abc123.js
+                    const filename = req.url.substring(7);
+                    // get asset
+                    const { type, content } = await compiler.asset(filename);
+                    // send response
+                    res.writeHead(200, { 'Content-Type': type });
+                    return res.end(content);
+                  // if home page
+                  } else if (req.url === '/') {
+                    // render and send response
+                    res.writeHead(200, { 'Content-Type': 'text/html' });
+                    return res.end(await compiler.render('./src/page.dtml', {
+                      title: 'Hello World'
+                    }));
+                  }
+                });
+                // listen on port 3000
+                server.listen(3000);
+              </ide-code>
+              <ide-code id="page-dtml" style="display:none" numbers trim >
+                &lt;style&gt;
+                  .center { text-align: center; }
+                &lt;/style&gt;
+                &lt;script&gt;
+                  import { env, props } from '@ossph/temple';
+                  const { BUILD_ID, APP_DATA } = env();
+                  const { title } = props();
+                &lt;/script&gt;
+                &lt;html&gt;
+                  &lt;head&gt;
+                    &lt;title&gt;{title}&lt;/title&gt;
+                    &lt;link rel="stylesheet" type="text/css" href={`/build/${BUILD_ID}.css`} /&gt;
+                    &lt;script data-app={APP_DATA} src={`/build/${BUILD_ID}.js`}&gt;&lt;/script&gt;
+                  &lt;/head&gt;
+                  &lt;body&gt;
+                    &lt;h1 class="center"&gt;{title}&lt;/h1&gt;
+                  &lt;/body&gt;
+                &lt;/html&gt;
+              </ide-code>
+              <ide-code id="package-json" style="display:none" lang="js" numbers trim >
+                {
+                  "name": "my-project",
+                  "version": "1.0.0",
+                  "private": true,
+                  "scripts": {
+                    "dev": "ts-node ./src/index.ts"
+                  },
+                  "dependencies": {
+                    "@ossph/temple": "0.1.6"
+                  },
+                  "devDependencies": {
+                    "@types/node": "22.1.0",
+                    "ts-node": "10.9.2",
+                    "typescript": "5.5.4"
+                  }
+                }
+              </ide-code>
+            </app-main>
+          </ide-app>
+
+          <api-ui></api-ui>
+
+          <nav class="flex">
+            <a class="tx-primary py-40" href="/temple/docs/getting-started.html">
+              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              Getting Started
+            </a>
+            <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/getting-started.html">
+              Getting Started
+              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
+            </a>
+          </nav>
+        </api-docs>
+      </panel-main>
+    </panel-layout>
+  </body>
+</html>

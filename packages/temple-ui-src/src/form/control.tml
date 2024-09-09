@@ -1,36 +1,13 @@
-<style>
-:host {
-  --error: #DC3545;
-}
-
-.label {
-  display: block;
-}
-
-.error {
-  color: var(--error);
-}
-</style>
 <script>
-  import { props, classnames, children } from '@ossph/temple';
+  import { props, classlist, children } from '@ossph/temple';
   // Separate component related props from field attributes
-  const {   
-    label, 
-    error, 
-    ...atributes
-  } = props();
-
-  const classNames = ['frui-control'];
-  if (className) {
-    classNames.push(className);
-  }
+  const { label, error } = props();
+  classlist().add('block');
 </script>
-<div className={classnames()} {...atributes}>
-  <if true={!!label}>
-    <label class="label">{label}</label>
-  </if>
-  <div>{children}</div>
-  <if true={!!error && error?.length > 0}>
-    <div class="error">{error}</div>
-  </if>
-</div>
+<if true={!!label}>
+  <label class="block">{label}</label>
+</if>
+<div>{children}</div>
+<if true={!!error && error?.length > 0}>
+  <div class="tx-error">{error}</div>
+</if>
