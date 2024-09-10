@@ -1,6 +1,0 @@
-<link rel="import" type="component" href="./icon.tml" name="block-icon" />
-<script>
-  import { props } from '@ossph/temple';
-  const { block = false } = props();
-</script>
-<block-icon {block} name="spinner" class="tui-loader" />

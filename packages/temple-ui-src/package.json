@@ -3,17 +3,11 @@
   "version": "0.1.6",
   "private": true,
   "scripts": {
-    "build": "yarn build:tsc && yarn build:block && yarn build:assets && yarn build:files && yarn build:field && yarn build:form && yarn build:format && yarn build:package && yarn build:panel && yarn build:popup && yarn build:table",
-    "build:assets": "cp -rf ./src/assets ../temple-ui",
-    "build:block": "cp -rf ./src/block ../temple-ui",
+    "build": "yarn build:tsc && yarn build:styles && yarn build:ui && yarn build:files && yarn build:package",
     "build:files": "cp README.md LICENSE ../temple-ui",
-    "build:field": "cp -rf ./src/field ../temple-ui",
-    "build:form": "cp -rf ./src/form ../temple-ui",
-    "build:format": "cp -rf ./src/format ../temple-ui",
     "build:package": "cp ./package.live.json ../temple-ui/package.json",
-    "build:panel": "cp -rf ./src/panel ../temple-ui",
-    "build:popup": "cp -rf ./src/popup ../temple-ui",
-    "build:table": "cp -rf ./src/table ../temple-ui",
+    "build:styles": "cp -rf ./src/styles ../temple-ui",
+    "build:ui": "cp -rf ./src/components/ ../temple-ui/",
     "build:tsc": "tsc"
   },
   "devDependencies": {

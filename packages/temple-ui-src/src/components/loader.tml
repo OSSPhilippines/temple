@@ -1,0 +1,54 @@
+<script>
+  import { props, classlist } from '@ossph/temple';
+  const { 
+    color,
+    speed = 1000,
+    size = 20, 
+    thickness = 2,
+    slice = 0,
+    dotted = false, 
+    dashed = false ,
+    info,
+    warning,
+    success,
+    error,
+    muted,
+    primary,
+    secondary
+  } = props();
+  classlist().add('inline-block', 'inline-block', 'mr-5');
+  const styles = [
+    `width: ${size}px`, 
+    `height: ${size}px`,
+    `border-width: ${thickness}px`,
+    `border-style: ${dotted ? 'dotted' : dashed ? 'dashed' : 'solid'}`,
+    `animation-duration: ${speed}ms`,
+  ];
+  if (color) {
+    styles.push(`border-color: ${color}`);
+  } else if (info) {
+    styles.push(`border-color: var(--info)`);
+  } else if (warning) {
+    styles.push(`border-color: var(--warning)`);
+  } else if (success) {
+    styles.push(`border-color: var(--success)`);
+  } else if (error) {
+    styles.push(`border-color: var(--error)`);
+  } else if (muted) {
+    styles.push(`border-color: var(--muted)`);
+  } else if (primary) {
+    styles.push(`border-color: var(--primary)`);
+  } else if (secondary) {
+    styles.push(`border-color: var(--secondary)`);
+  }
+  if (slice > 0) {
+    styles.push(`border-right-color: transparent`);
+  } 
+  if (slice > 1) {
+    styles.push(`border-bottom-color: transparent`);
+  } 
+  if (slice > 2) {
+    styles.push(`border-left-color: transparent`);
+  }
+</script>
+<i class="tui-loader" style={styles.join(';')}></i>

@@ -79,6 +79,8 @@
     button.classList.add('bd-solid', 'bd-thin');
     if (layout === 'outline') {
       button.classList.add('bg-white');
+    } else {
+      button.classList.add('bg-none');
     }
     if (color) {
       button.style.color = color;
@@ -99,7 +101,7 @@
       button.classList.add('bd-secondary', 'tx-secondary');
     }
   } else {
-    button.classList.add('tx-white');
+    button.classList.add('bd-0', 'tx-white');
     if (color) {
       button.style.backgroundColor = color;
     } else if (info) {
