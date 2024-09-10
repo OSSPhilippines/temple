@@ -1,6 +1,0 @@
-<script>
-  import { children } from '@ossph/temple';
-</script>
-<header class="absolute top-0 left-150 right-0 h-45 bg-t-0">
-  {children()}
-</header>

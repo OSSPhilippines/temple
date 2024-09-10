@@ -1,26 +1,26 @@
 <link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
 <link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/layout.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
 <link rel="import" type="component" href="@ossph/temple-ui/panel/head.tml" name="panel-head" />
 <link rel="import" type="component" href="@ossph/temple-ui/panel/left.tml" name="panel-left" />
 <link rel="import" type="component" href="@ossph/temple-ui/panel/right.tml" name="panel-right" />
 <link rel="import" type="component" href="@ossph/temple-ui/panel/main.tml" name="panel-main" />
-<link rel="import" type="component" href="@ossph/temple-ui/block/alert.tml" name="tui-alert" />
+<link rel="import" type="component" href="@ossph/temple-ui/alert.tml" name="tui-alert" />
 <link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
 <link rel="import" type="component" href="@/components/ide/app.tml" name="ide-app" />
 <link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
 <link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
 <style>
+  @tui theme;
   @tui reset;
   @tui fouc-opacity;
-  @tui theme;
-  @tui block;
+  @tui default-block;
   @tui utilities;
 </style>
 <script>
   import { env } from '@ossph/temple';
-  import { _ } from '@/modules/i18n';
+  import { _ } from '@/components/i18n';
 
   const url = '/docs/markup-syntax.html';
   const title = _('Markup Syntax - Temple reactive web component template engine.');
@@ -31,7 +31,7 @@
 </script>
 <html>
   <html-head />
-  <body class="dark bg-t-0 tx-t1 arial">
+  <body class="dark bg-t-0 tx-t-1 arial">
     <panel-layout>
       <panel-head><html-header /></panel-head>
       <panel-left><html-aside /></panel-left>
@@ -106,8 +106,8 @@
             <ide-code class="scroll-auto" numbers trim detab={14}>{`
               <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/prism.min.css" />
               <link rel="stylesheet" type="text/css" href="/styles/layout.css" />
-              <link rel="import" type="template" href="@/modules/html-head.tml" />
-              <link rel="import" type="component" href="@/modules/i18n/translate.tml" name="i18n-translate" />
+              <link rel="import" type="template" href="@/components/html-head.tml" />
+              <link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
 
               <style>
                 /* styles go here */

@@ -1,4 +1,4 @@
-<link rel="import" type="component" href="@/modules/ide/code.tml" name="api-ide-code" />
+<link rel="import" type="component" href="@/components/ide/code.tml" name="api-ide-code" />
 <script>
   import { signal, props, classlist } from '@ossph/temple';
   import types from './types.json';
@@ -54,7 +54,7 @@
               </td>
               <if true={types[prop.type]}>
                 <td class="tx-top tx-nowrap bd-solid bd-t-2 bdx-0 bdb-0 bdt-1 p-10">
-                  <a data-type={prop.type} click=next>
+                  <a class="tx-underline tx-info cursor-pointer" data-type={prop.type} click=next>
                     {prop.type}
                   </a>{prop.list ? '[]' :''}
                 </td>
@@ -70,7 +70,7 @@
                     <if true={index > 0}>, </if>
                     {arg.name}: 
                     <if true={types[arg.type]}>
-                      <a data-type={arg.type} click=next>
+                      <a class="tx-underline tx-info cursor-pointer" data-type={arg.type} click=next>
                         {arg.type}
                       </a>{arg.list ? '[]' :''}
                     <else />
@@ -81,7 +81,7 @@
               </td>
               <if true={types[prop.returns.type]}>
                 <td class="tx-top tx-nowrap bd-solid bd-t-2 bdx-0 bdb-0 bdt-1 p-10">
-                  <a data-type={prop.returns.type} click=next>
+                  <a class="tx-underline tx-info cursor-pointer" data-type={prop.returns.type} click=next>
                     {prop.returns.type}
                   </a>{prop.returns.list ? '[]' :''}
                 </td>

@@ -1,14 +1,14 @@
 <link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
 <link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/layout.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
 <link rel="import" type="component" href="@ossph/temple-ui/panel/head.tml" name="panel-head" />
 <link rel="import" type="component" href="@ossph/temple-ui/panel/left.tml" name="panel-left" />
 <link rel="import" type="component" href="@ossph/temple-ui/panel/right.tml" name="panel-right" />
 <link rel="import" type="component" href="@ossph/temple-ui/panel/main.tml" name="panel-main" />
 <link rel="import" type="component" href="@ossph/temple-ui/form/button.tml" name="tui-button" />
-<link rel="import" type="component" href="@ossph/temple-ui/block/alert.tml" name="tui-alert" />
-<link rel="import" type="component" href="@ossph/temple-ui/block/tab.tml" name="tui-tab" />
+<link rel="import" type="component" href="@ossph/temple-ui/alert.tml" name="tui-alert" />
+<link rel="import" type="component" href="@ossph/temple-ui/tab.tml" name="tui-tab" />
 <link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
 <link rel="import" type="component" href="@/components/api/ui.tml" name="api-ui" />
 <link rel="import" type="component" href="@/components/ide/app/head.tml" name="app-head" />
@@ -19,10 +19,10 @@
 <link rel="import" type="component" href="@/components/ide/preview.tml" name="ide-preview" />
 <link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
 <style>
+  @tui theme;
   @tui reset;
   @tui fouc-opacity;
-  @tui theme;
-  @tui block;
+  @tui default-block;
   @tui utilities;
 </style>
 <script>
@@ -39,7 +39,7 @@
 </script>
 <html>
   <html-head />
-  <body class="dark bg-t-0 tx-t1 arial">
+  <body class="dark bg-t-0 tx-t-1 arial">
     <panel-layout>
       <panel-head><html-header /></panel-head>
       <panel-left><html-aside /></panel-left>

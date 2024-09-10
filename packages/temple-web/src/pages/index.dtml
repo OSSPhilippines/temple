@@ -1,6 +1,6 @@
 <link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/layout.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
 <link rel="import" type="component" href="@ossph/temple-ui/panel/head.tml" name="panel-head" />
 <link rel="import" type="component" href="@ossph/temple-ui/panel/main.tml" name="panel-main" />
 <link rel="import" type="component" href="@ossph/temple-ui/form/button.tml" name="tui-button" />
@@ -10,15 +10,15 @@
 <link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
 <link rel="import" type="component" href="@/components/tweet-box.tml" />
 <style>
+  @tui theme;
   @tui reset;
   @tui fouc-opacity;
-  @tui theme;
-  @tui block;
+  @tui default-block;
   @tui utilities;
 </style>
 <script>
   import { env } from '@ossph/temple';
-  import { _ } from '@/modules/i18n';
+  import { _ } from '@/components/i18n';
 
   const url = '/temple/index.html';
   const title = _('Temple - The reactive web component template engine.');
@@ -59,7 +59,7 @@
           </i18n-translate>
           <ide-app class="block" title="Basic Example">
             <div class="flex bg-white md-block">
-              <ide-code numbers trim detab={14} class="basis-half">{`
+              <ide-code numbers trim detab={16} class="basis-half">{`
                 <style>
                   h1 { font-weight: bold; }
                 </style>
@@ -122,7 +122,7 @@
             frameworks in just a few lines of code.
           </i18n-translate>
           <ide-app title="Server Example">
-            <ide-code lang="js" numbers trim detab={12}>{`
+            <ide-code lang="js" numbers trim detab={14}>{`
               import temple from '@ossph/temple/compiler';
               //make a temple compiler
               const compiler = temple();
@@ -139,7 +139,7 @@
           </i18n-translate>
           <ide-app title="Props Example">
             <div class="flex bg-white md-block">
-              <ide-code numbers trim detab={14} class="basis-half">{`
+              <ide-code numbers trim detab={16} class="basis-half">{`
                 <style>
                   h1 { font-weight: bold; }
                 </style>
@@ -165,7 +165,7 @@
           </i18n-translate>
           <ide-app title="Signal Example">
             <div class="flex bg-white md-block">
-              <ide-code numbers trim detab={14} class="basis-half">{`
+              <ide-code numbers trim detab={16} class="basis-half">{`
                 <style>
                   h1 { font-weight: bold; }
                 </style>
@@ -192,7 +192,7 @@
           </i18n-translate>
           <ide-app title="Import Example">
             <div class="flex bg-white md-block">
-              <ide-code numbers trim detab={14} class="basis-half">{`
+              <ide-code numbers trim detab={16} class="basis-half">{`
                 <!-- page.html -->
                 <link rel="import" href="./my-heading.html" />
                 <script>
@@ -200,7 +200,7 @@
                 </script>
                 <my-heading {name}>Hello</my-heading>
               `}</ide-code>
-              <ide-code class="div basis-half" trim detab={14}>{`
+              <ide-code class="basis-half bd-t-1 bd-solid bdy-0 bdl-1 bdr-0 md-bd-0" trim detab={16}>{`
                 <!-- my-heading.html -->
                 <script>
                   import { props } from '@ossph/temple';
@@ -219,7 +219,7 @@
           </i18n-translate>
           <ide-app title="Conditional + Iteration Example">
             <div class="flex bg-white md-block">
-              <ide-code numbers trim detab={14} class="basis-half">{`
+              <ide-code numbers trim detab={16} class="basis-half">{`
                 <script>
                   const name = 'world';
                   const show = name === "world";
@@ -229,7 +229,7 @@
                   <h1>Hello {name}</h1>
                 </if>
               `}</ide-code>
-              <ide-code class="div basis-half" trim detab={14}>{`
+              <ide-code class="basis-half bd-t-1 bd-solid bdy-0 bdl-1 bdr-0 md-bd-0" trim detab={16}>{`
                 <script>
                   const list = [ 'a', 'b', 'c' ];
                 </script>

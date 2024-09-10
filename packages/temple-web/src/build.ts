@@ -3,7 +3,7 @@ import type { TempleEvent, DocumentBuilder } from '@ossph/temple/compiler';
 import path from 'path';
 import { globSync as glob } from 'fast-glob';
 import temple, { cache } from '@ossph/temple/compiler';
-import { tui } from '@ossph/temple-ui';
+import { tui } from '@ossph/temple-ui/compiler';
 
 const docs = path.resolve(__dirname, '../../../docs');
 //create temple compiler

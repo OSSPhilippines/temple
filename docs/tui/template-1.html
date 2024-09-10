@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Temple UI - Web Components Meets Atomic Styles.</title>
+  <meta name="description" content="Temple UI atomically generates CSS styles and provides out of box web components." />
+  <meta property="og:title" content="Temple UI - Web Components Meets Atomic Styles." />
+  <meta property="og:description" content="Temple UI atomically generates CSS styles and provides out of box web components." />
+  <meta property="og:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
+  <meta property="og:url" content="https://ossphilippines.github.io/temple/temple/panel.html" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@OSSPhilippines" />
+  <meta name="twitter:title" content="Temple UI - Web Components Meets Atomic Styles." />
+  <meta name="twitter:description" content="Temple UI atomically generates CSS styles and provides out of box web components." />
+  <meta name="twitter:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
+  <link rel="favicon" href="/temple/favicon.ico" />
+  <link rel="shortcut icon" type="image/png" href="/temple/favicon.png" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/fontawesome/all.css" />
+  <link rel="stylesheet" type="text/css" href="/temple/styles/global.css" />
+  <link rel="stylesheet" type="text/css" href="/temple/build/client/78023a6a30cbd9820817.css" />
+  
+  <script data-app="eyJwcm9wcyI6eyJ0aXRsZSI6IlRlbXBsZSBEb2N1bWVudGF0aW9uIn0sImVudiI6eyJCVUlMRF9JRCI6Ijc4MDIzYTZhMzBjYmQ5ODIwODE3In19" src="/temple/build/client/78023a6a30cbd9820817.js"></script>
+  
+</head>
+  <body class="dark bg-t-0 tx-t-1 arial">
+    <panel-layout>
+      <panel-head><menu class="flex flex-center-y px-20 py-15 m-0 bg-t-1">
+  
+    <i class="fas fa-fw fa-bars cursor-pointer py-5 pr-10 none md-inline-block tx-t-1" ></i>
+    <div class="flex-grow"></div>
+  
+  <nav class="flex flex-center-y">
+    <a class="tx-white" href="/temple/docs/index.html">Docs</a>
+    <a class="tx-t-1 tx-5xl ml-10" href="https://github.com/OSSPhilippines/temple" target="_blank">
+      <i class="fab fa-github"></i>
+    </a>
+    <a class="bg-h-cb3837 pill tx-t-1 tx-lg ml-5 p-5 tx-center" href="https://www.npmjs.com/package/@ossph/temple" target="_blank">
+      <i class="fab fa-npm text-white"></i>
+    </a>
+    <a class="bg-h-7289da pill tx-t-1 tx-lg ml-5 p-5 tx-center" href="https://discord.gg/open-source-software-ph-905496362982981723" target="_blank">
+      <i class="fab fa-discord text-white"></i>
+    </a>
+  </nav>
+</menu></panel-head>
+      <panel-main>
+        <div class="p-10 tx-t-1 h-full scroll-auto">
+          <tui-tab on class="inline-block" active="bg-t-1 tx-t-0" inactive="bg-t-2 tx-t-1" group="tab-group-1" selector="#tab-content-1">
+            Tab 1
+          </tui-tab>
+          <tui-tab class="inline-block" active="bg-t-1 tx-t-0" inactive="bg-t-2 tx-t-1" group="tab-group-1" selector="#tab-content-2">
+            Tab 2
+          </tui-tab>
+          <tui-tab class="inline-block" active="bg-t-1 tx-t-0" inactive="bg-t-2 tx-t-1" group="tab-group-1" selector="#tab-content-3">
+            Tab 3
+          </tui-tab>
+          <div id="tab-content-1">
+            <h1>Tab 1</h1>
+            <p>Temple UI atomically generates CSS styles and provides out of box web components.</p>
+          </div>
+          <div id="tab-content-2">
+            <h1>Tab 2</h1>
+            <p>Temple UI atomically generates CSS styles and provides out of box web components.</p>
+          </div>
+          <div id="tab-content-3">
+            <h1>Tab 3</h1>
+            <p>Temple UI atomically generates CSS styles and provides out of box web components.</p>
+          </div>
+          <div class="py-20">
+            <h3 class="pb-20">Loaders</h3>
+            <tui-loader success   dotted></tui-loader>
+            <tui-loader info ></tui-loader>
+            <tui-loader warning dashed></tui-loader>
+            <tui-loader error dotted   ></tui-loader>
+
+            <tui-loader muted   dotted></tui-loader>
+            <tui-loader primary   dotted></tui-loader>
+            <tui-loader secondary    dotted></tui-loader>
+            <tui-loader    color="orange" dashed></tui-loader>
+          </div>
+
+          <div class="py-20">
+            <h3 class="pb-20">Alerts</h3>
+            <tui-alert info class="mb-10">
+              <tui-icon name="info-circle"></tui-icon>
+              Web Components Meets Atomic Styles.
+            </tui-alert>
+            <tui-alert warning curved class="mb-10">
+              <tui-icon name="exclamation-triangle"></tui-icon>
+              Web Components Meets Atomic Styles.
+            </tui-alert>
+            <tui-alert error rounded class="mb-10">
+              <tui-icon name="exclamation-circle"></tui-icon>
+              Web Components Meets Atomic Styles.
+            </tui-alert>
+            <tui-alert success pill class="mb-10">
+              <tui-icon name="check-circle"></tui-icon>
+              Web Components Meets Atomic Styles.
+            </tui-alert>
+            
+            <tui-alert primary outline class="mb-10">
+              <tui-icon name="info-circle"></tui-icon>
+              Web Components Meets Atomic Styles.
+            </tui-alert>
+            <tui-alert secondary transparent curved class="mb-10">
+              <tui-icon name="exclamation-triangle"></tui-icon>
+              Web Components Meets Atomic Styles.
+            </tui-alert>
+            <tui-alert muted rounded class="mb-10">
+              <tui-icon name="exclamation-circle"></tui-icon>
+              Web Components Meets Atomic Styles.
+            </tui-alert>
+          </div>
+
+          <div class="py-20">
+            <h3 class="pb-20">Badges</h3>
+            <tui-badge info class="mb-10">
+             999
+            </tui-badge>
+            <tui-badge warning curved class="mb-10">
+              999
+            </tui-badge>
+            <tui-badge error rounded class="mb-10">
+              999
+            </tui-badge>
+            <tui-badge success pill class="mb-10">
+              999
+            </tui-badge>
+            
+            <tui-badge primary outline class="mb-10">
+              999
+            </tui-badge>
+            <tui-badge secondary transparent curved class="mb-10">
+              999
+            </tui-badge>
+            <tui-badge muted rounded class="mb-10">
+              999
+            </tui-badge>
+          </div>
+
+          <div class="py-20">
+            <h3 class="pb-20">Standard Buttons</h3>
+            <tui-button solid info>Info</tui-button>
+            <tui-button solid warning>Warning</tui-button>
+            <tui-button solid success>Success</tui-button>
+            <tui-button solid error>Error</tui-button>
+            <tui-button solid primary>Primary</tui-button>
+            <tui-button solid secondary>Secondary</tui-button>
+            <tui-button solid muted>Muted</tui-button>
+
+            <h3 class="py-20">Outline Buttons</h3>
+            <tui-button outline info rounded>Info</tui-button>
+            <tui-button outline warning rounded>Warning</tui-button>
+            <tui-button outline success rounded>Success</tui-button>
+            <tui-button outline error rounded>Error</tui-button>
+            <tui-button outline primary rounded>Primary</tui-button>
+            <tui-button outline secondary rounded>Secondary</tui-button>
+            <tui-button outline muted rounded>Muted</tui-button>
+
+            <h3 class="py-20">Transparent Buttons</h3>
+            <tui-button transparent info curved>Info</tui-button>
+            <tui-button transparent warning curved>Warning</tui-button>
+            <tui-button transparent success curved>Success</tui-button>
+            <tui-button transparent error curved>Error</tui-button>
+            <tui-button transparent primary curved>Primary</tui-button>
+            <tui-button transparent secondary curved>Secondary</tui-button>
+            <tui-button transparent muted curved>Muted</tui-button>
+
+            <h3 class="py-20">XS Buttons</h3>
+            <tui-button xs solid info rounded>Info</tui-button>
+            <tui-button xs solid warning rounded>Warning</tui-button>
+            <tui-button xs solid success rounded>Success</tui-button>
+            <tui-button xs solid error rounded>Error</tui-button>
+            <tui-button xs solid primary rounded>Primary</tui-button>
+            <tui-button xs solid secondary rounded>Secondary</tui-button>
+            <tui-button xs solid muted rounded>Muted</tui-button>
+            <tui-button xs outline info rounded>Info</tui-button>
+            <tui-button xs outline warning rounded>Warning</tui-button>
+            <tui-button xs outline success rounded>Success</tui-button>
+            <tui-button xs outline error rounded>Error</tui-button>
+            <tui-button xs outline primary rounded>Primary</tui-button>
+            <tui-button xs outline secondary rounded>Secondary</tui-button>
+            <tui-button xs outline muted rounded>Muted</tui-button>
+            <tui-button xs transparent info rounded>Info</tui-button>
+            <tui-button xs transparent warning rounded>Warning</tui-button>
+            <tui-button xs transparent success rounded>Success</tui-button>
+            <tui-button xs transparent error rounded>Error</tui-button>
+            <tui-button xs transparent primary rounded>Primary</tui-button>
+            <tui-button xs transparent secondary rounded>Secondary</tui-button>
+            <tui-button xs transparent muted rounded>Muted</tui-button>
+
+            <h3 class="py-20">SM Buttons</h3>
+            <tui-button sm solid info rounded>Info</tui-button>
+            <tui-button sm solid warning rounded>Warning</tui-button>
+            <tui-button sm solid success rounded>Success</tui-button>
+            <tui-button sm solid error rounded>Error</tui-button>
+            <tui-button sm solid primary rounded>Primary</tui-button>
+            <tui-button sm solid secondary rounded>Secondary</tui-button>
+            <tui-button sm solid muted rounded>Muted</tui-button>
+            <tui-button sm outline info rounded>Info</tui-button>
+            <tui-button sm outline warning rounded>Warning</tui-button>
+            <tui-button sm outline success rounded>Success</tui-button>
+            <tui-button sm outline error rounded>Error</tui-button>
+            <tui-button sm outline primary rounded>Primary</tui-button>
+            <tui-button sm outline secondary rounded>Secondary</tui-button>
+            <tui-button sm outline muted rounded>Muted</tui-button>
+            <tui-button sm transparent info rounded>Info</tui-button>
+            <tui-button sm transparent warning rounded>Warning</tui-button>
+            <tui-button sm transparent success rounded>Success</tui-button>
+            <tui-button sm transparent error rounded>Error</tui-button>
+            <tui-button sm transparent primary rounded>Primary</tui-button>
+            <tui-button sm transparent secondary rounded>Secondary</tui-button>
+            <tui-button sm transparent muted rounded>Muted</tui-button>
+
+            <h3 class="py-20">LG Buttons</h3>
+            <tui-button lg solid info rounded>Info</tui-button>
+            <tui-button lg solid warning rounded>Warning</tui-button>
+            <tui-button lg solid success rounded>Success</tui-button>
+            <tui-button lg solid error rounded>Error</tui-button>
+            <tui-button lg solid primary rounded>Primary</tui-button>
+            <tui-button lg solid secondary rounded>Secondary</tui-button>
+            <tui-button lg solid muted rounded>Muted</tui-button>
+            <tui-button lg outline info rounded>Info</tui-button>
+            <tui-button lg outline warning rounded>Warning</tui-button>
+            <tui-button lg outline success rounded>Success</tui-button>
+            <tui-button lg outline error rounded>Error</tui-button>
+            <tui-button lg outline primary rounded>Primary</tui-button>
+            <tui-button lg outline secondary rounded>Secondary</tui-button>
+            <tui-button lg outline muted rounded>Muted</tui-button>
+            <tui-button lg transparent info rounded>Info</tui-button>
+            <tui-button lg transparent warning rounded>Warning</tui-button>
+            <tui-button lg transparent success rounded>Success</tui-button>
+            <tui-button lg transparent error rounded>Error</tui-button>
+            <tui-button lg transparent primary rounded>Primary</tui-button>
+            <tui-button lg transparent secondary rounded>Secondary</tui-button>
+            <tui-button lg transparent muted rounded>Muted</tui-button>
+
+            <h3 class="py-20">XL Buttons</h3>
+            <tui-button xl solid info rounded>Info</tui-button>
+            <tui-button xl solid warning rounded>Warning</tui-button>
+            <tui-button xl solid success rounded>Success</tui-button>
+            <tui-button xl solid error rounded>Error</tui-button>
+            <tui-button xl solid primary rounded>Primary</tui-button>
+            <tui-button xl solid secondary rounded>Secondary</tui-button>
+            <tui-button xl solid muted rounded>Muted</tui-button>
+            <tui-button xl outline info rounded>Info</tui-button>
+            <tui-button xl outline warning rounded>Warning</tui-button>
+            <tui-button xl outline success rounded>Success</tui-button>
+            <tui-button xl outline error rounded>Error</tui-button>
+            <tui-button xl outline primary rounded>Primary</tui-button>
+            <tui-button xl outline secondary rounded>Secondary</tui-button>
+            <tui-button xl outline muted rounded>Muted</tui-button>
+            <tui-button xl transparent info rounded>Info</tui-button>
+            <tui-button xl transparent warning rounded>Warning</tui-button>
+            <tui-button xl transparent success rounded>Success</tui-button>
+            <tui-button xl transparent error rounded>Error</tui-button>
+            <tui-button xl transparent primary rounded>Primary</tui-button>
+            <tui-button xl transparent secondary rounded>Secondary</tui-button>
+            <tui-button xl transparent muted rounded>Muted</tui-button>
+
+            <h3 class="py-20">2XL Buttons</h3>
+            <tui-button xl2 solid info rounded>Info</tui-button>
+            <tui-button xl2 solid warning rounded>Warning</tui-button>
+            <tui-button xl2 solid success rounded>Success</tui-button>
+            <tui-button xl2 solid error rounded>Error</tui-button>
+            <tui-button xl2 solid primary rounded>Primary</tui-button>
+            <tui-button xl2 solid secondary rounded>Secondary</tui-button>
+            <tui-button xl2 solid muted rounded>Muted</tui-button>
+            <tui-button xl2 outline info rounded>Info</tui-button>
+            <tui-button xl2 outline warning rounded>Warning</tui-button>
+            <tui-button xl2 outline success rounded>Success</tui-button>
+            <tui-button xl2 outline error rounded>Error</tui-button>
+            <tui-button xl2 outline primary rounded>Primary</tui-button>
+            <tui-button xl2 outline secondary rounded>Secondary</tui-button>
+            <tui-button xl2 outline muted rounded>Muted</tui-button>
+            <tui-button xl2 transparent info rounded>Info</tui-button>
+            <tui-button xl2 transparent warning rounded>Warning</tui-button>
+            <tui-button xl2 transparent success rounded>Success</tui-button>
+            <tui-button xl2 transparent error rounded>Error</tui-button>
+            <tui-button xl2 transparent primary rounded>Primary</tui-button>
+            <tui-button xl2 transparent secondary rounded>Secondary</tui-button>
+            <tui-button xl2 transparent muted rounded>Muted</tui-button>
+
+            <h3 class="py-20">3XL Buttons</h3>
+            <tui-button xl3 solid info rounded>Info</tui-button>
+            <tui-button xl3 solid warning rounded>Warning</tui-button>
+            <tui-button xl3 solid success rounded>Success</tui-button>
+            <tui-button xl3 solid error rounded>Error</tui-button>
+            <tui-button xl3 solid primary rounded>Primary</tui-button>
+            <tui-button xl3 solid secondary rounded>Secondary</tui-button>
+            <tui-button xl3 solid muted rounded>Muted</tui-button>
+            <tui-button xl3 outline info rounded>Info</tui-button>
+            <tui-button xl3 outline warning rounded>Warning</tui-button>
+            <tui-button xl3 outline success rounded>Success</tui-button>
+            <tui-button xl3 outline error rounded>Error</tui-button>
+            <tui-button xl3 outline primary rounded>Primary</tui-button>
+            <tui-button xl3 outline secondary rounded>Secondary</tui-button>
+            <tui-button xl3 outline muted rounded>Muted</tui-button>
+            <tui-button xl3 transparent info rounded>Info</tui-button>
+            <tui-button xl3 transparent warning rounded>Warning</tui-button>
+            <tui-button xl3 transparent success rounded>Success</tui-button>
+            <tui-button xl3 transparent error rounded>Error</tui-button>
+            <tui-button xl3 transparent primary rounded>Primary</tui-button>
+            <tui-button xl3 transparent secondary rounded>Secondary</tui-button>
+            <tui-button xl3 transparent muted rounded>Muted</tui-button>
+
+            <h3 class="py-20">4XL Buttons</h3>
+            <tui-button xl4 solid info rounded>Info</tui-button>
+            <tui-button xl4 solid warning rounded>Warning</tui-button>
+            <tui-button xl4 solid success rounded>Success</tui-button>
+            <tui-button xl4 solid error rounded>Error</tui-button>
+            <tui-button xl4 solid primary rounded>Primary</tui-button>
+            <tui-button xl4 solid secondary rounded>Secondary</tui-button>
+            <tui-button xl4 solid muted rounded>Muted</tui-button>
+            <tui-button xl4 outline info rounded>Info</tui-button>
+            <tui-button xl4 outline warning rounded>Warning</tui-button>
+            <tui-button xl4 outline success rounded>Success</tui-button>
+            <tui-button xl4 outline error rounded>Error</tui-button>
+            <tui-button xl4 outline primary rounded>Primary</tui-button>
+            <tui-button xl4 outline secondary rounded>Secondary</tui-button>
+            <tui-button xl4 outline muted rounded>Muted</tui-button>
+            <tui-button xl4 transparent info rounded>Info</tui-button>
+            <tui-button xl4 transparent warning rounded>Warning</tui-button>
+            <tui-button xl4 transparent success rounded>Success</tui-button>
+            <tui-button xl4 transparent error rounded>Error</tui-button>
+            <tui-button xl4 transparent primary rounded>Primary</tui-button>
+            <tui-button xl4 transparent secondary rounded>Secondary</tui-button>
+            <tui-button xl4 transparent muted rounded>Muted</tui-button>
+
+            <h3 class="py-20">5XL Buttons</h3>
+            <tui-button xl5 solid info rounded>Info</tui-button>
+            <tui-button xl5 solid warning rounded>Warning</tui-button>
+            <tui-button xl5 solid success rounded>Success</tui-button>
+            <tui-button xl5 solid error rounded>Error</tui-button>
+            <tui-button xl5 solid primary rounded>Primary</tui-button>
+            <tui-button xl5 solid secondary rounded>Secondary</tui-button>
+            <tui-button xl5 solid muted rounded>Muted</tui-button>
+            <tui-button xl5 outline info rounded>Info</tui-button>
+            <tui-button xl5 outline warning rounded>Warning</tui-button>
+            <tui-button xl5 outline success rounded>Success</tui-button>
+            <tui-button xl5 outline error rounded>Error</tui-button>
+            <tui-button xl5 outline primary rounded>Primary</tui-button>
+            <tui-button xl5 outline secondary rounded>Secondary</tui-button>
+            <tui-button xl5 outline muted rounded>Muted</tui-button>
+            <tui-button xl5 transparent info rounded>Info</tui-button>
+            <tui-button xl5 transparent warning rounded>Warning</tui-button>
+            <tui-button xl5 transparent success rounded>Success</tui-button>
+            <tui-button xl5 transparent error rounded>Error</tui-button>
+            <tui-button xl5 transparent primary rounded>Primary</tui-button>
+            <tui-button xl5 transparent secondary rounded>Secondary</tui-button>
+            <tui-button xl5 transparent muted rounded>Muted</tui-button>
+          </div>
+        </div>
+      </panel-main>
+    </panel-layout>
+  </body>
+</html>

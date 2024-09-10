@@ -1,6 +1,0 @@
-<script>
-  import { children } from '@ossph/temple';
-</script>
-<aside class="absolute top-0 bottom-0 left-0 w-150 bg-h-000000 b-solid b-t-2 by-0 bl-0 br-1 z-1">
-  {children()}
-</aside>

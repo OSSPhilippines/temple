@@ -5,7 +5,7 @@ import path from 'path';
 import express from 'express';
 import temple, { cache } from '@ossph/temple/compiler';
 import { view, dev } from '@ossph/temple-express';
-import { tui } from '@ossph/temple-ui';
+import { tui } from '@ossph/temple-ui/compiler';
 
 type Next = () => void;
 
