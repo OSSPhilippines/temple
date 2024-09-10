@@ -41,7 +41,7 @@ export default function tui(options: TempleUIOptions = {}) {
     compiler.emitter.on('built-styles', async e => {
       const { document } = e.params.builder as DocumentBuilder;
       const sourceCode = e.params.sourceCode as string;
-      e.set(templeui(options)
+      const stylesheet = templeui(options)
         .plugin(reset)
         .plugin(theme)
         .plugin(block(document))
@@ -51,8 +51,9 @@ export default function tui(options: TempleUIOptions = {}) {
         .plugin(visibility(document))
         .plugin(component(document, { stylers }))
         .plugin(utilities(document, { stylers }))
-        .upgrade(sourceCode)
-      );
+        .upgrade(sourceCode);
+      e.set(stylesheet);
+      e.params.sourceCode = stylesheet;
     });
   };
 };
