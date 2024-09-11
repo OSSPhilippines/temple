@@ -10,6 +10,9 @@ import StyleMap from './StyleMap';
 import StyleSet from './StyleSet';
 import StyleSheet from './StyleSheet';
 
+//before and after
+export const bna = [ 'before', 'after' ];
+
 //responsive names and breakpoints
 export const media = [
   'all', 'xl4', 'xl3', 
@@ -46,14 +49,12 @@ export const percents = Object.entries({
  * Helper to form a literal token.
  */
 export function literal(
-  responsive: boolean, 
   name: string, 
   records: StyleRecord
 ): LiteralToken {
   const styles = new StyleMap(Object.entries(records));
   return { 
     type: 'literal', 
-    responsive, 
     name, 
     styles
   };
@@ -63,7 +64,6 @@ export function literal(
  * Helper to form a range token.
  */
 export function range(
-  responsive: boolean, 
   name: string, 
   records: StyleRecord, 
   min: number, 
@@ -73,7 +73,6 @@ export function range(
   const styles = new StyleMap(Object.entries(records));
   return {
     type: 'range',
-    responsive,
     name,
     styles,
     range: [ min, max ],
@@ -85,14 +84,12 @@ export function range(
  * Helper to form an expression token.
  */
 export function expression(
-  responsive: boolean, 
   name: string, 
   records: StyleRecord 
 ): ExpressionToken {
   const styles = new StyleMap(Object.entries(records));
   return { 
     type: 'expression', 
-    responsive, 
     name, 
     styles
   };

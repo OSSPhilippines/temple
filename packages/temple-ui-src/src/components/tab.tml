@@ -1,5 +1,4 @@
-<script accept="group,">
-  import { props, component, children } from '@ossph/temple';
+<script>
   const { 
     group, 
     selector = '',
@@ -10,18 +9,18 @@
     'class': _,
     //get the rest
     ...attributes 
-  } = props();
+  } = this.props;
 
-  const tab = component();
+  const children = this.originalChildren;
   const activeList = active.split(' ');
   const inactiveList = inactive.split(' ');
 
-  tab.classList.add('cursor-pointer');
+  this.classList.add('cursor-pointer');
 
   const init = () => {
-    const on = tab.hasAttribute('on');
-    tab.classList.remove(...(on ? inactiveList : activeList));
-    tab.classList.add(...(on ? activeList : inactiveList));
+    const on = this.hasAttribute('on');
+    this.classList.remove(...(on ? inactiveList : activeList));
+    this.classList.add(...(on ? activeList : inactiveList));
     //find all the content elements that this tab controls
     //and either show or hide it based on the active state
     Array.from(document.querySelectorAll(selector)).forEach(content => {
@@ -59,9 +58,8 @@
       }
       
     });
-    
   };
 </script>
 <a {...attributes} class="block h-full w-full" click=activate mount=init>
-  {children()}
+  {children}
 </a>

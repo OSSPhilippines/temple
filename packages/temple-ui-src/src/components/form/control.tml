@@ -5,9 +5,9 @@
   classlist().add('block');
 </script>
 <if true={!!label}>
-  <label class="block">{label}</label>
+  <label class="block pb-3">{label}</label>
 </if>
-<div>{children}</div>
+<div>{children()}</div>
 <if true={!!error && error?.length > 0}>
-  <div class="tx-error">{error}</div>
+  <div class="tx-error pt-3">{error}</div>
 </if>

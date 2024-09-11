@@ -1,83 +1,95 @@
 <script>
-  import { props, children, component } from '@ossph/temple';
   // Separate component related props from field attributes
   const { 
-    curved,      rounded,   pill,    
-    info,        warning,   success, 
-    error,       muted,     primary, 
-    color,       secondary, outline, 
-    transparent, solid,
-    //dont need these
-    style,     'class': _,
-    //get the rest
-    ...attributes 
-  } = props();
+    curved, rounded,   pill,    
+    info,   warning,   success, 
+    error,  muted,     primary, 
+    color,  secondary, outline,
+    solid,  transparent
+  } = this.props;
 
   //get the host element
-  const host = component();
-  //make a badge
-  const badge = document.createElement('span');
-  //add children to the badge
-  children().forEach(child => badge.appendChild(child));
-
-  host.classList.add('inline-block');
-  badge.classList.add('inline-block', 'px-8', 'py-2');
-
-  if (curved) {
-    badge.classList.add('curved');
-  } else if (rounded) {
-    badge.classList.add('rounded');
-  } else if (pill) {
-    badge.classList.add('pill');
+  const classes = this.className.split(' ');
+  const children = this.originalChildren;
+  //determine display
+  if (!classes.find(
+    classname => classname.includes('block')
+      || classname.includes('flex')
+      || classname.includes('none')
+      || classname.includes('inline')
+      || classname.includes('inline-block')
+  )) {
+    this.classList.add('inline-block');
   }
-
+  //determine padding
+  if (!classes.find(
+    classname => classname.includes('p-')
+      || classname.includes('px-')
+      || classname.includes('py-')
+      || classname.includes('pt-')
+      || classname.includes('pr-')
+      || classname.includes('pb-')
+      || classname.includes('pl-')
+  )) {
+    this.classList.add('px-8', 'py-2');
+  }
+  //determine curve
+  if (curved) {
+    this.classList.add('curved');
+  } else if (rounded) {
+    this.classList.add('rounded');
+  } else if (pill) {
+    this.classList.add('pill');
+  }
+  //determine layout
   const layout = outline ? 'outline' 
     : transparent ? 'transparent'
     : solid  ? 'solid'
     : 'solid';
-
+  //if outline or transparent
   if (layout === 'outline' || layout === 'transparent') {
-    badge.classList.add('bd-solid', 'bd-thin');
+    this.classList.add('bd-solid', 'bd-thin');
     if (layout === 'outline') {
-      badge.classList.add('bg-white');
+      this.classList.add('bg-white');
     }
     if (color) {
-      badge.style.color = color;
-      badge.style.borderColor = color;
+      this.style.color = color;
+      this.style.borderColor = color;
     } else if (info) {
-      badge.classList.add('bd-info', 'tx-info');
+      this.classList.add('bd-info', 'tx-info');
     } else if (warning) {
-      badge.classList.add('bd-warning', 'tx-warning');
+      this.classList.add('bd-warning', 'tx-warning');
     } else if (success) {
-      badge.classList.add('bd-success', 'tx-success');
+      this.classList.add('bd-success', 'tx-success');
     } else if (error) {
-      badge.classList.add('bd-error', 'tx-error');
+      this.classList.add('bd-error', 'tx-error');
     } else if (muted) {
-      badge.classList.add('bd-muted', 'tx-muted');
+      this.classList.add('bd-muted', 'tx-muted');
     } else if (primary) {
-      badge.classList.add('bd-primary', 'tx-primary');
+      this.classList.add('bd-primary', 'tx-primary');
     } else if (secondary) {
-      badge.classList.add('bd-secondary', 'tx-secondary');
+      this.classList.add('bd-secondary', 'tx-secondary');
     }
+  //it's solid
   } else {
-    badge.classList.add('tx-white');
+    this.classList.add('tx-white');
     if (color) {
-      badge.style.backgroundColor = color;
+      this.style.backgroundColor = color;
     } else if (info) {
-      badge.classList.add('bg-info');
+      this.classList.add('bg-info');
     } else if (warning) {
-      badge.classList.add('bg-warning');
+      this.classList.add('bg-warning');
     } else if (success) {
-      badge.classList.add('bg-success');
+      this.classList.add('bg-success');
     } else if (error) {
-      badge.classList.add('bg-error');
+      this.classList.add('bg-error');
     } else if (muted) {
-      badge.classList.add('bg-muted');
+      this.classList.add('bg-muted');
     } else if (primary) {
-      badge.classList.add('bg-primary');
+      this.classList.add('bg-primary');
     } else if (secondary) {
-      badge.classList.add('bg-secondary');
+      this.classList.add('bg-secondary');
     }
   } 
 </script>
-{[ badge ]}
+{children}

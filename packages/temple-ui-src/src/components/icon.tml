@@ -1,7 +1,6 @@
 <script>
-  import { props, classlist, children } from '@ossph/temple';
-  const { name, block = false } = props();
-  classlist().add(
+  const { name, block = false } = this.props;
+  this.classList.add(
     'fa', 
     'fa-fw', 
     `fa-${name}`, 

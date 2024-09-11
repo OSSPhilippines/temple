@@ -1,5 +1,10 @@
 <script>
-  import { props, children, component } from '@ossph/temple';
+  import { 
+    props, 
+    classnames, 
+    children, 
+    component 
+  } from '@ossph/temple';
   // Separate component related props from field attributes
   const { 
     block,     full,    color,
@@ -19,6 +24,7 @@
 
   //get the host element
   const host = component();
+  const classes = classnames().split(' ');
   //make a button
   const button =  document.createElement(href ? 'a' : 'button');
   //add attributes to the button
@@ -30,38 +36,47 @@
   }
   //add children to the button
   children().forEach(child => button.appendChild(child));
-
+  //default styles
   button.classList.add(
-    'inline-block', 
     'tx-center', 
     'tx-nodecor', 
     'cursor-pointer'
   );
-
+  //determine display
   if (block) {
     host.classList.add('block');
     button.classList.add('block');
+  } else if (classes.find(classname => classname.includes('block'))) {
+    button.classList.add('block');
+  } else if (classes.find(classname => classname.includes('flex'))) {
+    button.classList.add('flex');
+  } else if (classes.find(classname => classname.includes('none'))) {
+    button.classList.add('none');
+  } else if (classes.find(classname => classname.includes('inline'))) {
+    button.classList.add('inline');
+  } else if (classes.find(classname => classname.includes('inline-block'))) {
+    button.classList.add('inline-block');
   } else {
     host.classList.add('inline-block');
     button.classList.add('inline-block');
   }
+  //determine size
   if (full) {
     host.classList.add('w-full');
     button.classList.add('w-full');
   }
-
-  //determine size
-  const size = xs ? button.classList.add('py-2', 'px-4')
-    : sm ? button.classList.add('py-4', 'px-8')
-    : md ? button.classList.add('py-6', 'px-12')
-    : lg ? button.classList.add('py-8', 'px-16')
-    : xl ? button.classList.add('py-10', 'px-20')
-    : xl2 ? button.classList.add('py-12', 'px-24')
-    : xl3 ? button.classList.add('py-14', 'px-28')
-    : xl4 ? button.classList.add('py-16', 'px-32')
-    : xl5 ? button.classList.add('py-18', 'px-36')
-    : button.classList.add('py-6', 'px-12');
-
+  //determine padding by size
+  xs ? button.classList.add('py-2', 'px-4')
+  : sm ? button.classList.add('py-5', 'px-10')
+  : md ? button.classList.add('py-8', 'px-16')
+  : lg ? button.classList.add('py-12', 'px-24')
+  : xl ? button.classList.add('py-15', 'px-30')
+  : xl2 ? button.classList.add('py-18', 'px-36')
+  : xl3 ? button.classList.add('py-22', 'px-44')
+  : xl4 ? button.classList.add('py-26', 'px-52')
+  : xl5 ? button.classList.add('py-30', 'px-60')
+  : null;
+  //determine curve
   if (curved) {
     button.classList.add('curved');
   } else if (rounded) {
@@ -69,12 +84,12 @@
   } else if (pill) {
     button.classList.add('pill');
   }
-
+  //determine layout
   const layout = outline ? 'outline' 
     : transparent ? 'transparent'
     : solid  ? 'solid'
     : 'solid';
-
+  //if layout is outline or transparent
   if (layout === 'outline' || layout === 'transparent') {
     button.classList.add('bd-solid', 'bd-thin');
     if (layout === 'outline') {
@@ -100,6 +115,7 @@
     } else if (secondary) {
       button.classList.add('bd-secondary', 'tx-secondary');
     }
+  //it's solid
   } else {
     button.classList.add('bd-0', 'tx-white');
     if (color) {

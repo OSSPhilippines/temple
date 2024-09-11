@@ -1,45 +1,69 @@
-<style>
-  :host {
-    --black: #222222;
-    --error: #DC3545;
-  }
-  textarea {
-    border-color: var(--black);
-    border-style: solid;
-    border-width: 1px;
-    box-sizing: border-box;
-    color: var(--black);
-    padding-bottom: 8px;
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-top: 8px;
-    width: 100%;
-  }
-  textarea.error {
-    border-color: var(--error);
-    color: var(--error);
-  }
-</style>
-<script>
-  import { props, classnames, innerHTML } from '@ossph/temple';
-  // Separate component related props from field attributes
-  const { 
-    error, 
-    change,
-    update,
-    ...attributes 
-  } = props();
-  const classes = (classnames() || '').split(' ');
-  if (error) {
-    classes.unshift('error');
-  }
+<script observe="error,disabled">
+  const host = this;
+  //helper to extract attributes
+  const attr = () => {
+    const { 
+      error = false, change, update,
+      //dont need these...
+      style, 'class': _,
+      //input attributes
+      ...attributes
+    } = host.props;
+    const classlist = [ 
+      'p-7', 
+      'bd-1', 
+      'block',
+      'bd-solid', 
+      'box-border', 
+      'w-full',
+      'h-full',
+      'tx-inherit'
+    ];
+    if (error) {
+      classlist.push('bd-error', 'tx-error');
+    } else {
+      classlist.push('bd-black', 'tx-black');
+    }
+    attributes['class'] = classlist.join(' ');
+    return { error, change, update, classlist, attributes };
+  };
+  //get props
+  const { error, change, update, attributes } = attr();
+  const exclude = ['error', 'change', 'update', 'class', 'style'];
+  const children = host.originalChildren;
+  //handlers
   const onchange = e => {
     change && change(e);
     update && update(e.target.value);
   };
+  const onattr = e => {
+    const { action, name, prev, value, target } = e.detail;
+    const input = target.querySelector('input');
+    //set new class
+    if (name === 'error') {
+      if (action === 'remove') {
+        input.classList.remove('bd-error', 'tx-error');
+        input.classList.add('bd-black', 'tx-black');
+      } else {
+        input.classList.remove('bd-black', 'tx-black');
+        input.classList.add('bd-error', 'tx-error');
+      }
+      return;
+      //dont update if these are the names
+    } else if (!input || exclude.includes(name)) {
+      return;
+    }
+    switch (action) {
+      case 'add':
+      case 'update':
+        input.setAttribute(name, value);
+        break;
+      case 'remove':
+        input.removeAttribute(name);
+        break;
+    }
+  }
 </script>
-<textarea 
-  {...attributes} 
-  class={classname.join(' ')}
-  change={onchange} 
->{innerHTML}</textarea>
+<textarea {...attributes} attr={onattr} change={onchange}>{
+  children
+}</textarea>

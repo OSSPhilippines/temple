@@ -1,0 +1,5 @@
+<script>
+  const children = this.originalChildren;
+  this.classList.add('table-row-group');
+</script>
+{children}

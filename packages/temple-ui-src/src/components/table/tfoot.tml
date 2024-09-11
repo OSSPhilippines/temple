@@ -1,0 +1,6 @@
+<link rel="import" type="component" href="./row.tml" name="table-row" />
+<script>
+  const children = this.originalChildren;
+  this.classList.add('table-footer-group');
+</script>
+<table-row>{children}</table-row>

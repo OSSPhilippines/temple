@@ -1,83 +1,95 @@
 <script>
-  import { props, children, component } from '@ossph/temple';
   // Separate component related props from field attributes
   const { 
-    curved,      rounded,   pill,    
-    info,        warning,   success, 
-    error,       muted,     primary, 
-    color,       secondary, outline, 
-    transparent, solid,
-    //dont need these
-    style,     'class': _,
-    //get the rest
-    ...attributes 
-  } = props();
+    curved, rounded,   pill,    
+    info,   warning,   success, 
+    error,  muted,     primary, 
+    color,  secondary, outline,
+    solid,  transparent
+  } = this.props;
 
   //get the host element
-  const host = component();
-  //make a alert
-  const alert = document.createElement('div');
-  //add children to the alert
-  children().forEach(child => alert.appendChild(child));
-
-  host.classList.add('block');
-  alert.classList.add('block', 'p-16');
-
-  if (curved) {
-    alert.classList.add('curved');
-  } else if (rounded) {
-    alert.classList.add('rounded');
-  } else if (pill) {
-    alert.classList.add('pill');
+  const classes = this.className.split(' ');
+  const children = this.originalChildren;
+  //determine display
+  if (!classes.find(
+    classname => classname.includes('block')
+      || classname.includes('flex')
+      || classname.includes('none')
+      || classname.includes('inline')
+      || classname.includes('inline-block')
+  )) {
+    this.classList.add('block');
   }
-
+  //determine padding
+  if (!classes.find(
+    classname => classname.includes('p-')
+      || classname.includes('px-')
+      || classname.includes('py-')
+      || classname.includes('pt-')
+      || classname.includes('pr-')
+      || classname.includes('pb-')
+      || classname.includes('pl-')
+  )) {
+    this.classList.add('p-16');
+  }
+  //determine curve
+  if (curved) {
+    this.classList.add('curved');
+  } else if (rounded) {
+    this.classList.add('rounded');
+  } else if (pill) {
+    this.classList.add('pill');
+  }
+  //determine layout
   const layout = outline ? 'outline' 
     : transparent ? 'transparent'
     : solid  ? 'solid'
     : 'solid';
-
+  //if outline or transparent
   if (layout === 'outline' || layout === 'transparent') {
-    alert.classList.add('bd-solid', 'bd-thin');
+    this.classList.add('bd-solid', 'bd-thin');
     if (layout === 'outline') {
-      alert.classList.add('bg-white');
+      this.classList.add('bg-white');
     }
     if (color) {
-      alert.style.color = color;
-      alert.style.borderColor = color;
+      this.style.color = color;
+      this.style.borderColor = color;
     } else if (info) {
-      alert.classList.add('bd-info', 'tx-info');
+      this.classList.add('bd-info', 'tx-info');
     } else if (warning) {
-      alert.classList.add('bd-warning', 'tx-warning');
+      this.classList.add('bd-warning', 'tx-warning');
     } else if (success) {
-      alert.classList.add('bd-success', 'tx-success');
+      this.classList.add('bd-success', 'tx-success');
     } else if (error) {
-      alert.classList.add('bd-error', 'tx-error');
+      this.classList.add('bd-error', 'tx-error');
     } else if (muted) {
-      alert.classList.add('bd-muted', 'tx-muted');
+      this.classList.add('bd-muted', 'tx-muted');
     } else if (primary) {
-      alert.classList.add('bd-primary', 'tx-primary');
+      this.classList.add('bd-primary', 'tx-primary');
     } else if (secondary) {
-      alert.classList.add('bd-secondary', 'tx-secondary');
+      this.classList.add('bd-secondary', 'tx-secondary');
     }
+  //it's solid
   } else {
-    alert.classList.add('tx-white');
+    this.classList.add('tx-white');
     if (color) {
-      alert.style.backgroundColor = color;
+      this.style.backgroundColor = color;
     } else if (info) {
-      alert.classList.add('bg-info');
+      this.classList.add('bg-info');
     } else if (warning) {
-      alert.classList.add('bg-warning');
+      this.classList.add('bg-warning');
     } else if (success) {
-      alert.classList.add('bg-success');
+      this.classList.add('bg-success');
     } else if (error) {
-      alert.classList.add('bg-error');
+      this.classList.add('bg-error');
     } else if (muted) {
-      alert.classList.add('bg-muted');
+      this.classList.add('bg-muted');
     } else if (primary) {
-      alert.classList.add('bg-primary');
+      this.classList.add('bg-primary');
     } else if (secondary) {
-      alert.classList.add('bg-secondary');
+      this.classList.add('bg-secondary');
     }
   } 
 </script>
-{[ alert ]}
+{children}

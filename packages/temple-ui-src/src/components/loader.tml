@@ -1,5 +1,4 @@
 <script>
-  import { props, classlist } from '@ossph/temple';
   const { 
     color,
     speed = 1000,
@@ -15,40 +14,43 @@
     muted,
     primary,
     secondary
-  } = props();
-  classlist().add('inline-block', 'inline-block', 'mr-5');
-  const styles = [
-    `width: ${size}px`, 
-    `height: ${size}px`,
-    `border-width: ${thickness}px`,
-    `border-style: ${dotted ? 'dotted' : dashed ? 'dashed' : 'solid'}`,
-    `animation-duration: ${speed}ms`,
-  ];
+  } = this.props;
+  //make an icon
+  const icon =  document.createElement('i');
+  //default classes
+  icon.classList.add('tui-loader');
+  this.classList.add('inline-block', 'mr-5');
+  //default styles
+  icon.style.width = `${size}px`;
+  icon.style.height = `${size}px`;
+  icon.style.borderWidth = `${thickness}px`;
+  icon.style.borderStyle = dotted ? 'dotted' : dashed ? 'dashed' : 'solid';
+  icon.style.animationDuration = `${speed}ms`;
   if (color) {
-    styles.push(`border-color: ${color}`);
+    icon.style.borderColor = color;
   } else if (info) {
-    styles.push(`border-color: var(--info)`);
+    icon.classList.add('bd-info');
   } else if (warning) {
-    styles.push(`border-color: var(--warning)`);
+    icon.classList.add('bd-warning');
   } else if (success) {
-    styles.push(`border-color: var(--success)`);
+    icon.classList.add('bd-success');
   } else if (error) {
-    styles.push(`border-color: var(--error)`);
+    icon.classList.add('bd-error');
   } else if (muted) {
-    styles.push(`border-color: var(--muted)`);
+    icon.classList.add('bd-muted');
   } else if (primary) {
-    styles.push(`border-color: var(--primary)`);
+    icon.classList.add('bd-primary');
   } else if (secondary) {
-    styles.push(`border-color: var(--secondary)`);
+    icon.classList.add('bd-secondary');
   }
   if (slice > 0) {
-    styles.push(`border-right-color: transparent`);
+    icon.classList.add('bdr-transparent');
   } 
   if (slice > 1) {
-    styles.push(`border-bottom-color: transparent`);
+    icon.classList.add('bdb-transparent');
   } 
   if (slice > 2) {
-    styles.push(`border-left-color: transparent`);
+    icon.classList.add('bdl-transparent');
   }
 </script>
-<i class="tui-loader" style={styles.join(';')}></i>
+{[ icon ]}

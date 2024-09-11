@@ -9,7 +9,6 @@ export type StyleRecord = Record<string, Value[]>;
 
 export type LiteralToken = {
   type: 'literal',
-  responsive: boolean,
   //class name
   name: string,
   styles: StyleMap
@@ -17,7 +16,6 @@ export type LiteralToken = {
 
 export type RangeToken = {
   type: 'range',
-  responsive: boolean,
   //class name
   name: string,
   styles: StyleMap,
@@ -27,7 +25,6 @@ export type RangeToken = {
 
 export type ExpressionToken = {
   type: 'expression',
-  responsive: boolean,
   //class name
   name: string,
   styles: StyleMap

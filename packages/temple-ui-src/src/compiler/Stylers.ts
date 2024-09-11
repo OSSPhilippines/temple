@@ -8,7 +8,7 @@ import type {
 
 import Stylesheet from './StyleSheet';
 import StyleParser from './StyleParser';
-import { media } from './helpers';
+import { bna, media } from './helpers';
 
 /**
  * Returns a literal styler
@@ -18,19 +18,40 @@ export const literal = function(literals: LiteralToken[]) {
     for (const token of literals) {
       //extract the responsive, selector, 
       //and style from the definition
-      const { responsive: isResponsive, name, styles } = token;
+      const { name, styles } = token;
       if (name === classname) {
         stylesheet.map('all', `.${name}`, styles);
         //if the classname literally equals the literal name, 
         //then there is no need to check the other literals
         //because the literal name is unique.
         return;
-      //if the literal is responsive
-      } else if (isResponsive) {
-        for (const size of media) {
-          const selector = `${size}-${name}`;
+      }
+      //check before and after
+      for (const position of bna) {
+        const selector = `${position}-${name}`;
+        if (selector === classname) {
+          stylesheet.map('all', `.${selector}::${position}`, styles);
+          //if the classname literally equals the selector name, 
+          //then there is no need to check the other media sizes
+          //because the selector name is unique.
+          return;
+        }
+      }
+      //check responsive
+      for (const size of media) {
+        const selector = `${size}-${name}`;
+        if (selector === classname) {
+          stylesheet.map(size as Media, `.${selector}`, styles);
+          //if the classname literally equals the selector name, 
+          //then there is no need to check the other media sizes
+          //because the selector name is unique.
+          return;
+        }
+        //check before and after
+        for (const position of bna) {
+          const selector = `${size}-${position}-${name}`;
           if (selector === classname) {
-            stylesheet.map(size as Media, `.${selector}`, styles);
+            stylesheet.map(size as Media, `.${selector}::${position}`, styles);
             //if the classname literally equals the selector name, 
             //then there is no need to check the other media sizes
             //because the selector name is unique.
@@ -51,7 +72,7 @@ export const range = function(ranges: RangeToken[]) {
   for (const token of ranges) {
     //extract the responsive, selector, style,
     //range, and step from the definition
-    const { responsive, name, styles, range, step } = token;
+    const { name, styles, range, step } = token;
     const decimals = step.toString().split('.')[1]?.length || 0;
     const multiplier = Math.pow(10, decimals);
     //loop through the range
@@ -63,7 +84,6 @@ export const range = function(ranges: RangeToken[]) {
       //add the literal to the literals array
       literals.push({
         type: 'literal',
-        responsive: responsive,
         name: name.replaceAll('$', number),
         styles: styles.clone().replaceAll('$', value)
       });
@@ -81,7 +101,7 @@ export const expression = function(expressions: ExpressionToken[]) {
     for (const token of expressions) {
       //extract the responsive, selector, 
       //and style from the definition
-      const { responsive: isResponsive, name } = token;
+      const { name } = token;
       const matches = classname.match(new RegExp(`^${name}$`));
       if (matches) {
         //extract the selector and arguments
@@ -94,10 +114,39 @@ export const expression = function(expressions: ExpressionToken[]) {
         //add the styles to the stylesheet
         stylesheet.map('all', `.${classname}`, styles);
       //if the expression is responsive
-      } 
-      if (isResponsive) {
-        for (const size of media) {
-          const matches = classname.match(new RegExp(`^${size}\\-${name}$`));
+      }
+      //check before and after
+      for (const position of bna) {
+        const matches = classname.match(new RegExp(`^${position}\\-${name}$`));
+        if (matches) {
+          //extract the selector and arguments
+          const [ classname, ...args ] = Array.from(matches);
+          //replace the arguments in the style
+          const styles = token.styles.clone();
+          args.forEach(
+            (arg, index) => styles.replaceAll('$' + (index + 1), arg)
+          );
+          //add the styles to the stylesheet
+          stylesheet.map('all', `.${classname}::${position}`, styles);
+        }
+      }
+      //check responsive
+      for (const size of media) {
+        const matches = classname.match(new RegExp(`^${size}\\-${name}$`));
+        if (matches) {
+          //extract the selector and arguments
+          const [ classname, ...args ] = Array.from(matches);
+          //replace the arguments in the style
+          const styles = token.styles.clone();
+          args.forEach(
+            (arg, index) => styles.replaceAll('$' + (index + 1), arg)
+          );
+          //add the styles to the stylesheet
+          stylesheet.map(size as Media, `.${classname}`, styles);
+        }
+        //check before and after
+        for (const position of bna) {
+          const matches = classname.match(new RegExp(`^${size}\\-${position}\\-${name}$`));
           if (matches) {
             //extract the selector and arguments
             const [ classname, ...args ] = Array.from(matches);
@@ -107,7 +156,7 @@ export const expression = function(expressions: ExpressionToken[]) {
               (arg, index) => styles.replaceAll('$' + (index + 1), arg)
             );
             //add the styles to the stylesheet
-            stylesheet.map(size as Media, `.${classname}`, styles);
+            stylesheet.map(size as Media, `.${classname}::${position}`, styles);
           }
         }
       }

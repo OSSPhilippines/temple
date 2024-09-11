@@ -1,0 +1,88 @@
+<link rel="import" type="component" href="./table/thead.tml" name="table-thead" />
+<link rel="import" type="component" href="./table/tbody.tml" name="table-tbody" />
+<link rel="import" type="component" href="./table/tfoot.tml" name="table-tfoot" />
+<script>
+  const { top, bottom, left, right } = this.props;
+  const sticky = top || bottom || left || right;
+  const rows: Node[] = [];
+  const headers: Node[] = [];
+  const footers: Node[] = [];
+  const children = this.originalChildren;
+  const state = { mounted: false };
+  if (sticky) {
+    this.classList.add('block', 'relative', 'scroll-auto', 'w-full');
+  } else {
+    this.classList.add('table', 'w-full');
+  }
+
+  for (const [ i, child ] of children.entries()) {
+    if (child.nodeName.includes('HEAD')) {
+      if (top) {
+        child.classList.add('sticky', 'top-0', 'z-1');
+      }
+      headers.push(child);
+    } else if (child.nodeName.includes('FOOT')) {
+      if (bottom) {
+        child.classList.add('sticky', 'bottom-0', 'z-1');
+      }
+      footers.push(child);
+    } else if (child.nodeName.includes('ROW')) {
+      if (child.childElementCount > 1) {
+        const first = child.firstElementChild;
+        const last = child.lastElementChild;
+        if (left && first) {
+          first.classList.add('sticky', 'left-0', 'z-2');
+        } 
+        if (right && last) {
+          last.classList.add('sticky', 'right-0', 'z-2');
+        }
+      }
+      rows.push(child);
+    }
+  }
+
+  if (headers.length > 1) {
+    const first = headers[0];
+    const last = headers[headers.length - 1];
+    if (left && first) {
+      first.classList.add('sticky', 'left-0', 'z-3');
+    } 
+    if (right && last) {
+      last.classList.add('sticky', 'right-0', 'z-3');
+    }
+  }
+
+  if (footers.length > 1) {
+    const first = footers[0];
+    const last = footers[footers.length - 1];
+    if (left && first) {
+      first.classList.add('sticky', 'left-0', 'z-3');
+    } 
+    if (right && last) {
+      last.classList.add('sticky', 'right-0', 'z-3');
+    }
+  }
+</script>
+<if true={sticky}>
+  <div class="table">
+    <if true={headers.length > 0}>
+      <table-thead>{headers}</table-thead>
+    </if>
+    <if true={rows.length > 0}>
+      <table-tbody>{rows}</table-tbody>
+    </if>
+    <if true={footers.length > 0}>
+      <table-tfoot>{footers}</table-tfoot>
+    </if>
+  </div>
+<else />
+  <if true={headers.length > 0}>
+    <table-thead>{headers}</table-thead>
+  </if>
+  <if true={rows.length > 0}>
+    <table-tbody>{rows}</table-tbody>
+  </if>
+  <if true={footers.length > 0}>
+    <table-tfoot>{footers}</table-tfoot>
+  </if>
+</if>
