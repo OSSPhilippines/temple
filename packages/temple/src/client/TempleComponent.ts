@@ -144,6 +144,37 @@ export default abstract class TempleComponent extends HTMLElement {
   }
 
   /**
+   * Called when static observedAttributes is set and:
+   * 1. setAttribute is called
+   * 2. removeAttribute is called
+   * 3. element.[attribute] is changed
+   * 4. element.[attribute] is removed
+   * 5. element.attributes is changed
+   * 6. Attribute is changed via browser developer tools
+   */
+  public attributeChangedCallback(
+    name: string, 
+    prev: string|null, 
+    next: string|null
+  ) {
+    //if it's rendering, do nothing
+    if (this._rendering) {
+      return;
+    }
+    //determine action
+    const action = prev === null 
+      ? 'add' : next === null 
+      ? 'remove' : 'update';
+    if (next === null && this.hasAttribute(name)) {
+      this.element.removeAttribute(name);
+    } else {
+      this.element.setAttribute(name, next);
+    }
+    //emit the attr event
+    emitter.emit('attr', { action, name, prev, value: next, target: this });
+  }
+
+  /**
    * Called when the element is inserted into a document,
    */
   public connectedCallback() {
@@ -289,7 +320,7 @@ export default abstract class TempleComponent extends HTMLElement {
     } else {
       //if shadow root is not set, create it
       if (!this.shadowRoot) {
-        this.attachShadow({ mode: 'open' });
+        this.attachShadow({ mode: 'open', delegatesFocus: true });
       }
 
       const shadowRoot = this.shadowRoot as ShadowRoot;

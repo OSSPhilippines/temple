@@ -161,6 +161,17 @@ export default class Component {
   }
 
   /**
+   * Returns true if the component should be treated as a field
+   */
+  public get field() {
+    return this.ast.scripts.some(
+      script => script.attributes?.properties.some(
+        property => property.key.name === 'form'
+      )
+    );
+  }
+
+  /**
    * Returns the filesystem being used
    */
   public get fs() {
@@ -201,6 +212,29 @@ export default class Component {
    */
   public get loader() {
     return this._loader;
+  }
+
+  /**
+   * Returns attributes that should be observed
+   */
+  public get observe() {
+    const observables = new Set<string>();
+    for (const script of this.ast.scripts) {
+      if (script.attributes) {
+        for (const property of script.attributes.properties) {
+          const { key, value } = property;
+          if (key.name === 'observe' 
+            && value.type === 'Literal'
+            && typeof value.value === 'string'
+          ) {
+            value.value.split(',').forEach(
+              attribute => observables.add(attribute.trim())
+            );
+          }
+        }
+      }
+    }
+    return Array.from(observables);
   }
 
   /**

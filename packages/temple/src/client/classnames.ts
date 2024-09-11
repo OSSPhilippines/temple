@@ -25,5 +25,5 @@ export function classlist(pointer: Component|null = null) {
  * ie. const classes = classnames();
  */
 export default function classnames(pointer: TempleComponent|null = null) {
-  return props<{'class': string}>(pointer)['class'];
+  return props<{'class': string}>(pointer)['class'] || '';
 }

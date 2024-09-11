@@ -7,6 +7,7 @@ export type {
 } from './types';
 
 import TempleException from './Exception';
+import TempleField from './client/TempleField';
 import TempleComponent from './client/TempleComponent';
 import TempleRegistry from './client/TempleRegistry';
 import TempleElement from './client/TempleElement';
@@ -32,6 +33,7 @@ export {
   signal, 
   emitter,
   TempleDataMap,
+  TempleField,
   TempleComponent,
   TempleRegistry,
   TempleElement,

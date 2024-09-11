@@ -121,15 +121,25 @@ export default class Transpiler extends ComponentTranspiler {
         'Hash' 
       ]
     });
-    //import { TempleRegistry, emitter, data as __APP_DATA__ } from '@ossph/temple/client';
+    //import TempleException from '@ossph/temple/dist/Exception';
     source.addImportDeclaration({
-      moduleSpecifier: '@ossph/temple/client',
-      namedImports: [ 
-        'TempleRegistry', 
-        'TempleException',
-        'emitter', 
-        'data as __APP_DATA__' 
-      ]
+      moduleSpecifier: '@ossph/temple/dist/Exception',
+      defaultImport: 'TempleException'
+    });
+    //import TempleRegistry from '@ossph/temple/dist/client/TempleRegistry';
+    source.addImportDeclaration({
+      moduleSpecifier: '@ossph/temple/dist/client/TempleRegistry',
+      defaultImport: 'TempleRegistry'
+    });
+    //import emitter from '@ossph/temple/dist/client/TempleEmitter';
+    source.addImportDeclaration({
+      moduleSpecifier: '@ossph/temple/dist/client/TempleEmitter',
+      defaultImport: 'emitter'
+    });
+    //import __APP_DATA__ from '@ossph/temple/dist/client/data';
+    source.addImportDeclaration({
+      moduleSpecifier: '@ossph/temple/dist/client/data',
+      defaultImport: '__APP_DATA__' 
     });
     //import Counter_abc123 from './Counter_abc123'
     registry.forEach(component => {

@@ -187,7 +187,7 @@ export default (() => {
   //ex. <div mount=callback>Hello World</div>
   bindAttribute('mount', element => {
     const callback = element.getAttribute('mount');
-    if (typeof callback === 'function' ) {
+    if (typeof callback === 'function') {
       const event = new CustomEvent('mount', { 
         detail: {
           node: element,
@@ -201,7 +201,7 @@ export default (() => {
   //ex. <div unmount=callback>Hello World</div>
   unbindAttribute('unmount', element => {
     const callback = element.getAttribute('unmount');
-    if (typeof callback === 'function' ) {
+    if (typeof callback === 'function') {
       const event = new CustomEvent('unmount', { 
         detail: {
           node: element,
@@ -215,42 +215,63 @@ export default (() => {
   //ex. <div connect=callback>Hello World</div>
   bindAttribute('connect', element => {
     const callback = element.getAttribute('connect');
-    if (typeof callback === 'function' ) {
-      const event = new CustomEvent('connect', { 
-        detail: {
-          node: element,
-          target: element.element
-        }
-      });
-      callback(event);
+    if (typeof callback === 'function') {
+      emitter.unbind('connect', callback);
+      emitter.on('connect', callback);
     }
   });
 
   //ex. <div disconnect=callback>Hello World</div>
   bindAttribute('disconnect', element => {
     const callback = element.getAttribute('disconnect');
-    if (typeof callback === 'function' ) {
-      const event = new CustomEvent('disconnect', { 
-        detail: {
-          node: element,
-          target: element.element
-        }
-      });
-      callback(event);
+    if (typeof callback === 'function') {
+      emitter.unbind('disconnect', callback);
+      emitter.on('disconnect', callback);
     }
   });
 
   //ex. <div adopt=callback>Hello World</div>
   bindAttribute('adopt', element => {
     const callback = element.getAttribute('adopt');
+    if (typeof callback === 'function') {
+      emitter.unbind('adopt', callback);
+      emitter.on('adopt', callback);
+    }
+  });
+
+  //ex. <div associate=callback>Hello World</div>
+  bindAttribute('associate', element => {
+    const callback = element.getAttribute('associate');
+    if (typeof callback === 'function') {
+      emitter.unbind('associate', callback);
+      emitter.on('associate', callback);
+    }
+  });
+
+  //ex. <div disable=callback>Hello World</div>
+  bindAttribute('disable', element => {
+    const callback = element.getAttribute('disable');
+    if (typeof callback === 'function') {
+      emitter.unbind('disable', callback);
+      emitter.on('disable', callback);
+    }
+  });
+
+  //ex. <div reset=callback>Hello World</div>
+  bindAttribute('reset', element => {
+    const callback = element.getAttribute('reset');
+    if (typeof callback === 'function') {
+      emitter.unbind('reset', callback);
+      emitter.on('reset', callback);
+    }
+  });
+
+  //ex. <div attr=callback>Hello World</div>
+  bindAttribute('attr', element => {
+    const callback = element.getAttribute('attr');
     if (typeof callback === 'function' ) {
-      const event = new CustomEvent('adopt', { 
-        detail: {
-          node: element,
-          target: element.element
-        }
-      });
-      callback(event);
+      emitter.unbind('attr', callback);
+      emitter.on('attr', callback);
     }
   });
 

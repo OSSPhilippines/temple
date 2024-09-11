@@ -101,22 +101,31 @@ export default class Transpiler {
       classname, 
       imports,
       styles, 
-      scripts
+      scripts,
+      field,
+      observe
     } = this._component;
     //determine tagname
     const tagname = this._component.brand 
       ? `${this._component.brand}-${this._component.tagname}`
       : this._component.tagname;
+    //determine component parent
+    const parent = field ? 'TempleField' : 'TempleComponent';
     //get path without extension
     //ex. /path/to/Counter.tml -> /path/to/Counter
     const extname = path.extname(absolute);
     const filePath = absolute.slice(0, -extname.length);
     //create a new source file
     const { source } = this._createSourceFile(`${filePath}.ts`);
-    //import { TempleRegistry, TempleComponent } from '@ossph/temple/client';
+    //import TempleRegistry from '@ossph/temple/dist/client/TempleRegistry';
     source.addImportDeclaration({
-      moduleSpecifier: '@ossph/temple/client',
-      namedImports: [ 'TempleRegistry', 'TempleComponent' ]
+      moduleSpecifier: '@ossph/temple/dist/client/TempleRegistry',
+      defaultImport: 'TempleRegistry'
+    });
+    //import TempleComponent from '@ossph/temple/dist/client/TempleComponent';
+    source.addImportDeclaration({
+      moduleSpecifier: `@ossph/temple/dist/client/${parent}`,
+      defaultImport: parent
     });
     //import Counter from './Counter'
     this._component.components.filter(
@@ -156,7 +165,7 @@ export default class Transpiler {
     //export default class FoobarComponent extends TempleComponent
     const component = source.addClass({
       name: classname,
-      extends: 'TempleComponent',
+      extends: parent,
       isDefaultExport: true,
     });
     //public static component = ['foo-bar', 'FoobarComponent'];
@@ -165,6 +174,14 @@ export default class Transpiler {
       isStatic: true,
       initializer: `[ '${tagname}', '${classname}' ] as [ string, string ]`
     });
+    //public static observedAttributes = ["required", "value"]
+    if (observe.length > 0) {
+      component.addProperty({
+        name: 'observedAttributes',
+        isStatic: true,
+        initializer: JSON.stringify(observe)
+      });
+    }
     //public style()
     component.addMethod({
       name: 'styles',

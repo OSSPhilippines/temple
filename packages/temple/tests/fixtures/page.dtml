@@ -8,7 +8,7 @@
     padding: 0;
   }
 </style>
-<script>
+<script form observe="disabled,on">
   import snippets from '@/modules/snippets/home';
   const url = '/';
   const title = 'Temple - The reactive web component template engine.';
