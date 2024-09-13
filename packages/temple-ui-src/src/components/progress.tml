@@ -1,0 +1,53 @@
+<script>
+  const { 
+    info,    warning,   error, 
+    success, primary,   secondary, 
+    muted,   width = 0, bar = '',
+    color 
+  } = this.props;
+  const styleList = [ `width: ${Math.min(Math.max(width, 0), 100)}%` ];
+  const classList = bar.split(' ').filter(Boolean);
+  classList.push('h-full');
+  if (info) {
+    classList.push('bg-info');
+  } else if (warning) {
+    classList.push('bg-warning');
+  } else if (error) {
+    classList.push('bg-error');
+  } else if (success) {
+    classList.push('bg-success');
+  } else if (primary) {
+    classList.push('bg-primary');
+  } else if (secondary) {
+    classList.push('bg-secondary');
+  } else if (muted) {
+    classList.push('bg-muted');
+  } else if (color) {
+    styleList.push(`background-color: ${color}`);
+  }
+
+  //get the host element
+  const classes = this.className.split(' ');
+  const children = this.originalChildren;
+  this.classList.add('relative', 'scroll-hidden');
+  //determine display
+  if (!classes.find(
+    classname => classname.includes('block')
+      || classname.includes('flex')
+      || classname.includes('none')
+      || classname.includes('inline')
+      || classname.includes('inline-block')
+  )) {
+    this.classList.add('block');
+  }
+  //determine height
+  if (!classes.find(classname => classname.includes('h-'))) {
+    this.classList.add('h-20');
+  }
+</script>
+<div class={classList.join(' ')} style={styleList.join(';')}></div>
+<if true={children.length}>
+  <span class="absolute top-0 bottom-0 left-0 right-0 tx-center">
+    {children}
+  </span>
+</if>

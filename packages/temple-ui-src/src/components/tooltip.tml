@@ -1,0 +1,67 @@
+<script>
+  const { 
+    top,    bottom,   left,      right, 
+    info,   warning,  error,     success,
+    muted,  primary,  secondary, curved,
+    center, tip = '', width = 'auto'
+  } = this.props;
+  this.classList.add('relative', 'block', 'w-full');
+  const children = this.originalChildren;
+  const classList = tip?.length ? tip.split(' ') : [ 'p-5', 'o-90', 'tx-white' ]; 
+  const style = [];
+
+  classList.push('absolute', 'none');
+  if (info) {
+    classList.push('bg-info');
+  } else if (warning) {
+    classList.push('bg-warning');
+  } else if (error) {
+    classList.push('bg-error');
+  } else if (success) {
+    classList.push('bg-success');
+  } else if (muted) {
+    classList.push('bg-muted');
+  } else if (primary) {
+    classList.push('bg-primary');
+  } else if (secondary) {
+    classList.push('bg-secondary');
+  } else {
+    classList.push('bg-black');
+  }
+  if (curved) {
+    classList.push('curved');
+  }
+  if (top) {
+    classList.push('bottom-0');
+  } else if (bottom) {
+    classList.push('top-0');
+  }
+  if (left) {
+    classList.push('right-0');
+  } else if (right) {
+    classList.push('left-0');
+  }
+  if (center) {
+    classList.push('tx-center');
+  }
+  if (width === 'auto') {
+    style.push('width: auto');
+  } else {
+    style.push(`width: ${width}px`);
+  }
+  if (this.parentNode) {
+    this.parentNode.addEventListener('mouseover', () => {
+      const tip = this.querySelector('span');
+      tip?.classList.remove('none');
+      tip?.classList.add('block');
+    });
+    this.parentNode.addEventListener('mouseout', () => {
+      const tip = this.querySelector('span');
+      tip?.classList.remove('block');
+      tip?.classList.add('none');
+    });
+  }
+</script>
+<span class={classList.join(' ')} style={style.join(';')}>
+  {children}
+</span>

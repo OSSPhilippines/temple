@@ -1,0 +1,30 @@
+<link rel="import" type="component" href="./icon.tml" name="tui-icon" />
+<script>
+  const { 
+    icon = '', 
+    crumb: link = '', 
+    selected = '', 
+    separator = '', 
+    crumbs = [] 
+  } = this.props;
+</script>
+<each key=index value=crumb from=crumbs>
+  <if true={crumb.href && crumb.label}>
+    <a class={link} href={crumb.href}>
+      <if true={crumb.icon}>
+        <tui-icon class={icon} name={crumb.icon} />
+      </if>
+      {crumb.label}
+    </a>
+  <elif true={crumb.label} />
+    <span class={selected}>
+      <if true={crumb.icon}>
+        <tui-icon class={icon} name={crumb.icon} />
+      </if>
+      {crumb.label}
+    </span>
+  </if>
+  <if true={index < crumbs.length - 1}>
+    <tui-icon class={separator} name="chevron-right" />
+  </if>
+</each>

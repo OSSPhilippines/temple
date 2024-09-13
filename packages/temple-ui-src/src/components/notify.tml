@@ -1,0 +1,114 @@
+<script>
+  const { 
+    fade, 
+    bottom,   
+    top,
+    left,
+    center,
+    right,
+    smooth = 10
+  } = this.props;
+  const alert = (type, message) => {
+    const bar = document.createElement('div');
+    const icon = document.createElement('i');
+    const close = document.createElement('i');
+    const progress = document.createElement('div');
+    const notification = document.createElement('div');
+
+    bar.classList.add('h-full', 'bg-muted');
+    progress.classList.add('h-5', 'w-full');
+    icon.classList.add(
+      'inline-block', 'tx-white', 
+      'fas', 'fa-fw', 'mr-5'
+    );
+    close.classList.add(
+      'inline-block', 'float-right',
+      'tx-white', 'cursor-pointer',
+      'fas', 'fa-fw', 'fa-times',
+      'relative', 'top-3'
+    );
+    notification.classList.add(
+      'w-calc-full-32', 'relative', 
+      'p-16',   'mb-8', 'tx-white', 
+      'scroll-hidden', 'curved',
+      'wm-288'
+    );
+    
+    switch (type) {
+      case 'warning':
+        icon.classList.add('fa-exclamation-triangle');
+        notification.classList.add('bg-warning');
+        break;
+      case 'error':
+        icon.classList.add('fa-times-circle');
+        notification.classList.add('bg-error');
+        break;
+      case 'success':
+        icon.classList.add('fa-check-circle');
+        notification.classList.add('bg-success');
+        break;
+      case 'primary':
+        icon.classList.add('none');
+        notification.classList.add('bg-primary');
+        break;
+      case 'secondary':
+        icon.classList.add('none');
+        notification.classList.add('bg-secondary');
+        break;
+      case 'muted':
+        icon.classList.add('none');
+        notification.classList.add('bg-muted');
+        break;
+      case 'info':
+      default:
+        icon.classList.add('fa-info-circle');
+        notification.classList.add('bg-info');
+        break;
+    }
+
+    notification.appendChild(close);
+    notification.appendChild(icon);
+    notification.appendChild(new Text(message));
+    notification.appendChild(progress);
+    progress.appendChild(bar);
+
+    return { bar, icon, close, progress, notification };
+  };
+  this.notify = (type, message, timeout = 5000) => {
+    const { bar, close, progress, notification } = alert(type, message);
+    this.appendChild(notification);
+
+    const state = { time: 0, progress: 0 };
+
+    const interval = setInterval(() => {
+      state.time += smooth;
+      state.progress = Math.floor((state.time / timeout) * 100);
+      notification.style.opacity = String(
+        (timeout - state.time) / timeout
+      );
+      bar.style.width = `${state.progress}%`;
+      if (state.time >= timeout) {
+        remove();
+      }
+    }, smooth);
+
+    const remove = () => {
+      this.removeChild(notification);
+      clearInterval(interval);
+    };
+
+    close.addEventListener('click', remove);
+  };
+  //get the host element
+  this.classList.add('fixed');
+  if (top) {
+    this.classList.add('top-20');
+  } else {
+    this.classList.add('bottom-20');
+  }
+  if (left) {
+    this.classList.add('left-20');
+  } else {
+    this.classList.add('right-20');
+  }
+</script>

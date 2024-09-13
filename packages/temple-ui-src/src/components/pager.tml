@@ -1,0 +1,92 @@
+<link rel="import" type="component" href="./icon.tml" name="tui-icon" />
+<script>
+  const { 
+    total = 0, 
+    start = 0, 
+    range = 50, 
+    radius = 2,
+    next = false,
+    prev = false,
+    rewind = false,
+    forward = false,
+    page: pageClass = '',
+    selected: selectedClass = '',
+    select = () => {}
+  } = this.props;
+  const calculate = (total = 0, start = 0, range = 50, radius = 2) => {
+    //calculate the total number of pages
+    //ex. 1000 / 100 = 10
+    //ex. 1001 / 100 = 11
+    const pages = Math.ceil(total / range);
+    //calculate the current page
+    //ex. 0 / 50 = 1
+    //ex. 49 / 50 = 1
+    //ex. 50 / 50 = 2
+    const current = Math.ceil((start + 1) / range);
+    //determine what pages to show, ex. if radius is 2 and page is 5, then show 3, 4, 5, 6, 7
+    const numbers = Array.from({ length: pages }, (_, i) => i + 1).filter(page => {
+      return page >= current - radius && page <= current + radius;
+    });
+    const minmax = [ numbers[0], numbers[numbers.length - 1] ];
+
+    return { current, numbers, range: minmax, pages };
+  };
+
+  const state = calculate(total, start, range, radius);
+
+  const handlers = {
+    click: (e) => {
+      e.preventDefault();
+      const page = e.target.innerText;
+      handlers.select(Number(page));
+      return false;
+    },
+    rewind: (e) => {
+      e.preventDefault();
+      handlers.select(1);
+      return false;
+    },
+    forward: (e) => {
+      e.preventDefault();
+      handlers.select(Math.ceil(total / range));
+      return false;
+    },
+    prev: (e) => {
+      e.preventDefault();
+      handlers.select(Math.max(1, state.current - 1));
+      return false;
+    },
+    next: (e) => {
+      e.preventDefault();
+      handlers.select(Math.min(state.range[1], state.current + 1));
+      return false;
+    },
+    select: (page: number) => {
+      typeof select === 'function' && select(page);
+      Object.assign(state, calculate(total, (page - 1) * range, range, radius));
+      this.render();
+    }
+  };
+
+</script>
+<if true={state.numbers.length > 1}>
+  <if true={rewind && state.range[0] !== 1}>
+    <tui-icon name="angles-left" class=pageClass click={handlers.rewind} />
+  </if>
+  <if true={prev && state.current > 1}>
+    <tui-icon name="angle-left" class=pageClass click={handlers.prev} />
+  </if>
+  <each value=page from={state.numbers}>
+    <if true={page === state.current}>
+      <strong class=selectedClass>{page}</strong>
+    <else />
+      <a class=pageClass click={handlers.click}>{page}</a>
+    </if>
+  </each>
+  <if true={next && state.current < state.pages}>
+    <tui-icon name="angle-right" class=pageClass click={handlers.next} />
+  </if>
+  <if true={forward && state.range[1] !== state.pages}>
+    <tui-icon name="angles-right" class=pageClass click={handlers.forward} />
+  </if>
+</if>
