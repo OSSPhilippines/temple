@@ -66,7 +66,9 @@ export default class TempleElement {
     const entries = Object.entries(this._attributes);
     const attributes = entries.length > 0 
       ? ' ' + entries.map(([key, value]) => {
-        if (typeof value === 'string') {
+        if (typeof value === 'string' 
+          && !/["<>\n]/.test(value)
+        ) {
           return `${key}="${value}"`;
         } else if (typeof value === 'boolean') {
           return value ? key : '';
