@@ -1,0 +1,20 @@
+<script>
+  const { value, length, words, hellip } = this.props;
+  const count = typeof length === 'string' ? Number(length) || undefined : length;
+  let output = value;
+  if (words) {
+    const words = value.split(' ');
+    if (count && words.length > count) {
+      output = words.slice(0, count).join(' ');
+      if (hellip) {
+        output += '&hellip;';
+      }
+    }
+  } else if (count && value.length > count) {
+    output = value.slice(0, count);
+    if (hellip) {
+      output += '&hellip;';
+    }
+  }
+</script>
+{output}

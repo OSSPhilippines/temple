@@ -1,0 +1,18 @@
+<script>
+  import marked from 'marked';
+  import purify from 'dompurify';
+  const { value } = this.props;
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add('block');
+  }
+  const init = () => {
+    this.innerHTML = purify.sanitize(marked.parse(value));
+  }
+</script>
+<span mount=init></span>

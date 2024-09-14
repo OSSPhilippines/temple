@@ -1,0 +1,13 @@
+<script>
+  const { value, label, link = '' } = this.props;
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add('inline-block');
+  }
+</script>
+<a class=link href={`mailto:${value}`}>{label || value}</a>

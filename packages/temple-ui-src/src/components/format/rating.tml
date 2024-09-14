@@ -1,0 +1,27 @@
+<script>
+  const { value, max, remainder, round, star = '' } = this.props;
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add('inline-block');
+  }
+  const rating = round === 'round' ? Math.round(Number(value)) 
+    : round === 'ceil' ? Math.ceil(Number(value))
+    : round === 'floor' ? Math.floor(Number(value))
+    : Math.round(Number(value));
+  const stars: string[] = [];
+  for (let i = 0; i < (max || rating); i++) {
+    if (i < rating) {
+      stars.push('★');
+    } else if(remainder) {
+      stars.push('☆');
+    }
+  }
+</script>
+<each value=count from=stars>
+  <span class=star>{count}</span>
+</each>

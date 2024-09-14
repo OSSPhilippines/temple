@@ -1,0 +1,40 @@
+<link rel="import" type="component" href="../badge.tml" name="tui-badge" />
+<script>
+  const { 
+    curved, rounded,     pill,    
+    info,   warning,     success, 
+    error,  muted,       primary, 
+    color,  secondary,   outline,
+    solid,  transparent, value = [] 
+  } = this.props;
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add('inline-block');
+  }
+  const defaultColor = !info && !color
+    && !warning && !success && !error 
+    && !muted && !primary && !secondary;
+</script>
+<each value=tag from={value}>
+  <tui-badge 
+    curved={!!curved} 
+    rounded={!!rounded} 
+    pill={!!pill} 
+    info={!!info} 
+    warning={!!warning || defaultColor} 
+    success={!!success} 
+    error={!!error} 
+    muted={!!muted} 
+    primary={!!primary} 
+    color={color} 
+    secondary={!!secondary} 
+    outline={!!outline} 
+    solid={!!solid} 
+    transparent={!!transparent} 
+  >{tag}</tui-badge>
+</each>

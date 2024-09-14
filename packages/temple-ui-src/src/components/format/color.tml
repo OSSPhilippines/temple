@@ -1,0 +1,37 @@
+<script>
+  const { value, sm, md, lg, box = true, text = true } = this.props;
+  //build host class names
+  this.classList.add('flex', 'flex-center-y');
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add('inline-block');
+  }
+  //build box class list
+  const classList = [ 'inline-block', 'curved', 'bda-black' ];
+  //determine box class size
+  if (sm) {
+    classList.push('w-8', 'h-8');
+  } else if (md) {
+    classList.push('w-12', 'h-12');
+  } else if (lg) {
+    classList.push('w-16', 'h-16');
+  } else {
+    classList.push('w-12', 'h-12');
+  }
+  //if there is a text, add margin 
+  //right to the box class list
+  if (text) {
+    classList.push('mr-5');
+  }
+</script>
+<if true={box}>
+  <span class={classList.join(' ')} style={`background-color: ${value};`}></span>
+</if>
+<if true={text}>
+  <span>{value}</span>
+</if>

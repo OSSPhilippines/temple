@@ -1,0 +1,15 @@
+<script>
+  const { value = [], alt='', image = '' } = this.props;
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add('block');
+  }
+</script>
+<each value=src from=value>
+  <img class=image {alt} {src} />
+</each>

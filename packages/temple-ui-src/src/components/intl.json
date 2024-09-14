@@ -1,0 +1,2002 @@
+[
+  {
+    "countryCode": "AD",
+    "countryName": "Andorra",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "AE",
+    "countryName": "United Arab Emirates",
+    "currencyType": "fiat",
+    "currencyCode": "AED",
+    "currencyName": "United Arab Emirates Dirham",
+    "currencyPlural": "UAE dirhams",
+    "currencySymbol": "AED",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "AF",
+    "countryName": "Afghanistan",
+    "currencyType": "fiat",
+    "currencyCode": "AFN",
+    "currencyName": "Afghan Afghani",
+    "currencyPlural": "Afghan Afghanis",
+    "currencySymbol": "Af",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "AL",
+    "countryName": "Albania",
+    "currencyType": "fiat",
+    "currencyCode": "ALL",
+    "currencyName": "Albanian Lek",
+    "currencyPlural": "Albanian lekë",
+    "currencySymbol": "ALL",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "AM",
+    "countryName": "Armenia",
+    "currencyType": "fiat",
+    "currencyCode": "AMD",
+    "currencyName": "Armenian Dram",
+    "currencyPlural": "Armenian drams",
+    "currencySymbol": "AMD",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "AR",
+    "countryName": "Argentina",
+    "currencyType": "fiat",
+    "currencyCode": "ARS",
+    "currencyName": "Argentine Peso",
+    "currencyPlural": "Argentine pesos",
+    "currencySymbol": "AR$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "AS",
+    "countryName": "American Samoa",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "AT",
+    "countryName": "Austria",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "AU",
+    "countryName": "Australia",
+    "currencyType": "fiat",
+    "currencyCode": "AUD",
+    "currencyName": "Australian Dollar",
+    "currencyPlural": "Australian dollars",
+    "currencySymbol": "AU$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "AX",
+    "countryName": "Åland",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "AZ",
+    "countryName": "Azerbaijan",
+    "currencyType": "fiat",
+    "currencyCode": "AZN",
+    "currencyName": "Azerbaijani Manat",
+    "currencyPlural": "Azerbaijani manats",
+    "currencySymbol": "man.",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "BA",
+    "countryName": "Bosnia and Herzegovina",
+    "currencyType": "fiat",
+    "currencyCode": "BAM",
+    "currencyName": "Bosnia-Herzegovina Convertible Mark",
+    "currencyPlural": "Bosnia-Herzegovina convertible marks",
+    "currencySymbol": "KM",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "BD",
+    "countryName": "Bangladesh",
+    "currencyType": "fiat",
+    "currencyCode": "BDT",
+    "currencyName": "Bangladeshi Taka",
+    "currencyPlural": "Bangladeshi takas",
+    "currencySymbol": "Tk",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "BE",
+    "countryName": "Belgium",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "BF",
+    "countryName": "Burkina Faso",
+    "currencyType": "fiat",
+    "currencyCode": "XOF",
+    "currencyName": "CFA Franc BCEAO",
+    "currencyPlural": "CFA francs BCEAO",
+    "currencySymbol": "CFA",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "BG",
+    "countryName": "Bulgaria",
+    "currencyType": "fiat",
+    "currencyCode": "BGN",
+    "currencyName": "Bulgarian Lev",
+    "currencyPlural": "Bulgarian leva",
+    "currencySymbol": "BGN",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "BH",
+    "countryName": "Bahrain",
+    "currencyType": "fiat",
+    "currencyCode": "BHD",
+    "currencyName": "Bahraini Dinar",
+    "currencyPlural": "Bahraini dinars",
+    "currencySymbol": "BD",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "BI",
+    "countryName": "Burundi",
+    "currencyType": "fiat",
+    "currencyCode": "BIF",
+    "currencyName": "Burundian Franc",
+    "currencyPlural": "Burundian francs",
+    "currencySymbol": "FBu",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "BJ",
+    "countryName": "Benin",
+    "currencyType": "fiat",
+    "currencyCode": "XOF",
+    "currencyName": "CFA Franc BCEAO",
+    "currencyPlural": "CFA francs BCEAO",
+    "currencySymbol": "CFA",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "BL",
+    "countryName": "Saint Barthélemy",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "BN",
+    "countryName": "Brunei",
+    "currencyType": "fiat",
+    "currencyCode": "BND",
+    "currencyName": "Brunei Dollar",
+    "currencyPlural": "Brunei dollars",
+    "currencySymbol": "BN$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "BO",
+    "countryName": "Bolivia",
+    "currencyType": "fiat",
+    "currencyCode": "BOB",
+    "currencyName": "Bolivian Boliviano",
+    "currencyPlural": "Bolivian bolivianos",
+    "currencySymbol": "Bs",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "BQ",
+    "countryName": "Bonaire",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "BR",
+    "countryName": "Brazil",
+    "currencyType": "fiat",
+    "currencyCode": "BRL",
+    "currencyName": "Brazilian Real",
+    "currencyPlural": "Brazilian reals",
+    "currencySymbol": "R$",
+    "language": "pt_BR"
+  },
+  {
+    "countryCode": "BV",
+    "countryName": "Bouvet Island",
+    "currencyType": "fiat",
+    "currencyCode": "NOK",
+    "currencyName": "Norwegian Krone",
+    "currencyPlural": "Norwegian kroner",
+    "currencySymbol": "Nkr",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "BW",
+    "countryName": "Botswana",
+    "currencyType": "fiat",
+    "currencyCode": "BWP",
+    "currencyName": "Botswanan Pula",
+    "currencyPlural": "Botswanan pulas",
+    "currencySymbol": "BWP",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "BZ",
+    "countryName": "Belize",
+    "currencyType": "fiat",
+    "currencyCode": "BZD",
+    "currencyName": "Belize Dollar",
+    "currencyPlural": "Belize dollars",
+    "currencySymbol": "BZ$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "CA",
+    "countryName": "Canada",
+    "currencyType": "fiat",
+    "currencyCode": "CAD",
+    "currencyName": "Canadian Dollar",
+    "currencyPlural": "Canadian dollars",
+    "currencySymbol": "CA$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "CC",
+    "countryName": "Cocos [Keeling] Islands",
+    "currencyType": "fiat",
+    "currencyCode": "AUD",
+    "currencyName": "Australian Dollar",
+    "currencyPlural": "Australian dollars",
+    "currencySymbol": "AU$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "CD",
+    "countryName": "Democratic Republic of the Congo",
+    "currencyType": "fiat",
+    "currencyCode": "CDF",
+    "currencyName": "Congolese Franc",
+    "currencyPlural": "Congolese francs",
+    "currencySymbol": "CDF",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "CF",
+    "countryName": "Central African Republic",
+    "currencyType": "fiat",
+    "currencyCode": "XAF",
+    "currencyName": "CFA Franc BEAC",
+    "currencyPlural": "CFA francs BEAC",
+    "currencySymbol": "FCFA",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "CG",
+    "countryName": "Republic of the Congo",
+    "currencyType": "fiat",
+    "currencyCode": "XAF",
+    "currencyName": "CFA Franc BEAC",
+    "currencyPlural": "CFA francs BEAC",
+    "currencySymbol": "FCFA",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "CH",
+    "countryName": "Switzerland",
+    "currencyType": "fiat",
+    "currencyCode": "CHF",
+    "currencyName": "Swiss Franc",
+    "currencyPlural": "Swiss francs",
+    "currencySymbol": "CHF",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "CI",
+    "countryName": "Ivory Coast",
+    "currencyType": "fiat",
+    "currencyCode": "XOF",
+    "currencyName": "CFA Franc BCEAO",
+    "currencyPlural": "CFA francs BCEAO",
+    "currencySymbol": "CFA",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "CK",
+    "countryName": "Cook Islands",
+    "currencyType": "fiat",
+    "currencyCode": "NZD",
+    "currencyName": "New Zealand Dollar",
+    "currencyPlural": "New Zealand dollars",
+    "currencySymbol": "NZ$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "CL",
+    "countryName": "Chile",
+    "currencyType": "fiat",
+    "currencyCode": "CLP",
+    "currencyName": "Chilean Peso",
+    "currencyPlural": "Chilean pesos",
+    "currencySymbol": "CL$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "CM",
+    "countryName": "Cameroon",
+    "currencyType": "fiat",
+    "currencyCode": "XAF",
+    "currencyName": "CFA Franc BEAC",
+    "currencyPlural": "CFA francs BEAC",
+    "currencySymbol": "FCFA",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "CN",
+    "countryName": "China",
+    "currencyType": "fiat",
+    "currencyCode": "CNY",
+    "currencyName": "Chinese Yuan",
+    "currencyPlural": "Chinese yuan",
+    "currencySymbol": "CN¥",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "CO",
+    "countryName": "Colombia",
+    "currencyType": "fiat",
+    "currencyCode": "COP",
+    "currencyName": "Colombian Peso",
+    "currencyPlural": "Colombian pesos",
+    "currencySymbol": "CO$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "CR",
+    "countryName": "Costa Rica",
+    "currencyType": "fiat",
+    "currencyCode": "CRC",
+    "currencyName": "Costa Rican Colón",
+    "currencyPlural": "Costa Rican colóns",
+    "currencySymbol": "₡",
+    "language": "es"
+  },
+  {
+    "countryCode": "CV",
+    "countryName": "Cape Verde",
+    "currencyType": "fiat",
+    "currencyCode": "CVE",
+    "currencyName": "Cape Verdean Escudo",
+    "currencyPlural": "Cape Verdean escudos",
+    "currencySymbol": "CV$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "CX",
+    "countryName": "Christmas Island",
+    "currencyType": "fiat",
+    "currencyCode": "AUD",
+    "currencyName": "Australian Dollar",
+    "currencyPlural": "Australian dollars",
+    "currencySymbol": "AU$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "CY",
+    "countryName": "Cyprus",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "CZ",
+    "countryName": "Czechia",
+    "currencyType": "fiat",
+    "currencyCode": "CZK",
+    "currencyName": "Czech Republic Koruna",
+    "currencyPlural": "Czech Republic korunas",
+    "currencySymbol": "Kč",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "DE",
+    "countryName": "Germany",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "DJ",
+    "countryName": "Djibouti",
+    "currencyType": "fiat",
+    "currencyCode": "DJF",
+    "currencyName": "Djiboutian Franc",
+    "currencyPlural": "Djiboutian francs",
+    "currencySymbol": "Fdj",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "DK",
+    "countryName": "Denmark",
+    "currencyType": "fiat",
+    "currencyCode": "DKK",
+    "currencyName": "Danish Krone",
+    "currencyPlural": "Danish kroner",
+    "currencySymbol": "Dkr",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "DO",
+    "countryName": "Dominican Republic",
+    "currencyType": "fiat",
+    "currencyCode": "DOP",
+    "currencyName": "Dominican Peso",
+    "currencyPlural": "Dominican pesos",
+    "currencySymbol": "RD$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "DZ",
+    "countryName": "Algeria",
+    "currencyType": "fiat",
+    "currencyCode": "DZD",
+    "currencyName": "Algerian Dinar",
+    "currencyPlural": "Algerian dinars",
+    "currencySymbol": "DA",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "EC",
+    "countryName": "Ecuador",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "EE",
+    "countryName": "Estonia",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "EG",
+    "countryName": "Egypt",
+    "currencyType": "fiat",
+    "currencyCode": "EGP",
+    "currencyName": "Egyptian Pound",
+    "currencyPlural": "Egyptian pounds",
+    "currencySymbol": "EGP",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "EH",
+    "countryName": "Western Sahara",
+    "currencyType": "fiat",
+    "currencyCode": "MAD",
+    "currencyName": "Moroccan Dirham",
+    "currencyPlural": "Moroccan dirhams",
+    "currencySymbol": "MAD",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "ER",
+    "countryName": "Eritrea",
+    "currencyType": "fiat",
+    "currencyCode": "ERN",
+    "currencyName": "Eritrean Nakfa",
+    "currencyPlural": "Eritrean nakfas",
+    "currencySymbol": "Nfk",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "ES",
+    "countryName": "Spain",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "ET",
+    "countryName": "Ethiopia",
+    "currencyType": "fiat",
+    "currencyCode": "ETB",
+    "currencyName": "Ethiopian Birr",
+    "currencyPlural": "Ethiopian birrs",
+    "currencySymbol": "Br",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "FI",
+    "countryName": "Finland",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "FM",
+    "countryName": "Micronesia",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "FO",
+    "countryName": "Faroe Islands",
+    "currencyType": "fiat",
+    "currencyCode": "DKK",
+    "currencyName": "Danish Krone",
+    "currencyPlural": "Danish kroner",
+    "currencySymbol": "Dkr",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "FR",
+    "countryName": "France",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "GA",
+    "countryName": "Gabon",
+    "currencyType": "fiat",
+    "currencyCode": "XAF",
+    "currencyName": "CFA Franc BEAC",
+    "currencyPlural": "CFA francs BEAC",
+    "currencySymbol": "FCFA",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "GB",
+    "countryName": "United Kingdom",
+    "currencyType": "fiat",
+    "currencyCode": "GBP",
+    "currencyName": "British Pound Sterling",
+    "currencyPlural": "British pounds sterling",
+    "currencySymbol": "£",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "GE",
+    "countryName": "Georgia",
+    "currencyType": "fiat",
+    "currencyCode": "GEL",
+    "currencyName": "Georgian Lari",
+    "currencyPlural": "Georgian laris",
+    "currencySymbol": "GEL",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "GF",
+    "countryName": "French Guiana",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "GG",
+    "countryName": "Guernsey",
+    "currencyType": "fiat",
+    "currencyCode": "GBP",
+    "currencyName": "British Pound Sterling",
+    "currencyPlural": "British pounds sterling",
+    "currencySymbol": "£",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "GH",
+    "countryName": "Ghana",
+    "currencyType": "fiat",
+    "currencyCode": "GHS",
+    "currencyName": "Ghanaian Cedi",
+    "currencyPlural": "Ghanaian cedis",
+    "currencySymbol": "GH₵",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "GL",
+    "countryName": "Greenland",
+    "currencyType": "fiat",
+    "currencyCode": "DKK",
+    "currencyName": "Danish Krone",
+    "currencyPlural": "Danish kroner",
+    "currencySymbol": "Dkr",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "GN",
+    "countryName": "Guinea",
+    "currencyType": "fiat",
+    "currencyCode": "GNF",
+    "currencyName": "Guinean Franc",
+    "currencyPlural": "Guinean francs",
+    "currencySymbol": "FG",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "GP",
+    "countryName": "Guadeloupe",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "GQ",
+    "countryName": "Equatorial Guinea",
+    "currencyType": "fiat",
+    "currencyCode": "XAF",
+    "currencyName": "CFA Franc BEAC",
+    "currencyPlural": "CFA francs BEAC",
+    "currencySymbol": "FCFA",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "GS",
+    "countryName": "South Georgia and the South Sandwich Islands",
+    "currencyType": "fiat",
+    "currencyCode": "GBP",
+    "currencyName": "British Pound Sterling",
+    "currencyPlural": "British pounds sterling",
+    "currencySymbol": "£",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "GT",
+    "countryName": "Guatemala",
+    "currencyType": "fiat",
+    "currencyCode": "GTQ",
+    "currencyName": "Guatemalan Quetzal",
+    "currencyPlural": "Guatemalan quetzals",
+    "currencySymbol": "GTQ",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "GU",
+    "countryName": "Guam",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "GW",
+    "countryName": "Guinea-Bissau",
+    "currencyType": "fiat",
+    "currencyCode": "XOF",
+    "currencyName": "CFA Franc BCEAO",
+    "currencyPlural": "CFA francs BCEAO",
+    "currencySymbol": "CFA",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "HK",
+    "countryName": "Hong Kong",
+    "currencyType": "fiat",
+    "currencyCode": "HKD",
+    "currencyName": "Hong Kong Dollar",
+    "currencyPlural": "Hong Kong dollars",
+    "currencySymbol": "HK$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "HM",
+    "countryName": "Heard Island and McDonald Islands",
+    "currencyType": "fiat",
+    "currencyCode": "AUD",
+    "currencyName": "Australian Dollar",
+    "currencyPlural": "Australian dollars",
+    "currencySymbol": "AU$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "HN",
+    "countryName": "Honduras",
+    "currencyType": "fiat",
+    "currencyCode": "HNL",
+    "currencyName": "Honduran Lempira",
+    "currencyPlural": "Honduran lempiras",
+    "currencySymbol": "HNL",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "HR",
+    "countryName": "Croatia",
+    "currencyType": "fiat",
+    "currencyCode": "HRK",
+    "currencyName": "Croatian Kuna",
+    "currencyPlural": "Croatian kunas",
+    "currencySymbol": "kn",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "HU",
+    "countryName": "Hungary",
+    "currencyType": "fiat",
+    "currencyCode": "HUF",
+    "currencyName": "Hungarian Forint",
+    "currencyPlural": "Hungarian forints",
+    "currencySymbol": "Ft",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "ID",
+    "countryName": "Indonesia",
+    "currencyType": "fiat",
+    "currencyCode": "IDR",
+    "currencyName": "Indonesian Rupiah",
+    "currencyPlural": "Indonesian rupiahs",
+    "currencySymbol": "Rp",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "IE",
+    "countryName": "Ireland",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "IL",
+    "countryName": "Israel",
+    "currencyType": "fiat",
+    "currencyCode": "ILS",
+    "currencyName": "Israeli New Sheqel",
+    "currencyPlural": "Israeli new sheqels",
+    "currencySymbol": "₪",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "IM",
+    "countryName": "Isle of Man",
+    "currencyType": "fiat",
+    "currencyCode": "GBP",
+    "currencyName": "British Pound Sterling",
+    "currencyPlural": "British pounds sterling",
+    "currencySymbol": "£",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "IN",
+    "countryName": "India",
+    "currencyType": "fiat",
+    "currencyCode": "INR",
+    "currencyName": "Indian Rupee",
+    "currencyPlural": "Indian rupees",
+    "currencySymbol": "Rs",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "IO",
+    "countryName": "British Indian Ocean Territory",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "IQ",
+    "countryName": "Iraq",
+    "currencyType": "fiat",
+    "currencyCode": "IQD",
+    "currencyName": "Iraqi Dinar",
+    "currencyPlural": "Iraqi dinars",
+    "currencySymbol": "IQD",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "IR",
+    "countryName": "Iran",
+    "currencyType": "fiat",
+    "currencyCode": "IRR",
+    "currencyName": "Iranian Rial",
+    "currencyPlural": "Iranian rials",
+    "currencySymbol": "IRR",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "IS",
+    "countryName": "Iceland",
+    "currencyType": "fiat",
+    "currencyCode": "ISK",
+    "currencyName": "Icelandic Króna",
+    "currencyPlural": "Icelandic krónur",
+    "currencySymbol": "Ikr",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "IT",
+    "countryName": "Italy",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "JE",
+    "countryName": "Jersey",
+    "currencyType": "fiat",
+    "currencyCode": "GBP",
+    "currencyName": "British Pound Sterling",
+    "currencyPlural": "British pounds sterling",
+    "currencySymbol": "£",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "JM",
+    "countryName": "Jamaica",
+    "currencyType": "fiat",
+    "currencyCode": "JMD",
+    "currencyName": "Jamaican Dollar",
+    "currencyPlural": "Jamaican dollars",
+    "currencySymbol": "J$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "JO",
+    "countryName": "Jordan",
+    "currencyType": "fiat",
+    "currencyCode": "JOD",
+    "currencyName": "Jordanian Dinar",
+    "currencyPlural": "Jordanian dinars",
+    "currencySymbol": "JD",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "JP",
+    "countryName": "Japan",
+    "currencyType": "fiat",
+    "currencyCode": "JPY",
+    "currencyName": "Japanese Yen",
+    "currencyPlural": "Japanese yen",
+    "currencySymbol": "¥",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "KE",
+    "countryName": "Kenya",
+    "currencyType": "fiat",
+    "currencyCode": "KES",
+    "currencyName": "Kenyan Shilling",
+    "currencyPlural": "Kenyan shillings",
+    "currencySymbol": "Ksh",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "KH",
+    "countryName": "Cambodia",
+    "currencyType": "fiat",
+    "currencyCode": "KHR",
+    "currencyName": "Cambodian Riel",
+    "currencyPlural": "Cambodian riels",
+    "currencySymbol": "KHR",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "KI",
+    "countryName": "Kiribati",
+    "currencyType": "fiat",
+    "currencyCode": "AUD",
+    "currencyName": "Australian Dollar",
+    "currencyPlural": "Australian dollars",
+    "currencySymbol": "AU$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "KM",
+    "countryName": "Comoros",
+    "currencyType": "fiat",
+    "currencyCode": "KMF",
+    "currencyName": "Comorian Franc",
+    "currencyPlural": "Comorian francs",
+    "currencySymbol": "CF",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "KR",
+    "countryName": "South Korea",
+    "currencyType": "fiat",
+    "currencyCode": "KRW",
+    "currencyName": "South Korean Won",
+    "currencyPlural": "South Korean won",
+    "currencySymbol": "₩",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "KW",
+    "countryName": "Kuwait",
+    "currencyType": "fiat",
+    "currencyCode": "KWD",
+    "currencyName": "Kuwaiti Dinar",
+    "currencyPlural": "Kuwaiti dinars",
+    "currencySymbol": "KD",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "KZ",
+    "countryName": "Kazakhstan",
+    "currencyType": "fiat",
+    "currencyCode": "KZT",
+    "currencyName": "Kazakhstani Tenge",
+    "currencyPlural": "Kazakhstani tenges",
+    "currencySymbol": "KZT",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "LB",
+    "countryName": "Lebanon",
+    "currencyType": "fiat",
+    "currencyCode": "LBP",
+    "currencyName": "Lebanese Pound",
+    "currencyPlural": "Lebanese pounds",
+    "currencySymbol": "LB£",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "LI",
+    "countryName": "Liechtenstein",
+    "currencyType": "fiat",
+    "currencyCode": "CHF",
+    "currencyName": "Swiss Franc",
+    "currencyPlural": "Swiss francs",
+    "currencySymbol": "CHF",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "LK",
+    "countryName": "Sri Lanka",
+    "currencyType": "fiat",
+    "currencyCode": "LKR",
+    "currencyName": "Sri Lankan Rupee",
+    "currencyPlural": "Sri Lankan rupees",
+    "currencySymbol": "SLRs",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "LT",
+    "countryName": "Lithuania",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "LU",
+    "countryName": "Luxembourg",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "LV",
+    "countryName": "Latvia",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "LY",
+    "countryName": "Libya",
+    "currencyType": "fiat",
+    "currencyCode": "LYD",
+    "currencyName": "Libyan Dinar",
+    "currencyPlural": "Libyan dinars",
+    "currencySymbol": "LD",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "MA",
+    "countryName": "Morocco",
+    "currencyType": "fiat",
+    "currencyCode": "MAD",
+    "currencyName": "Moroccan Dirham",
+    "currencyPlural": "Moroccan dirhams",
+    "currencySymbol": "MAD",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "MC",
+    "countryName": "Monaco",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "MD",
+    "countryName": "Moldova",
+    "currencyType": "fiat",
+    "currencyCode": "MDL",
+    "currencyName": "Moldovan Leu",
+    "currencyPlural": "Moldovan lei",
+    "currencySymbol": "MDL",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "ME",
+    "countryName": "Montenegro",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "MF",
+    "countryName": "Saint Martin",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "MG",
+    "countryName": "Madagascar",
+    "currencyType": "fiat",
+    "currencyCode": "MGA",
+    "currencyName": "Malagasy Ariary",
+    "currencyPlural": "Malagasy Ariaries",
+    "currencySymbol": "MGA",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "MH",
+    "countryName": "Marshall Islands",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "MK",
+    "countryName": "Macedonia",
+    "currencyType": "fiat",
+    "currencyCode": "MKD",
+    "currencyName": "Macedonian Denar",
+    "currencyPlural": "Macedonian denari",
+    "currencySymbol": "MKD",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "ML",
+    "countryName": "Mali",
+    "currencyType": "fiat",
+    "currencyCode": "XOF",
+    "currencyName": "CFA Franc BCEAO",
+    "currencyPlural": "CFA francs BCEAO",
+    "currencySymbol": "CFA",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "MM",
+    "countryName": "Myanmar [Burma]",
+    "currencyType": "fiat",
+    "currencyCode": "MMK",
+    "currencyName": "Myanma Kyat",
+    "currencyPlural": "Myanma kyats",
+    "currencySymbol": "MMK",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "MO",
+    "countryName": "Macao",
+    "currencyType": "fiat",
+    "currencyCode": "MOP",
+    "currencyName": "Macanese Pataca",
+    "currencyPlural": "Macanese patacas",
+    "currencySymbol": "MOP$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "MP",
+    "countryName": "Northern Mariana Islands",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "MQ",
+    "countryName": "Martinique",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "MT",
+    "countryName": "Malta",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "MU",
+    "countryName": "Mauritius",
+    "currencyType": "fiat",
+    "currencyCode": "MUR",
+    "currencyName": "Mauritian Rupee",
+    "currencyPlural": "Mauritian rupees",
+    "currencySymbol": "MURs",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "MX",
+    "countryName": "Mexico",
+    "currencyType": "fiat",
+    "currencyCode": "MXN",
+    "currencyName": "Mexican Peso",
+    "currencyPlural": "Mexican pesos",
+    "currencySymbol": "MX$",
+    "language": "es"
+  },
+  {
+    "countryCode": "MY",
+    "countryName": "Malaysia",
+    "currencyType": "fiat",
+    "currencyCode": "MYR",
+    "currencyName": "Malaysian Ringgit",
+    "currencyPlural": "Malaysian ringgits",
+    "currencySymbol": "RM",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "MZ",
+    "countryName": "Mozambique",
+    "currencyType": "fiat",
+    "currencyCode": "MZN",
+    "currencyName": "Mozambican Metical",
+    "currencyPlural": "Mozambican meticals",
+    "currencySymbol": "MTn",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "NA",
+    "countryName": "Namibia",
+    "currencyType": "fiat",
+    "currencyCode": "NAD",
+    "currencyName": "Namibian Dollar",
+    "currencyPlural": "Namibian dollars",
+    "currencySymbol": "N$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "NE",
+    "countryName": "Niger",
+    "currencyType": "fiat",
+    "currencyCode": "XOF",
+    "currencyName": "CFA Franc BCEAO",
+    "currencyPlural": "CFA francs BCEAO",
+    "currencySymbol": "CFA",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "NF",
+    "countryName": "Norfolk Island",
+    "currencyType": "fiat",
+    "currencyCode": "AUD",
+    "currencyName": "Australian Dollar",
+    "currencyPlural": "Australian dollars",
+    "currencySymbol": "AU$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "NG",
+    "countryName": "Nigeria",
+    "currencyType": "fiat",
+    "currencyCode": "NGN",
+    "currencyName": "Nigerian Naira",
+    "currencyPlural": "Nigerian nairas",
+    "currencySymbol": "₦",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "NI",
+    "countryName": "Nicaragua",
+    "currencyType": "fiat",
+    "currencyCode": "NIO",
+    "currencyName": "Nicaraguan Córdoba",
+    "currencyPlural": "Nicaraguan córdobas",
+    "currencySymbol": "C$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "NL",
+    "countryName": "Netherlands",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "NO",
+    "countryName": "Norway",
+    "currencyType": "fiat",
+    "currencyCode": "NOK",
+    "currencyName": "Norwegian Krone",
+    "currencyPlural": "Norwegian kroner",
+    "currencySymbol": "Nkr",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "NP",
+    "countryName": "Nepal",
+    "currencyType": "fiat",
+    "currencyCode": "NPR",
+    "currencyName": "Nepalese Rupee",
+    "currencyPlural": "Nepalese rupees",
+    "currencySymbol": "NPRs",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "NR",
+    "countryName": "Nauru",
+    "currencyType": "fiat",
+    "currencyCode": "AUD",
+    "currencyName": "Australian Dollar",
+    "currencyPlural": "Australian dollars",
+    "currencySymbol": "AU$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "NU",
+    "countryName": "Niue",
+    "currencyType": "fiat",
+    "currencyCode": "NZD",
+    "currencyName": "New Zealand Dollar",
+    "currencyPlural": "New Zealand dollars",
+    "currencySymbol": "NZ$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "NZ",
+    "countryName": "New Zealand",
+    "currencyType": "fiat",
+    "currencyCode": "NZD",
+    "currencyName": "New Zealand Dollar",
+    "currencyPlural": "New Zealand dollars",
+    "currencySymbol": "NZ$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "OM",
+    "countryName": "Oman",
+    "currencyType": "fiat",
+    "currencyCode": "OMR",
+    "currencyName": "Omani Rial",
+    "currencyPlural": "Omani rials",
+    "currencySymbol": "OMR",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "PA",
+    "countryName": "Panama",
+    "currencyType": "fiat",
+    "currencyCode": "PAB",
+    "currencyName": "Panamanian Balboa",
+    "currencyPlural": "Panamanian balboas",
+    "currencySymbol": "B/.",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "PE",
+    "countryName": "Peru",
+    "currencyType": "fiat",
+    "currencyCode": "PEN",
+    "currencyName": "Peruvian Nuevo Sol",
+    "currencyPlural": "Peruvian nuevos soles",
+    "currencySymbol": "S/.",
+    "language": "es"
+  },
+  {
+    "countryCode": "PH",
+    "countryName": "Philippines",
+    "currencyType": "fiat",
+    "currencyCode": "PHP",
+    "currencyName": "Philippine Peso",
+    "currencyPlural": "Philippine pesos",
+    "currencySymbol": "₱",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "PK",
+    "countryName": "Pakistan",
+    "currencyType": "fiat",
+    "currencyCode": "PKR",
+    "currencyName": "Pakistani Rupee",
+    "currencyPlural": "Pakistani rupees",
+    "currencySymbol": "PKRs",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "PL",
+    "countryName": "Poland",
+    "currencyType": "fiat",
+    "currencyCode": "PLN",
+    "currencyName": "Polish Zloty",
+    "currencyPlural": "Polish zlotys",
+    "currencySymbol": "zł",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "PM",
+    "countryName": "Saint Pierre and Miquelon",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "PN",
+    "countryName": "Pitcairn Islands",
+    "currencyType": "fiat",
+    "currencyCode": "NZD",
+    "currencyName": "New Zealand Dollar",
+    "currencyPlural": "New Zealand dollars",
+    "currencySymbol": "NZ$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "PR",
+    "countryName": "Puerto Rico",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "PS",
+    "countryName": "Palestine",
+    "currencyType": "fiat",
+    "currencyCode": "ILS",
+    "currencyName": "Israeli New Sheqel",
+    "currencyPlural": "Israeli new sheqels",
+    "currencySymbol": "₪",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "PT",
+    "countryName": "Portugal",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "PW",
+    "countryName": "Palau",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "PY",
+    "countryName": "Paraguay",
+    "currencyType": "fiat",
+    "currencyCode": "PYG",
+    "currencyName": "Paraguayan Guarani",
+    "currencyPlural": "Paraguayan guaranis",
+    "currencySymbol": "₲",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "QA",
+    "countryName": "Qatar",
+    "currencyType": "fiat",
+    "currencyCode": "QAR",
+    "currencyName": "Qatari Rial",
+    "currencyPlural": "Qatari rials",
+    "currencySymbol": "QR",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "RE",
+    "countryName": "Réunion",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "RO",
+    "countryName": "Romania",
+    "currencyType": "fiat",
+    "currencyCode": "RON",
+    "currencyName": "Romanian Leu",
+    "currencyPlural": "Romanian lei",
+    "currencySymbol": "RON",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "RS",
+    "countryName": "Serbia",
+    "currencyType": "fiat",
+    "currencyCode": "RSD",
+    "currencyName": "Serbian Dinar",
+    "currencyPlural": "Serbian dinars",
+    "currencySymbol": "din.",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "RU",
+    "countryName": "Russia",
+    "currencyType": "fiat",
+    "currencyCode": "RUB",
+    "currencyName": "Russian Ruble",
+    "currencyPlural": "Russian rubles",
+    "currencySymbol": "RUB",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "RW",
+    "countryName": "Rwanda",
+    "currencyType": "fiat",
+    "currencyCode": "RWF",
+    "currencyName": "Rwandan Franc",
+    "currencyPlural": "Rwandan francs",
+    "currencySymbol": "RWF",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "SA",
+    "countryName": "Saudi Arabia",
+    "currencyType": "fiat",
+    "currencyCode": "SAR",
+    "currencyName": "Saudi Riyal",
+    "currencyPlural": "Saudi riyals",
+    "currencySymbol": "SR",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "SD",
+    "countryName": "Sudan",
+    "currencyType": "fiat",
+    "currencyCode": "SDG",
+    "currencyName": "Sudanese Pound",
+    "currencyPlural": "Sudanese pounds",
+    "currencySymbol": "SDG",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "SE",
+    "countryName": "Sweden",
+    "currencyType": "fiat",
+    "currencyCode": "SEK",
+    "currencyName": "Swedish Krona",
+    "currencyPlural": "Swedish kronor",
+    "currencySymbol": "Skr",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "SG",
+    "countryName": "Singapore",
+    "currencyType": "fiat",
+    "currencyCode": "SGD",
+    "currencyName": "Singapore Dollar",
+    "currencyPlural": "Singapore dollars",
+    "currencySymbol": "S$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "SI",
+    "countryName": "Slovenia",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "SJ",
+    "countryName": "Svalbard and Jan Mayen",
+    "currencyType": "fiat",
+    "currencyCode": "NOK",
+    "currencyName": "Norwegian Krone",
+    "currencyPlural": "Norwegian kroner",
+    "currencySymbol": "Nkr",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "SK",
+    "countryName": "Slovakia",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "SM",
+    "countryName": "San Marino",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "SN",
+    "countryName": "Senegal",
+    "currencyType": "fiat",
+    "currencyCode": "XOF",
+    "currencyName": "CFA Franc BCEAO",
+    "currencyPlural": "CFA francs BCEAO",
+    "currencySymbol": "CFA",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "SO",
+    "countryName": "Somalia",
+    "currencyType": "fiat",
+    "currencyCode": "SOS",
+    "currencyName": "Somali Shilling",
+    "currencyPlural": "Somali shillings",
+    "currencySymbol": "Ssh",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "SV",
+    "countryName": "El Salvador",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "SY",
+    "countryName": "Syria",
+    "currencyType": "fiat",
+    "currencyCode": "SYP",
+    "currencyName": "Syrian Pound",
+    "currencyPlural": "Syrian pounds",
+    "currencySymbol": "SY£",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "TC",
+    "countryName": "Turks and Caicos Islands",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "TD",
+    "countryName": "Chad",
+    "currencyType": "fiat",
+    "currencyCode": "XAF",
+    "currencyName": "CFA Franc BEAC",
+    "currencyPlural": "CFA francs BEAC",
+    "currencySymbol": "FCFA",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "TF",
+    "countryName": "French Southern Territories",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "TG",
+    "countryName": "Togo",
+    "currencyType": "fiat",
+    "currencyCode": "XOF",
+    "currencyName": "CFA Franc BCEAO",
+    "currencyPlural": "CFA francs BCEAO",
+    "currencySymbol": "CFA",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "TH",
+    "countryName": "Thailand",
+    "currencyType": "fiat",
+    "currencyCode": "THB",
+    "currencyName": "Thai Baht",
+    "currencyPlural": "Thai baht",
+    "currencySymbol": "฿",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "TK",
+    "countryName": "Tokelau",
+    "currencyType": "fiat",
+    "currencyCode": "NZD",
+    "currencyName": "New Zealand Dollar",
+    "currencyPlural": "New Zealand dollars",
+    "currencySymbol": "NZ$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "TL",
+    "countryName": "East Timor",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "TN",
+    "countryName": "Tunisia",
+    "currencyType": "fiat",
+    "currencyCode": "TND",
+    "currencyName": "Tunisian Dinar",
+    "currencyPlural": "Tunisian dinars",
+    "currencySymbol": "DT",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "TO",
+    "countryName": "Tonga",
+    "currencyType": "fiat",
+    "currencyCode": "TOP",
+    "currencyName": "Tongan Paʻanga",
+    "currencyPlural": "Tongan paʻanga",
+    "currencySymbol": "T$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "TR",
+    "countryName": "Turkey",
+    "currencyType": "fiat",
+    "currencyCode": "TRY",
+    "currencyName": "Turkish Lira",
+    "currencyPlural": "Turkish Lira",
+    "currencySymbol": "TL",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "TT",
+    "countryName": "Trinidad and Tobago",
+    "currencyType": "fiat",
+    "currencyCode": "TTD",
+    "currencyName": "Trinidad and Tobago Dollar",
+    "currencyPlural": "Trinidad and Tobago dollars",
+    "currencySymbol": "TT$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "TV",
+    "countryName": "Tuvalu",
+    "currencyType": "fiat",
+    "currencyCode": "AUD",
+    "currencyName": "Australian Dollar",
+    "currencyPlural": "Australian dollars",
+    "currencySymbol": "AU$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "TW",
+    "countryName": "Taiwan",
+    "currencyType": "fiat",
+    "currencyCode": "TWD",
+    "currencyName": "New Taiwan Dollar",
+    "currencyPlural": "New Taiwan dollars",
+    "currencySymbol": "NT$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "TZ",
+    "countryName": "Tanzania",
+    "currencyType": "fiat",
+    "currencyCode": "TZS",
+    "currencyName": "Tanzanian Shilling",
+    "currencyPlural": "Tanzanian shillings",
+    "currencySymbol": "TSh",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "UA",
+    "countryName": "Ukraine",
+    "currencyType": "fiat",
+    "currencyCode": "UAH",
+    "currencyName": "Ukrainian Hryvnia",
+    "currencyPlural": "Ukrainian hryvnias",
+    "currencySymbol": "₴",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "UG",
+    "countryName": "Uganda",
+    "currencyType": "fiat",
+    "currencyCode": "UGX",
+    "currencyName": "Ugandan Shilling",
+    "currencyPlural": "Ugandan shillings",
+    "currencySymbol": "USh",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "UM",
+    "countryName": "U.S. Minor Outlying Islands",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "US",
+    "countryName": "United States",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "UY",
+    "countryName": "Uruguay",
+    "currencyType": "fiat",
+    "currencyCode": "UYU",
+    "currencyName": "Uruguayan Peso",
+    "currencyPlural": "Uruguayan pesos",
+    "currencySymbol": "$U",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "UZ",
+    "countryName": "Uzbekistan",
+    "currencyType": "fiat",
+    "currencyCode": "UZS",
+    "currencyName": "Uzbekistan Som",
+    "currencyPlural": "Uzbekistan som",
+    "currencySymbol": "UZS",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "VA",
+    "countryName": "Vatican City",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "VE",
+    "countryName": "Venezuela",
+    "currencyType": "fiat",
+    "currencyCode": "VEF",
+    "currencyName": "Venezuelan Bolívar",
+    "currencyPlural": "Venezuelan bolívars",
+    "currencySymbol": "Bs.F.",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "VG",
+    "countryName": "British Virgin Islands",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "VI",
+    "countryName": "U.S. Virgin Islands",
+    "currencyType": "fiat",
+    "currencyCode": "USD",
+    "currencyName": "US Dollar",
+    "currencyPlural": "US dollars",
+    "currencySymbol": "$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "VN",
+    "countryName": "Vietnam",
+    "currencyType": "fiat",
+    "currencyCode": "VND",
+    "currencyName": "Vietnamese Dong",
+    "currencyPlural": "Vietnamese dong",
+    "currencySymbol": "₫",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "XK",
+    "countryName": "Kosovo",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "YE",
+    "countryName": "Yemen",
+    "currencyType": "fiat",
+    "currencyCode": "YER",
+    "currencyName": "Yemeni Rial",
+    "currencyPlural": "Yemeni rials",
+    "currencySymbol": "YR",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "YT",
+    "countryName": "Mayotte",
+    "currencyType": "fiat",
+    "currencyCode": "EUR",
+    "currencyName": "Euro",
+    "currencyPlural": "euros",
+    "currencySymbol": "€",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "ZA",
+    "countryName": "South Africa",
+    "currencyType": "fiat",
+    "currencyCode": "ZAR",
+    "currencyName": "South African Rand",
+    "currencyPlural": "South African rand",
+    "currencySymbol": "R",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "ZW",
+    "countryName": "Zimbabwe",
+    "currencyType": "fiat",
+    "currencyCode": "ZWL",
+    "currencyName": "Zimbabwean Dollar",
+    "currencyPlural": "Zimbabwean Dollar",
+    "currencySymbol": "ZWL$",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "BTC",
+    "countryName": "Bitcoin",
+    "currencyType": "crypto",
+    "currencyCode": "BTC",
+    "currencyName": "Bitcoin",
+    "currencyPlural": "bitcions",
+    "currencySymbol": "BTC",
+    "language": "en_US"
+  },
+  {
+    "countryCode": "ETH",
+    "countryName": "Ethereum",
+    "currencyType": "crypto",
+    "currencyCode": "ETH",
+    "currencyName": "Ether",
+    "currencyPlural": "ethers",
+    "currencySymbol": "ETH",
+    "language": "en_US"
+  }
+]

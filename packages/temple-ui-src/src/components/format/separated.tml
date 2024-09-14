@@ -1,0 +1,21 @@
+<script>
+  const { value = [], separator = ' ' } = this.props;
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add(
+      separator === 'line' ? 'block': 'inline-block'
+    );
+  }
+</script>
+<if true={separator === 'line'}>
+  <each value=item from=value>
+    <div>{item}</div>
+  </each>
+<else />
+  {value.join(separator)}
+</if>

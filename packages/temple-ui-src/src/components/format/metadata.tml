@@ -1,0 +1,20 @@
+<link rel="import" type="component" href="../table.tml" name="tui-tbl" />
+<link rel="import" type="component" href="../table/row.tml" name="tbl-row" />
+<link rel="import" type="component" href="../table/col.tml" name="tbl-col" />
+<script>
+  const { 
+    top, left, right, bottom, 
+    value = {}, stripes = []
+  } = this.props;
+  const entries = Object.entries(value);
+  stripes[0] = stripes[0] || '';
+  stripes[1] = stripes[1] || '';
+</script>
+<tui-tbl top={!!top} left={!!left} right={!!right} bottom={!!bottom}>
+  <each value=row key=i from=entries>
+    <tbl-row col={stripes[i % stripes.length]}>
+      <tbl-col>{row[0]}</tbl-col>
+      <tbl-col>{row[1]}</tbl-col>
+    </tbl-row>
+  </each>
+</tui-tbl>

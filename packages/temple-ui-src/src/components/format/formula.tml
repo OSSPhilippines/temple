@@ -1,0 +1,29 @@
+<script>
+  //extract props
+  const { value, data = {}, formula } = this.props;
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add('inline-block');
+  }
+  //replace {this} with value
+  let calculations = formula.replace(/\{this\}/, String(Number(value) || 0));
+  //replace templates from the dataset
+  for (const key in data) {
+    calculations = calculations.replace(
+      new RegExp(`\\{${key}\\}`), 
+      String(Number(data[key]) || 0)
+    );
+  }
+  //remove all other variables
+  calculations = calculations.replace(/\{[^\}]*\}/, '0');
+  let solution = () => 0;
+  try {
+    solution = new Function(`return (${calculations})`);
+  } catch (e) {}
+</script>
+{solution()}

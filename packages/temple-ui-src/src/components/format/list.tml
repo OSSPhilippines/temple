@@ -1,0 +1,25 @@
+<script>
+  const { value, ordered, list = '', item = '' } = this.props;
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add('block');
+  }
+</script>
+<if true={ordered}>
+  <ol class=list>
+    <each value=li from=value>
+      <li class=item>{li}</li>
+    </each>
+  </ol>
+<else />
+  <ul class=list>
+    <each value=li from=value>
+      <li class=item>{li}</li>
+    </each>
+  </ul>
+</if>

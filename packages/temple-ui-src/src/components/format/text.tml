@@ -1,0 +1,21 @@
+<script>
+  const { value, upper, lower, capital } = this.props;
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add('inline-block');
+  }
+  let output = value;
+  if (upper) {
+    output = value.toUpperCase();
+  } else if (lower) {
+    output = value.toLowerCase();
+  } else if (capital) {
+    output = value.replace(/\b\w/g, l => l.toUpperCase());
+  }
+</script>
+{output}
