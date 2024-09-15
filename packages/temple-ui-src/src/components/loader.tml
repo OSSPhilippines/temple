@@ -29,28 +29,28 @@
   if (color) {
     icon.style.borderColor = color;
   } else if (info) {
-    icon.classList.add('bd-info');
+    icon.classList.add('b-info');
   } else if (warning) {
-    icon.classList.add('bd-warning');
+    icon.classList.add('b-warning');
   } else if (success) {
-    icon.classList.add('bd-success');
+    icon.classList.add('b-success');
   } else if (error) {
-    icon.classList.add('bd-error');
+    icon.classList.add('b-error');
   } else if (muted) {
-    icon.classList.add('bd-muted');
+    icon.classList.add('b-muted');
   } else if (primary) {
-    icon.classList.add('bd-primary');
+    icon.classList.add('b-primary');
   } else if (secondary) {
-    icon.classList.add('bd-secondary');
+    icon.classList.add('b-secondary');
   }
   if (slice > 0) {
-    icon.classList.add('bdr-transparent');
+    icon.classList.add('br-transparent');
   } 
   if (slice > 1) {
-    icon.classList.add('bdb-transparent');
+    icon.classList.add('bb-transparent');
   } 
   if (slice > 2) {
-    icon.classList.add('bdl-transparent');
+    icon.classList.add('bl-transparent');
   }
 </script>
 {[ icon ]}

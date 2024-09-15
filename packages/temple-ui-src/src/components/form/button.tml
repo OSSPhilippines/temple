@@ -91,7 +91,7 @@
     : 'solid';
   //if layout is outline or transparent
   if (layout === 'outline' || layout === 'transparent') {
-    button.classList.add('bd-solid', 'bd-thin');
+    button.classList.add('b-solid', 'b-thin');
     if (layout === 'outline') {
       button.classList.add('bg-white');
     } else {
@@ -101,23 +101,23 @@
       button.style.color = color;
       button.style.borderColor = color;
     } else if (info) {
-      button.classList.add('bd-info', 'tx-info');
+      button.classList.add('b-info', 'tx-info');
     } else if (warning) {
-      button.classList.add('bd-warning', 'tx-warning');
+      button.classList.add('b-warning', 'tx-warning');
     } else if (success) {
-      button.classList.add('bd-success', 'tx-success');
+      button.classList.add('b-success', 'tx-success');
     } else if (error) {
-      button.classList.add('bd-error', 'tx-error');
+      button.classList.add('b-error', 'tx-error');
     } else if (muted) {
-      button.classList.add('bd-muted', 'tx-muted');
+      button.classList.add('b-muted', 'tx-muted');
     } else if (primary) {
-      button.classList.add('bd-primary', 'tx-primary');
+      button.classList.add('b-primary', 'tx-primary');
     } else if (secondary) {
-      button.classList.add('bd-secondary', 'tx-secondary');
+      button.classList.add('b-secondary', 'tx-secondary');
     }
   //it's solid
   } else {
-    button.classList.add('bd-0', 'tx-white');
+    button.classList.add('b-0', 'tx-white');
     if (color) {
       button.style.backgroundColor = color;
     } else if (info) {

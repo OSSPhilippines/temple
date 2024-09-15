@@ -2,8 +2,8 @@ import type {
   Media,
   StyleRecord,
   ExpressionToken, 
-  LiteralToken, 
-  RangeToken,
+  LiteralToken,
+  RangeToken
 } from './types';
 
 import StyleMap from './StyleMap';
@@ -50,48 +50,82 @@ export const percents = Object.entries({
  */
 export function literal(
   name: string, 
-  records: StyleRecord
+  records: StyleRecord|StyleMap,
+  media: Media = 'all',
+  pseudo?: string
 ): LiteralToken {
-  const styles = new StyleMap(Object.entries(records));
+  const styles = records instanceof StyleMap 
+    ? records.clone()
+    : new StyleMap(Object.entries(records));
+  let selector = `.${name}`;
+  let classname = name;
+  if (media !== 'all') {
+    classname = `${media}-${name}`;
+    selector = `.${classname}`;
+    if (pseudo) {
+      classname = `${media}-${pseudo}-${name}`;
+      selector = `.${classname}::${pseudo}`;
+    }
+  } else if (pseudo) {
+    classname = `${pseudo}-${name}`;
+    selector = `.${classname}::${pseudo}`;
+  } 
   return { 
     type: 'literal', 
-    name, 
-    styles
+    media,
+    classname, 
+    styles,
+    selector
   };
 };
 
-/**
- * Helper to form a range token.
- */
 export function range(
-  name: string, 
-  records: StyleRecord, 
-  min: number, 
-  max: number,
-  step = 1
+  name: string, // ex. 'm'
+  property: string, // ex. 'margin'
+  directional: boolean,
+  calculable: boolean,
+  negatable: boolean,
+  measurable: boolean
 ): RangeToken {
-  const styles = new StyleMap(Object.entries(records));
   return {
-    type: 'range',
     name,
-    styles,
-    range: [ min, max ],
-    step
-  };
-};
+    property,
+    directional,
+    calculable,
+    measurable,
+    negatable
+  }
+}
 
 /**
  * Helper to form an expression token.
  */
 export function expression(
-  name: string, 
-  records: StyleRecord 
+  regex: string, 
+  records: StyleRecord|StyleMap,
+  step: number[] = [],
+  media: Media = 'all',
+  pseudo?: string
 ): ExpressionToken {
-  const styles = new StyleMap(Object.entries(records));
+  const styles = records instanceof StyleMap 
+    ? records.clone()
+    : new StyleMap(Object.entries(records));
+  let pattern = regex;
+  if (media !== 'all') {
+    pattern = `${media}\\-${regex}`;
+    if (pseudo) {
+      pattern = `${media}\\-${pseudo}\\-${regex}`;
+    }
+  } else if (pseudo) {
+    pattern = `${pseudo}\\-${regex}`;
+  }
   return { 
     type: 'expression', 
-    name, 
-    styles
+    media,
+    pattern, 
+    styles,
+    step,
+    pseudo
   };
 };
 

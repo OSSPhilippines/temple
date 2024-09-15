@@ -37,34 +37,34 @@
 </h3>
 <div class="bg-t-0 p-10">
   <div class="relative mb-20 scroll-auto">
-    <table class="w-full bd-collapse">
+    <table class="w-full b-collapse">
       <thead>
-        <th class="p-10 tx-left tx-uppercase">Property</th>
+        <th class="p-10 tx-left tx-upper">Property</th>
         <if false={active.value.includes('Emitter')}>
-          <th class="p-10 tx-left tx-uppercase">Returns</th>
+          <th class="p-10 tx-left tx-upper">Returns</th>
         </if>
-        <th class="p-10 tx-left tx-uppercase">Description</th>
+        <th class="p-10 tx-left tx-upper">Description</th>
       </thead>
       <tbody>
         <each key=key value=prop from={types[active.value]}>
           <tr>
             <if true={prop.kind === 'property'}>
-              <td class="tx-primary tx-top tx-nowrap bd-solid bd-t-2 bdx-0 bdb-0 bdt-1 p-10">
+              <td class="tx-primary tx-top tx-nowrap b-solid b-t-2 bx-0 bb-0 bt-1 p-10">
                 {key}
               </td>
               <if true={types[prop.type]}>
-                <td class="tx-top tx-nowrap bd-solid bd-t-2 bdx-0 bdb-0 bdt-1 p-10">
+                <td class="tx-top tx-nowrap b-solid b-t-2 bx-0 bb-0 bt-1 p-10">
                   <a class="tx-underline tx-info cursor-pointer" data-type={prop.type} click=next>
                     {prop.type}
                   </a>{prop.list ? '[]' :''}
                 </td>
               <else />
-                <td class="tx-top tx-nowrap bd-solid bd-t-2 bdx-0 bdb-0 bdt-1 p-10">
+                <td class="tx-top tx-nowrap b-solid b-t-2 bx-0 bb-0 bt-1 p-10">
                   {prop.type}{prop.list ? '[]' :''}
                 </td>
               </if>
             <elif true={prop.kind === 'function'} />
-              <td class="tx-primary tx-top bd-solid bd-t-2 bdx-0 bdb-0 bdt-1 p-10" nowrap>
+              <td class="tx-primary tx-top b-solid b-t-2 bx-0 bb-0 bt-1 p-10" nowrap>
                 {key}(
                   <each key=index value=arg from={prop.args}>
                     <if true={index > 0}>, </if>
@@ -80,25 +80,25 @@
                 )
               </td>
               <if true={types[prop.returns.type]}>
-                <td class="tx-top tx-nowrap bd-solid bd-t-2 bdx-0 bdb-0 bdt-1 p-10">
+                <td class="tx-top tx-nowrap b-solid b-t-2 bx-0 bb-0 bt-1 p-10">
                   <a class="tx-underline tx-info cursor-pointer" data-type={prop.returns.type} click=next>
                     {prop.returns.type}
                   </a>{prop.returns.list ? '[]' :''}
                 </td>
               <else />
-                <td class="tx-top tx-nowrap bd-solid bd-t-2 bdx-0 bdb-0 bdt-1 p-10">
+                <td class="tx-top tx-nowrap b-solid b-t-2 bx-0 bb-0 bt-1 p-10">
                   {prop.returns.type}{prop.returns.list ? '[]' :''}
                 </td>
               </if>
             <elif true={prop.kind === 'event'} />
               <td 
-                class="tx-primary tx-top bd-solid bd-t-2 bdx-0 bdb-0 bdt-1 p-10" 
+                class="tx-primary tx-top b-solid b-t-2 bx-0 bb-0 bt-1 p-10" 
                 nowrap
               >
                 {`on('${key}', (event: Event) => void)`}
               </td>
             </if>
-            <td class="tx-top tx-lh-24 bd-solid bd-t-2 bdx-0 bdb-0 bdt-1 p-10">
+            <td class="tx-top tx-lh-24 b-solid b-t-2 bx-0 bb-0 bt-1 p-10">
               <if true={prop.description}>
                 <p class="pb-10">{prop.description}</p>
                 <if true={prop.example}>

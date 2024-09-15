@@ -9,32 +9,39 @@ export type StyleRecord = Record<string, Value[]>;
 
 export type LiteralToken = {
   type: 'literal',
-  //class name
-  name: string,
-  styles: StyleMap
-};
-
-export type RangeToken = {
-  type: 'range',
-  //class name
-  name: string,
+  classname: string,
   styles: StyleMap,
-  range: [ number, number ],
-  step: number
+  media: Media,
+  selector: string
 };
 
 export type ExpressionToken = {
   type: 'expression',
-  //class name
+  pattern: string,
+  styles: StyleMap,
+  step: number[],
+  media: Media,
+  pseudo?: string
+};
+
+export type RangeToken = {
   name: string,
-  styles: StyleMap
+  property: string,
+  directional: boolean,
+  calculable: boolean,
+  negatable: boolean,
+  measurable: boolean
 };
 
 export type Token = LiteralToken|RangeToken|ExpressionToken;
 export type Media = 'all'|'xs'|'sm'|'md'|'lg'|'xl'|'xl2'|'xl3'|'xl4';
 
-export type Styler = (classname: string, stylesheet: StyleSheet) => void;
 export type Plugin = (sheet: string, brand: string) => string;
+export type Styler = (
+  classnames: string[], 
+  stylesheet: StyleSheet,
+  cache: Set<string>
+) => void;
 
 export type ParserOptions = { fs?: FileSystem, cwd?: string };
 export type UtilityPluginOptions =  { 

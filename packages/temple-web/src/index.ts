@@ -15,7 +15,7 @@ const docs = path.join(__dirname, '../../../docs');
 const compiler = temple({ 
   brand: '', 
   cwd: __dirname, 
-  minify: process.env.NODE_ENV === 'development' 
+  minify: process.env.NODE_ENV !== 'development' 
 });
 //use temple ui
 compiler.use(tui());

@@ -2,10 +2,6 @@
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
 <link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
 <link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/head.tml" name="panel-head" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/left.tml" name="panel-left" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/right.tml" name="panel-right" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/main.tml" name="panel-main" />
 <link rel="import" type="component" href="@ossph/temple-ui/alert.tml" name="tui-alert" />
 <link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
 <link rel="import" type="component" href="@/components/api/ui.tml" name="api-ui" />
@@ -37,13 +33,13 @@
 </script>
 <html>
   <html-head />
-  <body class="dark bg-t-0 tx-t-1 arial">
+  <body class="dark bg-t-0 tx-t-1 tx-arial">
     <panel-layout>
-      <panel-head><html-header /></panel-head>
-      <panel-left><html-aside /></panel-left>
-      <panel-right>
+      <header><html-header /></header>
+      <aside left><html-aside /></aside>
+      <aside right>
         <menu class="m-0 px-10 py-20 h-calc-full-40 bg-t-2 scroll-auto">
-          <h6 class="tx-muted tx-14 mb-0 mt-0 pb-10 tx-uppercase">
+          <h6 class="tx-muted tx-14 mb-0 mt-0 pb-10 tx-upper">
             {_('On this page')}
           </h6>
           <nav class="tx-14 tx-lh-32">
@@ -57,10 +53,10 @@
             <a class="block tx-t-0" href="#this">{_('this')}</a>
           </nav>
         </menu>
-      </panel-right>
-      <panel-main>
+      </aside>
+      <main>
         <api-docs>
-          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+          <h1 class="tx-primary tx-upper tx-30 py-20">
             {_('State Management')}
           </h1>
           <i18n-translate p trim class="tx-lh-36 py-20">
@@ -69,7 +65,7 @@
           </i18n-translate>
 
           <a name="props"></a>
-          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+          <h2 class="tx-primary tx-upper tx-26 pt-40 pb-10 mb-20 b-solid b-t-1 bb-1 bt-0 bx-0">
             {_('Props')}
           </h2>
 
@@ -84,7 +80,7 @@
           </i18n-translate>
 
           <a name="signals"></a>
-          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+          <h2 class="tx-primary tx-upper tx-26 pt-40 pb-10 mb-20 b-solid b-t-1 bb-1 bt-0 bx-0">
             {_('Signals')}
           </h2>
 
@@ -125,7 +121,7 @@
           </i18n-translate>
 
           <a name="events"></a>
-          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+          <h2 class="tx-primary tx-upper tx-26 pt-40 pb-10 mb-20 b-solid b-t-1 bb-1 bt-0 bx-0">
             {_('Events')}
           </h2>
 
@@ -246,7 +242,7 @@
           </div>
 
           <a name="classnames"></a>
-          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+          <h2 class="tx-primary tx-upper tx-26 pt-40 pb-10 mb-20 b-solid b-t-1 bb-1 bt-0 bx-0">
             {_('Class Names')}
           </h2>
 
@@ -263,7 +259,7 @@
           </i18n-translate>
 
           <a name="children"></a>
-          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+          <h2 class="tx-primary tx-upper tx-26 pt-40 pb-10 mb-20 b-solid b-t-1 bb-1 bt-0 bx-0">
             {_('Children')}
           </h2>
 
@@ -279,7 +275,7 @@
           </i18n-translate>
 
           <a name="component"></a>
-          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+          <h2 class="tx-primary tx-upper tx-26 pt-40 pb-10 mb-20 b-solid b-t-1 bb-1 bt-0 bx-0">
             {_('Component')}
           </h2>
 
@@ -297,7 +293,7 @@
           </i18n-translate>
 
           <a name="env"></a>
-          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+          <h2 class="tx-primary tx-upper tx-26 pt-40 pb-10 mb-20 b-solid b-t-1 bb-1 bt-0 bx-0">
             {_('Environment Variables')}
           </h2>
 
@@ -316,7 +312,7 @@
           </i18n-translate>
 
           <a name="this"></a>
-          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+          <h2 class="tx-primary tx-upper tx-26 pt-40 pb-10 mb-20 b-solid b-t-1 bb-1 bt-0 bx-0">
             {_('this')}
           </h2>
 
@@ -374,7 +370,7 @@
           </nav>
           <footer class="foot"></footer>
         </api-docs>
-      </panel-main>
+      </main>
     </panel-layout>
   </body>
 </html>

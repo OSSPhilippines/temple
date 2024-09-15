@@ -12,7 +12,7 @@
     this.classList.add('inline-block');
   }
   //build box class list
-  const classList = [ 'inline-block', 'curved', 'bda-black' ];
+  const classList = [ 'inline-block', 'curved', 'ba-black' ];
   //determine box class size
   if (sm) {
     classList.push('w-8', 'h-8');

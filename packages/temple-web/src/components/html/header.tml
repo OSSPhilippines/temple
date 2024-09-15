@@ -13,7 +13,7 @@
         src="/temple/temple-icon.png" 
       />
     </a>
-    <h3 class="flex-grow tx-uppercase">
+    <h3 class="flex-grow tx-upper">
       <a class="tx-white" href="/temple">Temple</a>
     </h3>
   </if>

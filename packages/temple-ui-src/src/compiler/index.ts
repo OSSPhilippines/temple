@@ -1,7 +1,6 @@
 import { components } from './data/components';
 import { 
   literals, 
-  ranges, 
   expressions, 
   definitions 
 } from './data/definitions';
@@ -14,8 +13,8 @@ import { theme } from './plugins/theme';
 import { utilities } from './plugins/utilities';
 import {
   expression as toExpression,
-  literal as toLiteral,
   range as toRange,
+  literal as toLiteral,
   media,
   breakpoints,
   responsive,
@@ -35,8 +34,8 @@ import StyleMap from './StyleMap';
 import StyleParser from './StyleParser';
 import Stylers, {
   expression as expressionStyler,
-  literal as literalStyler,
-  range as rangeStyler
+  range as rangeStyler,
+  literal as literalStyler
 } from './Stylers';
 import StyleSet from './StyleSet';
 import StyleSheet from './StyleSheet';
@@ -46,7 +45,6 @@ export type * from './types';
 export {
   components,
   literals,
-  ranges,
   expressions,
   definitions,
   component,
@@ -59,13 +57,13 @@ export {
   theme,
   utilities,
   toExpression,
-  toLiteral,
   toRange,
+  toLiteral,
   getAsset, 
   getUtilities,
   expressionStyler,
-  literalStyler,
   rangeStyler,
+  literalStyler,
   media,
   breakpoints,
   responsive,

@@ -120,10 +120,10 @@
     "language": "en_US"
   },
   {
-    "countryCode": "BD",
+    "countryCode": "b",
     "countryName": "Bangladesh",
     "currencyType": "fiat",
-    "currencyCode": "BDT",
+    "currencyCode": "bT",
     "currencyName": "Bangladeshi Taka",
     "currencyPlural": "Bangladeshi takas",
     "currencySymbol": "Tk",
@@ -166,7 +166,7 @@
     "currencyCode": "BHD",
     "currencyName": "Bahraini Dinar",
     "currencyPlural": "Bahraini dinars",
-    "currencySymbol": "BD",
+    "currencySymbol": "b",
     "language": "en_US"
   },
   {

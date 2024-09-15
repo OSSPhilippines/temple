@@ -2,9 +2,6 @@
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
 <link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
 <link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/head.tml" name="panel-head" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/left.tml" name="panel-left" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/main.tml" name="panel-main" />
 <link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
 <link rel="import" type="component" href="@/components/api/ui.tml" name="api-ui" />
 <link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
@@ -29,13 +26,13 @@
 </script>
 <html>
   <html-head />
-  <body class="dark bg-t-0 tx-t-1 arial">
+  <body class="dark bg-t-0 tx-t-1 tx-arial">
     <panel-layout>
-      <panel-head><html-header /></panel-head>
-      <panel-left><html-aside /></panel-left>
-      <panel-main>
+      <header><html-header /></header>
+      <aside left><html-aside /></aside>
+      <main>
         <api-docs>
-          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+          <h1 class="tx-primary tx-upper tx-30 py-20">
             {_('Compiler API')}
           </h1>
 
@@ -75,7 +72,7 @@
           </nav>
           <footer class="foot"></footer>
         </api-docs>
-      </panel-main>
+      </main>
     </panel-layout>
   </body>
 </html>

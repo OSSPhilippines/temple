@@ -1,8 +1,6 @@
 <link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
 <link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/head.tml" name="panel-head" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/main.tml" name="panel-main" />
 <link rel="import" type="component" href="@ossph/temple-ui/form/button.tml" name="tui-button" />
 <link rel="import" type="component" href="@/components/ide/app.tml" name="ide-app" />
 <link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
@@ -27,10 +25,10 @@
 </script>
 <html>
   <html-head />
-  <body class="dark bg-t-0 tx-t-1 arial">
+  <body class="dark bg-t-0 tx-t-1 tx-arial">
     <panel-layout>
-      <panel-head><html-header /></panel-head>
-      <panel-main class="scroll-auto">
+      <header><html-header /></header>
+      <main class="scroll-auto">
         <div class="p-20 w-calc-full-40">
           <h1 class="pt-10 pb-20">{_('Oops...')}</h1>
           <i18n-translate p trim>
@@ -40,7 +38,7 @@
             <pre class="bg-black courier tx-lh-22 tx-word-wrap p-10 scroll-x-auto tx-prewrap">{error}</pre>
           </if>
         </div>
-      </panel-main>
+      </main>
     </panel-layout>
   </body>
 </html>

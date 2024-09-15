@@ -2,10 +2,6 @@
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
 <link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
 <link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/head.tml" name="panel-head" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/left.tml" name="panel-left" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/right.tml" name="panel-right" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/main.tml" name="panel-main" />
 <link rel="import" type="component" href="@ossph/temple-ui/form/button.tml" name="tui-button" />
 <link rel="import" type="component" href="@ossph/temple-ui/alert.tml" name="tui-alert" />
 <link rel="import" type="component" href="@ossph/temple-ui/tab.tml" name="tui-tab" />
@@ -34,18 +30,18 @@
   const description = _('Temple is a template engine that generates web components and support reactivity.');
 
   const toggle = () => {
-    document.getElementsByTagName('panel-layout')[0].toggle('left');
+    document.querySelector('panel-layout').toggle('left');
   };
 </script>
 <html>
   <html-head />
-  <body class="dark bg-t-0 tx-t-1 arial">
+  <body class="dark bg-t-0 tx-t-1 tx-arial">
     <panel-layout>
-      <panel-head><html-header /></panel-head>
-      <panel-left><html-aside /></panel-left>
-      <panel-right>
+      <header><html-header /></header>
+      <aside left><html-aside /></aside>
+      <aside right>
         <menu class="m-0 px-10 py-20 h-calc-full-40 bg-t-2 scroll-auto">
-          <h6 class="tx-muted tx-14 mb-0 mt-0 pb-10 tx-uppercase">
+          <h6 class="tx-muted tx-14 mb-0 mt-0 pb-10 tx-upper">
             {_('On this page')}
           </h6>
           <nav class="tx-14 tx-lh-32">
@@ -83,10 +79,10 @@
             </nav>
           </nav>
         </menu>
-      </panel-right>
-      <panel-main>
+      </aside>
+      <main>
         <api-docs>
-          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+          <h1 class="tx-primary tx-upper tx-30 py-20">
             {_('Getting Started')}
           </h1>
 
@@ -106,7 +102,7 @@
             </ide-code>
           </ide-app>
 
-          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+          <h2 class="tx-primary tx-upper tx-26 pt-40 pb-10 mb-20 b-solid b-t-1 bb-1 bt-0 bx-0">
             {_('1. Add HTTP')}
           </h2>
 
@@ -134,7 +130,7 @@
             `}</ide-code>
           </ide-app>
 
-          <h3 class="tx-t-1 tx-uppercase tx-22 pt-40 pb-20">
+          <h3 class="tx-t-1 tx-upper tx-22 pt-40 pb-20">
             {_('1. Add HTTP')}
           </h3>
 
@@ -148,9 +144,9 @@
             <ide-code inline lang="js">{`function() {}`}</ide-code>
           </i18n-translate>
 
-          <ide-app title="Basic Example" class="py-20">
-            <div class="flex bg-h-EFEFEF h-full lg-block">
-              <ide-code class="basis-half" numbers trim detab={14}>{`
+          <ide-app class="block py-20" title="Basic Example">
+            <div class="flex bg-white md-block">
+              <ide-code numbers trim detab={16} class="basis-half">{`
                 <style>
                   h1 { font-weight: bold; }
                 </style>
@@ -159,13 +155,15 @@
                 </script>
                 <h1>Hello {name}!</h1>
               `}</ide-code>
-              <ide-preview class="bg-white basis-half h-140 lg-h-auto">
-                <h1>Hello world!</h1>
+              <ide-preview class="basis-half">
+                <div>
+                  <h1>{_('Hello world!')}</h1>
+                </div>
               </ide-preview>
             </div>
           </ide-app>
 
-          <tui-alert solid curved info class="py-20 tx-lh-24">
+          <tui-alert solid curved info class="my-20 tx-lh-24">
             <i class="fas fa-info-circle"></i>
             <strong>Recommended:</strong>
             Download the Temple editor plugin at the <a 
@@ -180,7 +178,7 @@
               <div class="flex scroll-x-auto pt-5 pl-5">
                 <tui-tab 
                   on
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="http" 
@@ -189,7 +187,7 @@
                   src/index.ts
                 </tui-tab>
                 <tui-tab 
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="http" 
@@ -198,7 +196,7 @@
                   src/page.dtml
                 </tui-tab>
                 <tui-tab 
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="http" 
@@ -329,7 +327,7 @@
             </a>
           </nav>
         </api-docs>
-      </panel-main>
+      </main>
     </panel-layout>
   </body>
 </html>

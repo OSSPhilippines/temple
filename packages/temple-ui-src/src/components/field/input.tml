@@ -11,17 +11,17 @@
     } = host.props;
     const classlist = [ 
       'p-7', 
-      'bd-1', 
+      'b-1', 
       'block',
-      'bd-solid', 
+      'b-solid', 
       'box-border', 
       'w-full',
       'h-full'
     ];
     if (error) {
-      classlist.push('bd-error', 'tx-error');
+      classlist.push('b-error', 'tx-error');
     } else {
-      classlist.push('bd-black', 'tx-black');
+      classlist.push('b-black', 'tx-black');
     }
     attributes['class'] = classlist.join(' ');
     return { error, change, update, classlist, attributes };
@@ -40,11 +40,11 @@
     //set new class
     if (name === 'error') {
       if (action === 'remove') {
-        input.classList.remove('bd-error', 'tx-error');
-        input.classList.add('bd-black', 'tx-black');
+        input.classList.remove('b-error', 'tx-error');
+        input.classList.add('b-black', 'tx-black');
       } else {
-        input.classList.remove('bd-black', 'tx-black');
-        input.classList.add('bd-error', 'tx-error');
+        input.classList.remove('b-black', 'tx-black');
+        input.classList.add('b-error', 'tx-error');
       }
       return;
       //dont update if these are the names

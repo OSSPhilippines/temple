@@ -12,14 +12,14 @@ import { theme } from './plugins/theme';
 import { utilities } from './plugins/utilities';
 import templeui from './templeui';
 
-import { expressions, literals, ranges } from './data/definitions';
-import { expression, literal, range } from './Stylers';
+import { expressions, ranges, literals } from './data/definitions';
+import { expression, range, literal } from './Stylers';
 
 export default function tui(options: TempleUIOptions = {}) {
   const stylers = [
+    range(ranges()),
     expression(expressions()),
-    literal(literals()),
-    range(ranges())
+    literal(literals())
   ];
   return function withTui(compiler: TempleCompiler) {
     //whenever a component is updated, refresh the document stylesheet

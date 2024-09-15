@@ -3,7 +3,7 @@
   const { title, height } = props();
   const style = height ? `height:${height}px` : '';
 </script>
-<div class="bd-rad-curved scroll-hidden shadow-0-0-10-0-0-0-5">
+<div class="curved scroll-hidden shadow-0-0-10-0-0-0-5">
   <div class="relative flex flex-center-y gap-10 p-10 bg-t-1 tx-c-999999 tx-16">
     <span class="bg-h-999999 pill h-10 w-10"></span>
     <span class="bg-h-999999 pill h-10 w-10"></span>

@@ -10,8 +10,8 @@
   const children = this.originalChildren;
   this.classList.add(
     'table-cell', 'py-16', 'px-12', 
-    'bdx-0',      'bdb-0', 'bdt-1', 
-    'bd-solid'
+    'bx-0',      'bb-0', 'bt-1', 
+    'b-solid'
   );
   if (nowrap) {
     this.classList.add('tx-nowrap');

@@ -2,13 +2,13 @@
   <a href="/temple">
     <img class="h-26 mr-10" src="/temple/temple-icon.png" alt="Temple Logo" />
   </a>
-  <h3 class="flex-grow m-0 tx-uppercase">
+  <h3 class="flex-grow m-0 tx-upper">
     <a class="tx-white" href="/temple">Temple</a>
   </h3>
   <i class="fas fa-fw fa-chevron-left cursor-pointer none md-inline-block" click=toggle></i>
 </header>
 <nav class="bg-t-1 scroll-auto h-calc-full-60">
-  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-0 pt-20 pb-10 pl-10 tx-uppercase">
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-0 pt-20 pb-10 pl-10 tx-upper">
     {_('Introduction')}
   </h6>
   <if true={url === '/docs/index.html'}>
@@ -30,7 +30,7 @@
     </a>
   </if>
 
-  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-20 pt-20 pb-10 pl-10 tx-uppercase">
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-20 pt-20 pb-10 pl-10 tx-upper">
     {_('Features')}
   </h6>
   <if true={url === '/docs/markup-syntax.html'}>
@@ -79,7 +79,7 @@
     </a>
   </if>
 
-  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-20 pt-20 pb-10 pl-10 tx-uppercase">
+  <h6 class="bt-1 bt-solid bt-t-1 tx-muted tx-14 mb-0 mt-20 pt-20 pb-10 pl-10 tx-upper">
     {_('Usage')}
   </h6>
   <if true={url === '/docs/template-engine.html'}>

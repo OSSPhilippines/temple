@@ -2,10 +2,6 @@
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
 <link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
 <link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/head.tml" name="panel-head" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/left.tml" name="panel-left" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/right.tml" name="panel-right" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/main.tml" name="panel-main" />
 <link rel="import" type="component" href="@ossph/temple-ui/alert.tml" name="tui-alert" />
 <link rel="import" type="component" href="@ossph/temple-ui/tab.tml" name="tui-tab" />
 <link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
@@ -36,13 +32,13 @@
 </script>
 <html>
   <html-head />
-  <body class="dark bg-t-0 tx-t-1 arial">
+  <body class="dark bg-t-0 tx-t-1 tx-arial">
     <panel-layout>
-      <panel-head><html-header /></panel-head>
-      <panel-left><html-aside /></panel-left>
-      <panel-right>
+      <header><html-header /></header>
+      <aside left><html-aside /></aside>
+      <aside right>
         <menu class="m-0 px-10 py-20 h-calc-full-40 bg-t-2 scroll-auto">
-          <h6 class="tx-muted tx-14 mb-0 mt-0 pb-10 tx-uppercase">
+          <h6 class="tx-muted tx-14 mb-0 mt-0 pb-10 tx-upper">
             {_('On this page')}
           </h6>
           <nav class="tx-14 tx-lh-32">
@@ -58,10 +54,10 @@
             <a class="block tx-t-0" href="#fouc">{_('FOUC')}</a>
           </nav>
         </menu>
-      </panel-right>
-      <panel-main>
+      </aside>
+      <main>
         <api-docs>
-          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+          <h1 class="tx-primary tx-upper tx-30 py-20">
             {_('Component Strategy')}
           </h1>
 
@@ -78,7 +74,7 @@
           </i18n-translate>
 
           <a name="document"></a>
-          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+          <h2 class="tx-primary tx-upper tx-26 pt-40 pb-10 mb-20 b-solid b-t-1 bb-1 bt-0 bx-0">
             {_('Document')}
           </h2>
 
@@ -127,7 +123,7 @@
               <div class="flex scroll-x-auto pt-5 pl-5">
                 <tui-tab 
                   on
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"   
                   group="server" 
@@ -136,7 +132,7 @@
                   src/index.ts
                 </tui-tab>
                 <tui-tab 
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="server" 
@@ -202,7 +198,7 @@
           </ide-app>
 
           <a name="template"></a>
-          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+          <h2 class="tx-primary tx-upper tx-26 pt-40 pb-10 mb-20 b-solid b-t-1 bb-1 bt-0 bx-0">
             {_('Template')}
           </h2>
 
@@ -246,7 +242,7 @@
               <div class="flex scroll-x-auto pt-5 pl-5">
                 <tui-tab 
                   on
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="template" 
@@ -255,7 +251,7 @@
                   src/page.dtml
                 </tui-tab>
                 <tui-tab 
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="template" 
@@ -327,7 +323,7 @@
           </i18n-translate>
 
           <a name="component"></a>
-          <h2 class="tx-primary tx-uppercase tx-26 pt-40 pb-10 mb-20 bd-solid bd-t-1 bdb-1 bdt-0 bdx-0">
+          <h2 class="tx-primary tx-upper tx-26 pt-40 pb-10 mb-20 b-solid b-t-1 bb-1 bt-0 bx-0">
             {_('Component')}
           </h2>
 
@@ -347,7 +343,7 @@
           </i18n-translate>
 
           <a name="strat-1"></a>
-          <h3 class="tx-t-1 tx-uppercase tx-22 pt-40 pb-20">
+          <h3 class="tx-t-1 tx-upper tx-22 pt-40 pb-20">
             {_('Strategy 1: No Components')}
           </h3>
 
@@ -363,7 +359,7 @@
               <div class="flex scroll-x-auto pt-5 pl-5">
                 <tui-tab 
                   on
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="strat-1" 
@@ -372,7 +368,7 @@
                   src/page.dtml
                 </tui-tab>
                 <tui-tab 
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="strat-1" 
@@ -381,7 +377,7 @@
                   src/head.tml
                 </tui-tab>
                 <tui-tab 
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="strat-1" 
@@ -390,7 +386,7 @@
                   src/header.tml
                 </tui-tab>
                 <tui-tab 
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted" 
                   group="strat-1" 
@@ -493,7 +489,7 @@
           </ide-app>
 
           <a name="strat-2"></a>
-          <h3 class="tx-t-1 tx-uppercase tx-22 pt-40 pb-20">
+          <h3 class="tx-t-1 tx-upper tx-22 pt-40 pb-20">
             {_('Strategy 2: Shallow Components')}
           </h3>
 
@@ -509,7 +505,7 @@
               <div class="flex scroll-x-auto pt-5 pl-5">
                 <tui-tab 
                   on
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="strat-2" 
@@ -518,7 +514,7 @@
                   src/page.dtml
                 </tui-tab>
                 <tui-tab 
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="strat-2" 
@@ -527,7 +523,7 @@
                   src/header.tml
                 </tui-tab>
                 <tui-tab 
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted" 
                   group="strat-2" 
@@ -627,7 +623,7 @@
           </ide-app>
 
           <a name="strat-3"></a>
-          <h3 class="tx-t-1 tx-uppercase tx-22 pt-40 pb-20">
+          <h3 class="tx-t-1 tx-upper tx-22 pt-40 pb-20">
             {_('Strategy 3: Partial Styling')}
           </h3>
 
@@ -644,7 +640,7 @@
             <app-head>
               <div class="flex scroll-x-auto pt-5 pl-5">
                 <tui-tab 
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="strat-3" 
@@ -654,7 +650,7 @@
                 </tui-tab>
                 <tui-tab 
                   on
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="strat-3" 
@@ -663,7 +659,7 @@
                   src/header.tml
                 </tui-tab>
                 <tui-tab 
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted" 
                   group="strat-3" 
@@ -765,7 +761,7 @@
           </ide-app>
 
           <a name="strat-4"></a>
-          <h3 class="tx-t-1 tx-uppercase tx-22 pt-40 pb-20">
+          <h3 class="tx-t-1 tx-upper tx-22 pt-40 pb-20">
             {_('Strategy 4: Encapulation')}
           </h3>
 
@@ -782,7 +778,7 @@
             <app-head>
               <div class="flex scroll-x-auto pt-5 pl-5">
                 <tui-tab 
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="strat-4" 
@@ -792,7 +788,7 @@
                 </tui-tab>
                 <tui-tab 
                   on
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="strat-4" 
@@ -801,7 +797,7 @@
                   src/header.tml
                 </tui-tab>
                 <tui-tab 
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bdx-1 bdt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted" 
                   group="strat-4" 
@@ -960,7 +956,7 @@
           </nav>
           <footer class="foot"></footer>
         </api-docs>
-      </panel-main>
+      </main>
     </panel-layout>
   </body>
 </html>

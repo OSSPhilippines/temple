@@ -1,0 +1,44 @@
+<link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
+<link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
+<link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
+<link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
+<link rel="import" type="component" href="@ossph/temple-ui/form/button.tml" name="tui-button" />
+<link rel="import" type="component" href="@ossph/temple-ui/form/control.tml" name="tui-control" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/input.tml" name="tui-input" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/textarea.tml" name="tui-textarea" />
+<style>
+  @tui theme;
+  @tui reset;
+  @tui fouc-opacity;
+  @tui default-block;
+  @tui utilities;
+</style>
+<script>
+  import { env } from '@ossph/temple';
+  import { _ } from '@/components/i18n';
+
+  const url = '/temple/panel.html';
+  const title = _('Temple UI - Web Components Meets Atomic Styles.');
+  const description = _('Temple UI atomically generates CSS styles and provides out of box web components.');
+
+  const toggle = () => {
+    document.querySelector('panel-layout').toggle('left');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark bg-t-0 tx-t-1 tx-arial">
+    <panel-layout>
+      <header><html-header /></header>
+      <aside left><html-aside /></aside>
+      <main>
+        <api-docs>
+          <h1 class="tx-primary tx-upper tx-30 py-20">
+            {_('Fields')}
+          </h1>
+        </api-docs>
+      </main>
+    </panel-layout>
+  </body>
+</html>

@@ -31,7 +31,7 @@
       'w-calc-full-32', 'relative', 
       'p-16',   'mb-8', 'tx-white', 
       'scroll-hidden', 'curved',
-      'wm-288'
+      'mw-288'
     );
     
     switch (type) {

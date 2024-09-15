@@ -1,25 +1,28 @@
 import type { 
+  Media,
   Token, 
   ExpressionToken, 
   LiteralToken, 
-  RangeToken,
+  RangeToken
 } from '../types';
 
 import { 
   literal, 
-  range, 
   expression,
+  range,
   sizes,
   xsizes,
   colors,
-  percents
+  percents,
+  media,
+  bna
 } from '../helpers';
 
 /**
  * Returns a pre-defined list of literal definitions
  */
 export function literals(): LiteralToken[] {
-  return [
+  const tokens = [
     //----------------------------------------------------------------//
     // FIXED VALUES
     
@@ -98,13 +101,14 @@ export function literals(): LiteralToken[] {
     literal('w-auto', { width: [ 'auto' ] }),
     literal('vh', { height: [ '100vh' ] }),
     literal('vw', { width: [ '100vw' ] }),
-    literal('wm-auto', { 'max-width': [ 'auto' ] }),
-    literal('wm-xs', { 'max-width': [ '360px' ] }),
-    literal('wm-sm', { 'max-width': [ '420px' ] }),
-    literal('wm-md', { 'max-width': [ '767px' ] }),
-    literal('wm-lg', { 'max-width': [ '992px' ] }),
-    literal('wm-xl', { 'max-width': [ '1024px' ] }),
-    literal('wm-full', { 'max-width': [ '100%' ] }),
+    literal('mh-auto', { 'max-height': [ 'auto' ] }),
+    literal('mw-auto', { 'max-width': [ 'auto' ] }),
+    literal('mw-xs', { 'max-width': [ '360px' ] }),
+    literal('mw-sm', { 'max-width': [ '420px' ] }),
+    literal('mw-md', { 'max-width': [ '767px' ] }),
+    literal('mw-lg', { 'max-width': [ '992px' ] }),
+    literal('mw-xl', { 'max-width': [ '1024px' ] }),
+    literal('mw-full', { 'max-width': [ '100%' ] }),
 
     // Background
     literal('bg-none', { 'background-color': [ 'transparent', '!important' ] }),
@@ -158,20 +162,20 @@ export function literals(): LiteralToken[] {
     literal('tx-bottom', { 'vertical-align': [ 'bottom' ] }),
 
     // Border
-    literal('bd-solid', { 'border-style': [ 'solid' ] }),
-    literal('bd-dashed', { 'border-style': [ 'dashed' ] }),
-    literal('bd-dotted', { 'border-style': [ 'dotted' ] }),
-    literal('bd-collapse', { 'border-collapse': [ 'collapse' ] }),
-    literal('bd-transparent', { 'border-color': [ 'transparent' ] }),
-    literal('bdb-transparent', { 'border-bottom-color': [ 'transparent' ] }),
-    literal('bdl-transparent', { 'border-left-color': [ 'transparent' ] }),
-    literal('bdr-transparent', { 'border-right-color': [ 'transparent' ] }),
-    literal('bdt-transparent', { 'border-top-color': [ 'transparent' ] }),
-    literal('bdx-transparent', { 
+    literal('b-solid', { 'border-style': [ 'solid' ] }),
+    literal('b-dashed', { 'border-style': [ 'dashed' ] }),
+    literal('b-dotted', { 'border-style': [ 'dotted' ] }),
+    literal('b-collapse', { 'border-collapse': [ 'collapse' ] }),
+    literal('b-transparent', { 'border-color': [ 'transparent' ] }),
+    literal('bb-transparent', { 'border-bottom-color': [ 'transparent' ] }),
+    literal('bl-transparent', { 'border-left-color': [ 'transparent' ] }),
+    literal('br-transparent', { 'border-right-color': [ 'transparent' ] }),
+    literal('bt-transparent', { 'border-top-color': [ 'transparent' ] }),
+    literal('bx-transparent', { 
       'border-left-color': [ 'transparent' ],
       'border-right-color': [ 'transparent' ] 
     }),
-    literal('bdy-transparent', { 
+    literal('by-transparent', { 
       'border-bottom-color': [ 'transparent' ],
       'border-top-color': [ 'transparent' ] 
     }),
@@ -190,11 +194,6 @@ export function literals(): LiteralToken[] {
     literal('pill-r', { 'border-radius': [ '0', '10000px', '10000px', '0' ] }),
     literal('pill-t', { 'border-radius': [ '10000px', '10000px', '0', '0' ] }),
     literal('pill-b', { 'border-radius': [ '0', '0', '10000px', '10000px' ] }),
-    literal('curve-full', { 'border-radius': [ '10000px' ] }),
-    literal('curve-l-full', { 'border-radius': [ '10000px', '0', '0', '10000px' ] }),
-    literal('curve-r-full', { 'border-radius': [ '0', '10000px', '10000px', '0' ] }),
-    literal('curve-t-full', { 'border-radius': [ '10000px', '10000px', '0', '0' ] }),
-    literal('curve-b-full', { 'border-radius': [ '0', '0', '10000px', '10000px' ] }),
 
     // Margin
     literal('m-auto', { margin: [ 'auto' ] }),
@@ -265,149 +264,168 @@ export function literals(): LiteralToken[] {
 
     // Border
     ...colors.map(
-      //bda-primary, bda-secondary, bda-black, bda-white, 
-      //bda-info, bda-error, bda-warning, bda-success, bda-muted
-      color => literal(`bda-${color}`, { 'border': [ '1px', 'solid', `var(--${color})` ] })
+      //ba-primary, ba-secondary, ba-black, ba-white, 
+      //ba-info, b-error, ba-warning, ba-success, ba-muted
+      color => literal(`ba-${color}`, { 'border': [ '1px', 'solid', `var(--${color})` ] })
     ),
     ...colors.map(
-      //bdb-primary, bdb-secondary, bdb-black, bdb-white, 
-      //bdb-info, bdb-error, bdb-warning, bdb-success, bdb-muted
-      color => literal(`bdb-${color}`, { 'border-bottom': [ '1px', 'solid', `var(--${color})` ] })
+      //bb-primary, bb-secondary, bb-black, bb-white, 
+      //bb-info, bb-error, bb-warning, bb-success, bb-muted
+      color => literal(`bb-${color}`, { 'border-bottom': [ '1px', 'solid', `var(--${color})` ] })
     ),
     ...colors.map(
-      //bdl-primary, bdl-secondary, bdl-black, bdl-white, bdl-info, 
-      //bdl-error, bdl-warning, bdl-success, bdl-muted
-      color => literal(`bdl-${color}`, { 'border-left': [ '1px', 'solid', `var(--${color})` ] })
+      //bl-primary, bl-secondary, bl-black, bl-white, bl-info, 
+      //bl-error, bl-warning, bl-success, bl-muted
+      color => literal(`bl-${color}`, { 'border-left': [ '1px', 'solid', `var(--${color})` ] })
     ),
     ...colors.map(
-      //bdr-primary, bdr-secondary, bdr-black, bdr-white, 
-      //bdr-info, bdr-error, bdr-warning, bdr-success, bdr-muted
-      color => literal(`bdr-${color}`, { 'border-right': [ '1px', 'solid', `var(--${color})` ] })
+      //br-primary, br-secondary, br-black, br-white, 
+      //br-info, br-error, br-warning, br-success, br-muted
+      color => literal(`br-${color}`, { 'border-right': [ '1px', 'solid', `var(--${color})` ] })
     ),
     ...colors.map(
-      //bdt-primary, bdt-secondary, bdt-black, bdt-white, 
-      //bdt-info, bdt-error, bdt-warning, bdt-success, bdt-muted
-      color => literal(`bdt-${color}`, { 'border-top': [ '1px', 'solid', `var(--${color})` ] })
+      //bt-primary, bt-secondary, bt-black, bt-white, 
+      //bt-info, bt-error, bt-warning, bt-success, bt-muted
+      color => literal(`bt-${color}`, { 'border-top': [ '1px', 'solid', `var(--${color})` ] })
     ),
     ...colors.map(
-      //bdx-primary, bdx-secondary, bdx-black, bdx-white, 
-      //bdx-info, bdx-error, bdx-warning, bdx-success, bdx-muted
-      color => literal(`bdx-${color}`, { 
+      //bx-primary, bx-secondary, bx-black, bx-white, 
+      //bx-info, bx-error, bx-warning, bx-success, bx-muted
+      color => literal(`bx-${color}`, { 
         'border-left': [ '1px', 'solid', `var(--${color})` ],
         'border-right': [ '1px', 'solid', `var(--${color})` ]
       })
     ),
     ...colors.map(
-      //bdy-primary, bdy-secondary, bdy-black, bdy-white, 
-      //bdy-info, bdy-error, bdy-warning, bdy-success, bdy-muted
-      color => literal(`bdy-${color}`, { 
+      //by-primary, by-secondary, by-black, by-white, 
+      //by-info, by-error, by-warning, by-success, by-muted
+      color => literal(`by-${color}`, { 
         'border-bottom': [ '1px', 'solid', `var(--${color})` ],
         'border-top': [ '1px', 'solid', `var(--${color})` ]
       })
     ),
     ...colors.map(
-      //bd-primary, bd-secondary, bd-black, bd-white, 
-      //bd-info, bd-error, bd-warning, bd-success, bd-muted
-      color => literal(`bd-${color}`, { 
+      //b-primary, b-secondary, b-black, b-white, 
+      //b-info, b-error, b-warning, b-success, b-muted
+      color => literal(`b-${color}`, { 
         'border-color': [ `var(--${color})`, '!important' ] 
       })
     ),
-    ...sizes.map(//bd-xs, bd-sm, bd-md, bd-lg, bd-xl
-      (size, i) => literal(`bd-${size}`, { 
+    ...sizes.map(//b-xs, b-sm, b-md, b-lg, b-xl
+      (size, i) => literal(`b-${size}`, { 
         'border-width': [ `${i + 1}px` ] 
       })
     ),
-    ...sizes.map(//bdt-xs, bdt-sm, bdt-md, bdt-lg, bdt-xl
-      (size, i) => literal(`bdt-${size}`, { 
+    ...sizes.map(//bt-xs, bt-sm, bt-md, bt-lg, bt-xl
+      (size, i) => literal(`bt-${size}`, { 
         'border-top-width': [ `${i + 1}px` ] 
       })
     ),
-    ...sizes.map(//bdb-xs, bdb-sm, bdb-md, bdb-lg, bdb-xl
-      (size, i) => literal(`bdb-${size}`, { 
+    ...sizes.map(//bb-xs, bb-sm, bb-md, bb-lg, bb-xl
+      (size, i) => literal(`bb-${size}`, { 
         'border-bottom-width': [ `${i + 1}px` ] 
       })
     ),
-    ...sizes.map(//bdl-xs, bdl-sm, bdl-md, bdl-lg, bdl-xl
-      (size, i) => literal(`bdl-${size}`, { 
+    ...sizes.map(//bl-xs, bl-sm, bl-md, bl-lg, bl-xl
+      (size, i) => literal(`bl-${size}`, { 
         'border-left-width': [ `${i + 1}px` ] 
       })
     ),
-    ...sizes.map(//bdr-xs, bdr-sm, bdr-md, bdr-lg, bdr-xl
-      (size, i) => literal(`bdr-${size}`, { 
+    ...sizes.map(//br-xs, br-sm, br-md, br-lg, br-xl
+      (size, i) => literal(`br-${size}`, { 
         'border-right-width': [ `${i + 1}px` ] 
       })
     ),
-    ...sizes.map(//bdx-xs, bdx-sm, bdx-md, bdx-lg, bdx-xl
-      (size, i) => literal(`bdx-${size}`, { 
+    ...sizes.map(//bx-xs, bx-sm, bx-md, bx-lg, bx-xl
+      (size, i) => literal(`bx-${size}`, { 
         'border-left-width': [ `${i + 1}px` ],
         'border-right-width': [ `${i + 1}px` ]
       })
     ),
-    ...sizes.map(//bdy-xs, bdy-sm, bdy-md, bdy-lg, bdy-xl
-      (size, i) => literal(`bdy-${size}`, { 
+    ...sizes.map(//by-xs, by-sm, by-md, by-lg, by-xl
+      (size, i) => literal(`by-${size}`, { 
         'border-top-width': [ `${i + 1}px` ],
         'border-bottom-width': [ `${i + 1}px` ]
       })
     ),
     ...xsizes.map(
-      //curve-xs, curve-sm, curve-md, curve-lg, curve-xl, 
-      //curve-2xl, curve-3xl, curve-4xl, curve-5xl
-      (size, i) => literal(`curve-${size}`, { 
+      //c-xs, c-sm, c-md, c-lg, c-xl, 
+      //c-2xl, c-3xl, c-4xl, c-5xl
+      (size, i) => literal(`c-${size}`, { 
         'border-radius': [ `${(i + 1) * 2}px` ] 
       })
     ),
     ...xsizes.map(
-      //curve-l-xs, curve-l-sm, curve-l-md, curve-l-lg, curve-l-xl,
-      //curve-l-2xl, curve-l-3xl, curve-l-4xl, curve-l-5xl
-      (size, i) => literal(`curve-l-${size}`, { 
+      //cl-xs, cl-sm, cl-md, cl-lg, cl-xl,
+      //cl-2xl, cl-3xl, cl-4xl, cl-5xl
+      (size, i) => literal(`cl-${size}`, { 
         'border-radius': [ `${(i + 1) * 2}px`, '0', '0', `${(i + 1) * 2}px` ] 
       })
     ),
     ...xsizes.map(
-      //curve-r-xs, curve-r-sm, curve-r-md, curve-r-lg, curve-r-xl, 
-      //curve-r-2xl, curve-r-3xl, curve-r-4xl, curve-r-5xl
-      (size, i) => literal(`curve-r-${size}`, { 
+      //cr-xs, cr-sm, cr-md, cr-lg, cr-xl, 
+      //cr-2xl, cr-3xl, cr-4xl, cr-5xl
+      (size, i) => literal(`cr-${size}`, { 
         'border-radius': [ '0', `${(i + 1) * 2}px`, `${(i + 1) * 2}px`, '0' ] 
       })
     ),
     ...xsizes.map(
-      //curve-t-xs, curve-t-sm, curve-t-md, curve-t-lg, curve-t-xl, 
-      //curve-t-2xl, curve-t-3xl, curve-t-4xl, curve-t-5xl
-      (size, i) => literal(`curve-t-${size}`, { 
+      //ct-xs, ct-sm, ct-md, ct-lg, ct-xl, 
+      //ct-2xl, ct-3xl, ct-4xl, ct-5xl
+      (size, i) => literal(`ct-${size}`, { 
         'border-radius': [ `${(i + 1) * 2}px`, `${(i + 1) * 2}px`, '0', '0' ] 
       })
     ),
     ...xsizes.map(
-      //curve-b-xs, curve-b-sm, curve-b-md, curve-b-lg, curve-b-xl 
-      //curve-b-2xl, curve-b-3xl, curve-b-4xl, curve-b-5xl
-      (size, i) => literal(`curve-b-${size}`, { 
+      //cb-xs, cb-sm, cb-md, cb-lg, cb-xl 
+      //cb-2xl, cb-3xl, cb-4xl, cb-5xl
+      (size, i) => literal(`cb-${size}`, { 
         'border-radius': [ '0', '0', `${(i + 1) * 2}px`, `${(i + 1) * 2}px` ] 
       })
-    ),
+    )
   ];
+
+  const literals = Array.from(tokens);
+
+  tokens.forEach(token => {
+    const { classname, styles } = token;
+    //add bna, media
+    media.forEach(media => {
+      literals.push(literal(classname, styles, media as Media));
+      bna.forEach(position => {
+        literals.push(literal(
+          classname, 
+          styles, 
+          media as Media, 
+          position
+        ));
+      });
+    });
+  });
+
+  return literals;
 };
 
-/**
- * Returns a pre-defined list of range definitions
- */
-export function ranges(): RangeToken[] {
+export function ranges(): RangeToken[] { 
   return [
-    // Opacity
-    range('o-$', { opacity: [ '$' ] }, 0, 1, 0.01),
-    // Border
-    range('bd-$', { 'border-width': [ '$px' ] }, 0, 20),
-    range('bdb-$', { 'border-bottom-width': [ '$px' ] }, 0, 20),
-    range('bdl-$', { 'border-left-width': [ '$px' ] }, 0, 20),
-    range('bdr-$', { 'border-right-width': [ '$px' ] }, 0, 20),
-    range('bdt-$', { 'border-top-width': [ '$px' ] }, 0, 20),
-    range('bdx-$', {
-      'border-left-width': [ '$px' ],
-      'border-right-width': [ '$px' ]
-    }, 0, 20),
-    range('bdy-$', {
-      'border-bottom-width': [ '$px' ],
-      'border-top-width': [ '$px' ]
-    }, 0, 20),
+    //directional, calculable, negatable, measurable
+    range('h', 'height', false, true, false, true),
+    range('w', 'width', false, true, false, true),
+    range('m', 'margin', true, true, true, true),
+    range('p', 'padding', true, true, false, true),
+    range('mw', 'max-width', false, true, false, true),
+    range('mh', 'max-height', false, true, false, true),
+    range('bottom', 'bottom', false, false, true, true),
+    range('left', 'left', false, false, true, true),
+    range('right', 'right', false, false, true, true),
+    range('top', 'top', false, false, true, true),
+    range('z', 'z-index', false, false, true, false),
+    range('o', 'opacity', false, false, false, false),
+    range('basis', 'flex-basis', false, true, false, true),
+    range('gap', 'gap', false, true, false, true),
+    range('tx-lh', 'line-height', false, false, false, true),
+    range('tx', 'font-size', false, false, false, true),
+    range('b', 'border-width', true, true, false, true)
   ];
 };
 
@@ -415,78 +433,41 @@ export function ranges(): RangeToken[] {
  * Returns a pre-defined list of expression definitions
  */
 export function expressions(): ExpressionToken[] {
-  return [
+  const tokens = [
     //----------------------------------------------------------------//
     // FIXED EXPRESSIONS
-
-    // Position
-    expression('bottom\\-(\\-{0,1}\\d+)', { bottom: [ '$1px' ] }),
-    expression('left\\-(\\-{0,1}\\d+)', { left: [ '$1px' ] }),
-    expression('right\\-(\\-{0,1}\\d+)', { right: [ '$1px' ] }),
-    expression('top\\-(\\-{0,1}\\d+)', { top: [ '$1px' ] }),
-    expression('z\\-(\\d+)', { 'z-index': [ '$1' ] }),
-    
-    // Flex
-    expression('basis\\-(\\d+)', { 'flex-basis': [ '$1px' ] }),
-    expression('basis\\-p\\-(\\d+)', { 'flex-basis': [ '$1%' ] }),
-    expression('gap\\-(\\d+)', { 'gap': [ '$1px' ] }),
-  
-    // Size
-    expression('h\\-(\\d+)', { height: [ '$1px' ] }),
-    expression('h\\-calc\\-(\\d+)-(\\d+)', { height: [ 'calc($1% - $2px)' ] }),
-    expression('w\\-(\\d+)', { width: [ '$1px' ] }),
-    expression('wp\\-(\\d+)', { width: [ '$1%' ] }),
-    expression('w\\-calc\\-(\\d+)-(\\d+)', { width: [ 'calc($1% - $2px)' ] }),
-    expression('wm\\-(\\d+)', { 'max-width': [ '$1px' ] }),
     
     // Background
     expression('bg\\-t\\-(\\d+)', { 'background-color': [ 'var(--bg-$1)' ] }),
     expression('bg\\-h\\-([0-9a-f]{3,6})', { 'background-color': [ '#$1' ] }),
   
     // Text
-    expression('tx\\-(\\d+)', { 'font-size': [ '$1px' ] }),
-    expression('tx\\-lh\\-(\\d+)', { 'line-height': [ '$1px' ] }),
     expression('tx\\-t\\-(\\d+)', { 'color': [ 'var(--tx-$1)' ] }),
     expression('tx\\-h\\-([0-9a-f]{3,6})', { 'color': [ '#$1' ] }),
   
     // Border
-    expression('bd\\-t\\-(\\d+)', { 'border-color': [ 'var(--bd-$1)' ] }),
-    expression('bd\\-h\\-([0-9a-f]{3,6})', { 'border-color': [ '#$1' ] }),
-    expression('curve\\-(\\d+)', { 'border-radius': [ '$1px', '$1px', '$1px', '$1px' ] }),
-    expression('curve\\-b\\-(\\d+)', { 'border-radius': [ '0', '0', '$1px', '$1px' ] }),
-    expression('curve\\-l\\-(\\d+)', { 'border-radius': [ '$1px', '0', '0', '$1px' ] }),
-    expression('curve\\-r\\-(\\d+)', { 'border-radius': [ '0', '$1px', '$1px', '0' ] }),
-    expression('curve\\-t\\-(\\d+)', { 'border-radius': [ '$1px', '$1px', '0', '0' ] }),
-  
-    // Margin
-    expression('m\\-(\\-{0,1}\\d+)', { margin: [ '$1px' ] }),
-    expression('mb\\-(\\-{0,1}\\d+)', { 'margin-bottom': [ '$1px' ] }),
-    expression('ml\\-(\\-{0,1}\\d+)', { 'margin-left': [ '$1px' ] }),
-    expression('mr\\-(\\-{0,1}\\d+)', { 'margin-right': [ '$1px' ] }),
-    expression('mt\\-(\\-{0,1}\\d+)', { 'margin-top': [ '$1px' ] }),
-    expression('mx\\-(\\-{0,1}\\d+)', {
-      'margin-left': [ '$1px' ],
-      'margin-right': [ '$1px' ]
-    }),
-    expression('my\\-(\\-{0,1}\\d+)', {
-      'margin-top': [ '$1px' ],
-      'margin-bottom': [ '$1px' ]
-    }),
-  
-    // Padding
-    expression('p\\-(\\d+)', { padding: [ '$1px' ] }),
-    expression('pb\\-(\\d+)', { 'padding-bottom': [ '$1px' ] }),
-    expression('pl\\-(\\d+)', { 'padding-left': [ '$1px' ] }),
-    expression('pr\\-(\\d+)', { 'padding-right': [ '$1px' ] }),
-    expression('pt\\-(\\d+)', { 'padding-top': [ '$1px' ] }),
-    expression('px\\-(\\d+)', {
-      'padding-left': [ '$1px' ],
-      'padding-right': [ '$1px' ]
-    }),
-    expression('py\\-(\\d+)', {
-      'padding-top': [ '$1px' ],
-      'padding-bottom': [ '$1px' ]
-    }),
+    expression('b\\-t\\-(\\d+)', { 'border-color': [ 'var(--bd-$1)' ] }),
+    expression('b\\-h\\-([0-9a-f]{3,6})', { 'border-color': [ '#$1' ] }),
+    expression('c\\-(\\d+)', { 'border-radius': [ '$1px', '$1px', '$1px', '$1px' ] }),
+    //expression('c\\-(\\d+)p', { 'border-radius': [ '$1%', '$1%', '$1%', '$1%' ] }),
+    //expression('c\\-(\\d+)e', { 'border-radius': [ '$1em', '$1em', '$1em', '$1em' ] }, [ 0.01 ]),
+    //expression('c\\-(\\d+)r', { 'border-radius': [ '$1rem', '$1rem', '$1rem', '$1rem' ] }, [ 0.01 ]),
+    expression('cb\\-(\\d+)', { 'border-radius': [ '0', '0', '$1px', '$1px' ] }),
+    //expression('cb\\-(\\d+)p', { 'border-radius': [ '0', '0', '$1%', '$1%' ] }),
+    //expression('cb\\-(\\d+)e', { 'border-radius': [ '0', '0', '$1em', '$1em' ] }, [ 0.01 ]),
+    //expression('cb\\-(\\d+)r', { 'border-radius': [ '0', '0', '$1rem', '$1rem' ] }, [ 0.01 ]),
+    expression('cl\\-(\\d+)', { 'border-radius': [ '$1px', '0', '0', '$1px' ] }),
+    //expression('cl\\-(\\d+)p', { 'border-radius': [ '$1%', '0', '0', '$1%' ] }),
+    //expression('cl\\-(\\d+)e', { 'border-radius': [ '$1em', '0', '0', '$1em' ] }, [ 0.01 ]),
+    //expression('cl\\-(\\d+)r', { 'border-radius': [ '$1rem', '0', '0', '$1rem' ] }, [ 0.01 ]),
+    expression('cr\\-(\\d+)', { 'border-radius': [ '0', '$1px', '$1px', '0' ] }),
+    //expression('cr\\-(\\d+)p', { 'border-radius': [ '0', '$1%', '$1%', '0' ] }),
+    //expression('cr\\-(\\d+)e', { 'border-radius': [ '0', '$1em', '$1em', '0' ] }, [ 0.01 ]),
+    //expression('cr\\-(\\d+)r', { 'border-radius': [ '0', '$1rem', '$1rem', '0' ] }, [ 0.01 ]),
+    expression('ct\\-(\\d+)', { 'border-radius': [ '$1px', '$1px', '0', '0' ] }),
+    //expression('ct\\-(\\d+)p', { 'border-radius': [ '$1%', '$1%', '0', '0' ] }),
+    //expression('ct\\-(\\d+)e', { 'border-radius': [ '$1em', '$1em', '0', '0' ] }, [ 0.01 ]),
+    //expression('ct\\-(\\d+)r', { 'border-radius': [ '$1rem', '$1rem', '0', '0' ] }, [ 0.01 ]),
   
     //Animation
     expression('transition\\-(\\d+)', { 'transition-duration': [ '$1ms' ] }),
@@ -498,7 +479,8 @@ export function expressions(): ExpressionToken[] {
     ),
     expression(
       'shadow\\-(\\d+)\\-(\\d+)\\-(\\d+)\\-(\\d+)\\-(\\d+)\\-(\\d+)\\-(\\d+)', 
-      { 'box-shadow': [ '$1px $2px $3px rgb($4, $5, $6, 0.$7)' ] }
+      { 'box-shadow': [ '$1px $2px $3px rgb($4, $5, $6, $7)' ] },
+      [ 1, 1, 1, 1, 1, 1, 0.01 ]
     ),
 
     //----------------------------------------------------------------//
@@ -511,13 +493,243 @@ export function expressions(): ExpressionToken[] {
         'height': [ `calc(${value}% - $1px)` ] 
       })
     ),
+    // ...percents.map(
+    //   //h-calc-full-99e, h-calc-half-99e, h-calc-third-99e, h-calc-fourth-99e, h-calc-fifth-99e
+    //   ([ name, value ]) => expression(`h\\-calc\\-${name}-(\\d+)e`, { 
+    //     'height': [ `calc(${value}% - $1em)` ] 
+    //   })
+    // ),
+    // ...percents.map(
+    //   //h-calc-full-99r, h-calc-half-99r, h-calc-third-99r, h-calc-fourth-99r, h-calc-fifth-99r
+    //   ([ name, value ]) => expression(`h\\-calc\\-${name}-(\\d+)r`, { 
+    //     'height': [ `calc(${value}% - $1rem)` ] 
+    //   })
+    // ),
     ...percents.map(
       //w-calc-full-99, w-calc-half-99, w-calc-third-99, w-calc-fourth-99, w-calc-fifth-99
       ([ name, value ]) => expression(`w\\-calc\\-${name}-(\\d+)`, { 
         'width': [ `calc(${value}% - $1px)` ] 
       })
-    )
+    ),
+    // ...percents.map(
+    //   //w-calc-full-99e, w-calc-half-99e, w-calc-third-99e, w-calc-fourth-99e, w-calc-fifth-99e
+    //   ([ name, value ]) => expression(`w\\-calc\\-${name}-(\\d+)e`, { 
+    //     'width': [ `calc(${value}% - $1em)` ] 
+    //   })
+    // ),
+    // ...percents.map(
+    //   //w-calc-full-99r, w-calc-half-99r, w-calc-third-99r, w-calc-fourth-99r, w-calc-fifth-99r
+    //   ([ name, value ]) => expression(`w\\-calc\\-${name}-(\\d+)r`, { 
+    //     'width': [ `calc(${value}% - $1rem)` ] 
+    //   })
+    // ),
+
+    // Margin
+    ...percents.map(
+      //m-calc-full-99, m-calc-half-99, m-calc-third-99, m-calc-fourth-99, m-calc-fifth-99
+      ([ name, value ]) => expression(`m\\-calc\\-${name}-(\\d+)`, { 
+        'margin': [ `calc(${value}% - $1px)` ] 
+      })
+    ),
+    // ...percents.map(
+    //   //m-calc-full-99e, m-calc-half-99e, m-calc-third-99e, m-calc-fourth-99e, m-calc-fifth-99e
+    //   ([ name, value ]) => expression(`m\\-calc\\-${name}-(\\d+)e`, { 
+    //     'margin': [ `calc(${value}% - $1em)` ] 
+    //   })
+    // ),
+    // ...percents.map(
+    //   //m-calc-full-99r, m-calc-half-99r, m-calc-third-99r, m-calc-fourth-99r, m-calc-fifth-99r
+    //   ([ name, value ]) => expression(`m\\-calc\\-${name}-(\\d+)r`, { 
+    //     'margin': [ `calc(${value}% - $1rem)` ] 
+    //   })
+    // ),
+    ...percents.map(
+      //ml-calc-full-99, ml-calc-half-99, ml-calc-third-99, ml-calc-fourth-99, ml-calc-fifth-99
+      ([ name, value ]) => expression(`ml\\-calc\\-${name}-(\\d+)`, { 
+        'margin-left': [ `calc(${value}% - $1px)` ] 
+      })
+    ),
+    // ...percents.map(
+    //   //ml-calc-full-99e, ml-calc-half-99e, ml-calc-third-99e, ml-calc-fourth-99e, ml-calc-fifth-99e
+    //   ([ name, value ]) => expression(`ml\\-calc\\-${name}-(\\d+)e`, { 
+    //     'margin-left': [ `calc(${value}% - $1em)` ] 
+    //   })
+    // ),
+    // ...percents.map(
+    //   //ml-calc-full-99r, ml-calc-half-99r, ml-calc-third-99r, ml-calc-fourth-99r, ml-calc-fifth-99r
+    //   ([ name, value ]) => expression(`ml\\-calc\\-${name}-(\\d+)r`, { 
+    //     'margin-left': [ `calc(${value}% - $1rem)` ] 
+    //   })
+    // ),
+    ...percents.map(
+      //mr-calc-full-99, mr-calc-half-99, mr-calc-third-99, mr-calc-fourth-99, mr-calc-fifth-99
+      ([ name, value ]) => expression(`mr\\-calc\\-${name}-(\\d+)`, { 
+        'margin-right': [ `calc(${value}% - $1px)` ] 
+      })
+    ),
+    // ...percents.map(
+    //   //mr-calc-full-99e, mr-calc-half-99e, mr-calc-third-99e, mr-calc-fourth-99e, mr-calc-fifth-99e
+    //   ([ name, value ]) => expression(`mr\\-calc\\-${name}-(\\d+)e`, { 
+    //     'margin-right': [ `calc(${value}% - $1em)` ] 
+    //   })
+    // ),
+    // ...percents.map(
+    //   //mr-calc-full-99r, mr-calc-half-99r, mr-calc-third-99r, mr-calc-fourth-99r, mr-calc-fifth-99r
+    //   ([ name, value ]) => expression(`mr\\-calc\\-${name}-(\\d+)r`, { 
+    //     'margin-right': [ `calc(${value}% - $1rem)` ] 
+    //   })
+    // ),
+    ...percents.map(
+      //mt-calc-full-99, mt-calc-half-99, mt-calc-third-99, mt-calc-fourth-99, mt-calc-fifth-99
+      ([ name, value ]) => expression(`mt\\-calc\\-${name}-(\\d+)`, { 
+        'margin-top': [ `calc(${value}% - $1px)` ] 
+      })
+    ),
+    // ...percents.map(
+    //   //mt-calc-full-99e, mt-calc-half-99e, mt-calc-third-99e, mt-calc-fourth-99e, mt-calc-fifth-99e
+    //   ([ name, value ]) => expression(`mt\\-calc\\-${name}-(\\d+)e`, { 
+    //     'margin-top': [ `calc(${value}% - $1em)` ] 
+    //   })
+    // ),
+    // ...percents.map(
+    //   //mt-calc-full-99r, mt-calc-half-99r, mt-calc-third-99r, mt-calc-fourth-99r, mt-calc-fifth-99r
+    //   ([ name, value ]) => expression(`mt\\-calc\\-${name}-(\\d+)r`, { 
+    //     'margin-top': [ `calc(${value}% - $1rem)` ] 
+    //   })
+    // ),
+    ...percents.map(
+      //mb-calc-full-99, mb-calc-half-99, mb-calc-third-99, mb-calc-fourth-99, mb-calc-fifth-99
+      ([ name, value ]) => expression(`mb\\-calc\\-${name}-(\\d+)`, { 
+        'margin-bottom': [ `calc(${value}% - $1px)` ] 
+      })
+    ),
+    // ...percents.map(
+    //   //mb-calc-full-99e, mb-calc-half-99e, mb-calc-third-99e, mb-calc-fourth-99e, mb-calc-fifth-99e
+    //   ([ name, value ]) => expression(`mb\\-calc\\-${name}-(\\d+)e`, { 
+    //     'margin-bottom': [ `calc(${value}% - $1em)` ] 
+    //   })
+    // ),
+    // ...percents.map(
+    //   //mb-calc-full-99r, mb-calc-half-99r, mb-calc-third-99r, mb-calc-fourth-99r, mb-calc-fifth-99r
+    //   ([ name, value ]) => expression(`mb\\-calc\\-${name}-(\\d+)r`, { 
+    //     'margin-bottom': [ `calc(${value}% - $1rem)` ] 
+    //   })
+    // ),
+
+    // Padding
+    ...percents.map(
+      //p-calc-full-99, p-calc-half-99, p-calc-third-99, p-calc-fourth-99, p-calc-fifth-99
+      ([ name, value ]) => expression(`p\\-calc\\-${name}-(\\d+)`, { 
+        'padding': [ `calc(${value}% - $1px)` ] 
+      })
+    ),
+    // ...percents.map(
+    //   //p-calc-full-99e, p-calc-half-99e, p-calc-third-99e, p-calc-fourth-99e, p-calc-fifth-99e
+    //   ([ name, value ]) => expression(`p\\-calc\\-${name}-(\\d+)e`, { 
+    //     'padding': [ `calc(${value}% - $1em)` ] 
+    //   })
+    // ),
+    // ...percents.map(
+    //   //p-calc-full-99r, p-calc-half-99r, p-calc-third-99r, p-calc-fourth-99r, p-calc-fifth-99r
+    //   ([ name, value ]) => expression(`p\\-calc\\-${name}-(\\d+)r`, { 
+    //     'padding': [ `calc(${value}% - $1rem)` ] 
+    //   })
+    // ),
+    ...percents.map(
+      //pl-calc-full-99, pl-calc-half-99, pl-calc-third-99, pl-calc-fourth-99, pl-calc-fifth-99
+      ([ name, value ]) => expression(`pl\\-calc\\-${name}-(\\d+)`, { 
+        'padding-left': [ `calc(${value}% - $1px)` ] 
+      })
+    ),
+    // ...percents.map(
+    //   //pl-calc-full-99e, pl-calc-half-99e, pl-calc-third-99e, pl-calc-fourth-99e, pl-calc-fifth-99e
+    //   ([ name, value ]) => expression(`pl\\-calc\\-${name}-(\\d+)e`, { 
+    //     'padding-left': [ `calc(${value}% - $1em)` ] 
+    //   })
+    // ),
+    // ...percents.map(
+    //   //pl-calc-full-99r, pl-calc-half-99r, pl-calc-third-99r, pl-calc-fourth-99r, pl-calc-fifth-99r
+    //   ([ name, value ]) => expression(`pl\\-calc\\-${name}-(\\d+)r`, { 
+    //     'padding-left': [ `calc(${value}% - $1rem)` ] 
+    //   })
+    // ),
+    ...percents.map(
+      //pr-calc-full-99, pr-calc-half-99, pr-calc-third-99, pr-calc-fourth-99, pr-calc-fifth-99
+      ([ name, value ]) => expression(`pr\\-calc\\-${name}-(\\d+)`, { 
+        'padding-right': [ `calc(${value}% - $1px)` ] 
+      })
+    ),
+    // ...percents.map(
+    //   //pr-calc-full-99e, pr-calc-half-99e, pr-calc-third-99e, pr-calc-fourth-99e, pr-calc-fifth-99e
+    //   ([ name, value ]) => expression(`pr\\-calc\\-${name}-(\\d+)e`, { 
+    //     'padding-right': [ `calc(${value}% - $1em)` ] 
+    //   })
+    // ),
+    // ...percents.map(
+    //   //pr-calc-full-99r, pr-calc-half-99r, pr-calc-third-99r, pr-calc-fourth-99r, pr-calc-fifth-99r
+    //   ([ name, value ]) => expression(`pr\\-calc\\-${name}-(\\d+)r`, { 
+    //     'padding-right': [ `calc(${value}% - $1rem)` ] 
+    //   })
+    // ),
+    ...percents.map(
+      //pt-calc-full-99, pt-calc-half-99, pt-calc-third-99, pt-calc-fourth-99, pt-calc-fifth-99
+      ([ name, value ]) => expression(`pt\\-calc\\-${name}-(\\d+)`, { 
+        'padding-top': [ `calc(${value}% - $1px)` ] 
+      })
+    ),
+    // ...percents.map(
+    //   //pt-calc-full-99e, pt-calc-half-99e, pt-calc-third-99e, pt-calc-fourth-99e, pt-calc-fifth-99e
+    //   ([ name, value ]) => expression(`pt\\-calc\\-${name}-(\\d+)e`, { 
+    //     'padding-top': [ `calc(${value}% - $1em)` ] 
+    //   })
+    // ),
+    // ...percents.map(
+    //   //pt-calc-full-99r, pt-calc-half-99r, pt-calc-third-99r, pt-calc-fourth-99r, pt-calc-fifth-99r
+    //   ([ name, value ]) => expression(`pt\\-calc\\-${name}-(\\d+)r`, { 
+    //     'padding-top': [ `calc(${value}% - $1rem)` ] 
+    //   })
+    // ),
+    ...percents.map(
+      //pb-calc-full-99, pb-calc-half-99, pb-calc-third-99, pb-calc-fourth-99, pb-calc-fifth-99
+      ([ name, value ]) => expression(`pb\\-calc\\-${name}-(\\d+)`, { 
+        'padding-bottom': [ `calc(${value}% - $1px)` ] 
+      })
+    ),
+    // ...percents.map(
+    //   //pb-calc-full-99e, pb-calc-half-99e, pb-calc-third-99e, pb-calc-fourth-99e, pb-calc-fifth-99e
+    //   ([ name, value ]) => expression(`pb\\-calc\\-${name}-(\\d+)e`, { 
+    //     'padding-bottom': [ `calc(${value}% - $1em)` ] 
+    //   })
+    // ),
+    // ...percents.map(
+    //   //pb-calc-full-99r, pb-calc-half-99r, pb-calc-third-99r, pb-calc-fourth-99r, pb-calc-fifth-99r
+    //   ([ name, value ]) => expression(`pb\\-calc\\-${name}-(\\d+)r`, { 
+    //     'padding-bottom': [ `calc(${value}% - $1rem)` ] 
+    //   })
+    // )
   ];
+
+  const expressions = Array.from(tokens);
+
+  //add bna, media
+  tokens.forEach(token => {
+    const { pattern, styles, step } = token;
+    //add bna, media
+    media.forEach(media => {
+      expressions.push(expression(pattern, styles, step, media as Media));
+      bna.forEach(position => {
+        expressions.push(expression(
+          pattern, 
+          styles, 
+          step, 
+          media as Media, 
+          position
+        ));
+      });
+    });
+  });
+
+  return expressions;
 };
 
 /**
@@ -526,7 +738,6 @@ export function expressions(): ExpressionToken[] {
 export function definitions(): Token[] {
   return [
     ...literals(),
-    ...expressions(),
-    ...ranges()
+    ...expressions()
   ];
 };

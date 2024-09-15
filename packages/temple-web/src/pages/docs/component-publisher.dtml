@@ -2,9 +2,6 @@
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
 <link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
 <link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/head.tml" name="panel-head" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/left.tml" name="panel-left" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel/main.tml" name="panel-main" />
 <link rel="import" type="component" href="@ossph/temple-ui/tab.tml" name="tui-tab" />
 <link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
 <link rel="import" type="component" href="@/components/ide/app/head.tml" name="app-head" />
@@ -33,13 +30,13 @@
 </script>
 <html>
   <html-head />
-  <body class="dark bg-t-0 tx-t-1 arial">
+  <body class="dark bg-t-0 tx-t-1 tx-arial">
     <panel-layout>
-      <panel-head><html-header /></panel-head>
-      <panel-left><html-aside /></panel-left>
-      <panel-main>
+      <header><html-header /></header>
+      <aside left><html-aside /></aside>
+      <main>
         <api-docs>
-          <h1 class="tx-primary tx-uppercase tx-30 py-20">
+          <h1 class="tx-primary tx-upper tx-30 py-20">
             {_('Component Publisher')}
           </h1>
 
@@ -73,7 +70,7 @@
               <div class="flex scroll-x-auto pt-5 pl-5">
                 <tui-tab 
                   on
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="publisher" 
@@ -82,7 +79,7 @@
                   src/build.ts
                 </tui-tab>
                 <tui-tab 
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="publisher" 
@@ -91,7 +88,7 @@
                   src/component.tml
                 </tui-tab>
                 <tui-tab 
-                  class="relative ml-2 p-10 curve-t-sm bd-solid bd-t-1 bx-1 bt-1 bdb-0"
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
                   group="publisher" 
@@ -204,7 +201,7 @@
           </nav>
           <footer class="foot"></footer>
         </api-docs>
-      </panel-main>
+      </main>
     </panel-layout>
   </body>
 </html>

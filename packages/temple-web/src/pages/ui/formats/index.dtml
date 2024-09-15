@@ -1,0 +1,62 @@
+<link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
+<link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
+<link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
+<link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/code.tml" name="format-code" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/color.tml" name="format-color" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/country.tml" name="format-country" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/currency.tml" name="format-currency" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/date.tml" name="format-date" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/email.tml" name="format-email" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/phone.tml" name="format-phone" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/formula.tml" name="format-formula" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/html.tml" name="format-html" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/image.tml" name="format-image" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/imagelist.tml" name="format-imagelist" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/json.tml" name="format-json" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/list.tml" name="format-list" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/metadata.tml" name="format-metadata" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/number.tml" name="format-number" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/overflow.tml" name="format-overflow" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/rating.tml" name="format-rating" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/separated.tml" name="format-separated" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/table.tml" name="format-table" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/taglist.tml" name="format-taglist" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/text.tml" name="format-text" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/yesno.tml" name="format-yesno" />
+<style>
+  @tui theme;
+  @tui reset;
+  @tui fouc-opacity;
+  @tui default-block;
+  @tui utilities;
+</style>
+<script>
+  import { env } from '@ossph/temple';
+  import { _ } from '@/components/i18n';
+
+  const url = '/temple/panel.html';
+  const title = _('Temple UI - Web Components Meets Atomic Styles.');
+  const description = _('Temple UI atomically generates CSS styles and provides out of box web components.');
+
+  const toggle = () => {
+    document.querySelector('panel-layout').toggle('left');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark bg-t-0 tx-t-1 tx-arial">
+    <panel-layout>
+      <header><html-header /></header>
+      <aside left><html-aside /></aside>
+      <main>
+        <api-docs>
+          <h1 class="tx-primary tx-upper tx-30 py-20">
+            {_('Formats')}
+          </h1>
+        </api-docs>
+      </main>
+    </panel-layout>
+  </body>
+</html>
