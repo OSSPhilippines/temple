@@ -1,0 +1,498 @@
+<link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
+<link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
+<link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
+<link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/form/button.tml" name="tui-button" />
+<link rel="import" type="component" href="@ossph/temple-ui/form/control.tml" name="tui-control" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/checkbox.tml" name="field-checkbox" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/color.tml" name="field-color" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/country.tml" name="field-country" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/currency.tml" name="field-currency" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/input.tml" name="field-input" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/date.tml" name="field-date" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/datetime.tml" name="field-datetime" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/mask.tml" name="field-mask" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/password.tml" name="field-password" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/radio.tml" name="field-radio" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/select.tml" name="field-select" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/slug.tml" name="field-slug" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/switch.tml" name="field-switch" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/time.tml" name="field-time" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/textarea.tml" name="field-textarea" />
+<style>
+  @tui theme;
+  @tui reset;
+  @tui fouc-opacity;
+  @tui default-block;
+  @tui utilities;
+</style>
+<script>
+  import { env } from '@ossph/temple';
+  import { _ } from '@/components/i18n';
+
+  const url = '/temple/panel.html';
+  const title = _('Temple UI - Web Components Meets Atomic Styles.');
+  const description = _('Temple UI atomically generates CSS styles and provides out of box web components.');
+
+  const toggle = () => {
+    document.querySelector('panel-layout').toggle('left');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark bg-t-0 tx-t-1 tx-arial">
+    <panel-layout>
+      <header><html-header /></header>
+      <aside left><html-aside /></aside>
+      <main>
+        <api-docs>
+          <h1 class="tx-primary tx-upper tx-30 py-20">
+            {_('Form')}
+          </h1>
+          <section class="flex flex-wrap gap-10">
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/button.html"
+              >
+                Buttons
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/control.html"
+              >
+                Control
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/fieldset.html"
+              >
+                Fieldset
+              </a>
+            </div>
+          </section>
+          <h1 class="tx-primary tx-upper tx-30 py-20">
+            {_('Fields')}
+          </h1>
+          <section class="flex flex-wrap gap-10">
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <field-checkbox 
+                  name="checkbox" 
+                  label="Active?" 
+                  value="yes" 
+                  checked 
+                  update={console.log}
+                />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/checkbox.html"
+              >
+                Checkbox
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <field-color name="color" placeholder="Enter color" />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/color.html"
+              >
+                Color
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <field-country  
+                  class="w-200"
+                  placeholder="Choose Country" 
+                  value="US"
+                  open={(e) => console.log('open', e)}
+                  close={(e) => console.log('close', e)}
+                  filter={(e) => console.log('filter', e)}
+                  select={(e) => console.log('select', e)}
+                  remove={(e) => console.log('remove', e)}
+                  add={(e) => console.log('add', e)}
+                  clear={(e) => console.log('clear', e)}
+                  change={(e) => console.log('change', e)}
+                  update={(e) => console.log('update', e)}
+                />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/country.html"
+              >
+                Country
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <field-currency 
+                  class="w-200"
+                  placeholder="Choose Currency" 
+                  value="PHP"
+                  open={(e) => console.log('open', e)}
+                  close={(e) => console.log('close', e)}
+                  filter={(e) => console.log('filter', e)}
+                  select={(e) => console.log('select', e)}
+                  remove={(e) => console.log('remove', e)}
+                  add={(e) => console.log('add', e)}
+                  clear={(e) => console.log('clear', e)}
+                  change={(e) => console.log('change', e)}
+                  update={(e) => console.log('update', e)}
+                />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/currency.html"
+              >
+                Currency
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <field-date 
+                  name="date" 
+                  placeholder="Enter date" 
+                  value="2020-01-01" 
+                  update={console.log}
+                />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/date.html"
+              >
+                Date
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <field-datetime
+                  name="datetime" 
+                  placeholder="Enter datetime" 
+                  value="2020-01-01 13:20:10" 
+                  update={console.log}
+                />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/datetime.html"
+              >
+                Datetime
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/editor.html"
+              >
+                Editor
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/file.html"
+              >
+                File
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/filelist.html"
+              >
+                Filelist
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/image.html"
+              >
+                Image
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/imagelist.html"
+              >
+                Imagelist
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <field-input 
+                  name="first"
+                  placeholder="Enter your first name" 
+                  value="test"
+                />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/input.html"
+              >
+                Input
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/json.html"
+              >
+                JSON
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/knob.html"
+              >
+                Knob
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/markdown.html"
+              >
+                Markdown
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <field-mask mask="999-999-9999" placeholder="999-999-9999" />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/mask.html"
+              >
+                Mask
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/metadata.html"
+              >
+                Metadata
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/number.html"
+              >
+                Number
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <field-password 
+                  name="password" 
+                  placeholder="Enter password" 
+                  update={console.log}
+                />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/password.html"
+              >
+                Password
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <field-radio 
+                  name="radio" 
+                  label="Yes" 
+                  value="yes" 
+                  checked
+                  rounded
+                  update={console.log}
+                  class="mr-10"
+                />
+                <field-radio 
+                  name="radio" 
+                  label="No" 
+                  value="no" 
+                  rounded
+                  update={console.log}
+                />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/radio.html"
+              >
+                Radio
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/range.html"
+              >
+                Range
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/rating.html"
+              >
+                Rating
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <field-select  
+                  class="w-200 relative z-1"
+                  placeholder="Choose" 
+                  value="1"
+                  search
+                  custom
+                  multiple
+                  open={(e) => console.log('open', e)}
+                  close={(e) => console.log('close', e)}
+                  filter={(e) => console.log('filter', e)}
+                  select={(e) => console.log('select', e)}
+                  remove={(e) => console.log('remove', e)}
+                  add={(e) => console.log('add', e)}
+                  clear={(e) => console.log('clear', e)}
+                  change={(e) => console.log('change', e)}
+                  update={(e) => console.log('update', e)}
+                >
+                  <option value="1" keyword="option 1">Option 1</option>
+                  <option value={4} keyword="option 2"><strong>Option 2</strong></option>
+                  <option value={[1, '2', 3]} keyword="option 3">Option 3</option>
+                  <option value={[1, '2', 3]} keyword="option 3">Option 4</option>
+                </field-select>
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/select.html"
+              >
+                Select
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <field-slug
+                  name="slug" 
+                  placeholder="Enter slug" 
+                  value="I AM A SLUG" 
+                  update={console.log}
+                />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/slug.html"
+              >
+                Slug
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <field-switch 
+                  name="switch" 
+                  label="Active?" 
+                  value="yes" 
+                  checked 
+                  update={console.log}
+                />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/switch.html"
+              >
+                Switch
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/taglist.html"
+              >
+                Taglist
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <field-textarea 
+                  name="textarea" 
+                  placeholder="Enter text" 
+                  update={console.log}
+                >Some Text</field-textarea>
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/textarea.html"
+              >
+                Textarea
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/textlist.html"
+              >
+                Textlist
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <field-time
+                  name="time" 
+                  placeholder="Enter time" 
+                  value={new Date().getTime()} 
+                  update={console.log}
+                />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/time.html"
+              >
+                Time
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/form/wysiwyg.html"
+              >
+                WYSIWYG
+              </a>
+            </div>
+          </section>
+        </api-docs>
+      </main>
+    </panel-layout>
+  </body>
+</html>

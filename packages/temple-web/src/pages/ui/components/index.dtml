@@ -41,6 +41,10 @@
   const toggle = () => {
     document.querySelector('panel-layout').toggle('left');
   };
+  const crumbs = [
+    { icon: 'home', label: 'Home', href: '/temple/index.html' },
+    { icon: 'book', label: 'Docs' }
+  ];
 </script>
 <html>
   <html-head />
@@ -54,21 +58,217 @@
             {_('Components')}
           </h1>
           <section class="flex flex-wrap gap-10">
-            <div class="basis-third lg-basis-half md-basis-full">
-              <div class="bg-t-3 p-10"></div>
-              <div class="tx-center p-10">Alert</div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <tui-alert success>
+                  <tui-icon name="check-circle" />
+                  Good News!
+                </tui-alert>
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/components/alert.html"
+              >
+                Alerts
+              </a>
             </div>
-            <div class="basis-third lg-basis-half md-basis-full">
-              <div class="bg-t-3 p-10"></div>
-              <div class="tx-center p-10">Badge</div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <tui-badge warning curved class="mb-10">999</tui-badge>
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/components/badge.html"
+              >
+                Badges
+              </a>
             </div>
-            <div class="basis-third lg-basis-half md-basis-full">
-              <div class="bg-t-3 p-10"></div>
-              <div class="tx-center p-10">Crumbs</div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <tui-crumbs 
+                  class="inline-block"
+                  crumbs={crumbs} 
+                  crumb="tx-warning" 
+                  selected="tx-t-0" 
+                  separator="tx-muted" 
+                />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/components/crumbs.html"
+              >
+                Crumbs
+              </a>
             </div>
-            <div class="basis-third lg-basis-half md-basis-full">
-              <div class="bg-t-3 p-10"></div>
-              <div class="tx-center p-10">Icon</div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <tui-icon name="info-circle" class="tx-info" />
+                <tui-icon name="exclamation-triangle" class="tx-warning" />
+                <tui-icon name="times-circle" class="tx-error" />
+                <tui-icon name="check-circle" class="tx-success" />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/components/icon.html"
+              >
+                Icons
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <tui-loader success size={5} thickness={5} dotted />
+                <tui-loader info slice={2} />
+                <tui-loader warning dashed />
+                <tui-loader error dashed thickness={10} size={10} speed={1500} />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/components/loader.html"
+              >
+                Loaders
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <tui-alert error>
+                  <tui-icon name="times-circle" />
+                  Errors on Submit
+                </tui-alert>
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/components/notify.html"
+              >
+                Notify
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <tui-pager 
+                  total={500} 
+                  range={100} 
+                  start={90} 
+                  show={3} 
+                  next
+                  prev
+                  rewind
+                  forward
+                  page="inline-block b-t-2 b-1 b-solid cursor-pointer p-10 tx-info"
+                  selected="inline-block b-t-2 b-1 b-solid tx-bold p-10 tx-primary"
+                  select={console.log}
+                />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/components/pager.html"
+              >
+                Pagers
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120">
+                <div class="relative w-full h-full">
+                  <header class="absolute top-0 left-20p right-0 h-50p b-solid b-t-1"><div class="p-5">Head</div></header>
+                  <aside class="absolute w-20p top-0 bottom-0 left-0 b-solid b-t-1"><div class="p-5">Left</div></aside>
+                  <aside class="absolute w-30p top-50p bottom-0 right-0 b-solid b-t-1"><div class="p-5">Right</div></aside>
+                  <main class="absolute top-50p bottom-0 left-20p right-30p b-solid b-t-1"><div class="p-5">Main</div></main>
+                </div>
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/components/panel.html"
+              >
+                Panels
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <tui-progress width={50} info class="bg-muted rounded tx-13 h-20 tx-lh-20 w-full-20" />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/components/progress.html"
+              >
+                Progress Bars
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <tui-tab 
+                  on
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="http" 
+                  selector="#http-index-ts"
+                >
+                  Tab 1
+                </tui-tab>
+                <tui-tab 
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="http" 
+                  selector="#http-page-dtml"
+                >
+                  Tab 2
+                </tui-tab>
+                <tui-tab 
+                  class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
+                  active="bg-black tx-white"
+                  inactive="bg-t-1 tx-muted"  
+                  group="http" 
+                  selector="#http-package-json"
+                >
+                  Tab 3
+                </tui-tab>
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/components/tab.html"
+              >
+                Tabs
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 relative scroll-hidden">
+                <div class="absolute top-0 left-0 right-0 bottom-0">
+                  <tui-tbl class="h-300" left>
+                    <tbl-row col="b-t-3 bg-t-3">
+                      <tbl-col nowrap>John Doe</tbl-col>
+                      <tbl-col>21</tbl-col>
+                      <tbl-col wrap-5>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing 
+                        elit. Duis laoreet lectus eget enim rhoncus, vel 
+                        volutpat eros tincidunt. In molestie nunc ut pulvinar 
+                        sollicitudin.
+                      </tbl-col>
+                      <tbl-col nowrap>
+                        <tui-icon name="eye" class="mr-5 tx-info" />
+                        <tui-icon name="edit" class="mr-5 tx-warning" />
+                        <tui-icon name="trash" class="tx-error" />
+                      </tbl-col>
+                    </tbl-row>
+                  </tui-tbl>
+                </div>
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/components/table.html"
+              >
+                Tables
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <tui-tip info curved top left tip="p-5">This is the first and last name</tui-tip>
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/components/tooltip.html"
+              >
+                Tooltips
+              </a>
             </div>
           </section>
         </api-docs>

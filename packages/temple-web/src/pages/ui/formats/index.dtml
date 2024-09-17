@@ -3,6 +3,7 @@
 <link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
 <link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
 <link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
+<link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/code.tml" name="format-code" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/color.tml" name="format-color" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/country.tml" name="format-country" />
@@ -43,6 +44,19 @@
   const toggle = () => {
     document.querySelector('panel-layout').toggle('left');
   };
+  const json = { icon: 'book', label: 'Docs' };
+  const variables = { x: 10, y: 20 };
+  const html = '<h1><strong style="color: green">Hello</strong> World</h1>';
+  const images = [
+    'https://images.wsj.net/im-580612/8SR', 
+    'https://images.wsj.net/im-580612/8SR'
+  ];
+  const list = [ 'Item 1', 'Item 2' ];
+  const metadata = { name: 'John Doe' };
+  const table = [
+    { id: 2, name: 'Jane Doe', age: 25 }
+  ];
+  const stripes = [ 'bg-t-2', 'bg-t-3' ];
 </script>
 <html>
   <html-head />
@@ -55,6 +69,269 @@
           <h1 class="tx-primary tx-upper tx-30 py-20">
             {_('Formats')}
           </h1>
+          <section class="flex flex-wrap gap-10">
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-code lang="js">compiler.render('./page.tml')</format-code>
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/code.html"
+              >
+                Code
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-color value="red" />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/color.html"
+              >
+                Color
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-country value="us" />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/country.html"
+              >
+                Country
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-currency value="usd" sm flag={false} />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/currency.html"
+              >
+                Currency
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-date format="MMMM Do YYYY, h:mm:ss a" />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/date.html"
+              >
+                Date
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-email link="tx-primary tx-underline" value="john@doe.com" />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/email.html"
+              >
+                Email
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                10 + 29 + 20 = 
+                <format-formula value="29" formula="{x} + {this} + {y}" data={variables} />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/formula.html"
+              >
+                Formula
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-html value={html} />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/html.html"
+              >
+                HTML
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-image image="w-70" value="https://images.wsj.net/im-580612/8SR" />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/image.html"
+              >
+                Image
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-imagelist image="w-70" value={images} />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/imagelist.html"
+              >
+                Imagelist
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-json value={json} />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/json.html"
+              >
+                JSON
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/link.html"
+              >
+                Link
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-list value={list} item="tx-lh-36" />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/list.html"
+              >
+                List
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/markdown.html"
+              >
+                Markdown
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-metadata value={metadata} stripes={stripes} />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/metadata.html"
+              >
+                Metadata
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-number value="12345.67" separator="," decimal="." decimals={2} />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/number.html"
+              >
+                Number
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-overflow value="Lorem Ipsum" length={8} hellip />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/overflow.html"
+              >
+                Overflow
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-phone link="tx-success" value="+63 (917) 555-2424" />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/phone.html"
+              >
+                Phone
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-rating class="tx-warning" value="3.5" max={5} remainder round="floor" />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/rating.html"
+              >
+                Rating
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-separated value={['Foo', 'bar']} separator="line" />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/separated.html"
+              >
+                Separated
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-table value={table} stripes={stripes} />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/table.html"
+              >
+                Table
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-taglist value={['Foo', 'bar']} pill />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/taglist.html"
+              >
+                Taglist
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-text value="i am a title" capital />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/text.html"
+              >
+                Text
+              </a>
+            </div>
+            <div class="basis-third-10 lg-basis-half-10 md-basis-full">
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-yesno value={true} />
+              </div>
+              <a 
+                class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
+                href="/temple/ui/format/yesno.html"
+              >
+                Yesno
+              </a>
+            </div>
+          </section>
         </api-docs>
       </main>
     </panel-layout>
