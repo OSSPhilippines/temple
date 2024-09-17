@@ -1,0 +1,13 @@
+<link rel="import" type="component" href="./select.tml" name="tui-select" />
+<link rel="import" type="component" href="../format/country.tml" name="format-country" />
+<script>
+  import intl from '../utilities/intl.json';
+  const { select = '', custom, multiple, ...attributes } = this.props;
+</script>
+<tui-select {...attributes} class=select search>
+  <each value=country from=intl>
+    <option value={country.countryCode} keyword={`${country.countryCode} ${country.countryName}`}>
+      <format-country sm value={country.countryCode} />
+    </option>
+  </each>
+</tui-select>

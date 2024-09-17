@@ -1,0 +1,68 @@
+<script observe="error,autocomplete,disabled,name,pattern,readonly,required,value">
+  import type { ChangeEvent } from '@ossph/temple/dist/types';
+  import { getProps, setHostClass } from '../utilities/input';
+  import { slugify, camelfy } from '../utilities/slug';
+
+  const { error, change, update, attributes } = getProps(this);
+  const { dash, line, camel } = attributes;
+
+  const ify = (value: string) => {
+    return camel 
+      ? camelfy(value)
+      : slugify(value, !dash, !line);
+  };
+
+  if (attributes.value) {
+    attributes.value = ify(String(attributes.value));
+  }
+  //set the host classes
+  setHostClass(this, error);
+  //get handlers
+  const handlers = {
+    change(e: ChangeEvent<HTMLInputElement>) {
+      change && change(e);
+      update && update(ify(String(e.target.value)));
+    },
+    transform(e: KeyboardEvent<HTMLInputElement>) {
+      //next tick
+      setTimeout(() => {
+        e.target.value = ify(e.target.value);
+      }, 1000);
+    },
+    attribute(e: AttributeChangeEvent) {
+      //accepts: error,accept,autocomplete,checked,disabled,max,min,
+      //         multiple,name,pattern,readonly,required,step,value
+      let { action, name, value, target } = e.detail;
+      const input = target.querySelector('input');
+      //set new class
+      if (name === 'error') {
+        if (action === 'remove') {
+          host.classList.remove('b-error', 'tx-error');
+        } else {
+          host.classList.add('b-error', 'tx-error');
+        }
+        return;
+      }
+      switch (action) {
+        case 'add':
+        case 'update':
+          if (name === 'value') {
+            value = ify(String(value));
+          }
+          input?.setAttribute(name, value);
+          break;
+        case 'remove':
+          input?.removeAttribute(name);
+          break;
+      }
+    }
+  };
+  this.on('attributechange', handlers.attribute);
+</script>
+<input 
+  {...attributes} 
+  type="text"
+  class="b-0 p-0 block w-full h-full box-border tx-inherit outline-none bg-transparent"
+  change={handlers.change} 
+  keyup={handlers.transform}
+/>

@@ -5,7 +5,7 @@
     "lib": [ "es2021", "es7", "es6", "dom" ],
     "module": "commonjs",
     "noUnusedLocals": true,
-    "outDir": "../temple-ui/compiler",
+    "outDir": "../temple-ui",
     "preserveConstEnums": true,
     "resolveJsonModule": true,
     "removeComments": true,
@@ -14,6 +14,6 @@
     "target": "es6",
     "skipLibCheck": true
   },
-  "include": [ "src/compiler/**/*.ts" ],
+  "include": [ "src/**/*.ts" ],
   "exclude": [ "dist", "node_modules" ]
 }

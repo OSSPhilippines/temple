@@ -7,6 +7,15 @@
     separator = '', 
     crumbs = [] 
   } = this.props;
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add('block');
+  }
 </script>
 <each key=index value=crumb from=crumbs>
   <if true={crumb.href && crumb.label}>

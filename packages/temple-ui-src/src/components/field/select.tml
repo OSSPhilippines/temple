@@ -1,134 +1,302 @@
-<style>
-:host {
-  position: relative;
-}
-
-.control {
-  align-items: center;
-  background-color: white;
-  border-color: var(--black);
-  border-style: solid;
-  border-width: 1px;
-  box-sizing: border-box;
-  color: var(--black);
-  display: flex;
-  padding-bottom: 8px;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-top: 8px;
-  white-space: nowrap;
-  width: 100%;
-}
-
-.placeholder {
-  color: #666666;
-}
-
-.dropdown {
-  background-color: var(--white);
-  border-color: var(--black);
-  border-style: solid;
-  border-bottom-width: 1px;
-  border-left-width: 1px;
-  border-right-width: 1px;
-  border-top-width: 0;
-  box-sizing: border-box;
-  position: absolute;
-  width: 100%;
-}
-
-.search {
-  padding-bottom: 4px;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-top: 4px;
-  position: relative;
-}
-
-.search-control {
-  padding-right: 32px;
-}
-
-.search-icon {
-  background-color: var(--white);
-  color: var(--black);
-  padding: 4px;
-  position: absolute;
-  right: 9px;
-  top: 9px;
-}
-
-.options {
-  max-height: 256px;
-  overflow: auto;
-}
-
-.option {
-  align-items: center;
-  border-color: #AAAAAA;
-  border-style: solid;
-  border-bottom-width: 0;
-  border-left-width: 0;
-  border-right-width: 0;
-  border-top-width: 1px;
-  cursor: pointer;
-  display: flex;
-  padding-bottom: 8px;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 8px;
-}
-
-.label { 
-  display: inline-block; 
-  margin-left: 4px; 
-}
-</style>
+<link rel="import" type="component" href="./input.tml" name="tui-input" />
+<link rel="import" type="component" href="../icon.tml" name="tui-icon" />
 <script>
-  import { props, classnames } from '@ossph/temple';
-  // Separate component related props from field attributes
-  const { 
-    options,
-    searchable,
-    value,
-    defaultValue,
-    placeholder = 'Choose an Option',
-    error, 
-    className,
-    style,
-    dropdown,
-    selected,
-    update
-  } = props<{
-    value?: any,
-    defaultValue?: any,
-    options: SelectOption<any>[]|Record<string, any>,
-    searchable?: boolean,
-    placeholder?: string,
-    error?: boolean,
-    style?: string,
-    dropdown?: (show: boolean) => void,
-    selected?: (value: SelectOption<any>) => void,
-    update?: (value: any) => void
-  }>();
+  import type { MouseEvent, KeyboardEvent } from '@ossph/temple/dist/types';
+  import type { Option } from '../utilities/select';
+  import TempleRegistry from '@ossph/temple/dist/client/TempleRegistry';
+  import signal from '@ossph/temple/dist/client/signal';
+  const {  
+    name,   value,    placeholder,
+    //classnames
+    highlight = 'bg-warning',
+    //allow custom value
+    custom, multiple, search,
+    //events
+    open,   close,  filter,
+    select, remove, add,
+    clear,  change, update
+  } = this.props;
+  //save host
+  const host = this;
+  //handlers
+  const handlers = {
+    toggle(e: MouseEvent<HTMLElement>) {
+      const show = !state.value.show;
+      state.value = { ...state.value, show };
+      show ? open && open(e, state) : close && close(e, state);
+    },
+    select(e: MouseEvent<HTMLElement>) {
+      //get selected choice
+      const option = this as HTMLElement;
+      //get selected value
+      const value = TempleRegistry.get(option)?.getAttribute('value');
+      //if value is undefined, skip (or throw error)
+      if (typeof value === 'undefined') return;
+      //remake state
+      state.value = host.makeState(
+        //same options
+        state.value.options,
+        //change values
+        state.value.values.includes(value)
+          ? state.value.values.filter(v => v !== value)
+          : multiple 
+          ? [ ...state.value.values, value ]
+          : [ value ],
+        //same keyword
+        state.value.keyword,
+        //close dropdown
+        multiple ? state.value.show : false
+      );
+      //trigger all events
+      select && select(e, state);
+      change && change({ ...e, target: { 
+        ...host, 
+        value: multiple ? state.value.values : value
+      }});
+      update && update(multiple ? state.value.values : value);
+    },
+    filter(e: KeyboardEvent<HTMLInputElement>) {
+      //next tick
+      setTimeout(() => {
+        //get the input element
+        const target = e.target;
+        //get the selection range
+        const selection = [ target.selectionStart, target.selectionEnd ];
+        //get the value from the search input
+        const keyword = target.value.toLowerCase();
+        //remake state
+        state.value = host.makeState(
+          //same options
+          state.value.options,
+          //same values
+          state.value.values,
+          //change keyword
+          keyword,
+          //same dropdown state
+          state.value.show
+        );
+        //a re-render just happened, so we need
+        //to re-focus the input to continue typing
+        const input = host.querySelector('input');
+        input?.focus();
+        input?.setSelectionRange(selection[0], selection[1]);
+        //trigger filter event
+        filter && filter(e, state);
+      }, 1);
+    },
+    clear(e: MouseEvent<HTMLElement>) {
+      //make new state with no values
+      state.value = host.makeState(
+        //same options
+        state.value.options,
+        //no values
+        [],
+        //same keyword
+        state.value.keyword,
+        //close dropdown
+        false
+      );
+      clear && clear(e, state);
+      change && change({ ...e, target: { 
+        ...host, 
+        value: multiple ? [] : null
+      }});
+      update && update(multiple ? [] : null);
+    },
+    add(e: MouseEvent<HTMLElement>) {
+      const input = host.querySelector('input');
+      const value = input.value;
+      state.value = host.makeState(
+        //add option
+        [ { label: value, keyword: value, value }, ...state.value.options ],
+        //add value
+        multiple ? [ ...state.value.values, value ]: [ value ],
+        //same keyword
+        '',
+        //same dropdown state
+        multiple ? state.value.show : false
+      );
+      add && add(e, state);
+      change && change({ ...e, target: { 
+        ...host, 
+        value: multiple ? state.value.values : value
+      }});
+      update && update(multiple ? state.value.values : value);
+    },
+    over(e: MouseEvent<HTMLElement>) {
+      e.stopPropagation();
+      local.over = true;
+      return false;
+    },
+    out(e: MouseEvent<HTMLElement>) {
+      e.stopPropagation();
+      local.over = false;
+      if (!state.value.show) {
+        return false;
+      }
+      setTimeout(() => {
+        if (!local.over && state.value.show) {
+          state.value = { ...state.value, show: false };
+          close && close(e, state);
+        }
+      }, 500);
+      return false;
+    }
+  };
+  //make options child list
+  this.makeOption = (
+    item: Option, 
+    values: any[] = [], 
+    style = false, 
+    listen = false
+  ) => {
+    //extract label and value from item
+    const { label, value, keyword } = item;
+    //create option element
+    const option = document.createElement('div');
+    //add option to registry and set value
+    TempleRegistry
+      .register(option)
+      .setAttribute('value', value)
+      .setAttribute('keyword', keyword);
+    //if add styling
+    if (style) {
+      //add classes to option
+      option.classList.add(
+        'p-5',  'b-solid', 'bx-0', 
+        'bb-0', 'bt-1',    'b-muted'
+      ); 
+      //if value is in values
+      if (values.includes(value)) {
+        //show like it's selected
+        option.classList.add(...highlight.split(' '));
+      }
+    }
+    //if add listener
+    if (listen) {
+      //listen to click
+      option.addEventListener('click', handlers.select.bind(option));
+    }
+    //build the children
+    const display = Array.isArray(label) 
+      ? label : label instanceof NodeList 
+      ? Array.from(label) : [ label ];
+    display.forEach(child => {
+      if (typeof child === 'string') {
+        option.appendChild(new Text(child));
+      } else if (child instanceof Node) {
+        option.appendChild(child.cloneNode(true))
+      }
+    });
+    return option;
+  };
+  //make state variables
+  this.makeState = (
+    options: Option[], 
+    value: string|string[],
+    keyword = '', 
+    show = false
+  ) => {
+    //determine values
+    const values = Array.isArray(value) ? Array.from(value) : [ value ];
+    //make options
+    const filtered = options
+      //filter options by keyword
+      .filter(option => {
+        if (!keyword) {
+          return true;
+        } else if (!option.keyword) {
+          return false;
+        }
+        return option.keyword
+          .toLowerCase()
+          .includes(keyword.toLowerCase());
+      })
+      .map(option => this.makeOption(option, values, true, true));
+    //get make selected options
+    const selected = options
+      .filter(option => values.includes(option.value))
+      .map(option => this.makeOption(option));
+    selected.forEach(option => option.classList.add('pr-5'));
+    return { show, keyword, values, options, filtered, selected };
+  };
+  //format initial options from the original children
+  const options = this.originalChildren
+    .filter(child => child.nodeName.toLowerCase() === 'option')
+    .map(option => ({
+      label: option.childNodes,
+      value: TempleRegistry.has(option)
+        ? TempleRegistry.get(option)?.getAttribute('value')
+        : option.hasAttribute('value') 
+        ? option.getAttribute('value') 
+        : option.innerText.trim(),
+      keyword: option.hasAttribute('keyword') 
+        ? option.getAttribute('keyword') 
+        : undefined
+    }))
+    .map(option => ({
+      ...option,
+      keyword: option.keyword || (typeof option.value === 'string' 
+        ? option.value.toLowerCase()
+        : undefined 
+      )
+    }));
+  //get initial state (show, values, options, selected)
+  const state = signal(this.makeState(options, value), this);
+  //local state
+  const local = { over: false };
+  this.addEventListener('mouseover', handlers.over);
+  this.addEventListener('mouseout', handlers.out);
 </script>
-<div class={classnames()} style={style}>
-  <div class="control" click={handlers.toggle}>
-    <if true={!!(selected?.label)}>
-      {selected.label}
-    <else />
-      <span class="placeholder">
-        {placeholder}
-      </span>
+<div class="tx-black relative">
+  <div class="flex flex-center-y p-7 b-solid b-1 b-black bg-white">
+    <div class="w-full scroll-auto flex flex-center-y flex-grow cursor-pointer tx-nowrap" click={handlers.toggle}>
+      <if true={state.value.selected.length > 0}>
+        {state.value.selected}
+      <elif true={placeholder} />
+        <span class="tx-muted tx-italic">
+          {placeholder}
+        </span>
+      </if>
+    </div>
+    <if true={state.value.selected.length > 1}>
+      <em class="inline-block pl-4 tx-muted tx-sm">({state.value.selected.length})</em>
+    </if>
+    <if true={state.value.selected.length > 0}>
+      <tui-icon class="cursor-pointer" name="times" click={handlers.clear} />
+    </if>
+    <if true={state.value.filtered.length > 0 || state.value.keyword.length > 0}>
+      <if true={state.value.show}>
+        <tui-icon class="cursor-pointer" name="caret-up" click={handlers.toggle} />
+      <else />
+        <tui-icon class="cursor-pointer" name="caret-down" click={handlers.toggle} />
+      </if>
     </if>
   </div>
-  <SelectDropdown 
-    options={entries} 
-    show={showing} 
-    error={error}
-    searchable={searchable} 
-    select={handlers.select} 
-    search={handlers.search} 
-    match={handlers.match} 
-  />
+  <if true={state.value.show && (state.value.filtered.length > 0 || state.value.keyword.length > 0)}>
+    <div class="bg-white b-solid b-1 b-black absolute">
+      <if true={search || custom}>
+        <div class="flex flex-center-y m-5 p-7 b-solid b-1 b-muted">
+          <if true={search}>
+            <tui-input 
+              class="flex-grow p-0 b-0 bg-transparent" 
+              value={state.value.keyword} 
+              keyup={handlers.filter} 
+            />
+          <else />
+            <tui-input 
+              class="flex-grow p-0 b-0 bg-transparent" 
+              value={state.value.keyword} 
+            />
+          </if>
+          <if true={custom}>
+            <tui-icon class="cursor-pointer" name="plus" click={handlers.add} />
+          <else />
+            <tui-icon class="tx-muted" name="search" />
+          </if>
+        </div>
+      </if>
+      <div class="scroll-auto cursor-pointer">{state.value.filtered}</div>
+    </div>
+  </if>
 </div>

@@ -15,6 +15,15 @@
     primary,
     secondary
   } = this.props;
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add('inline-block');
+  }
   //make an icon
   const icon =  document.createElement('i');
   //default classes
@@ -29,28 +38,49 @@
   if (color) {
     icon.style.borderColor = color;
   } else if (info) {
-    icon.classList.add('b-info');
+    icon.style.borderTopColor = 'var(--info)';
+    icon.style.borderRightColor = 'var(--info)';
+    icon.style.borderBottomColor = 'var(--info)';
+    icon.style.borderLeftColor = 'var(--info)';
   } else if (warning) {
-    icon.classList.add('b-warning');
+    icon.style.borderTopColor = 'var(--warning)';
+    icon.style.borderRightColor = 'var(--warning)';
+    icon.style.borderBottomColor = 'var(--warning)';
+    icon.style.borderLeftColor = 'var(--warning)';
   } else if (success) {
-    icon.classList.add('b-success');
+    icon.style.borderTopColor = 'var(--success)';
+    icon.style.borderRightColor = 'var(--success)';
+    icon.style.borderBottomColor = 'var(--success)';
+    icon.style.borderLeftColor = 'var(--success)';
   } else if (error) {
-    icon.classList.add('b-error');
+    icon.style.borderTopColor = 'var(--error)';
+    icon.style.borderRightColor = 'var(--error)';
+    icon.style.borderBottomColor = 'var(--error)';
+    icon.style.borderLeftColor = 'var(--error)';
   } else if (muted) {
-    icon.classList.add('b-muted');
+    icon.style.borderTopColor = 'var(--muted)';
+    icon.style.borderRightColor = 'var(--muted)';
+    icon.style.borderBottomColor = 'var(--muted)';
+    icon.style.borderLeftColor = 'var(--muted)';
   } else if (primary) {
-    icon.classList.add('b-primary');
+    icon.style.borderTopColor = 'var(--primary)';
+    icon.style.borderRightColor = 'var(--primary)';
+    icon.style.borderBottomColor = 'var(--primary)';
+    icon.style.borderLeftColor = 'var(--primary)';
   } else if (secondary) {
-    icon.classList.add('b-secondary');
+    icon.style.borderTopColor = 'var(--secondary)';
+    icon.style.borderRightColor = 'var(--secondary)';
+    icon.style.borderBottomColor = 'var(--secondary)';
+    icon.style.borderLeftColor = 'var(--secondary)';
   }
   if (slice > 0) {
-    icon.classList.add('br-transparent');
+    icon.style.borderRightColor = 'transparent';
   } 
   if (slice > 1) {
-    icon.classList.add('bb-transparent');
+    icon.style.borderBottomColor = 'transparent';
   } 
   if (slice > 2) {
-    icon.classList.add('bl-transparent');
+    icon.style.borderLeftColor = 'transparent';
   }
 </script>
 {[ icon ]}

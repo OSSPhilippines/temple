@@ -1,9 +1,13 @@
 <script>
-  const { name, block = false } = this.props;
-  this.classList.add(
-    'fa', 
-    'fa-fw', 
-    `fa-${name}`, 
-    block ? 'block' : 'inline-block'
-  );
+  const { name } = this.props;
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add('inline-block');
+  }
+  this.classList.add('fa', 'fa-fw', `fa-${name}`);
 </script>

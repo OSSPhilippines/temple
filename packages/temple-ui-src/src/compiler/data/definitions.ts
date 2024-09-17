@@ -17,6 +17,7 @@ import {
   media,
   bna
 } from '../helpers';
+import StyleMap from '../StyleMap';
 
 /**
  * Returns a pre-defined list of literal definitions
@@ -80,10 +81,12 @@ export function literals(): LiteralToken[] {
     literal('justify-between', { 'justify-content': [ 'space-between' ] }),
     literal('justify-around', { 'justify-content': [ 'space-around' ] }),
     literal('justify-evenly', { 'justify-content': [ 'space-evenly' ] }),
+    literal('justify-stretch', { 'justify-content': [ 'stretch' ] }),
     literal('align-center', { 'align-items': [ 'center' ] }),
     literal('align-left', { 'align-items': [ 'flex-start' ] }),
     literal('align-right', { 'align-items': [ 'flex-end' ] }),
     literal('align-baseline', { 'align-items': [ 'baseline' ] }),
+    literal('align-stretch', { 'align-items': [ 'stretch' ] }),
 
     // Overflow
     literal('scroll', { 'overflow': [ 'scroll' ] }),
@@ -148,7 +151,10 @@ export function literals(): LiteralToken[] {
     literal('tx-courier', { 'font-family': [ "'Courier New', Courier, monospace" ] }),
     literal('tx-georgia', { 'font-family': [ 'Georgia, serif' ] }),
     literal('tx-verdana', { 'font-family': [ 'Verdana, sans-serif' ] }),
-    literal('tx-inherit', { 'font-family': [ 'inherit' ] }),
+    literal('tx-inherit', { 
+      'font-family': [ 'inherit' ],
+      'font-size': [ 'inherit' ]
+    }),
     literal('tx-underline', { 'text-decoration': [ 'underline' ] }),
     literal('tx-lower', { 'text-transform': [ 'lowercase' ] }),
     literal('tx-upper', { 'text-transform': [ 'uppercase' ] }),
@@ -220,6 +226,14 @@ export function literals(): LiteralToken[] {
     literal('cursor-auto', { 'cursor': [ 'auto' ] }),
     literal('cursor-wait', { 'cursor': [ 'wait' ] }),
     literal('cursor-crosshair', { 'cursor': [ 'crosshair' ] }),
+
+    // Ratio
+    literal('ratio-full', { 'aspect-ratio': [ '1 / 1' ] }),
+    literal('ratio-half', { 'aspect-ratio': [ '1 / 2' ] }),
+    literal('ratio-third', { 'aspect-ratio': [ '1 / 3' ] }),
+    literal('ratio-fourth', { 'aspect-ratio': [ '1 / 4' ] }),
+    literal('ratio-fifth', { 'aspect-ratio': [ '1 / 5' ] }),
+    literal('ratio-double', { 'aspect-ratio': [ '2 / 1' ] }),
 
     //----------------------------------------------------------------//
     // ITERATORS
@@ -403,6 +417,14 @@ export function literals(): LiteralToken[] {
     });
   });
 
+  literals.push({
+    type: 'literal',
+    classname: 'outline-none',
+    styles: (new StyleMap()).add('outline', ['none']),
+    media: 'all',
+    selector: '.outline-none:focus',
+  });
+
   return literals;
 };
 
@@ -482,6 +504,9 @@ export function expressions(): ExpressionToken[] {
       { 'box-shadow': [ '$1px $2px $3px rgb($4, $5, $6, $7)' ] },
       [ 1, 1, 1, 1, 1, 1, 0.01 ]
     ),
+
+    // Ratio
+    expression('ratio\\-(\\d+)\\-(\\d+)', { 'aspect-ratio': [ '$1 / $2' ] }),
 
     //----------------------------------------------------------------//
     // ITERATORS

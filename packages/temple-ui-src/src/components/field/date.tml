@@ -1,0 +1,60 @@
+<script observe="error,autocomplete,disabled,name,pattern,readonly,required,value">
+  import type { ChangeEvent } from '@ossph/temple/dist/types';
+  import { getProps, setHostClass } from '../utilities/input';
+  //get props
+  const { error, change, update, attributes } = getProps(this);
+  attributes.value = attributes.value instanceof Date 
+    ? attributes.value.toISOString() 
+    : attributes.value 
+    ? new Date(attributes.value).toISOString()
+    : new Date().toISOString();
+  attributes.value = attributes.value.split('T')[0];
+  //set the host classes
+  setHostClass(this, error);
+  //get handlers
+  const handlers = {
+    change(e: ChangeEvent<HTMLInputElement>) {
+      const utc = new Date(e.target.value).toUTCString();
+      const datetime = new Date(utc).toISOString();
+      const date = datetime.split('T')[0];
+      change && change(e);
+      update && update(date);
+    },
+    attribute(e: AttributeChangeEvent) {
+      //accepts: error,accept,autocomplete,checked,disabled,max,min,
+      //         multiple,name,pattern,readonly,required,step,value
+      let { action, name, value, target } = e.detail;
+      const input = target.querySelector('input');
+      //set new class
+      if (name === 'error') {
+        if (action === 'remove') {
+          host.classList.remove('b-error', 'tx-error');
+        } else {
+          host.classList.add('b-error', 'tx-error');
+        }
+        return;
+      }
+      switch (action) {
+        case 'add':
+        case 'update':
+          if (name === 'value') {
+            const utc = new Date(value).toUTCString();
+            const datetime = new Date(utc).toISOString();
+            value = datetime.split('T')[0];
+          }
+          input?.setAttribute(name, value);
+          break;
+        case 'remove':
+          input?.removeAttribute(name);
+          break;
+      }
+    }
+  };
+  this.on('attributechange', handlers.attribute);
+</script>
+<input 
+  {...attributes} 
+  type="date"
+  class="b-0 p-0 block w-full h-full box-border tx-inherit outline-none bg-transparent"
+  change={handlers.change} 
+/>

@@ -76,6 +76,10 @@ export default class Parser {
   public add(file: string, pwd = this._cwd) {
     //whether relative or using @ directive, find the absolute path
     const absolute = this._loader.absolute(file, pwd);
+    //if the file is already in the cache
+    if (!this._vfs.has(absolute)) {
+      return this;
+    }
     //if the file does not exist
     if (!this._fs.existsSync(absolute)) {
       //throw an exception
@@ -103,10 +107,8 @@ export default class Parser {
    * Sets a file's content in the cache.
    */
   public set(file: string, content: string) {
-    //whether relative or using @ directive, find the absolute path
-    const absolute = this._loader.absolute(file, this._cwd);
     //add the file's content to the cache
-    this._vfs.set(absolute, content);
+    this._vfs.set(file, content);
     return this;
   }
 

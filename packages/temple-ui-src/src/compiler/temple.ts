@@ -1,6 +1,6 @@
 import type { 
   TempleCompiler, 
-  DocumentBuilder 
+  DocumentBuilder
 } from '@ossph/temple/compiler';
 import type { TempleUIOptions } from './types';
 
@@ -39,7 +39,12 @@ export default function tui(options: TempleUIOptions = {}) {
     });
     //whenever a document style is built, replace directives with actual styles
     compiler.emitter.on('built-styles', async e => {
-      const { document } = e.params.builder as DocumentBuilder;
+      const builder = e.params.builder as DocumentBuilder;
+      const { document } = builder;
+      const contents = { 
+        client: await builder.client(),
+        server: document.contents
+      };
       const sourceCode = e.params.sourceCode as string;
       const stylesheet = templeui(options)
         .plugin(reset)
@@ -50,7 +55,7 @@ export default function tui(options: TempleUIOptions = {}) {
         .plugin(opacity(document))
         .plugin(visibility(document))
         .plugin(component(document, { stylers }))
-        .plugin(utilities(document, { stylers }))
+        .plugin(utilities(document, { stylers, contents }))
         .upgrade(sourceCode);
       e.set(stylesheet);
       e.params.sourceCode = stylesheet;

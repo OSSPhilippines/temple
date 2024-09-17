@@ -1,7 +1,7 @@
 <script>
-  import intl from '../intl.json';
+  import intl from '../utilities/intl.json';
   //extract props
-  const { value, sm, md, lg, flag = true, text = true } = this.props;
+  const { value, xs, sm, md, lg, flag = true, text = true } = this.props;
   //get lower case country code
   const code = value.toLowerCase();
   //find the country in question
@@ -22,7 +22,9 @@
   //build flag class list
   const classList = [ 'inline-block', 'curved', 'ba-black' ];
   //determine flag class size
-  if (sm) {
+  if (xs) {
+    classList.push('w-20');
+  } else if (sm) {
     classList.push('w-40');
   } else if (md) {
     classList.push('w-60');
@@ -39,6 +41,7 @@
 <if true={country}>
   <if true={flag}>
     <img 
+      loading="lazy"
       class={classList.join(' ')} 
       src={`https://flagcdn.com/w80/${code}.png`}
     />
