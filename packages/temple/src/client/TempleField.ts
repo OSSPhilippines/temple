@@ -1,5 +1,4 @@
 import TempleComponent from './TempleComponent';
-import emitter from './TempleEmitter';
 
 export default abstract class TempleField extends TempleComponent {
   //associates this component with a form
@@ -27,7 +26,7 @@ export default abstract class TempleField extends TempleComponent {
    */
   public formAssociatedCallback(form: HTMLFormElement) {
     //emit the associate event
-    emitter.emit('associate', this);
+    this.emit('formassociate', this);
   }
 
   /**
@@ -35,7 +34,7 @@ export default abstract class TempleField extends TempleComponent {
    */
   public formDisabledCallback(disabled: boolean) {
     //emit the disable event
-    emitter.emit('disable', this);
+    this.emit('formdisable', this);
   }
 
   /**
@@ -43,7 +42,7 @@ export default abstract class TempleField extends TempleComponent {
    */
   public formResetCallback() {
     //emit the disable event
-    emitter.emit('reset', this);
+    this.emit('formreset', this);
   }
 }
 

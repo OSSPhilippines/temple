@@ -54,6 +54,11 @@ export default class TempleRegistry {
     component.constructor = definition.constructor;
     //@ts-ignore set the component names
     component.constructor.component = definition.component;
+    //@ts-ignore set the observed attributes
+    if (definition.observedAttributes) {
+      //@ts-ignore set the observed attributes
+      component.constructor.observedAttributes = definition.observedAttributes;
+    }
     //not call the magic constructor
     component.register(attributes, children);
     //return the element

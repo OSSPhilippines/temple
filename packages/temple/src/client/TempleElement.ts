@@ -81,7 +81,6 @@ export default class TempleElement {
       return this;
     }
     delete this._attributes[key];
-    this._element.removeAttribute(key);
     if (!silent) {
       //emit the change event
       TempleEmitter.emit('attribute-remove', {
@@ -109,9 +108,6 @@ export default class TempleElement {
     }
     //set the new value
     this._attributes[key] = value;
-    if (typeof value === 'string') {
-      this._element.setAttribute(key, value);
-    }
     if (!silent) {
       //emit the change event
       if (typeof current === 'undefined') {

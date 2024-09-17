@@ -3,7 +3,21 @@ export type {
   RegistryIterator,
   TempleBrowserEvent,
   SignalObserver,
-  SignalProps
+  SignalProps,
+  SyntheticEvent,
+  ClipboardEvent,
+  CompositionEvent,
+  DragEvent,
+  PointerEvent,
+  FocusEvent,
+  FormEvent,
+  ChangeEvent,
+  KeyboardEvent,
+  MouseEvent,
+  TouchEvent,
+  WheelEvent,
+  AnimationEvent,
+  TransitionEvent
 } from './types';
 
 import TempleException from './Exception';

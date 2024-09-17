@@ -265,6 +265,225 @@ export type SignalProps<T = any> = {
 };
 
 //--------------------------------------------------------------------//
+// Client Event Types
+
+type ModifierKey =
+  | 'Alt'
+  | 'AltGraph'
+  | 'CapsLock'
+  | 'Control'
+  | 'Fn'
+  | 'FnLock'
+  | 'Hyper'
+  | 'Hyper'
+  | 'NumLock'
+  | 'ScrollLock'
+  | 'Shift'
+  | 'Super'
+  | 'Symbol'
+  | 'SymbolLock';
+
+interface StyleMedia {};
+interface AbstractView {
+  styleMedia: StyleMedia;
+  document: Document;
+};
+type NativeAnimationEvent = AnimationEvent;
+type NativeClipboardEvent = ClipboardEvent;
+type NativeCompositionEvent = CompositionEvent;
+type NativeDragEvent = DragEvent;
+type NativeFocusEvent = FocusEvent;
+type NativeKeyboardEvent = KeyboardEvent;
+type NativeMouseEvent = MouseEvent;
+type NativeTouchEvent = TouchEvent;
+type NativePointerEvent = PointerEvent;
+type NativeTransitionEvent = TransitionEvent;
+type NativeUIEvent = UIEvent;
+type NativeWheelEvent = WheelEvent;
+
+interface BaseSyntheticEvent<E = object, C = any, T = any> {
+  nativeEvent: E;
+  currentTarget: C;
+  target: T;
+  bubbles: boolean;
+  cancelable: boolean;
+  defaultPrevented: boolean;
+  eventPhase: number;
+  isTrusted: boolean;
+  preventDefault(): void;
+  isDefaultPrevented(): boolean;
+  stopPropagation(): void;
+  isPropagationStopped(): boolean;
+  persist(): void;
+  timeStamp: number;
+  type: string;
+};
+
+interface UIEvent<
+  T = Element, 
+  E = NativeUIEvent
+> extends SyntheticEvent<T, E> {
+  detail: number;
+  view: AbstractView;
+};
+
+export interface SyntheticEvent<
+  T = Element, 
+  E = Event
+> extends BaseSyntheticEvent<E, EventTarget & T, EventTarget> {};
+
+export interface ClipboardEvent<
+  T = Element
+> extends SyntheticEvent<T, NativeClipboardEvent> {
+  clipboardData: DataTransfer;
+};
+
+export interface CompositionEvent<
+  T = Element
+> extends SyntheticEvent<T, NativeCompositionEvent> {
+  data: string;
+};
+
+export interface DragEvent<
+  T = Element
+> extends MouseEvent<T, NativeDragEvent> {
+  dataTransfer: DataTransfer;
+};
+
+export interface PointerEvent<
+  T = Element
+> extends MouseEvent<T, NativePointerEvent> {
+  pointerId: number;
+  pressure: number;
+  tangentialPressure: number;
+  tiltX: number;
+  tiltY: number;
+  twist: number;
+  width: number;
+  height: number;
+  pointerType: "mouse" | "pen" | "touch";
+  isPrimary: boolean;
+};
+
+export interface FocusEvent<
+  Target = Element, 
+  RelatedTarget = Element
+> extends SyntheticEvent<Target, NativeFocusEvent> {
+  relatedTarget: (EventTarget & RelatedTarget) | null;
+  target: EventTarget & Target;
+};
+
+export interface FormEvent<
+  T = Element
+> extends SyntheticEvent<T> {};
+
+export interface ChangeEvent<T = Element> extends SyntheticEvent<T> {
+  target: EventTarget & T;
+};
+
+export interface KeyboardEvent<
+  T = Element
+> extends UIEvent<T, NativeKeyboardEvent> {
+  altKey: boolean;
+  /** @deprecated */
+  charCode: number;
+  ctrlKey: boolean;
+  code: string;
+  //See DOM Level 3 Events spec 
+  //https://www.w3.org/TR/uievents-key/#keys-modifier. for a 
+  //list of valid (case-sensitive) arguments to this method.
+  getModifierState(key: ModifierKey): boolean;
+  //See the DOM Level 3 Events spec 
+  //https://www.w3.org/TR/uievents-key/#named-key-attribute-values. 
+  //for possible values
+  key: string;
+  //@deprecated
+  keyCode: number;
+  locale: string;
+  location: number;
+  metaKey: boolean;
+  repeat: boolean;
+  shiftKey: boolean;
+  //@deprecated
+  which: number;
+};
+
+export interface MouseEvent<
+  T = Element, 
+  E = NativeMouseEvent
+> extends UIEvent<T, E> {
+  altKey: boolean;
+  button: number;
+  buttons: number;
+  clientX: number;
+  clientY: number;
+  ctrlKey: boolean;
+  //See DOM Level 3 Events spec 
+  //https://www.w3.org/TR/uievents-key/#keys-modifier. for a 
+  //list of valid (case-sensitive) arguments to this method.
+  getModifierState(key: ModifierKey): boolean;
+  metaKey: boolean;
+  movementX: number;
+  movementY: number;
+  pageX: number;
+  pageY: number;
+  relatedTarget: EventTarget | null;
+  screenX: number;
+  screenY: number;
+  shiftKey: boolean;
+};
+
+export interface TouchEvent<
+  T = Element
+> extends UIEvent<T, NativeTouchEvent> {
+  altKey: boolean;
+  changedTouches: TouchList;
+  ctrlKey: boolean;
+  //See DOM Level 3 Events spec 
+  //https://www.w3.org/TR/uievents-key/#keys-modifier). for a 
+  //list of valid (case-sensitive) arguments to this method.   
+  getModifierState(key: ModifierKey): boolean;
+  metaKey: boolean;
+  shiftKey: boolean;
+  targetTouches: TouchList;
+  touches: TouchList;
+};
+
+export interface WheelEvent<
+  T = Element
+> extends MouseEvent<T, NativeWheelEvent> {
+  deltaMode: number;
+  deltaX: number;
+  deltaY: number;
+  deltaZ: number;
+};
+
+export interface AnimationEvent<
+  T = Element
+> extends SyntheticEvent<T, NativeAnimationEvent> {
+  animationName: string;
+  elapsedTime: number;
+  pseudoElement: string;
+};
+
+export interface TransitionEvent<
+  T = Element
+> extends SyntheticEvent<T, NativeTransitionEvent> {
+  elapsedTime: number;
+  propertyName: string;
+  pseudoElement: string;
+};
+
+export type AttributeChangeEvent = CustomEvent<{ 
+  action: string, 
+  name: string, 
+  value: any, 
+  target: ClientComponent 
+}>;
+
+export type CustomEventListener<T> = (e: CustomEvent<T>) => void;
+
+//--------------------------------------------------------------------//
 // Constructor Options
 
 export type FileOptions = {

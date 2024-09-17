@@ -1,4 +1,4 @@
-import type { Hash } from '../types';
+import type { Hash, CustomEventListener } from '../types';
 //import type { TempleBrowserEvent } from '../types';
 import type TempleElement from './TempleElement';
 
@@ -85,6 +85,16 @@ export default abstract class TempleComponent extends HTMLElement {
   }
 
   /**
+   * Returns the component's observed attributes
+   */
+  public get observedAttributes(): string[] {
+    return (
+      this.constructor as typeof TempleComponent
+    //@ts-ignore
+    )?.observedAttributes || [];
+  }
+
+  /**
    * Returns the original component's children
    * before the component was initiated
    */
@@ -140,7 +150,7 @@ export default abstract class TempleComponent extends HTMLElement {
   public adoptedCallback() {
     this.render();
     //emit the adopt event
-    emitter.emit('adopt', this);
+    this.emit('adopt', this);
   }
 
   /**
@@ -171,7 +181,7 @@ export default abstract class TempleComponent extends HTMLElement {
       this.element.setAttribute(name, next);
     }
     //emit the attr event
-    emitter.emit('attr', { action, name, prev, value: next, target: this });
+    this.emit('attributechange', { action, name, prev, value: next, target: this });
   }
 
   /**
@@ -181,7 +191,7 @@ export default abstract class TempleComponent extends HTMLElement {
     //attributes are ready here
     this.wait();
     //emit the connect event
-    emitter.emit('connect', this);
+    this.emit('connect', this);
   }
 
   /**
@@ -189,7 +199,15 @@ export default abstract class TempleComponent extends HTMLElement {
    */
   public disconnectedCallback() {
     //emit the disconnect event
-    emitter.emit('disconnect', this);
+    this.emit('disconnect', this);
+  }
+
+  /**
+   * Emits an event
+   */
+  public emit<T = any>(event: string, detail?: T) {
+    this.dispatchEvent(new CustomEvent<T>(event, { detail: detail }));
+    return this;
   }
 
   /**
@@ -225,6 +243,27 @@ export default abstract class TempleComponent extends HTMLElement {
    */
   public hasAttribute(name: string) {
     return this.element.hasAttribute(name);
+  }
+
+  /**
+   * Listens for an event
+   */
+  public on<T>(event: string, callback: CustomEventListener<T>) {
+    this.removeEventListener(event, callback as unknown as EventListener);
+    this.addEventListener(event, callback as unknown as EventListener);
+    return this;
+  }
+
+  /**
+   * Listens for an event once
+   */
+  public once<T>(event: string, callback: CustomEventListener<T>) {
+    const unbinder: CustomEventListener<T> = e => {
+      this.removeEventListener(event, callback as unknown as EventListener);
+      callback(e);
+    };
+    this.on<T>(event, unbinder);
+    return this;
   }
 
   /**
@@ -269,11 +308,17 @@ export default abstract class TempleComponent extends HTMLElement {
    * Removes the attribute
    */
   public removeAttribute(name: string) {
+    const prev = this.getAttribute(name);
     if (this.hasAttribute(name)) {
       this.element.removeAttribute(name);
     }
     if (super.hasAttribute(name)) {
       super.removeAttribute(name);
+    }
+    //if this is a virtual component and is an observed attribute
+    if (this._virtual && this.observedAttributes.includes(name)) {
+      //manually trigger the lifecycle
+      this.attributeChangedCallback(name, prev, null);
     }
   }
 
@@ -356,9 +401,15 @@ export default abstract class TempleComponent extends HTMLElement {
    * Sets the attribute
    */
   public setAttribute(name: string, value: any) {
+    const prev = this.getAttribute(name);
     this.element.setAttribute(name, value);
     if (typeof value === 'string' || value === true) {
       super.setAttribute(name, value);
+    }
+    //if this is a virtual component and is an observed attribute
+    if (this._virtual && this.observedAttributes.includes(name)) {
+      //manually trigger the lifecycle
+      this.attributeChangedCallback(name, prev, value);
     }
   }
 
@@ -366,7 +417,17 @@ export default abstract class TempleComponent extends HTMLElement {
    * Sets all the attributes
    */
   public setAttributes(attributes: Hash) {
-    this.element.setAttributes(attributes);
+    Object.entries(attributes).forEach(
+      ([ key, value ]) => this.setAttribute(key, value)
+    );
+  }
+
+  /**
+   * Unbinds an event
+   */
+  public unbind(event: string, callback: EventListener) {
+    this.removeEventListener(event, callback);
+    return this;
   }
 
   /**
