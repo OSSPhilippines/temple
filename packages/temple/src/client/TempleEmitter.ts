@@ -125,7 +125,11 @@ export class TempleEmitter extends EventTarget {
 }
 
 //helper that returns all child elements with the attribute name
-export const match = (element: Element|ShadowRoot, attribute: string) => {
+export const match = (
+  element: Element|ShadowRoot, 
+  attribute: string, 
+  bind = true
+) => {
   //get all child elements
   return Array.from(element.querySelectorAll('*')).filter(
     //filter by elements has the attribute
@@ -134,7 +138,7 @@ export const match = (element: Element|ShadowRoot, attribute: string) => {
       const node = TempleRegistry.get(element);
       const matched = node 
         && node.hasAttribute(attribute)
-        && !node.hasEvent(attribute);
+        && (!bind || !node.hasEvent(attribute));
       if (matched) {
         node.addEvent(attribute);
       }
@@ -167,7 +171,7 @@ export function unbindAttribute(name: string, bind: AttributeBinder) {
     const element = e.detail;
     //this is called for every listener, 
     //there will be a lot of listeners...
-    match(element.shadowRoot || element, name).forEach(bind);
+    match(element.shadowRoot || element, name, false).forEach(bind);
   });
 }
 
@@ -223,13 +227,21 @@ export default (() => {
   });
 
   //bind all browser events
-  events.forEach(event => bindAttribute(event, element => {
-    const callback = element.getAttribute(event);
-    if (typeof callback === 'function' ) {
-      element.element.removeEventListener(event, callback);
-      element.element.addEventListener(event, callback);
-    }
-  }));
+  events.forEach(event => {
+    bindAttribute(event, element => {
+      const callback = element.getAttribute(event);
+      if (typeof callback === 'function') {
+        element.element.removeEventListener(event, callback);
+        element.element.addEventListener(event, callback);
+      }
+    });
+    unbindAttribute(event, element => {
+      const callback = element.getAttribute(event);
+      if (typeof callback === 'function') {
+        element.element.removeEventListener(event, callback);
+      }
+    });
+  });
 
   return emitter;
 })();
