@@ -239,6 +239,9 @@ export type Node = ServerElement|ServerText;
 
 export type TempleComponentClass = {
   component: [ string, string ],
+  registered: string|null,
+  observedAttributes?: string[],
+  register(): void,
   new (): ClientComponent
 };
 
@@ -482,6 +485,10 @@ export type AttributeChangeEvent = CustomEvent<{
 }>;
 
 export type CustomEventListener<T> = (e: CustomEvent<T>) => void;
+
+//valid style property value
+export type StyleValue = string|number;
+export type MediaSize = 'all'|'xs'|'sm'|'md'|'lg'|'xl'|'xl2'|'xl3'|'xl4';
 
 //--------------------------------------------------------------------//
 // Constructor Options

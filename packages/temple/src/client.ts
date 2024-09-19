@@ -17,7 +17,9 @@ export type {
   TouchEvent,
   WheelEvent,
   AnimationEvent,
-  TransitionEvent
+  TransitionEvent,
+  StyleValue,
+  MediaSize
 } from './types';
 
 import TempleException from './Exception';
@@ -33,6 +35,10 @@ import props from './client/props';
 import classnames, { classlist } from './client/classnames';
 import children, { innerHTML, innerText } from './client/children';
 import signal, { SignalRegistry } from './client/signal';
+
+import StyleMap, { stylemap } from './style/StyleMap';
+import StyleSet, { styleset } from './style/StyleSet';
+import StyleSheet, { stylesheet, breakpoints } from './style/StyleSheet';
 
 export {
   component,
@@ -53,5 +59,12 @@ export {
   TempleElement,
   TempleEmitter,
   TempleException,
-  SignalRegistry
+  SignalRegistry,
+  breakpoints,
+  stylemap,
+  styleset,
+  stylesheet,
+  StyleMap,
+  StyleSet,
+  StyleSheet
 };
