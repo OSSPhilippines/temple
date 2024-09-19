@@ -34,35 +34,52 @@ export default class TempleRegistry {
     attributes: Record<string, any>, 
     children: Element[] = []
   ) {
-    //We cant just instantiate the component and return it because
-    //an error `Illegal constructor` will be thrown if the component 
-    //is not registered via customElements.define(). A work around is
-    //to create a fragment via template then copy the TempleComponent
-    //definitions to that. This will allow us to encapsule a component
-    //inside of another component without having to register it.
-
-    // Create a template for the inner component
-    const template = document.createElement('template');
-    template.innerHTML = `<${tagname}></${tagname}>`;
-    // Create a document fragment and append the inner component instance
-    const fragment = template.content;
-    //get the shallow component shell
-    const component = fragment.querySelector(`${tagname}`) as TempleComponent;
-    //copy the prototype
-    Object.setPrototypeOf(component, definition.prototype);
-    //set the constructor
-    component.constructor = definition.constructor;
-    //@ts-ignore set the component names
-    component.constructor.component = definition.component;
-    //@ts-ignore set the observed attributes
-    if (definition.observedAttributes) {
-      //@ts-ignore set the observed attributes
-      component.constructor.observedAttributes = definition.observedAttributes;
+    //if the component being created is not a
+    //registered component in customElements
+    if (!definition.registered) {
+      //we need to pseudo create the component instead.
+      return this.createVirtualComponent(
+        tagname, 
+        definition, 
+        attributes, 
+        children
+      );
     }
-    //not call the magic constructor
-    component.register(attributes, children);
+    //change the tagname if the component is registered
+    //this is to avoid confustion with different tag names 
+    //using the same component.
+    const component = document.createElement(definition.registered);
+    customElements.upgrade(component);
+    //it is not registered, so register it
+    const element = TempleRegistry.register(component, attributes) ;
+    //set attributes natively so it shows 
+    //up in the markup when it's rendered
+    for (const [ name, value ] of Object.entries(attributes)) {
+      if (typeof value === 'string' || value === true) {
+        component.setAttribute(name, (
+          value === '' || value === name  || value === true
+        ) ? true : value);
+      }
+    }
+    //if the component is a TempleComponent 
+    if (component instanceof TempleComponent
+      //and children is not set yet 
+      && !component.originalChildren
+    ) {
+      //this is the preferred way because appending children
+      //will initialize the children in the DOM, which is not
+      //what we want. We want to keep the children in the
+      //component instance and only append them when the
+      //component is rendered.
+      component.originalChildren = children;
+    //if the component is not a TempleComponent 
+    //or the original children is already set
+    } else {
+      //okay append it, bahala na...
+      children.forEach(child => component.appendChild(child));
+    }
     //return the element
-    return component.element;
+    return element;
   }
 
   /**
@@ -102,6 +119,46 @@ export default class TempleRegistry {
     // cases that need to be considered before allowing
     // escape to be false...
     return document.createTextNode(decode(value));
+  }
+
+  /**
+   * Localizes a TempleComponent instance
+   */
+  public static createVirtualComponent(
+    tagname: string,
+    definition: TempleComponentClass, 
+    attributes: Record<string, any>, 
+    children: Element[] = []
+  ) {
+    //We cant just instantiate the component and return it because
+    //an error `Illegal constructor` will be thrown if the component 
+    //is not registered via customElements.define(). A work around is
+    //to create a fragment via template then copy the TempleComponent
+    //definitions to that. This will allow us to encapsule a component
+    //inside of another component without having to register it.
+    
+    // Create a template for the inner component
+    const template = document.createElement('template');
+    template.innerHTML = `<${tagname}></${tagname}>`;
+    // Create a document fragment and append the inner component instance
+    const fragment = template.content;
+    //get the shallow component shell
+    const component = fragment.querySelector(`${tagname}`) as TempleComponent;
+    //copy the prototype
+    Object.setPrototypeOf(component, definition.prototype);
+    //set the constructor
+    component.constructor = definition.constructor;
+    //@ts-ignore set the component names
+    component.constructor.component = definition.component;
+    //@ts-ignore set the observed attributes
+    if (definition.observedAttributes) {
+      //@ts-ignore set the observed attributes
+      component.constructor.observedAttributes = definition.observedAttributes;
+    }
+    //now call the magic constructor
+    component.register(attributes, children);
+    //return the element
+    return component.element;
   }
 
   /**
