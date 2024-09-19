@@ -1,5 +1,4 @@
 import type { Hash, CustomEventListener } from '../types';
-//import type { TempleBrowserEvent } from '../types';
 import type TempleElement from './TempleElement';
 
 import TempleException from '../Exception';
@@ -15,6 +14,14 @@ export default abstract class TempleComponent extends HTMLElement {
   public static component: [ string, string ];
 
   /**
+   * Returns the registered element name from customElements
+   * if it doesn't exist, it will return null
+   */
+  public static get registered() {
+    return customElements.getName(this as unknown as CustomElementConstructor);
+  }
+
+  /**
    * Self registers the component
    */
   public static register() {
@@ -24,16 +31,16 @@ export default abstract class TempleComponent extends HTMLElement {
     );
   }
 
-  //whether the component has initiated
-  //this is a flag used by signals to check
-  //the number of signals that exists
-  //in this component
+  //whether the component has initiated this is a flag 
+  //used by signals to check the number of signals that 
+  //exists in this component as logic to determine
+  //whether to create a signal or reuse an existing one
   protected _initiated = false;
   //the callback to render just the children 
   //(wo initializing the variables again)
   protected _template: (() => (Element|false)[])|null = null;
   //the initial children
-  protected _children: ChildNode[]|undefined = undefined;
+  protected _children: Node[]|undefined = undefined;
   //prevents rendering loops
   protected _rendering = false;
   //attribute observer
@@ -78,27 +85,29 @@ export default abstract class TempleComponent extends HTMLElement {
    * Returns the component's metadata
    */
   public get metadata() {
-    const [ tagname, classname ] = (
-      this.constructor as typeof TempleComponent
-    ).component;
-    return { tagname, classname };
-  }
-
-  /**
-   * Returns the component's observed attributes
-   */
-  public get observedAttributes(): string[] {
-    return (
-      this.constructor as typeof TempleComponent
-    //@ts-ignore
-    )?.observedAttributes || [];
+    const { 
+      component, 
+      registered, 
+      //@ts-ignore some components might 
+      //not have observed attributes...
+      observedAttributes: observed = [] 
+    } = this.constructor as typeof TempleComponent;
+    //extract more names from component
+    const [ tagname, classname ] = component;
+    //return all the static data collected
+    return { 
+      tagname, 
+      classname, 
+      registered, 
+      observed: observed as string[] 
+    };
   }
 
   /**
    * Returns the original component's children
    * before the component was initiated
    */
-  public get originalChildren() {
+  public get originalChildren(): Node[]|undefined {
     return this._children;
   }
 
@@ -131,16 +140,12 @@ export default abstract class TempleComponent extends HTMLElement {
   }
 
   /**
-   * Constructor can only be called by native custom elements.
-   * Theoretically, this means that the server should have
-   * registered its attributes to TempleRegistry before hand.
+   * Safely sets the original component's children
    */
-  public constructor() {
-    super();
-    //check to see if the registry has this component
-    if (!TempleRegistry.has(this)) {
-      //it should have...
-      throw TempleException.for('Component not mapped.');
+  public set originalChildren(children: Node[]) {
+    //if children are not set
+    if (typeof this._children === 'undefined') {
+      this._children = Array.from(children || []);
     }
   }
 
@@ -178,7 +183,9 @@ export default abstract class TempleComponent extends HTMLElement {
     if (next === null && this.hasAttribute(name)) {
       this.element.removeAttribute(name);
     } else {
-      this.element.setAttribute(name, next);
+      this.element.setAttribute(name, (
+        next === '' || next === name
+      ) ? true : next);
     }
     //emit the attr event
     this.emit('attributechange', { action, name, prev, value: next, target: this });
@@ -280,15 +287,15 @@ export default abstract class TempleComponent extends HTMLElement {
       element.setAttributes(attributes);
     } else {
       //it is not registered, so register it
-      TempleRegistry.register(this, attributes) 
+      TempleRegistry.register(this, attributes);
     }
     //set attributes natively so it shows 
     //up in the markup when it's rendered
-    for (const [ key, value ] of Object.entries(attributes)) {
-      if (typeof value === 'string') {
-        super.setAttribute(key, value);
-      } else if (value === true) {
-        super.setAttribute(key, key);
+    for (const [ name, value ] of Object.entries(attributes)) {
+      if (typeof value === 'string' || value === true) {
+        super.setAttribute(name, (
+          value === '' || value === name  || value === true
+        ) ? true : value);
       }
     }
     //set the original children
@@ -316,7 +323,7 @@ export default abstract class TempleComponent extends HTMLElement {
       super.removeAttribute(name);
     }
     //if this is a virtual component and is an observed attribute
-    if (this._virtual && this.observedAttributes.includes(name)) {
+    if (this._virtual && this.metadata.observed.includes(name)) {
       //manually trigger the lifecycle
       this.attributeChangedCallback(name, prev, null);
     }
@@ -334,66 +341,83 @@ export default abstract class TempleComponent extends HTMLElement {
       return;
     //if it's already rendering
     } else if (this._rendering) {
+      //prevent infinite loops
       return;
     }
     //set the rendering flag
     this._rendering = true;
-    //get the previous current component
+    //keep the previous current component 
+    //to revert when we are done rendering
     const prev = __APP_DATA__.get('current');
-    //set the current component
+    //set the current component pointer
+    //NOTE: this is a pointer for component 
+    //related helpers like props and signals
     __APP_DATA__.set('current', this);
-    //get the styles
-    const styles = this.styles();
     //get the template
     if (!this._template) {
       //this will only initialize the variables once
       this._template = this.template();
     //there's a template, so it means it was mounted
     } else {
-      //emit the unmounted event
+      //emit the unmounted event to allow any cleanup
+      //like removing event listeners or clearing timeouts
+      //to happen before the children are overwritten
       emitter.emit('unmounted', this);
     }
     //get the children build w/o re-initializing the variables
+    //this is why we dont need memoization strategies
     const children = this._template().filter(Boolean) as Element[];
+    //get the styles now to allow template() 
+    //to dynamically change the styles
+    const styles = this.styles();
     //if no styles, just set the innerHTML
     if (styles.length === 0) {
       //empty the current text content
+      //the old data is captured in originalChildren
+      //NOTE: We might want to version the children based 
+      //on the state like React...
+      //but for now, good bye old children
       this.textContent = '';
-      //now append the children
+      //now append the new children
       children.forEach(child => this.appendChild(child));
-    //there are styles, use shadow dom
+    //there are styles, use shadow dom because it doesn't make
+    //sense in light mode because the styles will be applied
+    //to the entire document...
     } else {
       //if shadow root is not set, create it
       if (!this.shadowRoot) {
+        //NOTE: delegatesFocus is part of the ElementInternals API
+        //it allows the shadow root to delegate focus to the element
+        //and it doesn't hurt to set it to true
         this.attachShadow({ mode: 'open', delegatesFocus: true });
       }
-
+      //get the shadow root
       const shadowRoot = this.shadowRoot as ShadowRoot;
-      //empty the current text content
-      //the old data is captured in props
-      this.textContent = '';
+      //NOTE: dont do this.textContent = ''
+      //because it will make <slot> useless
+      //just empty the shadow root content
       shadowRoot.textContent = '';
       //append the styles
       const style = document.createElement('style');
       style.innerText = styles;
       shadowRoot.appendChild(style);
-      //now append the children
+      //append the children
       children.forEach(child => this.shadowRoot?.appendChild(child));
     }
-    //reset the current component
+    //revert or reset the current component pointer
     //maybe we should do a queue later?
     if (prev) {
       __APP_DATA__.set('current', prev);
     } else {
       __APP_DATA__.delete('current');
     }
-
     //set the initiated flag
     this._initiated = true;
     //reset the rendering flag
     this._rendering = false;
     //emit the mounted event
     emitter.emit('mounted', this);
+    //return something (nothing is using this right now)
     return this.shadowRoot ? this.shadowRoot.innerHTML :this.innerHTML;
   }
 
@@ -404,10 +428,12 @@ export default abstract class TempleComponent extends HTMLElement {
     const prev = this.getAttribute(name);
     this.element.setAttribute(name, value);
     if (typeof value === 'string' || value === true) {
-      super.setAttribute(name, value);
+      super.setAttribute(name, (
+        value === '' || value === name  || value === true
+      ) ? true : value);
     }
     //if this is a virtual component and is an observed attribute
-    if (this._virtual && this.observedAttributes.includes(name)) {
+    if (this._virtual && this.metadata.observed.includes(name)) {
       //manually trigger the lifecycle
       this.attributeChangedCallback(name, prev, value);
     }
