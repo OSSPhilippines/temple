@@ -43,6 +43,7 @@ export default class Transpiler extends ComponentTranspiler {
       const specifier = imported.source
         //replace client with server
         .replaceAll('@ossph/temple/client', '@ossph/temple/server')
+        .replaceAll('@ossph/temple/dist/client', '@ossph/temple/dist/server')
         .replace(/^@ossph\/temple$/, '@ossph/temple/server');
       if (imported.default && imported.names) {
         source.addImportDeclaration({
