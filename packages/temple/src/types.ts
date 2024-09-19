@@ -204,7 +204,7 @@ export type AST = {
 //--------------------------------------------------------------------//
 // Component Class Types
 
-export type ComponentType = 'document' | 'component' | 'template';
+export type ComponentType = 'document'|'component'|'template'|'external';
 
 //component directives
 export type NextDirective = (

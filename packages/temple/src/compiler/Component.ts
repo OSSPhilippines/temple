@@ -8,6 +8,7 @@ import NodeFS from '../filesystem/NodeFS';
 //parsers/compilers
 import Tokenizer from './Tokenizer';
 //helpers
+import Exception from '../Exception';
 import { camelize, serialize, slugify } from '../helpers';
 
 /**
@@ -74,6 +75,11 @@ export default class Component {
    * Returns the imported components
    */
   public get components() {
+    //if external component
+    if (this._type === 'external') {
+      //no components here...
+      return [];
+    }
     if (!this._components) {
       this._components = this.ast.components.map(component => {
         //get property attributes
@@ -85,14 +91,14 @@ export default class Component {
           property => property.key.name === 'type'
         );
         //determine the type of component
-        const type = (
-          //if property is found
-          typeProperty 
-          //and the value type is a literal
-          && typeProperty.value.type === 'Literal'
-          //and the value is 'template'
-          && typeProperty.value.value === 'template'
-        ) ? 'template' : 'component';
+        const type = typeProperty?.value.type === 'Literal'
+          ? (typeProperty?.value.value === 'document' ? 'document' 
+            : typeProperty?.value.value === 'component' ? 'component' 
+            : typeProperty?.value.value === 'template' ? 'template' 
+            : typeProperty?.value.value === 'external' ? 'external' 
+            : 'component'
+          ) 
+          : 'component';
 
         //find name property
         // ie. <link name="foo-bar" />
@@ -141,6 +147,11 @@ export default class Component {
    * Used fast refresh
    */
   public get dependencies() {
+    //if external component
+    if (this._type === 'external') {
+      //no dependencies here...
+      return [];
+    }
     const imports = this.imports.map(token => ({
       path: this._loader.absolute(token.source, this.dirname),
       type: 'file'
@@ -164,6 +175,11 @@ export default class Component {
    * Returns true if the component should be treated as a field
    */
   public get field() {
+    //if external component
+    if (this._type === 'external') {
+      //no sure...
+      return false;
+    }
     return this.ast.scripts.some(
       script => script.attributes?.properties.some(
         property => property.key.name === 'form'
@@ -192,6 +208,11 @@ export default class Component {
    * these imports are extracted from the <script>
    */
   public get imports() {
+    //if external component
+    if (this._type === 'external') {
+      //no imports here...
+      return [];
+    }
     return this.ast.imports.map(token => ({
       typeOnly: token.typeOnly,
       names: token.names?.map(name => name.value),
@@ -204,6 +225,11 @@ export default class Component {
    * Returns the markup tokens
    */
   public get markup() {
+    //if external component
+    if (this._type === 'external') {
+      //no markup...
+      return [];
+    }
     return this.ast.markup;
   }
 
@@ -218,6 +244,11 @@ export default class Component {
    * Returns attributes that should be observed
    */
   public get observe() {
+    //if external component
+    if (this._type === 'external') {
+      //no observables here...
+      return [];
+    }
     const observables = new Set<string>();
     for (const script of this.ast.scripts) {
       if (script.attributes) {
@@ -278,6 +309,11 @@ export default class Component {
    * Returns the compiled scripts
    */
   public get scripts() {
+    //if external component
+    if (this._type === 'external') {
+      //no scripts here...
+      return [];
+    }
     return this.ast.scripts.map(script => script.source);
   }
 
@@ -285,6 +321,11 @@ export default class Component {
    * Returns the compiled styles
    */
   public get styles() {
+    //if external component
+    if (this._type === 'external') {
+      //no styles here...
+      return [];
+    }
     return this.ast.styles.map(style => style.source);
   }
 
@@ -341,6 +382,10 @@ export default class Component {
    * Tokenenizes the source code and returns the AST
    */
   public tokenize(cache = true) {
+    //throw if the type is not tokenizable
+    if (this._type === 'external') {
+      throw Exception.for('No tokenizer for external: %s', this.source);
+    }
     //if cache is disabled or ast is not cached
     if (!cache || !this._ast) {
       //parse the source code

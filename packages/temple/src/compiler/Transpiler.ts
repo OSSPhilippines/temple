@@ -129,7 +129,8 @@ export default class Transpiler {
     });
     //import Counter from './Counter'
     this._component.components.filter(
-      component => component.type === 'component'
+      //template is already added to markup
+      component => component.type !== 'template'
     ).forEach(component => {
       //now import
       source.addImportDeclaration({
@@ -301,8 +302,9 @@ export default class Transpiler {
     const component = components.find(
       component => component.tagname === token.name
     );
-    //if the token refers to a component imported by this file
-    if (component) {
+    //if the token refers to a component imported by 
+    //this file and the component is tokenizable
+    if (component && component.type !== 'external') {
       if (component.type === 'template') {
         //templates take no children and scope is 
         //the same as the parent scope. template

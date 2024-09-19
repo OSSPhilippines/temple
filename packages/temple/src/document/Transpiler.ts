@@ -106,11 +106,13 @@ export default class Transpiler extends ComponentTranspiler {
     const { imports, scripts } = this._component;
     //only components (vs templates)
     const components = this._component.components.filter(
-      component => component.type === 'component'
+      component => component.type === 'component' 
+        || component.type === 'external'
     );
     //all components and sub components
     const registry = Object.values(this._component.registry).filter(
       component => component.type === 'component'
+        || component.type === 'external'
     )
     //create a new source file
     const { source } = this._createSourceFile('client.ts');
@@ -233,28 +235,23 @@ export default class Transpiler extends ComponentTranspiler {
       //components and let it manip the HTML further if it wants to
       ${components.map(component => {
         const { brand, tagname, classname } = component;
-        return brand 
-          ? `customElements.define('${brand}-${tagname}', ${classname});` 
-          : `customElements.define('${tagname}', ${classname});`
+        return `if (!customElements.getName(${classname})) {
+          ${brand 
+            ? `customElements.define('${brand}-${tagname}', ${classname});` 
+            : `customElements.define('${tagname}', ${classname});`}
+        }`
       }).join('\n')}
       //emit the mounted event
       emitter.emit('mounted', document.body);
     });`);
 
-    //export { TempleComponent, TempleRegistry, ... } from '@ossph/temple/client';
+    //export { TempleRegistry, emitter, __APP_DATA__ as data };
     source.addExportDeclaration({
-      moduleSpecifier: '@ossph/temple/client',
       namedExports: [
-        'data',
-        'props',
-        'children',
-        'signal', 
+        'TempleException',
+        'TempleRegistry',
         'emitter',
-        'TempleComponent', 
-        'TempleRegistry', 
-        'TempleElement', 
-        'TempleEmitter', 
-        'TempleException'
+        { name: 'data', alias: '__APP_DATA__' }
       ]
     });
 
