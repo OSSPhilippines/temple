@@ -1,7 +1,7 @@
 import type { Component } from '@ossph/temple/compiler';
 import type { Plugin } from '../types';
 
-import Styleset from '../StyleSet';
+import Styleset from '@ossph/temple/dist/style/StyleSet';
 
 export function block(document: Component): Plugin {
   return (sheet: string, brand: string) => {

@@ -1,0 +1,74 @@
+<script>
+  import type { ChangeEvent } from '@ossph/temple/dist/types';
+  import CodeMirror from 'codemirror';
+  const { 
+    lang = 'htmlmixed', numbers, change, update, value,
+    //dont need these...
+    style, 'class': _,
+    //input attributes
+    ...attributes
+  } = this.props;
+  const children = this.originalChildren;
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add('block');
+  }
+  //set handlers
+  const handlers = {
+    update: (textarea, value) => {
+      textarea.value = value;
+      textarea.dispatchEvent(new Event('change', { bubbles: true }));
+    },
+    change: (e: ChangeEvent<HTMLTextareaElement>) => {
+      change && change(e);
+      update && update(e.target.value);
+    },
+    init: (mode: string, textarea: HTMLTextareaElement) => {
+      const defaultValue = textarea.value || value;
+      this._editor = CodeMirror.fromTextArea(textarea, {
+        mode,
+        lineNumbers: numbers,
+        tabSize: 2
+      });
+      defaultValue && this._editor.setValue(defaultValue);
+      this._editor.on('change', () => handlers.update(
+        textarea, 
+        this._editor.getValue()
+      ));
+    },
+    mount: () => {
+      const textarea = this.querySelector('textarea');
+      if (!textarea) return;
+      switch (lang) {
+        case 'md':
+        case 'markdown': import('codemirror/mode/markdown/markdown')
+          .then(() => handlers.init('markdown', textarea)); break;
+        case 'css': import('codemirror/mode/css/css')
+          .then(() => handlers.init('css', textarea)); break;
+        case 'js':
+        case 'javascript': import('codemirror/mode/javascript/javascript')
+          .then(() => handlers.init('javascript', textarea)); break;
+        case 'json': import('codemirror/mode/javascript/javascript')
+          .then(() => handlers.init('application/json', textarea)); break;
+        case 'ts':
+        case 'typescript': import('codemirror/mode/javascript/javascript')
+          .then(() => handlers.init('application/typescript', textarea)); break;
+        case 'html':
+        case 'htmlmixed':
+        default: import('codemirror/mode/htmlmixed/htmlmixed')
+          .then(() => handlers.init('htmlmixed', textarea)); break;
+      }
+    }
+  };
+</script>
+<textarea 
+  {...attributes} 
+  mount={handlers.mount}
+  change={handlers.change}
+  value={value}
+>{children}</textarea>

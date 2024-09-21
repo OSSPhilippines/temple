@@ -1,25 +1,32 @@
 <script>
-  const { value, ordered, list = '', item = '' } = this.props;
-  //determine host class display
-  if (!this.classList.contains('block') 
-    && !this.classList.contains('flex')
-    && !this.classList.contains('none')
-    && !this.classList.contains('inline')
-    && !this.classList.contains('inline-block')
-  ) {
-    this.classList.add('block');
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  import setDisplay from '../utilities/style/display';
+  //extract props
+  const { value, ordered, indent, spacing } = this.props;
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
+  //determine display
+  setDisplay(this.props, styles, 'block');
+  //determine indent
+  if (indent) {
+    styles.add('ol,ul', 'padding-left', `${indent}px`);
+  }
+  //determine spacing
+  if (spacing) {
+    styles.add('li', 'padding', `${spacing}px 0`);
   }
 </script>
 <if true={ordered}>
-  <ol class=list>
+  <ol>
     <each value=li from=value>
-      <li class=item>{li}</li>
+      <li>{li}</li>
     </each>
   </ol>
 <else />
-  <ul class=list>
+  <ul>
     <each value=li from=value>
-      <li class=item>{li}</li>
+      <li>{li}</li>
     </each>
   </ul>
 </if>

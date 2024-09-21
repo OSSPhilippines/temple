@@ -15,30 +15,21 @@ import {
   expression as toExpression,
   range as toRange,
   literal as toLiteral,
-  media,
-  breakpoints,
-  responsive,
   sizes,
   xsizes,
   colors,
-  percents,
-  stylemap,
-  styleset,
-  stylesheet
+  percents
 } from './helpers';
 import tui from './temple';
 import templeui from './templeui';
 
 import Exception from './Exception';
-import StyleMap from './StyleMap';
 import StyleParser from './StyleParser';
 import Stylers, {
   expression as expressionStyler,
   range as rangeStyler,
   literal as literalStyler
 } from './Stylers';
-import StyleSet from './StyleSet';
-import StyleSheet from './StyleSheet';
 
 export type * from './types';
 
@@ -64,24 +55,15 @@ export {
   expressionStyler,
   rangeStyler,
   literalStyler,
-  media,
-  breakpoints,
-  responsive,
   sizes,
   xsizes,
   colors,
   percents,
-  stylemap,
-  styleset,
-  stylesheet,
   tui,
   templeui,
   Exception,
-  StyleMap,
   StyleParser,
-  Stylers,
-  StyleSet,
-  StyleSheet
+  Stylers
 };
 
 export default templeui;

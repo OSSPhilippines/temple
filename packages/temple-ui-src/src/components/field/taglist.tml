@@ -1,0 +1,123 @@
+<link rel="import" type="component" href="../badge.tml" name="tui-badge" />
+<script>
+  import signal from '@ossph/temple/dist/client/signal';
+  //separate component related props from field attributes
+  const { 
+    curved, rounded,     pill,    
+    info,   warning,     success, 
+    error,  muted,       primary, 
+    color,  secondary,   outline,
+    solid,  transparent, placeholder,
+    change, update,      value = []
+  } = this.props;
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add('block');
+  }
+  const state = signal(typeof value === 'string' 
+    ? value.split(',').filter(value => value.length > 0)
+    : Array.from(value)
+  );
+  const defaults = {
+    layout: !solid && !outline && !transparent,
+    shape: !curved && !rounded && !pill,
+    color: !color && !info && !warning && !success 
+      && !error && !muted && !primary && !secondary
+  };
+  //set handlers
+  const handlers = {
+    change: (e: ChangeEvent<HTMLInputElement>) => {
+      change && change(e);
+    },
+    remove: (index: number) => {
+      //update the state without the removed tag
+      state.value = state.value.filter((tag, i) => i !== index);
+      //this will cause to re-render the component
+      //trigger the update event
+      update && update(state.value);
+    },
+    edit: (e: KeyboardEvent<HTMLInputElement>) => {
+      const { key } = e;
+      const value = e.target.value.trim();
+      //if enter or comma
+      if ((key === 'Enter' || key === ',') 
+        //and there's a value
+        && value.length > 0
+        //and the value is not already in the tag list
+        && !state.value.includes(value)
+      ) {
+        //prevent form submission
+        e.preventDefault();
+        //add the value to the tag list
+        state.value = [ ...state.value, value ];
+        //this will cause to re-render the component
+        //so we need to re-focus the input
+        this.querySelector('input')?.focus();
+        //trigger the update event
+        update && update(state.value);
+      //if backspace
+      } else if (key === 'Backspace' 
+        //and the input is empty
+        && e.target.value.length === 0
+        //and there are tags
+        && state.value.length > 0
+      ) {
+        //prevent form submission
+        e.preventDefault();
+        //make a copy of the tags
+        const tags = [ ...state.value ];
+        //remove the last tag and get the value
+        const value = tags.pop() || '';
+        //update the tags list
+        state.value = tags;
+        //this will cause to re-render the component
+        //so get the new input
+        const input = this.querySelector('input');
+        //it should be there
+        if (input) {
+          //set the value and focus
+          input.value = value;
+          input.focus();
+        }
+        //trigger the update event
+        update && update(tags);
+      }
+      //prevent form submission
+      return false;
+    }
+  };
+</script>
+<div class="bg-white b-black b-solid box-border flex mw-full scroll w-full pl-4 py-3 flex-center-y">
+  <each value=tag key=i from={state.value}>
+    <span class="inline-block mr-2 tx-nowrap">
+      <tui-badge 
+        class="flex flex-center-y" 
+        solid={solid || defaults.layout} 
+        warning={warning || defaults.color} 
+        curved={curved || defaults.shape}
+        {color} {info} {success} {muted} 
+        {error} {primary} {secondary} {rounded} 
+        {pill} {outline} {transparent}
+      >
+        {tag}
+        <span 
+          class="inline-block tx-white cursor-pointer pl-5" 
+          click={() => handlers.remove(Number(i))}
+        >&times;</span>
+      </tui-badge>
+    </span>
+  </each>
+  <input
+    class="b-0 p-0 w-full h-full box-border tx-inherit outline-none bg-none"
+    style="min-width:50%"
+    placeholder={placeholder}
+    keydown={handlers.edit}
+    keyup={handlers.save}
+    change={handlers.change}
+  />
+</div>

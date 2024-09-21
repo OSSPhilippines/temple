@@ -1,34 +1,15 @@
 import type { 
-  Media,
-  StyleRecord,
   ExpressionToken, 
   LiteralToken,
   RangeToken
 } from './types';
 
-import StyleMap from './StyleMap';
-import StyleSet from './StyleSet';
-import StyleSheet from './StyleSheet';
+import type { MediaSize, StyleValue } from '@ossph/temple/dist/types';
+import StyleMap from '@ossph/temple/dist/style/StyleMap';
+
 
 //before and after
 export const bna = [ 'before', 'after' ];
-
-//responsive names and breakpoints
-export const media = [
-  'all', 'xl4', 'xl3', 
-  'xl2', 'xl',  'lg', 
-  'md',  'sm',  'xs'
-];
-
-export const breakpoints = [
-  0,    1920, 1536, 
-  1280, 1024, 992, 
-  767,  420,  360
-];
-
-export const responsive = Object.fromEntries(
-  media.map((name, index) => [ name as Media, breakpoints[index] ])
-) as Record<Media, number>;
 
 export const sizes = [ 'xs', 'sm', 'md', 'lg', 'xl' ];
 export const xsizes = [ ...sizes, '2xl', '3xl', '4xl', '5xl' ];
@@ -50,8 +31,8 @@ export const percents = Object.entries({
  */
 export function literal(
   name: string, 
-  records: StyleRecord|StyleMap,
-  media: Media = 'all',
+  records: Record<string, StyleValue[]>|StyleMap,
+  media: MediaSize = 'all',
   pseudo?: string
 ): LiteralToken {
   const styles = records instanceof StyleMap 
@@ -102,9 +83,9 @@ export function range(
  */
 export function expression(
   regex: string, 
-  records: StyleRecord|StyleMap,
+  records: Record<string, StyleValue[]>|StyleMap,
   step: number[] = [],
-  media: Media = 'all',
+  media: MediaSize = 'all',
   pseudo?: string
 ): ExpressionToken {
   const styles = records instanceof StyleMap 
@@ -127,25 +108,4 @@ export function expression(
     step,
     pseudo
   };
-};
-
-/**
- * Chainable way to create a stylemap.
- */
-export function stylemap(styles: StyleRecord = {}) {
-  return new StyleMap(Object.entries(styles));
-};
-
-/**
- * Chainable way to create a styleset.
- */
-export function styleset(styles: Record<string, StyleMap> = {}) {
-  return new StyleSet(Object.entries(styles));
-};
-
-/**
- * Chainable way to create a stylesheet.
- */
-export function stylesheet() {
-  return new StyleSheet();
 };

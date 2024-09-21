@@ -1,0 +1,90 @@
+<link rel="import" type="component" href="./input.tml" name="tui-input" />
+<script>
+  import type { ChangeEvent } from '@ossph/temple/dist/types';
+  import signal from '@ossph/temple/dist/client/signal';
+  const { 
+    uploading = 'Uploading...',
+    name,
+    value = [],
+    change,
+    update,
+    upload,
+    //dont need these...
+    style, 'class': _,
+    ...attributes 
+  } = this.props;
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add('block');
+  }
+
+  const state = signal({ queued: 0, uploaded: value });
+
+  const handlers = {
+    change: (e: ChangeEvent<HTMLInputElement>) => {
+      if (upload && e.target.files?.length) {
+        const pending = Array.from(e.target.files);
+        const queued = state.value.queued + pending.length;
+        const uploaded = Array.from(state.value.uploaded);
+        state.value = { ...state.value, queued };
+        console.log(state.value)
+        upload(pending, urls => {
+          uploaded.push(...urls);
+          state.value = { 
+            queued: Math.max(queued - urls.length, 0), 
+            uploaded: [ ...uploaded ] 
+          };
+          console.log(state.value)
+        });
+      }
+      
+      change && change(e);
+    },
+    remove: (index: number) => {
+      const queued = state.value.queued ? state.value.queued - 1: 0;
+      const uploaded = [ ...state.value.uploaded ];
+      uploaded.splice(index, 1);
+      state.value = { queued, uploaded };
+    }
+  }
+</script>
+<tui-input 
+  {...attributes} 
+  type="file" 
+  class="block py-4 px-7"
+  change={handlers.change} 
+  multiple
+/>
+<if true={state.value.uploaded.length > 0}>
+  <each key=i value=url from={state.value.uploaded}>
+    <div class="bg-white b-black b-solid b-1 border-box tx-black flex flex-center-y p-7">
+      <a 
+        class="flex-grow scroll-hidden tx-ellipsis tx-nowrap tx-black tx-underline"
+        href={url} 
+        target="_blank" 
+        rel="noreferrer"
+      >
+        {url}
+      </a>
+      <div 
+        class="tx-error cursor-pointer tx-20 mt--2"
+        click={() => handlers.remove(i)}
+      >
+        &times;
+      </div>
+      <input {name} type="hidden" value={url} />
+    </div>
+  </each>
+</if>
+<if true={state.value.queued > 0}>
+  <div class="bg-white b-black b-solid b-1 border-box tx-black flex flex-center-y p-7">
+    <div class="flex-grow scroll-hidden tx-ellipsis tx-nowrap">
+      {uploading}
+    </div>
+  </div>
+</if>

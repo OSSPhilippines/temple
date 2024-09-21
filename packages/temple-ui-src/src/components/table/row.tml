@@ -1,12 +1,9 @@
 <script>
-  const { col } = this.props;
-  const children = this.originalChildren;
-  this.classList.add('table-row');
-  if (typeof col === 'string') {
-    const classList = col.split(' ').filter(col => col.length > 0);
-    if (classList.length > 0) {
-      children.forEach(child => child.classList?.add(...classList));
-    }
-  }
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
+  //default host styles
+  styles.add(':host', 'display', 'table-row');
 </script>
-{children}
+<slot></slot>

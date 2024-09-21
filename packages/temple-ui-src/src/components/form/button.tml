@@ -1,10 +1,5 @@
 <script>
-  import { 
-    props, 
-    classnames, 
-    children, 
-    component 
-  } from '@ossph/temple';
+  import TempleRegistry from '@ossph/temple/dist/client/TempleRegistry';
   // Separate component related props from field attributes
   const { 
     block,     full,    color,
@@ -20,22 +15,13 @@
     style,    'class': _,
     //get the rest
     ...attributes 
-  } = props();
-
-  //get the host element
-  const host = component();
-  const classes = classnames().split(' ');
+  } = this.props;
   //make a button
-  const button =  document.createElement(href ? 'a' : 'button');
-  //add attributes to the button
-  Object.entries(attributes).forEach(
-    ([key, value]) => button.setAttribute(key, value)
-  );
-  if (href) {
-    button.setAttribute('href', href);
-  }
-  //add children to the button
-  children().forEach(child => button.appendChild(child));
+  const button = TempleRegistry.createElement(
+    href ? 'a' : 'button', 
+    { ...attributes, href },
+    this.originalChildren || []
+  ).element;
   //default styles
   button.classList.add(
     'tx-center', 
@@ -44,25 +30,25 @@
   );
   //determine display
   if (block) {
-    host.classList.add('block');
+    this.classList.add('block');
     button.classList.add('block');
-  } else if (classes.find(classname => classname.includes('block'))) {
+  } else if (this.classList.contains('block')) {
     button.classList.add('block');
-  } else if (classes.find(classname => classname.includes('flex'))) {
+  } else if (this.classList.contains('flex')) {
     button.classList.add('flex');
-  } else if (classes.find(classname => classname.includes('none'))) {
+  } else if (this.classList.contains('none')) {
     button.classList.add('none');
-  } else if (classes.find(classname => classname.includes('inline'))) {
+  } else if (this.classList.contains('inline')) {
     button.classList.add('inline');
-  } else if (classes.find(classname => classname.includes('inline-block'))) {
+  } else if (this.classList.contains('inline-block')) {
     button.classList.add('inline-block');
   } else {
-    host.classList.add('inline-block');
+    this.classList.add('inline-block');
     button.classList.add('inline-block');
   }
   //determine size
   if (full) {
-    host.classList.add('w-full');
+    this.classList.add('w-full');
     button.classList.add('w-full');
   }
   //determine padding by size

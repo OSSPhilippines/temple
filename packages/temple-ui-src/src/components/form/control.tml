@@ -1,13 +1,18 @@
 <script>
-  import { props, classlist, children } from '@ossph/temple';
   // Separate component related props from field attributes
-  const { label, error } = props();
-  classlist().add('block');
+  const { label, error } = this.props;
+  const children = this.originalChildren;
+  const classList = this.classList;
+  classList.add('block');
+  if (error) {
+    classList.add('tx-error');
+  }
+
 </script>
 <if true={!!label}>
   <label class="block pb-3">{label}</label>
 </if>
-<div>{children()}</div>
+{children}
 <if true={!!error && error?.length > 0}>
-  <div class="tx-error pt-3">{error}</div>
+  <div class="pt-3">{error}</div>
 </if>

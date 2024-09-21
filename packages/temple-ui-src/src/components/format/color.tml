@@ -1,37 +1,48 @@
 <script>
-  const { value, sm, md, lg, box = true, text = true } = this.props;
-  //build host class names
-  this.classList.add('flex', 'flex-center-y');
-  //determine host class display
-  if (!this.classList.contains('block') 
-    && !this.classList.contains('flex')
-    && !this.classList.contains('none')
-    && !this.classList.contains('inline')
-    && !this.classList.contains('inline-block')
-  ) {
-    this.classList.add('inline-block');
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  import setBold from '../utilities/style/bold';
+  import setDisplay from '../utilities/style/display';
+  import setSize from '../utilities/style/size';
+  //extract props
+  const { value } = this.props;
+  //sub-props (box size, text size)
+  let { box, text } = this.propsTree;
+  if (!box && text !== false) {
+    box = {};
+    text = true;
   }
-  //build box class list
-  const classList = [ 'inline-block', 'curved', 'ba-black' ];
-  //determine box class size
-  if (sm) {
-    classList.push('w-8', 'h-8');
-  } else if (md) {
-    classList.push('w-12', 'h-12');
-  } else if (lg) {
-    classList.push('w-16', 'h-16');
-  } else {
-    classList.push('w-12', 'h-12');
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
+  //determine display
+  const display = setDisplay(this.props, styles, 'inline-flex');
+  if (display === 'flex' || display === 'inline-flex') {
+    styles.add(':host', 'align-items', 'center');
   }
-  //if there is a text, add margin 
-  //right to the box class list
+  //determine size
+  setSize(this.props, styles, false, ':host', 'font-size');
+  //determine font weight
+  setBold(this.props, styles, ':host');
+  //if there is box props
+  if (box) {
+    //build box class list
+    styles.add(':host .box', 'display', 'inline-block');
+    styles.add(':host .box', 'border-radius', '4px');
+    styles.add(':host .box', 'border', '1px solid var(--black)');
+    styles.add(':host .box', 'background-color', value);
+    //determine box class size
+    setSize(box, styles, '16px', '.box', 'width');
+    setSize(box, styles, '16px', '.box', 'height');
+  }
+  //if there is text props
   if (text) {
-    classList.push('mr-5');
+    //add margin right to the box class list
+    styles.add(':host .box', 'margin-right', '5px');
   }
 </script>
 <if true={box}>
-  <span class={classList.join(' ')} style={`background-color: ${value};`}></span>
+  <span class="box"></span>
 </if>
 <if true={text}>
-  <span>{value}</span>
+  <span class="text">{value}</span>
 </if>

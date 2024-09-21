@@ -1,13 +1,17 @@
 <script>
-  const { value, pre = '' } = this.props;
-  //determine host class display
-  if (!this.classList.contains('block') 
-    && !this.classList.contains('flex')
-    && !this.classList.contains('none')
-    && !this.classList.contains('inline')
-    && !this.classList.contains('inline-block')
-  ) {
-    this.classList.add('block');
-  }
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  import setDisplay from '../utilities/style/display';
+  //extract props
+  const { 
+    value, 
+    //displays
+    flex, none, inline, block, 
+    'inline-block': iblock, 'inline-flex': iflex
+  } = this.props;
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
+  //determine display
+  setDisplay(this.props, styles, 'block');
 </script>
-<pre class=pre>{JSON.stringify(value, null, 2)}</pre>
+<pre>{JSON.stringify(value, null, 2)}</pre>

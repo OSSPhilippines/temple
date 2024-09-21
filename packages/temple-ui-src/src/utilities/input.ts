@@ -10,11 +10,10 @@ export function getProps(host: TempleComponent) {
     //input attributes
     ...attributes
   } = host.props;
-
   return { error, change, update, attributes };
 };
 
-export function setHostClass(host: TempleComponent, error: boolean) {
+export function setHostClass(host: TempleComponent, error: boolean|string) {
   //get the host classes
   const classes = host.className.split(' ');
   //determine display

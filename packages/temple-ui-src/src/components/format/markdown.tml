@@ -1,18 +1,17 @@
 <script>
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  import setDisplay from '../utilities/style/display';
   import marked from 'marked';
   import purify from 'dompurify';
+  //extract props
   const { value } = this.props;
-  //determine host class display
-  if (!this.classList.contains('block') 
-    && !this.classList.contains('flex')
-    && !this.classList.contains('none')
-    && !this.classList.contains('inline')
-    && !this.classList.contains('inline-block')
-  ) {
-    this.classList.add('block');
-  }
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
+  //determine display
+  setDisplay(this.props, styles, 'block');
   const init = () => {
     this.innerHTML = purify.sanitize(marked.parse(value));
   }
 </script>
-<span mount=init></span>
+<slot mount=init></slot>

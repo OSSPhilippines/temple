@@ -9,6 +9,6 @@
 </script>
 <input 
   {...attributes} 
-  class="b-0 p-0 block w-full h-full box-border tx-inherit outline-none bg-transparent"
+  class="b-0 p-0 block w-full h-full box-border tx-inherit outline-none bg-none"
   change={handlers.change} 
 />

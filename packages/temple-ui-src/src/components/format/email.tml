@@ -1,13 +1,30 @@
 <script>
-  const { value, label, link = '' } = this.props;
-  //determine host class display
-  if (!this.classList.contains('block') 
-    && !this.classList.contains('flex')
-    && !this.classList.contains('none')
-    && !this.classList.contains('inline')
-    && !this.classList.contains('inline-block')
-  ) {
-    this.classList.add('inline-block');
-  }
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  import setBold from '../utilities/style/bold';
+  import setColor from '../utilities/style/color';
+  import setDisplay from '../utilities/style/display';
+  import setSize from '../utilities/style/size';
+  import setUnderline from '../utilities/style/underline';
+  //extract props
+  const { 
+    value, label,
+    //dont need these...
+    'class': _, style,
+    //the rest is for the link
+    ...attributes
+  } = this.props;
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
+  //determine host display
+  setDisplay(this.props, styles, 'inline-block', ':host');
+  //determine size
+  setSize(this.props, styles, '13px', ':host', 'font-size');
+  //determine font weight
+  setBold(this.props, styles, ':host');
+  //determine color
+  setColor(this.props, styles, false, 'a', 'color');
+  //determine text decoration
+  setUnderline(this.props, styles, 'a');
 </script>
-<a class=link href={`mailto:${value}`}>{label || value}</a>
+<a {...attributes} href={`mailto:${value}`}>{label || value}</a>

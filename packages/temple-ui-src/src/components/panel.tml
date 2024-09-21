@@ -147,6 +147,6 @@
   };
   //initial setup
   setClassNames.all();
-  this.classList.add('relative', 'w-full', 'vh', 'scroll-hidden');
+  this.classList.add('block', 'relative', 'w-full', 'vh', 'scroll-hidden');
 </script>
 {panels}

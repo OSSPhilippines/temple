@@ -1,7 +1,14 @@
 <script>
-  import moment from 'moment';
-  //moment configuration
-  moment.locale('short', { 
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  import relativeTime from 'dayjs/plugin/relativeTime';
+  import dayjs from 'dayjs';
+  import setBold from '../utilities/style/bold';
+  import setColor from '../utilities/style/color';
+  import setDisplay from '../utilities/style/display';
+  import setSize from '../utilities/style/size';
+  //dayjs configuration
+  dayjs.extend(relativeTime);
+  dayjs.locale('short', { 
     parentLocale: 'en',
     relativeTime: { 
       future: "-%s",  past: "%s", s: 'now', ss: 'now',
@@ -14,24 +21,26 @@
   const { 
     value, 
     locale = 'en',
-    format = 'MMMM Do YYYY, h:mm:ss a' 
+    format = 'MMMM D, YYYY, h:mm:ss a'
   } = this.props;
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
   //determine display
-  if (!this.classList.contains('block') 
-    && !this.classList.contains('flex')
-    && !this.classList.contains('none')
-    && !this.classList.contains('inline')
-    && !this.classList.contains('inline-block')
-  ) {
-    this.classList.add('inline-block');
-  }
+  setDisplay(this.props, styles, 'inline-block');
+  //determine color
+  setColor(this.props, styles, false, ':host', 'color');
+  //determine size
+  setSize(this.props, styles, false, ':host', 'font-size');
+  //determine font weight
+  setBold(this.props, styles, ':host');
   //make date object
   const date = value ? new Date(value): new Date();
   //format date
   const output = format === 'ago' 
-    ? moment(date, format).locale(locale).fromNow()
+    ? dayjs(date).locale(locale).fromNow()
     : format === 'a'
-    ? moment(date, format).locale('short').fromNow()
-    : moment(date).locale(locale).format(format);
+    ? dayjs(date).locale('short').fromNow()
+    : dayjs(date).locale(locale).format(format);
 </script>
 {output}

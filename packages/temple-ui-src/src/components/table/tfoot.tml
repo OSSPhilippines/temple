@@ -1,6 +1,10 @@
 <link rel="import" type="component" href="./row.tml" name="table-row" />
 <script>
-  const children = this.originalChildren;
-  this.classList.add('table-footer-group');
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
+  //default host styles
+  styles.add(':host', 'display', 'table-footer-group');
 </script>
-<table-row>{children}</table-row>
+<table-row><slot></slot></table-row>

@@ -1,17 +1,13 @@
-import type { FileSystem } from '@ossph/temple/compiler';
-import type StyleMap from './StyleMap';
-import type StyleSheet from './StyleSheet';
-
-//valid style property value
-export type Value = string|number;
-//ie { 'color': ['red'] }
-export type StyleRecord = Record<string, Value[]>;
+import type { MediaSize } from '@ossph/temple/dist/types';
+import type FileSystem from '@ossph/temple/dist/filesystem/FileSystem';
+import type StyleMap from '@ossph/temple/dist/style/StyleMap';
+import type StyleSheet from '@ossph/temple/dist/style/StyleSheet';
 
 export type LiteralToken = {
   type: 'literal',
   classname: string,
   styles: StyleMap,
-  media: Media,
+  media: MediaSize,
   selector: string
 };
 
@@ -20,7 +16,7 @@ export type ExpressionToken = {
   pattern: string,
   styles: StyleMap,
   step: number[],
-  media: Media,
+  media: MediaSize,
   pseudo?: string
 };
 
@@ -34,7 +30,6 @@ export type RangeToken = {
 };
 
 export type Token = LiteralToken|RangeToken|ExpressionToken;
-export type Media = 'all'|'xs'|'sm'|'md'|'lg'|'xl'|'xl2'|'xl3'|'xl4';
 
 export type Plugin = (sheet: string, brand: string) => string;
 export type Styler = (

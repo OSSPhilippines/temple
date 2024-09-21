@@ -1,0 +1,9 @@
+<script>
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
+  //default host styles
+  styles.add(':host', 'display', 'table');
+</script>
+<slot></slot>

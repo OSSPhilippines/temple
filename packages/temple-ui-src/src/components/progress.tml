@@ -1,53 +1,64 @@
-<script>
-  const { 
-    info,    warning,   error, 
-    success, primary,   secondary, 
-    muted,   width = 0, bar = '',
-    color 
-  } = this.props;
-  const styleList = [ `width: ${Math.min(Math.max(width, 0), 100)}%` ];
-  const classList = bar.split(' ').filter(Boolean);
-  classList.push('h-full');
-  if (info) {
-    classList.push('bg-info');
-  } else if (warning) {
-    classList.push('bg-warning');
-  } else if (error) {
-    classList.push('bg-error');
-  } else if (success) {
-    classList.push('bg-success');
-  } else if (primary) {
-    classList.push('bg-primary');
-  } else if (secondary) {
-    classList.push('bg-secondary');
-  } else if (muted) {
-    classList.push('bg-muted');
-  } else if (color) {
-    styleList.push(`background-color: ${color}`);
-  }
-
-  //get the host element
-  const classes = this.className.split(' ');
+<script observe="width">
+  import type { AttributeChangeEvent } from '@ossph/temple/dist/types';
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  import setColor from './utilities/style/color';
+  import setDisplay from './utilities/style/display';
+  //define handlers
+  const { width = 0, height = 20, bg } = this.propsTree;
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
+  //get the children
   const children = this.originalChildren;
-  this.classList.add('relative', 'scroll-hidden');
+  //default host styles
+  styles.add(':host', 'position', 'relative');
+  styles.add(':host', 'overflow', 'hidden');
+  styles.add(':host', 'height', `${height}px`);
   //determine display
-  if (!classes.find(
-    classname => classname.includes('block')
-      || classname.includes('flex')
-      || classname.includes('none')
-      || classname.includes('inline')
-      || classname.includes('inline-block')
-  )) {
-    this.classList.add('block');
+  setDisplay(this.props, styles, 'block', ':host');
+  //determine bar styles
+  styles.add('.bar', 'height', '100%');
+  if (!isNaN(Number(width))) {
+    styles.add('.bar', 'width', `${Math.min(
+      Math.max(Number(width), 0), 
+      100
+    )}%`);
   }
-  //determine height
-  if (!classes.find(classname => classname.includes('h-'))) {
-    this.classList.add('h-20');
+  styles.add('.bar', 'transition', 'width 500ms');
+  //determine color
+  if (bg) {
+    setColor(bg, styles, false, ':host', 'background-color');
   }
+  setColor(this.props, styles, false, '.bar', 'background-color');
+  //determine label styles
+  styles.add('.label', 'position', 'absolute');
+  styles.add('.label', 'top', '0');
+  styles.add('.label', 'bottom', '0');
+  styles.add('.label', 'left', '0');
+  styles.add('.label', 'right', '0');
+  styles.add('.label', 'display', 'flex');
+  styles.add('.label', 'align-items', 'center');
+  styles.add('.label', 'justify-content', 'center');
+  styles.add('.label', 'text-align', 'center');
+  //watch for width changes
+  this.on('attributechange', (e: AttributeChangeEvent) => {
+    //accepts: width only
+    const { action, name, value, target } = e.detail;
+    if (name !== 'width') return;
+    const bar = target.shadowRoot?.querySelector('div.bar');
+    if (!bar) return;
+    if (action === 'remove') {
+      bar.style.width = '0%';
+      return;
+    }
+    if (isNaN(parseFloat(value))) return;
+    bar.style.width = `${Math.min(
+      Math.max(parseFloat(value), 0), 
+      100
+    )}%`;
+  });
 </script>
-<div class={classList.join(' ')} style={styleList.join(';')}></div>
+<div class="bar"></div>
 <if true={children.length}>
-  <span class="absolute top-0 bottom-0 left-0 right-0 tx-center">
-    {children}
-  </span>
+  <div class="label"><slot></slot></div>
 </if>

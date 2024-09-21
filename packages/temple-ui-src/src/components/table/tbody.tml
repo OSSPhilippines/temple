@@ -1,5 +1,9 @@
 <script>
-  const children = this.originalChildren;
-  this.classList.add('table-row-group');
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
+  //default host styles
+  styles.add(':host', 'display', 'table-row-group');
 </script>
-{children}
+<slot></slot>

@@ -1,5 +1,5 @@
-import Styleset from '../StyleSet';
-import { stylemap } from '../helpers';
+import Styleset from '@ossph/temple/dist/style/StyleSet';
+import { stylemap } from '@ossph/temple/dist/style/StyleMap';
 
 export function theme(sheet: string, brand: string) {
   const directive = `@${brand} theme;`;

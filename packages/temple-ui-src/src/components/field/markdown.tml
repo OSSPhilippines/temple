@@ -1,0 +1,56 @@
+<link rel="import" type="component" href="../form/button.tml" name="form-button" />
+<link rel="import" type="component" href="../icon.tml" name="tui-icon" />
+<link rel="import" type="component" href="./editor.tml" name="field-editor" />
+<script>
+  import { marked } from 'marked';
+  const { name, value, numbers, change, update } = this.props;
+  const children = this.originalChildren;
+  //determine host class display
+  if (!this.classList.contains('block') 
+    && !this.classList.contains('flex')
+    && !this.classList.contains('none')
+    && !this.classList.contains('inline')
+    && !this.classList.contains('inline-block')
+  ) {
+    this.classList.add('block');
+  }
+  const handlers = {
+    edit: () => {
+      const edit = this.querySelector('.tui-field-markdown-edit');
+      const view = this.querySelector('.tui-field-markdown-view');
+      const editor = this.querySelector('.tui-field-markdown-editor');
+      const preview = this.querySelector('.tui-field-markdown-preview');
+      
+      editor.style.display = 'block';
+      preview.style.display = 'none';
+      view.style.display = 'inline-block';
+      edit.style.display = 'none';
+    },
+    view: () => {
+      const edit = this.querySelector('.tui-field-markdown-edit');
+      const view = this.querySelector('.tui-field-markdown-view');
+      const editor = this.querySelector('.tui-field-markdown-editor');
+      const preview = this.querySelector('.tui-field-markdown-preview');
+      const html = marked.parse(editor._editor.getValue() || '');
+      
+      preview.src = `data:text/html;charset=utf-8,${encodeURI(html)}`;
+      editor.classList.add('none');
+      editor.style.display = 'none';
+      preview.style.display = 'block';
+      view.style.display = 'none';
+      edit.style.display = 'inline-block';
+    }
+  };
+</script>
+<nav class="tui-field-markdown-nav relative">
+  <form-button sm muted class="tui-field-markdown-edit" style="display:none" type="button" click={handlers.edit}>
+    <tui-icon name="edit" />
+  </form-button>
+  <form-button sm muted class="tui-field-markdown-view" type="button" click={handlers.view}>
+    <tui-icon name="eye" />
+  </form-button>
+</nav>
+<field-editor class="tui-field-markdown-editor" lang="md" {name} {value} {change} {update} {numbers}>{
+  children
+}</field-editor>
+<iframe class="tui-field-markdown-preview" style="display:none" />

@@ -48,7 +48,7 @@ export function component(
   return (sheet: string, brand: string) => {
     for (const { name, component, styles } of components) {
       //determine source file
-      const source = `@ossph/temple-ui/${component}.tml`;
+      const source = path.resolve(__dirname, `../../${component}.tml`);
       //determine the directive
       const directive = `@${brand} ui-${name};`;
       //if the directive is in the stylesheet
@@ -64,7 +64,7 @@ export function component(
       //the directive is not in the stylesheet
       //determine if the source was imported
       if (Object.values(document.registry).find(
-        component => component.source === source
+        component => component.absolute === source
       )) {
         //add the styles to the sheet
         sheet += getAsset(styles, document.fs);

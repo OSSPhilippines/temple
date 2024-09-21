@@ -1,19 +1,19 @@
+import { MediaSize } from '@ossph/temple/dist/types';
 import type { 
-  Media,
   RangeToken,
   Styler,
   LiteralToken, 
   ExpressionToken 
 } from './types';
 
-import Stylesheet from './StyleSheet';
+import StyleSheet from '@ossph/temple/dist/style/StyleSheet';
 import StyleParser from './StyleParser';
 
 /**
  * Returns a literal styler
  */
 export const literal = function(literals: LiteralToken[]) {
-  return (classnames: string[], stylesheet: Stylesheet, cache: Set<string>) => {
+  return (classnames: string[], stylesheet: StyleSheet, cache: Set<string>) => {
     //filter out the classnames that are already defined
     const todo = classnames.filter(classname => !cache.has(classname));
     for (const token of literals) {
@@ -49,7 +49,7 @@ export const range = function(rules: RangeToken[]) {
     //measurements
     '(p|e|r){0,1}' 
   ].join('') + '$');
-  return (classnames: string[], stylesheet: Stylesheet, cache: Set<string>) => {
+  return (classnames: string[], stylesheet: StyleSheet, cache: Set<string>) => {
     //filter out the classnames that are already defined
     const todo = classnames.filter(classname => !cache.has(classname));
     for (const classname of todo) {
@@ -57,7 +57,7 @@ export const range = function(rules: RangeToken[]) {
       if (match) {
         //extract the necessary parts from the match
         const classname = match[0];
-        const media = (match[2] || 'all') as Media;
+        const media = (match[2] || 'all') as MediaSize;
         const pseudo = match[12];
         const rule = rules.find(rule => rule.name === match[15]);
         if (!rule) continue;
@@ -127,7 +127,7 @@ export const range = function(rules: RangeToken[]) {
  * Returns an expression styler
  */
 export const expression = function(expressions: ExpressionToken[]) {
-  return (classnames: string[], stylesheet: Stylesheet, cache: Set<string>) => {
+  return (classnames: string[], stylesheet: StyleSheet, cache: Set<string>) => {
     //filter out the classnames that are already defined
     const todo = classnames.filter(classname => !cache.has(classname));
     for (const classname of todo) {
@@ -171,7 +171,7 @@ export default class Stylers extends Set<Styler> {
    */
   public parse(parser: StyleParser) {
     const cache = new Set<string>();
-    const stylesheet = new Stylesheet();
+    const stylesheet = new StyleSheet();
     const classnames = parser.parse();
     // Apply each stylist to the classname
     for (const stylist of this) {

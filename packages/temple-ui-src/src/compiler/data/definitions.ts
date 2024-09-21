@@ -1,11 +1,12 @@
+import { MediaSize } from '@ossph/temple/dist/types';
 import type { 
-  Media,
   Token, 
   ExpressionToken, 
   LiteralToken, 
   RangeToken
 } from '../types';
 
+import { breakpoints } from '@ossph/temple/dist/style/StyleSheet';
 import { 
   literal, 
   expression,
@@ -14,10 +15,9 @@ import {
   xsizes,
   colors,
   percents,
-  media,
   bna
 } from '../helpers';
-import StyleMap from '../StyleMap';
+import StyleMap from '@ossph/temple/dist/style/StyleMap';
 
 /**
  * Returns a pre-defined list of literal definitions
@@ -152,6 +152,7 @@ export function literals(): LiteralToken[] {
     literal('tx-georgia', { 'font-family': [ 'Georgia, serif' ] }),
     literal('tx-verdana', { 'font-family': [ 'Verdana, sans-serif' ] }),
     literal('tx-inherit', { 
+      'color': [ 'inherit' ],
       'font-family': [ 'inherit' ],
       'font-size': [ 'inherit' ]
     }),
@@ -163,6 +164,7 @@ export function literals(): LiteralToken[] {
     literal('tx-nowrap', { 'white-space': [ 'nowrap' ] }),
     literal('tx-prewrap', { 'white-space': [ 'pre-wrap' ] }),
     literal('tx-nodecor', { 'text-decoration': [ 'none' ] }),
+    literal('tx-ellipsis', { 'text-overflow': [ 'ellipsis' ] }),
     literal('tx-top', { 'vertical-align': [ 'top' ] }),
     literal('tx-middle', { 'vertical-align': [ 'middle' ] }),
     literal('tx-bottom', { 'vertical-align': [ 'bottom' ] }),
@@ -404,13 +406,15 @@ export function literals(): LiteralToken[] {
   tokens.forEach(token => {
     const { classname, styles } = token;
     //add bna, media
-    media.forEach(media => {
-      literals.push(literal(classname, styles, media as Media));
+    Object.keys(breakpoints).forEach(media => {
+      literals.push(
+        literal(classname, styles, media as MediaSize)
+      );
       bna.forEach(position => {
         literals.push(literal(
           classname, 
           styles, 
-          media as Media, 
+          media as MediaSize, 
           position
         ));
       });
@@ -740,14 +744,16 @@ export function expressions(): ExpressionToken[] {
   tokens.forEach(token => {
     const { pattern, styles, step } = token;
     //add bna, media
-    media.forEach(media => {
-      expressions.push(expression(pattern, styles, step, media as Media));
+    Object.keys(breakpoints).forEach(media => {
+      expressions.push(
+        expression(pattern, styles, step, media as MediaSize)
+      );
       bna.forEach(position => {
         expressions.push(expression(
           pattern, 
           styles, 
           step, 
-          media as Media, 
+          media as MediaSize, 
           position
         ));
       });

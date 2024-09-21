@@ -1,86 +1,55 @@
 <script>
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  import setColor from './utilities/style/color';
+  import setDisplay from './utilities/style/display';
+  //extract props
   const { 
-    color,
-    speed = 1000,
-    size = 20, 
-    thickness = 2,
-    slice = 0,
-    dotted = false, 
-    dashed = false ,
-    info,
-    warning,
-    success,
-    error,
-    muted,
-    primary,
-    secondary
+    //shape
+    size = 20,    slice = 0,
+    speed = 1000, thickness = 2,
+    //styles
+    solid, dotted, dashed
   } = this.props;
-  //determine host class display
-  if (!this.classList.contains('block') 
-    && !this.classList.contains('flex')
-    && !this.classList.contains('none')
-    && !this.classList.contains('inline')
-    && !this.classList.contains('inline-block')
-  ) {
-    this.classList.add('inline-block');
-  }
-  //make an icon
-  const icon =  document.createElement('i');
-  //default classes
-  icon.classList.add('tui-loader');
-  this.classList.add('inline-block', 'mr-5');
-  //default styles
-  icon.style.width = `${size}px`;
-  icon.style.height = `${size}px`;
-  icon.style.borderWidth = `${thickness}px`;
-  icon.style.borderStyle = dotted ? 'dotted' : dashed ? 'dashed' : 'solid';
-  icon.style.animationDuration = `${speed}ms`;
-  if (color) {
-    icon.style.borderColor = color;
-  } else if (info) {
-    icon.style.borderTopColor = 'var(--info)';
-    icon.style.borderRightColor = 'var(--info)';
-    icon.style.borderBottomColor = 'var(--info)';
-    icon.style.borderLeftColor = 'var(--info)';
-  } else if (warning) {
-    icon.style.borderTopColor = 'var(--warning)';
-    icon.style.borderRightColor = 'var(--warning)';
-    icon.style.borderBottomColor = 'var(--warning)';
-    icon.style.borderLeftColor = 'var(--warning)';
-  } else if (success) {
-    icon.style.borderTopColor = 'var(--success)';
-    icon.style.borderRightColor = 'var(--success)';
-    icon.style.borderBottomColor = 'var(--success)';
-    icon.style.borderLeftColor = 'var(--success)';
-  } else if (error) {
-    icon.style.borderTopColor = 'var(--error)';
-    icon.style.borderRightColor = 'var(--error)';
-    icon.style.borderBottomColor = 'var(--error)';
-    icon.style.borderLeftColor = 'var(--error)';
-  } else if (muted) {
-    icon.style.borderTopColor = 'var(--muted)';
-    icon.style.borderRightColor = 'var(--muted)';
-    icon.style.borderBottomColor = 'var(--muted)';
-    icon.style.borderLeftColor = 'var(--muted)';
-  } else if (primary) {
-    icon.style.borderTopColor = 'var(--primary)';
-    icon.style.borderRightColor = 'var(--primary)';
-    icon.style.borderBottomColor = 'var(--primary)';
-    icon.style.borderLeftColor = 'var(--primary)';
-  } else if (secondary) {
-    icon.style.borderTopColor = 'var(--secondary)';
-    icon.style.borderRightColor = 'var(--secondary)';
-    icon.style.borderBottomColor = 'var(--secondary)';
-    icon.style.borderLeftColor = 'var(--secondary)';
-  }
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => keyframe + styles.toString();
+  //determine display
+  setDisplay(this.props, styles, 'inline-block', ':host');
+  styles.add(':host', 'margin-right', '5px');
+  //default icon styles
+  styles.add('i', 'display', 'inline-block');
+  styles.add('i', 'border-radius', '50%');
+  styles.add('i', 'animation', 'spin 1s linear infinite');
+  styles.add('i', 'width', `${size}px`);
+  styles.add('i', 'height', `${size}px`);
+  styles.add('i', 'animation-duration', `${speed}ms`);
+  styles.add('i', 'border-width', `${thickness}px`);
+  //determine border style
+  const style = solid ? 'solid' 
+    : dotted ? 'dotted' 
+    : dashed ? 'dashed' 
+    : 'solid';
+  styles.add('i', 'border-style', style);
+  //determine icon color
+  setColor(this.props, styles, 'var(--black)', 'i', 'border-bottom-color');
+  setColor(this.props, styles, 'var(--black)', 'i', 'border-left-color');
+  setColor(this.props, styles, 'var(--black)', 'i', 'border-right-color');
+  setColor(this.props, styles, 'var(--black)', 'i', 'border-top-color');
+  //determine slices
   if (slice > 0) {
-    icon.style.borderRightColor = 'transparent';
+    styles.add('i', 'border-right-color', 'transparent');
   } 
   if (slice > 1) {
-    icon.style.borderBottomColor = 'transparent';
+    styles.add('i', 'border-bottom-color', 'transparent');
   } 
   if (slice > 2) {
-    icon.style.borderLeftColor = 'transparent';
+    styles.add('i', 'border-left-color', 'transparent');
   }
+  //add keyframe
+  const keyframe = `@keyframes spin{${
+    `0%{transform:rotate(0deg)}`
+  }${
+    `100%{transform:rotate(360deg)}`
+  }}`;
 </script>
-{[ icon ]}
+<i></i>

@@ -1,15 +1,23 @@
 <script>
-  const { value = [], alt='', image = '' } = this.props;
-  //determine host class display
-  if (!this.classList.contains('block') 
-    && !this.classList.contains('flex')
-    && !this.classList.contains('none')
-    && !this.classList.contains('inline')
-    && !this.classList.contains('inline-block')
-  ) {
-    this.classList.add('block');
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  import setDisplay from '../utilities/style/display';
+  //extract props
+  const { 
+    value, 
+    //dont need these
+    'class': _, style,
+    //the rest is for the image tag
+    ...attributes
+  } = this.props;
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
+  //determine display
+  setDisplay(this.props, styles, 'block');
+  if (!attributes.loading) {
+    attributes.loading = 'lazy';
   }
 </script>
 <each value=src from=value>
-  <img class=image {alt} {src} />
+  <img {...attributes} {src} />
 </each>

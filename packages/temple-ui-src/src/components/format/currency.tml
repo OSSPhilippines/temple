@@ -1,7 +1,44 @@
 <script>
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  import setBold from '../utilities/style/bold';
+  import setColor from '../utilities/style/color';
+  import setDisplay from '../utilities/style/display';
+  import setSize from '../utilities/style/size';
   import intl from '../utilities/intl.json';
   //extract props
-  const { value, xs, sm, md, lg, flag = true, text = true } = this.props;
+  const { value } = this.props;
+  //sub-props (box size, text size)
+  let { flag, text } = this.propsTree;
+  if (!flag && text !== false) {
+    flag = {};
+    text = true;
+  }
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
+  //determine display
+  const display = setDisplay(this.props, styles, 'inline-flex');
+  if (display === 'flex' || display === 'inline-flex') {
+    styles.add(':host', 'align-items', 'center');
+  }
+  //determine color
+  setColor(this.props, styles, false, ':host', 'color');
+  //determine size
+  setSize(this.props, styles, false, ':host', 'font-size');
+  //determine font weight
+  setBold(this.props, styles, ':host');
+  //if there is flag props
+  if (flag) {
+    //build flag class list
+    styles.add('img', 'display', 'inline-block');
+    //determine box class size
+    setSize(flag, styles, '16px', 'img', 'height');
+  }
+  //if there is text props
+  if (text) {
+    //add margin right to the box class list
+    styles.add('img', 'margin-right', '5px');
+  }
   //get lower case currency code
   const currency = value.toLowerCase();
   //find the country currency in question
@@ -12,41 +49,11 @@
       currency === 'usd' && country.countryCode === 'US'
     )
   );
-  //build host class names
-  this.classList.add('flex', 'flex-center-y');
-  //determine host class display
-  if (!this.classList.contains('block') 
-    && !this.classList.contains('flex')
-    && !this.classList.contains('none')
-    && !this.classList.contains('inline')
-    && !this.classList.contains('inline-block')
-  ) {
-    this.classList.add('inline-block');
-  }
-  //build flag class list
-  const classList = [ 'inline-block', 'curved', 'ba-black' ];
-  //determine flag class size
-  if (xs) {
-    classList.push('w-20');
-  } else if (sm) {
-    classList.push('w-40');
-  } else if (md) {
-    classList.push('w-60');
-  } else if (lg) {
-    classList.push('w-100');
-  } else {
-    classList.push('w-60');
-  }
-  //if there is a text, add margin to the flag class list
-  if (text) {
-    classList.push('mr-5');
-  }
 </script>
 <if true={country}>
   <if true={flag}>
     <img 
       loading="lazy"
-      class={classList.join(' ')} 
       src={`https://flagcdn.com/w80/${country.countryCode.toLowerCase()}.png`}
     />
   </if>

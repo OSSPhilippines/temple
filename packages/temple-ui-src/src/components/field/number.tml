@@ -1,0 +1,88 @@
+<link rel="import" type="component" href="./input.tml" name="tui-input" />
+<script>
+  import signal from '@ossph/temple/dist/client/signal';
+  import { 
+    getFormats, 
+    getFormatsFromInput, 
+    padDecimals 
+  } from '../utilities/number';
+  //expand props
+  const { 
+    name,
+    value,
+    min,
+    max,      
+    separator = ',', 
+    decimal = '.', 
+    step, 
+    absolute = false,
+    update,
+    change,
+    //we dont need these
+    'class': _, style,
+    //pass to input
+    ...attributes 
+  } = this.props;
+
+  const decimals = step? String(step).split('.')[1]?.length || -1: -1;
+  const options = { 
+    min: Number(min) || undefined, 
+    max: Number(max) || undefined, 
+    separator, 
+    decimal, 
+    decimals, 
+    absolute 
+  };
+  const initial = getFormats(String(value || ''), options);
+  //set initital state
+  const state = signal({
+    hiddenValue: initial.value,
+    displayValue: initial.display,
+    cursor: 0
+  });
+  //handers
+  const handlers = {
+    change: (e: ChangeEvent<HTMLInputElement>) => {
+      const { value, display } = getFormatsFromInput(e.target, options);
+      let { cursor, displayValue, hiddenValue } = state.value;
+      const pointer = e.target.selectionStart || 0;
+      let change = false;
+      
+      if (Number(state.value.hiddenValue) !== Number(value)) {
+        change && change(e);
+        update && update(String(Number(value)));
+        hiddenValue = value;
+        change = true;
+      }
+      
+      if (displayValue !== display) {
+        if (display.length > displayValue.length) {
+          cursor = pointer + (display.length - displayValue.length) - 1;
+        } else if (display.length < displayValue.length) {
+          cursor = pointer - (displayValue.length - display.length) + 1;
+        } else {
+          cursor = pointer;
+        }
+        displayValue = display;
+        change = true;
+      }
+      if (change) {
+        state.value = { cursor, displayValue, hiddenValue };
+      }
+    },
+    blur: () => {
+      state.value = { ...state.value, displayValue: padDecimals(
+        state.value.displayValue, 
+        decimal, 
+        decimals
+      )};
+    }
+  };
+</script>
+<tui-input
+  {...attributes}
+  change={handlers.change} 
+  blur={handlers.blur} 
+  value={state.value.displayValue}  
+/>
+<input type="hidden" {name} value={state.value.hiddenValue} />

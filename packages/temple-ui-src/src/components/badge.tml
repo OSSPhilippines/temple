@@ -1,95 +1,37 @@
 <script>
-  // Separate component related props from field attributes
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  import setColor from './utilities/style/color';
+  import setCurve from './utilities/style/curve';
+  import setDisplay from './utilities/style/display';
+  //extract props
   const { 
-    curved, rounded,   pill,    
-    info,   warning,   success, 
-    error,  muted,     primary, 
-    color,  secondary, outline,
-    solid,  transparent
+    //layouts
+    outline, solid, transparent, 
+    //padding
+    padding
   } = this.props;
-
-  //get the host element
-  const classes = this.className.split(' ');
-  const children = this.originalChildren;
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
   //determine display
-  if (!classes.find(
-    classname => classname.includes('block')
-      || classname.includes('flex')
-      || classname.includes('none')
-      || classname.includes('inline')
-      || classname.includes('inline-block')
-  )) {
-    this.classList.add('inline-block');
-  }
+  setDisplay(this.props, styles, 'inline-block', ':host');
   //determine padding
-  if (!classes.find(
-    classname => classname.includes('p-')
-      || classname.includes('px-')
-      || classname.includes('py-')
-      || classname.includes('pt-')
-      || classname.includes('pr-')
-      || classname.includes('pb-')
-      || classname.includes('pl-')
-  )) {
-    this.classList.add('px-8', 'py-2');
-  }
+  styles.add(':host', 'padding', padding ? `${padding}px` : '2px 8px');
   //determine curve
-  if (curved) {
-    this.classList.add('curved');
-  } else if (rounded) {
-    this.classList.add('rounded');
-  } else if (pill) {
-    this.classList.add('pill');
-  }
-  //determine layout
-  const layout = outline ? 'outline' 
-    : transparent ? 'transparent'
-    : solid  ? 'solid'
-    : 'solid';
+  setCurve(this.props, styles, false, ':host');
   //if outline or transparent
-  if (layout === 'outline' || layout === 'transparent') {
-    this.classList.add('b-solid', 'b-thin');
-    if (layout === 'outline') {
-      this.classList.add('bg-white');
-    }
-    if (color) {
-      this.style.color = color;
-      this.style.borderColor = color;
-    } else if (info) {
-      this.classList.add('b-info', 'tx-info');
-    } else if (warning) {
-      this.classList.add('b-warning', 'tx-warning');
-    } else if (success) {
-      this.classList.add('b-success', 'tx-success');
-    } else if (error) {
-      this.classList.add('b-error', 'tx-error');
-    } else if (muted) {
-      this.classList.add('b-muted', 'tx-muted');
-    } else if (primary) {
-      this.classList.add('b-primary', 'tx-primary');
-    } else if (secondary) {
-      this.classList.add('b-secondary', 'tx-secondary');
+  if (outline || transparent) {
+    setColor(this.props, styles, 'var(--muted)', ':host', 'color');
+    setColor(this.props, styles, 'var(--muted)', ':host', 'border-color');
+    styles.add(':host', 'border-style', 'solid');
+    styles.add(':host', 'border-width', '1px');
+    if (outline) {
+      styles.add(':host', 'background-color', 'var(--white)');
     }
   //it's solid
   } else {
-    this.classList.add('tx-white');
-    if (color) {
-      this.style.backgroundColor = color;
-    } else if (info) {
-      this.classList.add('bg-info');
-    } else if (warning) {
-      this.classList.add('bg-warning');
-    } else if (success) {
-      this.classList.add('bg-success');
-    } else if (error) {
-      this.classList.add('bg-error');
-    } else if (muted) {
-      this.classList.add('bg-muted');
-    } else if (primary) {
-      this.classList.add('bg-primary');
-    } else if (secondary) {
-      this.classList.add('bg-secondary');
-    }
-  } 
+    styles.add(':host', 'color', 'var(--white)');
+    setColor(this.props, styles, 'var(--muted)', ':host', 'background-color');
+  }
 </script>
-{children}
+<slot></slot>

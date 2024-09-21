@@ -1,88 +1,144 @@
-<link rel="import" type="component" href="./table/thead.tml" name="table-thead" />
-<link rel="import" type="component" href="./table/tbody.tml" name="table-tbody" />
-<link rel="import" type="component" href="./table/tfoot.tml" name="table-tfoot" />
+<link rel="import" type="component" href="./table/table.tml" name="table-wrapper" />
 <script>
-  const { top, bottom, left, right } = this.props;
+  import TempleRegistry from '@ossph/temple/dist/client/TempleRegistry';
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  import Thead from './table/thead.tml';
+  import Tbody from './table/tbody.tml';
+  import Tfoot from './table/tfoot.tml';
+  //extract props
+  const { 
+    //sticky props
+    top, bottom, left, right,
+    //section classes
+    head, body, odd, even, foot
+  } = this.props;
+  //if any sticky, then sticky
   const sticky = top || bottom || left || right;
+  //make default classLists
+  const headList = typeof head === 'string'
+    ? head.split(' ').filter(Boolean)
+    : [];
+  const footList = typeof foot === 'string'
+    ? foot.split(' ').filter(Boolean)
+    : [];
+  const bodyList = typeof body === 'string'
+    ? body.split(' ').filter(Boolean)
+    : [];
+  const oddList = typeof odd === 'string'
+    ? odd.split(' ').filter(Boolean)
+    : [];
+  const evenList = typeof even === 'string'
+    ? even.split(' ').filter(Boolean)
+    : [];
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
+  //default host styles
+  styles.add(':host', 'width', '100%');
+  if (sticky) {
+    styles.add(':host', 'display', 'block');
+    styles.add(':host', 'position', 'relative');
+    styles.add(':host', 'overflow', 'auto');
+    styles.add(':host', 'height', '100%');
+  } else {
+    styles.add(':host', 'display', 'table');
+  }
+
+  //let's re organize the children
   const rows: Node[] = [];
   const headers: Node[] = [];
   const footers: Node[] = [];
   const children = this.originalChildren;
-  const state = { mounted: false };
-  if (sticky) {
-    this.classList.add('block', 'relative', 'scroll-auto', 'w-full');
-  } else {
-    this.classList.add('table', 'w-full');
-  }
-
+  //start sorting out which is which
   for (const [ i, child ] of children.entries()) {
     if (child.nodeName.includes('HEAD')) {
-      if (top) {
-        child.classList.add('sticky', 'top-0', 'z-1');
-      }
       headers.push(child);
     } else if (child.nodeName.includes('FOOT')) {
-      if (bottom) {
-        child.classList.add('sticky', 'bottom-0', 'z-1');
-      }
       footers.push(child);
     } else if (child.nodeName.includes('ROW')) {
-      if (child.childElementCount > 1) {
-        const first = child.firstElementChild;
-        const last = child.lastElementChild;
-        if (left && first) {
-          first.classList.add('sticky', 'left-0', 'z-2');
-        } 
-        if (right && last) {
-          last.classList.add('sticky', 'right-0', 'z-2');
-        }
-      }
       rows.push(child);
     }
   }
-
-  if (headers.length > 1) {
-    const first = headers[0];
-    const last = headers[headers.length - 1];
-    if (left && first) {
-      first.classList.add('sticky', 'left-0', 'z-3');
-    } 
-    if (right && last) {
-      last.classList.add('sticky', 'right-0', 'z-3');
+  //loop through headers
+  for (const [ i, header ] of headers.entries()) {
+    header.setAttribute('head', '');
+    if (headList.length > 0) {
+      header.classList.add(...headList);
+    }
+    if (top) {
+      header.setAttribute('top', '');
+    }
+    if (left && i === 0) {
+      header.setAttribute('left', '');
+    }
+    if (right && i === (headers.length - 1)) {
+      header.setAttribute('right', '');
     }
   }
-
-  if (footers.length > 1) {
-    const first = footers[0];
-    const last = footers[footers.length - 1];
-    if (left && first) {
-      first.classList.add('sticky', 'left-0', 'z-3');
-    } 
-    if (right && last) {
-      last.classList.add('sticky', 'right-0', 'z-3');
+  //loop through footers
+  for (const [ i, footer ] of footers.entries()) {
+    footer.setAttribute('foot', '');
+    if (footList.length > 0) {
+      footer.classList.add(...footList);
+    }
+    if (bottom) {
+      footer.setAttribute('bottom', '');
+    }
+    if (left && i === 0) {
+      footer.setAttribute('left', '');
+    }
+    if (right && i === (footers.length - 1)) {
+      footer.setAttribute('right', '');
     }
   }
+  //loop through rows
+  for (const [ i, row ] of rows.entries()) {
+    row.setAttribute('row', '');
+    Array.from(row.children || []).forEach((cell, j, cells) => {
+      bodyList.length > 0 && cell?.classList?.add(...bodyList);
+      oddList.length > 0 && i % 2 === 0 && cell?.classList?.add(...oddList);
+      evenList.length > 0 && i % 2 === 1 && cell.classList?.add(...evenList);
+      if (left && j === 0) {
+        cell.setAttribute('left', '');
+      }
+      if (right && j === (cells.length - 1)) {
+        cell.setAttribute('right', '');
+      }
+    });
+  }
+
+  //empty the children
+  this.innerText = '';
+  //append new children (these are the new things to slot)
+  headers.length && this.appendChild(
+    TempleRegistry.createComponent(
+      'table-thead', 
+      Thead, 
+      {}, 
+      headers
+    ).element
+  );
+  rows.length && this.appendChild(
+    TempleRegistry.createComponent(
+      'table-tbody', 
+      Tbody, 
+      {}, 
+      rows
+    ).element
+  );
+  footers.length && this.appendChild(
+    TempleRegistry.createComponent(
+      'table-tfoot', 
+      Tfoot, 
+      {}, 
+      footers
+    ).element
+  );
 </script>
 <if true={sticky}>
-  <div class="table">
-    <if true={headers.length > 0}>
-      <table-thead>{headers}</table-thead>
-    </if>
-    <if true={rows.length > 0}>
-      <table-tbody>{rows}</table-tbody>
-    </if>
-    <if true={footers.length > 0}>
-      <table-tfoot>{footers}</table-tfoot>
-    </if>
-  </div>
+  <table-wrapper>
+    <slot></slot>
+  </table-wrapper>
 <else />
-  <if true={headers.length > 0}>
-    <table-thead>{headers}</table-thead>
-  </if>
-  <if true={rows.length > 0}>
-    <table-tbody>{rows}</table-tbody>
-  </if>
-  <if true={footers.length > 0}>
-    <table-tfoot>{footers}</table-tfoot>
-  </if>
+  <slot></slot>
 </if>
