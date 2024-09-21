@@ -49,6 +49,25 @@ export default class TempleElement {
   }
 
   /**
+   * Returns the props except the dash 
+   * keys are transformed to camel case
+   */
+  public camel() {
+    return Object.fromEntries(
+      Object.entries(this._attributes).map(([ key, value ]) => {
+        if (key === 'class') {
+          return [ 'className', value ];
+        }
+        const camel = key.replace(
+          /-([a-z])/g, 
+          (_, letter) => letter.toUpperCase()
+        ).replaceAll('-', '');
+        return [ camel, value ];
+      })
+    );
+  }
+
+  /**
    * Returns the attribute value
    */
   public getAttribute<T = any>(key: string) {
@@ -145,5 +164,54 @@ export default class TempleElement {
     }
 
     return this;
+  }
+
+  /**
+   * Returns the attributes where the key with 
+   * dashes are transformed into sub objects.
+   * ex. data-foo-bar => { data: { foo: { bar: value } } }
+   * this function will recursively call itself to
+   * handle nested objects.
+   */
+  public tree(attributes?: Record<string, any>, name?: string, value?: any) {
+    //if the attributes are not defined
+    if (!attributes) {
+      //then make a copy of the attributes by default
+      attributes = { ...this._attributes };
+    }
+    //if the name is defined then the logic mode 
+    //changes to building the branches of the tree
+    if (name) {
+      //make a key path
+      const path = name.split('-');
+      if (path.length > 0) {
+        //get the first key
+        const key = path.shift() as string;
+        //if there are still paths...
+        if (path.length > 0) {
+          //make sure the key exists in the attributes
+          if (!attributes[key]) attributes[key] = {};
+          //keep going until there are no more paths
+          this.tree(attributes[key], path.join('-'), value);
+        //there are no more paths
+        } else {
+          //finally set the value
+          attributes[key] = value;
+        }
+      }
+      //at any rate, return the attributes
+      //to exit this branching mode
+      return attributes;
+    }
+    //This is the main mode of the function.
+    //create a new branch
+    const branch: Record<string, any> = {};
+    //loop through all the attributes
+    for (const [ name, value ] of Object.entries(attributes)) {
+      //add the attribute to the object
+      this.tree(branch, name, value);
+    }
+    //return the object
+    return branch;
   }
 }

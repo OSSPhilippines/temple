@@ -76,7 +76,10 @@ export default abstract class TempleComponent extends HTMLElement {
     //check to see if the registry has this component
     if (!TempleRegistry.has(this)) {
       //it should have...
-      throw TempleException.for('Component not mapped.');
+      throw TempleException.for(
+        'Component %s not mapped.', 
+        this.metadata.classname
+      );
     }
     return TempleRegistry.get(this) as TempleElement;
   }
@@ -123,6 +126,22 @@ export default abstract class TempleComponent extends HTMLElement {
    */
   public get props() {
     return this.getAttributes();
+  }
+
+  /**
+   * Returns the props except the dash 
+   * keys are transformed to camel case
+   */
+  public get propsCamel() {
+    return this.element.camel();
+  }
+
+  /**
+   * Returns the props except the dash 
+   * keys are transformed to sub objects
+   */
+  public get propsTree() {
+    return this.element.tree();
   }
 
   /**
@@ -182,10 +201,10 @@ export default abstract class TempleComponent extends HTMLElement {
       ? 'remove' : 'update';
     if (next === null && this.hasAttribute(name)) {
       this.element.removeAttribute(name);
+    } else if (next === '') {
+      this.element.setAttribute(name, true);
     } else {
-      this.element.setAttribute(name, (
-        next === '' || next === name
-      ) ? true : next);
+      this.element.setAttribute(name, next);
     }
     //emit the attr event
     this.emit('attributechange', { action, name, prev, value: next, target: this });
@@ -300,6 +319,10 @@ export default abstract class TempleComponent extends HTMLElement {
     }
     //set the original children
     this._children = children;
+    //NOTE: we need to append the children for shadow mode
+    //since at this point, we dont know if shadow mode is 
+    //enabled we need to append the children jic
+    children.forEach(child => this.appendChild(child));
     //this is a virtual component
     //virtual components suffer from :not(:defined) selectors
     //because they are not registered in custom elements
@@ -391,18 +414,19 @@ export default abstract class TempleComponent extends HTMLElement {
         //and it doesn't hurt to set it to true
         this.attachShadow({ mode: 'open', delegatesFocus: true });
       }
+      //make a style tag
+      const style = document.createElement('style');
+      //set the styles
+      style.innerText = styles;
       //get the shadow root
       const shadowRoot = this.shadowRoot as ShadowRoot;
       //NOTE: dont do this.textContent = ''
       //because it will make <slot> useless
       //just empty the shadow root content
       shadowRoot.textContent = '';
-      //append the styles
-      const style = document.createElement('style');
-      style.innerText = styles;
       shadowRoot.appendChild(style);
       //append the children
-      children.forEach(child => this.shadowRoot?.appendChild(child));
+      children.forEach(child => shadowRoot.appendChild(child));
     }
     //revert or reset the current component pointer
     //maybe we should do a queue later?
@@ -426,14 +450,23 @@ export default abstract class TempleComponent extends HTMLElement {
    */
   public setAttribute(name: string, value: any) {
     const prev = this.getAttribute(name);
-    this.element.setAttribute(name, value);
-    if (typeof value === 'string' || value === true) {
-      super.setAttribute(name, (
-        value === '' || value === name  || value === true
-      ) ? true : value);
+    if (value === '' || value === true) {
+      this.element.setAttribute(name, true);
+      super.setAttribute(name, '');
+    } else if (typeof value === 'string') {
+      this.element.setAttribute(name, value);
+      super.setAttribute(name, value);
+    } else {
+      this.element.setAttribute(name, value);
+      //dont set the super attribute if it's not a string
     }
-    //if this is a virtual component and is an observed attribute
-    if (this._virtual && this.metadata.observed.includes(name)) {
+    //if this is a virtual component 
+    if (this._virtual 
+      //and is an observed attribute
+      && this.metadata.observed.includes(name) 
+      //and the value is a string
+      && typeof value === 'string'
+  ) {
       //manually trigger the lifecycle
       this.attributeChangedCallback(name, prev, value);
     }

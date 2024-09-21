@@ -34,9 +34,10 @@ export default class TempleRegistry {
     attributes: Record<string, any>, 
     children: Element[] = []
   ) {
+    const { registered } = definition;
     //if the component being created is not a
     //registered component in customElements
-    if (!definition.registered) {
+    if (!registered) {
       //we need to pseudo create the component instead.
       return this.createVirtualComponent(
         tagname, 
@@ -45,39 +46,33 @@ export default class TempleRegistry {
         children
       );
     }
+    
+    //NOTE: It's more logical to call this.crateElement()
+    //but TempleComponent will error because it's not
+    //registered in TempleRegistry yet. 
+    
     //change the tagname if the component is registered
-    //this is to avoid confustion with different tag names 
+    //this is to avoid confusion with different tag names 
     //using the same component.
-    const component = document.createElement(definition.registered);
+    const component = document.createElement(registered);
+    //uhh, wait for this to be registered in customElements?
     customElements.upgrade(component);
     //it is not registered, so register it
-    const element = TempleRegistry.register(component, attributes) ;
+    const element = TempleRegistry.register(component, attributes);
     //set attributes natively so it shows 
     //up in the markup when it's rendered
+    //NOTE: We cannot assume this is a TempleComponent...
     for (const [ name, value ] of Object.entries(attributes)) {
-      if (typeof value === 'string' || value === true) {
-        component.setAttribute(name, (
-          value === '' || value === name  || value === true
-        ) ? true : value);
+      if (typeof value === 'string') {
+        component.setAttribute(name, value);
+      } else if (value === true) {
+        component.setAttribute(name, '');
       }
     }
-    //if the component is a TempleComponent 
-    if (component instanceof TempleComponent
-      //and children is not set yet 
-      && !component.originalChildren
-    ) {
-      //this is the preferred way because appending children
-      //will initialize the children in the DOM, which is not
-      //what we want. We want to keep the children in the
-      //component instance and only append them when the
-      //component is rendered.
-      component.originalChildren = children;
-    //if the component is not a TempleComponent 
-    //or the original children is already set
-    } else {
-      //okay append it, bahala na...
-      children.forEach(child => component.appendChild(child));
-    }
+    //append children (the original children)
+    children
+      .filter(child => typeof child !== 'undefined')
+      .forEach(child => component.appendChild(child));
     //return the element
     return element;
   }
@@ -93,11 +88,11 @@ export default class TempleRegistry {
     //create html element
     const element = document.createElement(name);
     //set attributes
-    for (const [ key, value ] of Object.entries(attributes)) {
+    for (const [ name, value ] of Object.entries(attributes)) {
       if (typeof value === 'string') {
-        element.setAttribute(key, value);
+        element.setAttribute(name, value);
       } else if (value === true) {
-        element.setAttribute(key, key);
+        element.setAttribute(name, '');
       }
     }
     //append children (the original children)
@@ -138,12 +133,7 @@ export default class TempleRegistry {
     //inside of another component without having to register it.
     
     // Create a template for the inner component
-    const template = document.createElement('template');
-    template.innerHTML = `<${tagname}></${tagname}>`;
-    // Create a document fragment and append the inner component instance
-    const fragment = template.content;
-    //get the shallow component shell
-    const component = fragment.querySelector(`${tagname}`) as TempleComponent;
+    const component = document.createElement(tagname) as TempleComponent;
     //copy the prototype
     Object.setPrototypeOf(component, definition.prototype);
     //set the constructor
