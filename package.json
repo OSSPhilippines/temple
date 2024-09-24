@@ -5,11 +5,12 @@
     "packages/*"
   ],
   "scripts": {
-    "build:packages": "yarn build:temple && yarn build:esbuild && yarn build:loader && yarn build:dev && yarn build:express && yarn build:tailwind && yarn build:ui && yarn build:web",
+    "build:packages": "yarn build:temple && yarn build:css && yarn build:esbuild && yarn build:loader && yarn build:dev && yarn build:express && yarn build:tailwind && yarn build:ui && yarn build:web",
     "build:temple": "yarn --cwd packages/temple build",
+    "build:css": "yarn --cwd packages/temple-css build",
+    "build:dev": "yarn --cwd packages/temple-dev build",
     "build:esbuild": "yarn --cwd packages/temple-esbuild build",
     "build:loader": "yarn --cwd packages/temple-loader build",
-    "build:dev": "yarn --cwd packages/temple-dev build",
     "build:express": "yarn --cwd packages/temple-express build",
     "build:tailwind": "yarn --cwd packages/temple-tailwind build",
     "build:ui": "yarn --cwd packages/temple-ui-src build",
