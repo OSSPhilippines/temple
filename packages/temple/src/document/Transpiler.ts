@@ -226,7 +226,6 @@ export default class Transpiler extends ComponentTranspiler {
         if (__BINDINGS__[id]) {
           //this is where we need to add the bindings to the attributes
           Object.assign(attributes, __BINDINGS__[id]);
-          element.TempleAttributes = __BINDINGS__[id];
         }
         //finally add the element to the registry
         TempleRegistry.register(element, attributes);

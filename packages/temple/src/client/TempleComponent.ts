@@ -1,4 +1,8 @@
-import type { Hash, CustomEventListener } from '../types';
+import type { 
+  Hash, 
+  CustomEventListener, 
+  TempleComponentClass 
+} from '../types';
 import type TempleElement from './TempleElement';
 
 import TempleException from '../Exception';
@@ -31,20 +35,20 @@ export default abstract class TempleComponent extends HTMLElement {
     );
   }
 
+  //the initial children
+  protected _children: Node[]|undefined = undefined;
   //whether the component has initiated this is a flag 
   //used by signals to check the number of signals that 
   //exists in this component as logic to determine
   //whether to create a signal or reuse an existing one
   protected _initiated = false;
+  //attribute observer
+  protected _observer: MutationObserver|null = null;
+  //prevents rendering loops
+  protected _rendering = false;
   //the callback to render just the children 
   //(wo initializing the variables again)
   protected _template: (() => (Element|false)[])|null = null;
-  //the initial children
-  protected _children: Node[]|undefined = undefined;
-  //prevents rendering loops
-  protected _rendering = false;
-  //attribute observer
-  protected _observer: MutationObserver|null = null;
   //whether if this is a virtual component
   protected _virtual = false;
 
@@ -169,6 +173,34 @@ export default abstract class TempleComponent extends HTMLElement {
   }
 
   /**
+   * This is called only from customElements 
+   * when the component is created
+   */
+  public constructor() {
+    super();
+    //if the component is not registered
+    if (!TempleRegistry.has(this)) {
+      //this came from a native createElement
+      const { registered } = this.metadata;
+      if (!registered) {
+        // What?!? how....
+        throw TempleException.for(
+          'Component %s not registered in customElements.', 
+          this.metadata.classname
+        );
+      }
+      //get all attributes
+      const attributes = Object.fromEntries(
+        Array.from(this.attributes).map(
+          attr => [ attr.name, attr.value !== '' ? attr.value : true ]
+        )
+      );
+      //register the component
+      TempleRegistry.register(this, attributes);
+    }
+  }
+
+  /**
    * Called when component moved to a new document
    */
   public adoptedCallback() {
@@ -221,6 +253,40 @@ export default abstract class TempleComponent extends HTMLElement {
   }
 
   /**
+   * Helper API to create a new component
+   * and add to the registry
+   */
+  public createComponent(
+    tagname: string,
+    definition: TempleComponentClass, 
+    attributes: Record<string, any>, 
+    children: Element[] = []
+  ) {
+    return TempleRegistry.createComponent(
+      tagname, 
+      definition, 
+      attributes, 
+      children
+    );
+  }
+
+  /**
+   * Helper API to create a new HTML element
+   * and add to the registry
+   */
+  public createElement(
+    name: string, 
+    attributes: Record<string, any>, 
+    children: Element[] = []
+  ) {
+    return TempleRegistry.createElement(
+      name, 
+      attributes, 
+      children
+    );
+  }
+
+  /**
    * Called when the element is removed from a document
    */
   public disconnectedCallback() {
@@ -248,6 +314,37 @@ export default abstract class TempleComponent extends HTMLElement {
    */
   public getAttributes() {
     return Object.assign({}, this.element.attributes);
+  }
+
+  /**
+   * Returns the children of the component
+   * 
+   * - if type is true, it will return  
+   *   the current rendered childNodes
+   * 
+   * - if type is false, it will return 
+   *   the original unrendered children
+   * 
+   * - if type is null, it will return the 
+   *   current rendered shadowRoot childNodes
+   */
+  public getChildren(type: boolean|null = true) {
+    if (type === true) {
+      return Array.from(this.childNodes);
+    } else if (type === false) {
+      return this._children;
+    } else if (type === null && this.shadowRoot) {
+      return Array.from(this.shadowRoot.childNodes);
+    }
+    return [];
+  }
+
+  /**
+   * Helper API to get attributes of an element
+   * from the registry
+   */
+  public getElement(element: Element) {
+    return TempleRegistry.get(element);
   }
 
   /**
@@ -389,12 +486,16 @@ export default abstract class TempleComponent extends HTMLElement {
     }
     //get the children build w/o re-initializing the variables
     //this is why we dont need memoization strategies
-    const children = this._template().filter(Boolean) as Element[];
+    const children = this._template().filter(Boolean) as Node[];
     //get the styles now to allow template() 
     //to dynamically change the styles
     const styles = this.styles();
+    //determine rendering mode
+    const mode = styles.length === 0 ? 'light' : 'shadow';
+    //get children by modes
+    const { light, shadow } = this._getChildren(children, mode);
     //if no styles, just set the innerHTML
-    if (styles.length === 0) {
+    if (shadow.length === 0) {
       //empty the current text content
       //the old data is captured in originalChildren
       //NOTE: We might want to version the children based 
@@ -402,7 +503,7 @@ export default abstract class TempleComponent extends HTMLElement {
       //but for now, good bye old children
       this.textContent = '';
       //now append the new children
-      children.forEach(child => this.appendChild(child));
+      light.forEach(child => this.appendChild(child));
     //there are styles, use shadow dom because it doesn't make
     //sense in light mode because the styles will be applied
     //to the entire document...
@@ -426,7 +527,13 @@ export default abstract class TempleComponent extends HTMLElement {
       shadowRoot.textContent = '';
       shadowRoot.appendChild(style);
       //append the children
-      children.forEach(child => shadowRoot.appendChild(child));
+      shadow.forEach(child => shadowRoot.appendChild(child));
+      if (light.length) {
+        //empty the current text content
+        this.textContent = '';
+        //append the light children
+        light.forEach(child => this.appendChild(child));
+      }
     }
     //revert or reset the current component pointer
     //maybe we should do a queue later?
@@ -453,6 +560,9 @@ export default abstract class TempleComponent extends HTMLElement {
     if (value === '' || value === true) {
       this.element.setAttribute(name, true);
       super.setAttribute(name, '');
+    } else if (value === false) {
+      this.element.setAttribute(name, value);
+      super.removeAttribute(name);
     } else if (typeof value === 'string') {
       this.element.setAttribute(name, value);
       super.setAttribute(name, value);
@@ -502,6 +612,52 @@ export default abstract class TempleComponent extends HTMLElement {
       };
       emitter.on('ready', next);
     }
+  }
+
+  /**
+   * For render(), this is used to split the 
+   * children into light and shadow children
+   */
+  protected _getChildren(children: Node[], mode: 'light'|'shadow') {
+    //split children into light, shadow and any
+    const anyNodes = this._getTemplateNodes(children);
+    const lightNodes = this._getTemplateNodes(children, 'light');
+    const shadowNodes = this._getTemplateNodes(children, 'shadow');
+    //determine the default children
+    const defaultNodes = anyNodes.length > 0 ? anyNodes : children;
+    //determine the light and shadow children
+    return {
+      light: lightNodes.length > 0 ? lightNodes 
+        : mode === 'light' ? defaultNodes : [],
+      shadow: shadowNodes.length > 0 ? shadowNodes 
+        : mode === 'shadow' ? defaultNodes : []
+    };
+  }
+
+  /**
+   * Returns a guaranteed list of nodes
+   * from a template based on the type
+   */
+  protected _getTemplateNodes(children: Node[], type?: string) {
+    const template = children.find(
+      child => this._isTemplate(child, type)
+    ) as HTMLTemplateElement|null;
+    if (!template) return [];
+    //When a <template> is constructed programmatically, using 
+    //appendChild, the content remains empty. it needs to be 
+    //appended to the document in order for content to be useful. 
+    //We just need to get the childNodes of the template.
+    return Array.from(template.childNodes || []) as Node[];
+  }
+
+  /**
+   * Returns whether a node is a template with a type
+   */
+  protected _isTemplate(child: Node, type?: string) {
+    if (child.nodeName !== 'TEMPLATE') return false;
+    const template = child as HTMLTemplateElement;
+    if (!type) return !template.hasAttribute('type');
+    return type === template.getAttribute('type');
   }
 
   /**

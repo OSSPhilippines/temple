@@ -21,6 +21,9 @@ export type Hash = Record<string, any>;
 export type Scalar = string|number|null|boolean;
 export type Data = Scalar|Data[]|{ [key: string]: Data };
 
+//a generic class constructor 
+export type Constructor<T> = { new (): T };
+
 //standard http request and response types
 export type Request = http.IncomingMessage;
 export type Response = http.ServerResponse<Request> & {
@@ -237,12 +240,11 @@ export type Node = ServerElement|ServerText;
 //--------------------------------------------------------------------//
 // Client Types
 
-export type TempleComponentClass = {
+export type TempleComponentClass = Constructor<ClientComponent> &{
   component: [ string, string ],
   registered: string|null,
   observedAttributes?: string[],
-  register(): void,
-  new (): ClientComponent
+  register(): void
 };
 
 export type RegistryIterator<T = any> = (
@@ -262,8 +264,9 @@ export type SignalObserver = {
 //for signals
 export type SignalProps<T = any> = {
   raw: T,
-  getter(callback: () => any): SignalProps,
-  setter(callback: (value: any) => any): SignalProps,
+  change(callback: (value: T) => void): SignalProps<T>,
+  getter(callback: () => T): SignalProps<T>,
+  setter(callback: (value: any) => T): SignalProps<T>,
   value: T
 };
 
