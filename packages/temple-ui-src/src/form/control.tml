@@ -1,0 +1,24 @@
+<script>
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  //extract props
+  const { label, error } = this.props;
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
+  //default styles
+  styles.add(':host', 'display', 'block');
+  styles.add('label', 'display', 'block');
+  styles.add('label', 'padding-bottom', '3px');
+  styles.add('div', 'padding-top', '3px');
+  styles.add('div', 'font-size', '0.90rem');
+  if (error) {
+    styles.add(':host', 'color', 'var(--error)');
+  }
+</script>
+<if true={!!label}>
+  <label>{label}</label>
+</if>
+<slot></slot>
+<if true={!!error && error?.length > 0}>
+  <div>{error}</div>
+</if>

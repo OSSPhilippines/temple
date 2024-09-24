@@ -1,8 +1,9 @@
 <link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
 <link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
-<link rel="import" type="component" href="@ossph/temple-ui/tab.tml" name="tui-tab" />
+<link rel="import" type="component" href="@ossph/temple-ui/layout/panel.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/tab.tml" name="element-tab" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/icon.tml" name="element-icon" />
 <link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
 <link rel="import" type="component" href="@/components/ide/app/head.tml" name="app-head" />
 <link rel="import" type="component" href="@/components/ide/app/left.tml" name="app-left" />
@@ -11,11 +12,10 @@
 <link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
 <link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
 <style>
-  @tui theme;
-  @tui reset;
-  @tui fouc-opacity;
-  @tui default-block;
-  @tui utilities;
+  @temple theme;
+  @temple reset;
+  @temple fouc-opacity;
+  @temple utilities;
 </style>
 <script>
   import { env } from '@ossph/temple';
@@ -57,7 +57,7 @@
           <ide-app height={410} title="My Project">
             <app-head>
               <div class="flex scroll-x-auto pt-5 pl-5">
-                <tui-tab 
+                <element-tab 
                   on
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
@@ -66,8 +66,8 @@
                   selector="#index-ts"
                 >
                   src/index.ts
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -75,8 +75,8 @@
                   selector="#page-dtml"
                 >
                   src/page.dtml
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -84,15 +84,15 @@
                   selector="#package-json"
                 >
                   package.json
-                </tui-tab>
+                </element-tab>
               </div>
             </app-head>
             <app-left>
               <h5 class="p-5">
-                <i class="fas fa-fw fa-chevron-down"></i>
+                <element-icon name="chevron-down" />
                 <span>src</span>
               </h5>
-              <tui-tab 
+              <element-tab 
                 on
                 class="pl-15 pt-10 block" 
                 active="tx-white"
@@ -100,29 +100,29 @@
                 group="static" 
                 selector="#index-ts"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 index.ts
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pl-15 pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="static" 
                 selector="#page-dtml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 page.dtml
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="static" 
                 selector="#package-json"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 package.json
-              </tui-tab>
+              </element-tab>
             </app-left>
             <app-main>
               <ide-code id="index-ts" lang="js" numbers trim detab={16}>{`
@@ -236,12 +236,12 @@
           
           <nav class="flex">
             <a class="tx-primary py-40" href="/temple/docs/single-page.html">
-              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              <element-icon name="chevron-left" theme="tx-1" />
               {_('Single Page App')}
             </a>
             <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/component-publisher.html">
               {_('Component Publisher')}
-              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
+              <element-icon name="chevron-right" theme="tx-1" />
             </a>
           </nav>
           <footer class="foot"></footer>

@@ -1,17 +1,15 @@
 <link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
-<link rel="import" type="component" href="@ossph/temple-ui/form/button.tml" name="tui-button" />
+<link rel="import" type="component" href="@ossph/temple-ui/layout/panel.tml" name="panel-layout" />
 <link rel="import" type="component" href="@/components/ide/app.tml" name="ide-app" />
 <link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
 <link rel="import" type="component" href="@/components/ide/preview.tml" name="ide-preview" />
 <link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
 <style>
-  @tui theme;
-  @tui reset;
-  @tui fouc-opacity;
-  @tui default-block;
-  @tui utilities;
+  @temple theme;
+  @temple reset;
+  @temple fouc-opacity;
+  @temple utilities;
 </style>
 <script>
   import { env, props } from '@ossph/temple';

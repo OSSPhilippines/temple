@@ -3,23 +3,25 @@
 <link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
 <link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
 <link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/layout/panel.tml" name="panel-layout" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/code.tml" name="format-code" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/color.tml" name="format-color" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/country.tml" name="format-country" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/currency.tml" name="format-currency" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/date.tml" name="format-date" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/email.tml" name="format-email" />
-<link rel="import" type="component" href="@ossph/temple-ui/format/phone.tml" name="format-phone" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/formula.tml" name="format-formula" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/html.tml" name="format-html" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/image.tml" name="format-image" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/imagelist.tml" name="format-imagelist" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/json.tml" name="format-json" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/link.tml" name="format-link" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/list.tml" name="format-list" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/markdown.tml" name="format-markdown" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/metadata.tml" name="format-metadata" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/number.tml" name="format-number" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/overflow.tml" name="format-overflow" />
+<link rel="import" type="component" href="@ossph/temple-ui/format/phone.tml" name="format-phone" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/rating.tml" name="format-rating" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/separated.tml" name="format-separated" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/table.tml" name="format-table" />
@@ -27,11 +29,10 @@
 <link rel="import" type="component" href="@ossph/temple-ui/format/text.tml" name="format-text" />
 <link rel="import" type="component" href="@ossph/temple-ui/format/yesno.tml" name="format-yesno" />
 <style>
-  @tui theme;
-  @tui reset;
-  @tui fouc-opacity;
-  @tui default-block;
-  @tui utilities;
+  @temple theme;
+  @temple reset;
+  @temple fouc-opacity;
+  @temple utilities;
 </style>
 <script>
   import { env } from '@ossph/temple';
@@ -52,7 +53,7 @@
     'https://images.wsj.net/im-580612/8SR'
   ];
   const list = [ 'Item 1', 'Item 2' ];
-  const metadata = { name: 'John Doe' };
+  const metadata = { name: 'John Doe', age: 25 };
   const table = [
     { id: 2, name: 'Jane Doe', age: 25 }
   ];
@@ -83,7 +84,7 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <format-color value="red" />
+                <format-color box-md text-md value="red" />
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -94,7 +95,7 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <format-country value="us" />
+                <format-country flag-md text-md value="us" />
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -105,7 +106,7 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <format-currency value="usd" sm flag={false} />
+                <format-currency flag-lg text-lg value="usd" />
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -116,7 +117,7 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <format-date format="MMMM Do YYYY, h:mm:ss a" />
+                <format-date format="MMMM D YYYY, h:mm:ss a" />
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -127,7 +128,7 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <format-email link="tx-primary tx-underline" value="john@doe.com" />
+                <format-email primary underline md value="john@doe.com" />
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -139,7 +140,12 @@
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
                 10 + 29 + 20 = 
-                <format-formula value="29" formula="{x} + {this} + {y}" data={variables} />
+                <format-formula 
+                  value="29" 
+                  formula="{x} + {this} + {y}" 
+                  data={variables} 
+                  bold
+                />
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -161,7 +167,7 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <format-image image="w-70" value="https://images.wsj.net/im-580612/8SR" />
+                <format-image width="70" value="https://images.wsj.net/im-580612/8SR" />
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -172,7 +178,7 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <format-imagelist image="w-70" value={images} />
+                <format-imagelist width="70" value={images} />
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -193,7 +199,15 @@
               </a>
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
-              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-link 
+                  secondary 
+                  underline 
+                  md 
+                  target="_blank" 
+                  value="https://iamawesome.com/" 
+                />
+              </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
                 href="/temple/ui/format/link.html"
@@ -213,7 +227,9 @@
               </a>
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
-              <div class="bg-t-3 h-120 flex flex-center"></div>
+              <div class="bg-t-3 h-120 flex flex-center">
+                <format-markdown value="**Hello** World" />
+              </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
                 href="/temple/ui/format/markdown.html"
@@ -223,7 +239,15 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <format-metadata value={metadata} stripes={stripes} />
+                <format-metadata 
+                  value={metadata}
+                  padding="10"
+                  align="center"
+                  background-theme="bg-1"
+                  stripe-theme="bg-2"
+                  border-theme="black"
+                  format
+                />
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -256,7 +280,7 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <format-phone link="tx-success" value="+63 (917) 555-2424" />
+                <format-phone value="+63 (917) 555-2424" />
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -289,7 +313,15 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <format-table value={table} stripes={stripes} />
+                <format-table 
+                  value={table} 
+                  padding="10"
+                  align="center"
+                  background-theme="bg-1"
+                  stripe-theme="bg-2"
+                  header-theme="bg-2"
+                  border-theme="black"
+                />
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 

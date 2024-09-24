@@ -1,0 +1,35 @@
+<link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
+<link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
+<link rel="import" type="component" href="@ossph/temple-ui/layout/panel.tml" name="panel-layout" />
+<link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/input.tml" name="field-input" />
+<style>
+  @temple theme;
+  @temple reset;
+  @temple fouc-opacity;
+  @temple utilities;
+</style>
+<script>
+  import env from '@ossph/temple/dist/client/env';
+  import { _ } from '@/components/i18n';
+
+  const url = '/temple/panel.html';
+  const title = _('Temple UI - Web Components Meets Atomic Styles.');
+  const description = _('Temple UI atomically generates CSS styles and provides out of box web components.');
+
+  const toggle = () => {
+    document.querySelector('panel-layout').toggle('left');
+  };
+</script>
+<html>
+  <html-head />
+  <body class="dark sl-theme-dark bg-t-0 tx-t-1 tx-arial">
+    <panel-layout>
+      <header><html-header /></header>
+      <main class="p-20">
+        <h1>Sandbox</h1>
+        <field-input name="first" placeholder="Enter your first name" error />
+      </main>
+    </panel-layout>
+  </body>
+</html>

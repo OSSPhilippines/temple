@@ -1,9 +1,10 @@
 <link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
 <link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
-<link rel="import" type="component" href="@ossph/temple-ui/alert.tml" name="tui-alert" />
-<link rel="import" type="component" href="@ossph/temple-ui/tab.tml" name="tui-tab" />
+<link rel="import" type="component" href="@ossph/temple-ui/layout/panel.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/alert.tml" name="element-alert" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/icon.tml" name="element-icon" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/tab.tml" name="element-tab" />
 <link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
 <link rel="import" type="component" href="@/components/api/ui.tml" name="api-ui" />
 <link rel="import" type="component" href="@/components/ide/app/head.tml" name="app-head" />
@@ -13,11 +14,10 @@
 <link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
 <link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
 <style>
-  @tui theme;
-  @tui reset;
-  @tui fouc-opacity;
-  @tui default-block;
-  @tui utilities;
+  @temple theme;
+  @temple reset;
+  @temple fouc-opacity;
+  @temple utilities;
 </style>
 <script>
   import { env } from '@ossph/temple';
@@ -111,17 +111,17 @@
             </li>
           </ul>
 
-          <tui-alert curved info class="py-20 tx-lh-24">
-            <i class="fas fa-fw fa-info-circle"></i>
+          <element-alert curved info class="py-20 tx-lh-24">
+            <element-icon name="info-circle" />
             <strong>Recommendation:</strong> You should do server related
             logic on the server framework and pass the neccesary data 
             to the client.
-          </tui-alert>
+          </element-alert>
 
           <ide-app height={250} title="Passing Server Props" class="py-20">
             <app-head>
               <div class="flex scroll-x-auto pt-5 pl-5">
-                <tui-tab 
+                <element-tab 
                   on
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
@@ -130,8 +130,8 @@
                   selector="#server-index-ts"
                 >
                   src/index.ts
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -139,15 +139,15 @@
                   selector="#server-page-dtml"
                 >
                   src/page.dtml
-                </tui-tab>
+                </element-tab>
               </div>
             </app-head>
             <app-left>
               <h5 class="p-5">
-                <i class="fas fa-fw fa-chevron-down"></i>
+                <element-icon name="chevron-down" />
                 <span>src</span>
               </h5>
-              <tui-tab 
+              <element-tab 
                 on
                 class="pl-15 pt-10 block" 
                 active="tx-white"
@@ -155,19 +155,19 @@
                 group="server" 
                 selector="#server-index-ts"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 index.ts
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pl-15 pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="server" 
                 selector="#server-page-dtml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 page.dtml
-              </tui-tab>
+              </element-tab>
             </app-left>
             <app-main>
               <ide-code id="server-index-ts" lang="js" numbers trim detab={16}>{`
@@ -240,7 +240,7 @@
           <ide-app height={250} title="Using Templates" class="py-20">
             <app-head>
               <div class="flex scroll-x-auto pt-5 pl-5">
-                <tui-tab 
+                <element-tab 
                   on
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
@@ -249,8 +249,8 @@
                   selector="#template-page-dtml"
                 >
                   src/page.dtml
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -258,15 +258,15 @@
                   selector="#template-head-tml"
                 >
                   src/head.tml
-                </tui-tab>
+                </element-tab>
               </div>
             </app-head>
             <app-left>
               <h5 class="p-5">
-                <i class="fas fa-fw fa-chevron-down"></i>
+                <element-icon name="chevron-down" />
                 <span>src</span>
               </h5>
-              <tui-tab 
+              <element-tab 
                 on
                 class="pl-15 pt-10 block" 
                 active="tx-white"
@@ -274,19 +274,19 @@
                 group="template" 
                 selector="#template-page-dtml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 page.dtml
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pl-15 pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="template" 
                 selector="#template-head-tml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 head.tml
-              </tui-tab>
+              </element-tab>
             </app-left>
             <app-main>
               <ide-code id="template-page-dtml" numbers trim detab={16}>{`
@@ -310,11 +310,11 @@
             </app-main>
           </ide-app>
 
-          <tui-alert curved info class="py-20 tx-lh-24">
-            <i class="fas fa-fw fa-info-circle"></i>
+          <element-alert curved info class="py-20 tx-lh-24">
+            <element-icon name="info-circle" />
             <strong>Note:</strong> Template partials do not process 
             attributes or children if given.
-          </tui-alert>
+          </element-alert>
 
           <i18n-translate p trim class="tx-lh-36 py-20">
             Variables used in a template should be declared in the
@@ -357,7 +357,7 @@
           <ide-app height={400} title="No Components" class="py-20">
             <app-head>
               <div class="flex scroll-x-auto pt-5 pl-5">
-                <tui-tab 
+                <element-tab 
                   on
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
@@ -366,8 +366,8 @@
                   selector="#strat-1-page-dtml"
                 >
                   src/page.dtml
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -375,8 +375,8 @@
                   selector="#strat-1-head-tml"
                 >
                   src/head.tml
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -384,8 +384,8 @@
                   selector="#strat-1-header-tml"
                 >
                   src/header.tml
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted" 
@@ -393,15 +393,15 @@
                   selector="#strat-1-footer-tml"
                 >
                   src/footer.tml
-                </tui-tab>
+                </element-tab>
               </div>
             </app-head>
             <app-left>
               <h5 class="folder">
-                <i class="fas fa-fw fa-chevron-down"></i>
+                <element-icon name="chevron-down" />
                 <span>src</span>
               </h5>
-              <tui-tab 
+              <element-tab 
                 on
                 class="pl-15 pt-10 block" 
                 active="tx-white"
@@ -409,39 +409,39 @@
                 group="strat-1" 
                 selector="#strat-1-page-dtml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 page.dtml
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pl-15 pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted"  
                 group="strat-1" 
                 selector="#strat-1-head-tml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 head.tml
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pl-15 pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="strat-1" 
                 selector="#strat-1-header-tml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 header.tml
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pl-15 pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="strat-1" 
                 selector="#strat-1-footer-tml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 footer.tml
-              </tui-tab>
+              </element-tab>
             </app-left>
             <app-main>
               <ide-code id="strat-1-page-dtml" numbers trim detab={16}>{`
@@ -503,7 +503,7 @@
           <ide-app height={400} title="Shallow Components" class="py-20">
             <app-head>
               <div class="flex scroll-x-auto pt-5 pl-5">
-                <tui-tab 
+                <element-tab 
                   on
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
@@ -512,8 +512,8 @@
                   selector="#strat-2-page-dtml"
                 >
                   src/page.dtml
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -521,8 +521,8 @@
                   selector="#strat-2-header-tml"
                 >
                   src/header.tml
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted" 
@@ -530,15 +530,15 @@
                   selector="#strat-2-footer-tml"
                 >
                   src/footer.tml
-                </tui-tab>
+                </element-tab>
               </div>
             </app-head>
             <app-left>
               <h5 class="folder">
-                <i class="fas fa-fw fa-chevron-down"></i>
+                <element-icon name="chevron-down" />
                 <span>src</span>
               </h5>
-              <tui-tab 
+              <element-tab 
                 on
                 class="pl-15 pt-10 block" 
                 active="tx-white"
@@ -546,29 +546,29 @@
                 group="strat-2" 
                 selector="#strat-2-page-dtml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 page.dtml
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pl-15 pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="strat-2" 
                 selector="#strat-2-header-tml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 header.tml
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pl-15 pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="strat-2" 
                 selector="#strat-2-footer-tml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 footer.tml
-              </tui-tab>
+              </element-tab>
             </app-left>
             <app-main>
               <ide-code id="strat-2-page-dtml" numbers trim detab={16}>{`
@@ -639,7 +639,7 @@
           <ide-app height={400} title="Shallow Components" class="py-20">
             <app-head>
               <div class="flex scroll-x-auto pt-5 pl-5">
-                <tui-tab 
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -647,8 +647,8 @@
                   selector="#strat-3-page-dtml"
                 >
                   src/page.dtml
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   on
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
@@ -657,8 +657,8 @@
                   selector="#strat-3-header-tml"
                 >
                   src/header.tml
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted" 
@@ -666,25 +666,25 @@
                   selector="#strat-3-footer-tml"
                 >
                   src/footer.tml
-                </tui-tab>
+                </element-tab>
               </div>
             </app-head>
             <app-left>
               <h5 class="folder">
-                <i class="fas fa-fw fa-chevron-down"></i>
+                <element-icon name="chevron-down" />
                 <span>src</span>
               </h5>
-              <tui-tab 
+              <element-tab 
                 class="pl-15 pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="strat-3" 
                 selector="#strat-3-page-dtml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 page.dtml
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 on
                 class="pl-15 pt-10 block" 
                 active="tx-white"
@@ -692,19 +692,19 @@
                 group="strat-3" 
                 selector="#strat-3-header-tml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 header.tml
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pl-15 pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="strat-3" 
                 selector="#strat-3-footer-tml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 footer.tml
-              </tui-tab>
+              </element-tab>
             </app-left>
             <app-main>
               <ide-code id="strat-3-page-dtml" style="display:none" numbers trim detab={16}>{`
@@ -777,7 +777,7 @@
           <ide-app height={400} title="Encapsulation" class="py-20">
             <app-head>
               <div class="flex scroll-x-auto pt-5 pl-5">
-                <tui-tab 
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -785,8 +785,8 @@
                   selector="#strat-4-page-dtml"
                 >
                   src/page.dtml
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   on
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
@@ -795,8 +795,8 @@
                   selector="#strat-4-header-tml"
                 >
                   src/header.tml
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted" 
@@ -804,15 +804,15 @@
                   selector="#strat-4-footer-tml"
                 >
                   src/footer.tml
-                </tui-tab>
+                </element-tab>
               </div>
             </app-head>
             <app-left>
               <h5 class="folder">
-                <i class="fas fa-fw fa-chevron-down"></i>
+                <element-icon name="chevron-down" />
                 <span>src</span>
               </h5>
-              <tui-tab 
+              <element-tab 
                 on
                 class="pl-15 pt-10 block" 
                 active="tx-white"
@@ -820,10 +820,10 @@
                 group="strat-4" 
                 selector="#strat-4-page-dtml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 page.dtml
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 on
                 class="pl-15 pt-10 block" 
                 active="tx-white"
@@ -831,19 +831,19 @@
                 group="strat-4" 
                 selector="#strat-4-header-tml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 header.tml
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pl-15 pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="strat-4" 
                 selector="#strat-4-footer-tml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 footer.tml
-              </tui-tab>
+              </element-tab>
             </app-left>
             <app-main>
               <ide-code id="strat-4-page-dtml" style="display:none" numbers trim detab={14}>{`
@@ -946,12 +946,12 @@
 
           <nav class="flex">
             <a class="tx-primary py-40" href="/temple/docs/state-management.html">
-              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              <element-icon name="chevron-left" theme="tx-1" />
               {_('State Management')}
             </a>
             <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/compiler-api.html">
               {_('Compiler API')}
-              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
+              <element-icon name="chevron-right" theme="tx-1" />
             </a>
           </nav>
           <footer class="foot"></footer>

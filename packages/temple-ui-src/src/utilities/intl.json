@@ -7,6 +7,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -17,6 +18,7 @@
     "currencyName": "United Arab Emirates Dirham",
     "currencyPlural": "UAE dirhams",
     "currencySymbol": "AED",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -27,6 +29,7 @@
     "currencyName": "Afghan Afghani",
     "currencyPlural": "Afghan Afghanis",
     "currencySymbol": "Af",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -37,6 +40,7 @@
     "currencyName": "Albanian Lek",
     "currencyPlural": "Albanian lekë",
     "currencySymbol": "ALL",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -47,6 +51,7 @@
     "currencyName": "Armenian Dram",
     "currencyPlural": "Armenian drams",
     "currencySymbol": "AMD",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -57,6 +62,7 @@
     "currencyName": "Argentine Peso",
     "currencyPlural": "Argentine pesos",
     "currencySymbol": "AR$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -67,6 +73,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -77,6 +84,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -87,6 +95,7 @@
     "currencyName": "Australian Dollar",
     "currencyPlural": "Australian dollars",
     "currencySymbol": "AU$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -97,6 +106,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -107,6 +117,7 @@
     "currencyName": "Azerbaijani Manat",
     "currencyPlural": "Azerbaijani manats",
     "currencySymbol": "man.",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -117,6 +128,7 @@
     "currencyName": "Bosnia-Herzegovina Convertible Mark",
     "currencyPlural": "Bosnia-Herzegovina convertible marks",
     "currencySymbol": "KM",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -127,6 +139,7 @@
     "currencyName": "Bangladeshi Taka",
     "currencyPlural": "Bangladeshi takas",
     "currencySymbol": "Tk",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -137,6 +150,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -147,6 +161,7 @@
     "currencyName": "CFA Franc BCEAO",
     "currencyPlural": "CFA francs BCEAO",
     "currencySymbol": "CFA",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -157,6 +172,7 @@
     "currencyName": "Bulgarian Lev",
     "currencyPlural": "Bulgarian leva",
     "currencySymbol": "BGN",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -167,6 +183,7 @@
     "currencyName": "Bahraini Dinar",
     "currencyPlural": "Bahraini dinars",
     "currencySymbol": "b",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -177,6 +194,7 @@
     "currencyName": "Burundian Franc",
     "currencyPlural": "Burundian francs",
     "currencySymbol": "FBu",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -187,6 +205,7 @@
     "currencyName": "CFA Franc BCEAO",
     "currencyPlural": "CFA francs BCEAO",
     "currencySymbol": "CFA",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -197,6 +216,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -207,6 +227,7 @@
     "currencyName": "Brunei Dollar",
     "currencyPlural": "Brunei dollars",
     "currencySymbol": "BN$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -217,6 +238,7 @@
     "currencyName": "Bolivian Boliviano",
     "currencyPlural": "Bolivian bolivianos",
     "currencySymbol": "Bs",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -227,6 +249,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -237,6 +260,7 @@
     "currencyName": "Brazilian Real",
     "currencyPlural": "Brazilian reals",
     "currencySymbol": "R$",
+    "currencyOrigin": true,
     "language": "pt_BR"
   },
   {
@@ -247,6 +271,7 @@
     "currencyName": "Norwegian Krone",
     "currencyPlural": "Norwegian kroner",
     "currencySymbol": "Nkr",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -257,6 +282,7 @@
     "currencyName": "Botswanan Pula",
     "currencyPlural": "Botswanan pulas",
     "currencySymbol": "BWP",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -267,6 +293,7 @@
     "currencyName": "Belize Dollar",
     "currencyPlural": "Belize dollars",
     "currencySymbol": "BZ$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -277,6 +304,7 @@
     "currencyName": "Canadian Dollar",
     "currencyPlural": "Canadian dollars",
     "currencySymbol": "CA$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -287,6 +315,7 @@
     "currencyName": "Australian Dollar",
     "currencyPlural": "Australian dollars",
     "currencySymbol": "AU$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -297,6 +326,7 @@
     "currencyName": "Congolese Franc",
     "currencyPlural": "Congolese francs",
     "currencySymbol": "CDF",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -307,6 +337,7 @@
     "currencyName": "CFA Franc BEAC",
     "currencyPlural": "CFA francs BEAC",
     "currencySymbol": "FCFA",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -317,6 +348,7 @@
     "currencyName": "CFA Franc BEAC",
     "currencyPlural": "CFA francs BEAC",
     "currencySymbol": "FCFA",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -327,6 +359,7 @@
     "currencyName": "Swiss Franc",
     "currencyPlural": "Swiss francs",
     "currencySymbol": "CHF",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -337,6 +370,7 @@
     "currencyName": "CFA Franc BCEAO",
     "currencyPlural": "CFA francs BCEAO",
     "currencySymbol": "CFA",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -347,6 +381,7 @@
     "currencyName": "New Zealand Dollar",
     "currencyPlural": "New Zealand dollars",
     "currencySymbol": "NZ$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -357,6 +392,7 @@
     "currencyName": "Chilean Peso",
     "currencyPlural": "Chilean pesos",
     "currencySymbol": "CL$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -367,6 +403,7 @@
     "currencyName": "CFA Franc BEAC",
     "currencyPlural": "CFA francs BEAC",
     "currencySymbol": "FCFA",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -377,6 +414,7 @@
     "currencyName": "Chinese Yuan",
     "currencyPlural": "Chinese yuan",
     "currencySymbol": "CN¥",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -387,6 +425,7 @@
     "currencyName": "Colombian Peso",
     "currencyPlural": "Colombian pesos",
     "currencySymbol": "CO$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -397,6 +436,7 @@
     "currencyName": "Costa Rican Colón",
     "currencyPlural": "Costa Rican colóns",
     "currencySymbol": "₡",
+    "currencyOrigin": true,
     "language": "es"
   },
   {
@@ -407,6 +447,7 @@
     "currencyName": "Cape Verdean Escudo",
     "currencyPlural": "Cape Verdean escudos",
     "currencySymbol": "CV$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -417,6 +458,7 @@
     "currencyName": "Australian Dollar",
     "currencyPlural": "Australian dollars",
     "currencySymbol": "AU$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -427,6 +469,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -437,6 +480,7 @@
     "currencyName": "Czech Republic Koruna",
     "currencyPlural": "Czech Republic korunas",
     "currencySymbol": "Kč",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -447,6 +491,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -457,6 +502,7 @@
     "currencyName": "Djiboutian Franc",
     "currencyPlural": "Djiboutian francs",
     "currencySymbol": "Fdj",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -467,6 +513,7 @@
     "currencyName": "Danish Krone",
     "currencyPlural": "Danish kroner",
     "currencySymbol": "Dkr",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -477,6 +524,7 @@
     "currencyName": "Dominican Peso",
     "currencyPlural": "Dominican pesos",
     "currencySymbol": "RD$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -487,6 +535,7 @@
     "currencyName": "Algerian Dinar",
     "currencyPlural": "Algerian dinars",
     "currencySymbol": "DA",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -497,6 +546,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -507,6 +557,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -517,6 +568,7 @@
     "currencyName": "Egyptian Pound",
     "currencyPlural": "Egyptian pounds",
     "currencySymbol": "EGP",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -527,6 +579,7 @@
     "currencyName": "Moroccan Dirham",
     "currencyPlural": "Moroccan dirhams",
     "currencySymbol": "MAD",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -537,6 +590,7 @@
     "currencyName": "Eritrean Nakfa",
     "currencyPlural": "Eritrean nakfas",
     "currencySymbol": "Nfk",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -547,6 +601,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -557,6 +612,7 @@
     "currencyName": "Ethiopian Birr",
     "currencyPlural": "Ethiopian birrs",
     "currencySymbol": "Br",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -567,6 +623,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -577,6 +634,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -587,6 +645,7 @@
     "currencyName": "Danish Krone",
     "currencyPlural": "Danish kroner",
     "currencySymbol": "Dkr",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -597,6 +656,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -607,6 +667,7 @@
     "currencyName": "CFA Franc BEAC",
     "currencyPlural": "CFA francs BEAC",
     "currencySymbol": "FCFA",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -617,6 +678,7 @@
     "currencyName": "British Pound Sterling",
     "currencyPlural": "British pounds sterling",
     "currencySymbol": "£",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -627,6 +689,7 @@
     "currencyName": "Georgian Lari",
     "currencyPlural": "Georgian laris",
     "currencySymbol": "GEL",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -637,6 +700,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -647,6 +711,7 @@
     "currencyName": "British Pound Sterling",
     "currencyPlural": "British pounds sterling",
     "currencySymbol": "£",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -657,6 +722,7 @@
     "currencyName": "Ghanaian Cedi",
     "currencyPlural": "Ghanaian cedis",
     "currencySymbol": "GH₵",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -667,6 +733,7 @@
     "currencyName": "Danish Krone",
     "currencyPlural": "Danish kroner",
     "currencySymbol": "Dkr",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -677,6 +744,7 @@
     "currencyName": "Guinean Franc",
     "currencyPlural": "Guinean francs",
     "currencySymbol": "FG",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -687,6 +755,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -697,6 +766,7 @@
     "currencyName": "CFA Franc BEAC",
     "currencyPlural": "CFA francs BEAC",
     "currencySymbol": "FCFA",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -707,6 +777,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -717,6 +788,7 @@
     "currencyName": "British Pound Sterling",
     "currencyPlural": "British pounds sterling",
     "currencySymbol": "£",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -727,6 +799,7 @@
     "currencyName": "Guatemalan Quetzal",
     "currencyPlural": "Guatemalan quetzals",
     "currencySymbol": "GTQ",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -737,6 +810,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -747,6 +821,7 @@
     "currencyName": "CFA Franc BCEAO",
     "currencyPlural": "CFA francs BCEAO",
     "currencySymbol": "CFA",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -757,6 +832,7 @@
     "currencyName": "Hong Kong Dollar",
     "currencyPlural": "Hong Kong dollars",
     "currencySymbol": "HK$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -767,6 +843,7 @@
     "currencyName": "Australian Dollar",
     "currencyPlural": "Australian dollars",
     "currencySymbol": "AU$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -777,6 +854,7 @@
     "currencyName": "Honduran Lempira",
     "currencyPlural": "Honduran lempiras",
     "currencySymbol": "HNL",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -787,6 +865,7 @@
     "currencyName": "Croatian Kuna",
     "currencyPlural": "Croatian kunas",
     "currencySymbol": "kn",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -797,6 +876,7 @@
     "currencyName": "Hungarian Forint",
     "currencyPlural": "Hungarian forints",
     "currencySymbol": "Ft",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -807,6 +887,7 @@
     "currencyName": "Indonesian Rupiah",
     "currencyPlural": "Indonesian rupiahs",
     "currencySymbol": "Rp",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -817,6 +898,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -827,6 +909,7 @@
     "currencyName": "Israeli New Sheqel",
     "currencyPlural": "Israeli new sheqels",
     "currencySymbol": "₪",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -837,6 +920,7 @@
     "currencyName": "British Pound Sterling",
     "currencyPlural": "British pounds sterling",
     "currencySymbol": "£",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -847,6 +931,7 @@
     "currencyName": "Indian Rupee",
     "currencyPlural": "Indian rupees",
     "currencySymbol": "Rs",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -857,6 +942,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -867,6 +953,7 @@
     "currencyName": "Iraqi Dinar",
     "currencyPlural": "Iraqi dinars",
     "currencySymbol": "IQD",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -877,6 +964,7 @@
     "currencyName": "Iranian Rial",
     "currencyPlural": "Iranian rials",
     "currencySymbol": "IRR",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -887,6 +975,7 @@
     "currencyName": "Icelandic Króna",
     "currencyPlural": "Icelandic krónur",
     "currencySymbol": "Ikr",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -897,6 +986,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -907,6 +997,7 @@
     "currencyName": "British Pound Sterling",
     "currencyPlural": "British pounds sterling",
     "currencySymbol": "£",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -917,6 +1008,7 @@
     "currencyName": "Jamaican Dollar",
     "currencyPlural": "Jamaican dollars",
     "currencySymbol": "J$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -927,6 +1019,7 @@
     "currencyName": "Jordanian Dinar",
     "currencyPlural": "Jordanian dinars",
     "currencySymbol": "JD",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -937,6 +1030,7 @@
     "currencyName": "Japanese Yen",
     "currencyPlural": "Japanese yen",
     "currencySymbol": "¥",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -947,6 +1041,7 @@
     "currencyName": "Kenyan Shilling",
     "currencyPlural": "Kenyan shillings",
     "currencySymbol": "Ksh",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -957,6 +1052,7 @@
     "currencyName": "Cambodian Riel",
     "currencyPlural": "Cambodian riels",
     "currencySymbol": "KHR",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -967,6 +1063,7 @@
     "currencyName": "Australian Dollar",
     "currencyPlural": "Australian dollars",
     "currencySymbol": "AU$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -977,6 +1074,7 @@
     "currencyName": "Comorian Franc",
     "currencyPlural": "Comorian francs",
     "currencySymbol": "CF",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -987,6 +1085,7 @@
     "currencyName": "South Korean Won",
     "currencyPlural": "South Korean won",
     "currencySymbol": "₩",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -997,6 +1096,7 @@
     "currencyName": "Kuwaiti Dinar",
     "currencyPlural": "Kuwaiti dinars",
     "currencySymbol": "KD",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1007,6 +1107,7 @@
     "currencyName": "Kazakhstani Tenge",
     "currencyPlural": "Kazakhstani tenges",
     "currencySymbol": "KZT",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1017,6 +1118,7 @@
     "currencyName": "Lebanese Pound",
     "currencyPlural": "Lebanese pounds",
     "currencySymbol": "LB£",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1027,6 +1129,7 @@
     "currencyName": "Swiss Franc",
     "currencyPlural": "Swiss francs",
     "currencySymbol": "CHF",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1037,6 +1140,7 @@
     "currencyName": "Sri Lankan Rupee",
     "currencyPlural": "Sri Lankan rupees",
     "currencySymbol": "SLRs",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1047,6 +1151,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1057,6 +1162,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1067,6 +1173,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1077,6 +1184,7 @@
     "currencyName": "Libyan Dinar",
     "currencyPlural": "Libyan dinars",
     "currencySymbol": "LD",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1087,6 +1195,7 @@
     "currencyName": "Moroccan Dirham",
     "currencyPlural": "Moroccan dirhams",
     "currencySymbol": "MAD",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1097,6 +1206,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1107,6 +1217,7 @@
     "currencyName": "Moldovan Leu",
     "currencyPlural": "Moldovan lei",
     "currencySymbol": "MDL",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1117,6 +1228,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1127,6 +1239,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1137,6 +1250,7 @@
     "currencyName": "Malagasy Ariary",
     "currencyPlural": "Malagasy Ariaries",
     "currencySymbol": "MGA",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1147,6 +1261,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1157,6 +1272,7 @@
     "currencyName": "Macedonian Denar",
     "currencyPlural": "Macedonian denari",
     "currencySymbol": "MKD",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1167,6 +1283,7 @@
     "currencyName": "CFA Franc BCEAO",
     "currencyPlural": "CFA francs BCEAO",
     "currencySymbol": "CFA",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1177,6 +1294,7 @@
     "currencyName": "Myanma Kyat",
     "currencyPlural": "Myanma kyats",
     "currencySymbol": "MMK",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1187,6 +1305,7 @@
     "currencyName": "Macanese Pataca",
     "currencyPlural": "Macanese patacas",
     "currencySymbol": "MOP$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1197,6 +1316,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1207,6 +1327,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1217,6 +1338,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1227,6 +1349,7 @@
     "currencyName": "Mauritian Rupee",
     "currencyPlural": "Mauritian rupees",
     "currencySymbol": "MURs",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1237,6 +1360,7 @@
     "currencyName": "Mexican Peso",
     "currencyPlural": "Mexican pesos",
     "currencySymbol": "MX$",
+    "currencyOrigin": true,
     "language": "es"
   },
   {
@@ -1247,6 +1371,7 @@
     "currencyName": "Malaysian Ringgit",
     "currencyPlural": "Malaysian ringgits",
     "currencySymbol": "RM",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1257,6 +1382,7 @@
     "currencyName": "Mozambican Metical",
     "currencyPlural": "Mozambican meticals",
     "currencySymbol": "MTn",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1267,6 +1393,7 @@
     "currencyName": "Namibian Dollar",
     "currencyPlural": "Namibian dollars",
     "currencySymbol": "N$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1277,6 +1404,7 @@
     "currencyName": "CFA Franc BCEAO",
     "currencyPlural": "CFA francs BCEAO",
     "currencySymbol": "CFA",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1287,6 +1415,7 @@
     "currencyName": "Australian Dollar",
     "currencyPlural": "Australian dollars",
     "currencySymbol": "AU$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1297,6 +1426,7 @@
     "currencyName": "Nigerian Naira",
     "currencyPlural": "Nigerian nairas",
     "currencySymbol": "₦",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1307,6 +1437,7 @@
     "currencyName": "Nicaraguan Córdoba",
     "currencyPlural": "Nicaraguan córdobas",
     "currencySymbol": "C$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1317,6 +1448,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1327,6 +1459,7 @@
     "currencyName": "Norwegian Krone",
     "currencyPlural": "Norwegian kroner",
     "currencySymbol": "Nkr",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1337,6 +1470,7 @@
     "currencyName": "Nepalese Rupee",
     "currencyPlural": "Nepalese rupees",
     "currencySymbol": "NPRs",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1347,6 +1481,7 @@
     "currencyName": "Australian Dollar",
     "currencyPlural": "Australian dollars",
     "currencySymbol": "AU$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1357,6 +1492,7 @@
     "currencyName": "New Zealand Dollar",
     "currencyPlural": "New Zealand dollars",
     "currencySymbol": "NZ$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1367,6 +1503,7 @@
     "currencyName": "New Zealand Dollar",
     "currencyPlural": "New Zealand dollars",
     "currencySymbol": "NZ$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1377,6 +1514,7 @@
     "currencyName": "Omani Rial",
     "currencyPlural": "Omani rials",
     "currencySymbol": "OMR",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1387,6 +1525,7 @@
     "currencyName": "Panamanian Balboa",
     "currencyPlural": "Panamanian balboas",
     "currencySymbol": "B/.",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1397,6 +1536,7 @@
     "currencyName": "Peruvian Nuevo Sol",
     "currencyPlural": "Peruvian nuevos soles",
     "currencySymbol": "S/.",
+    "currencyOrigin": true,
     "language": "es"
   },
   {
@@ -1407,6 +1547,7 @@
     "currencyName": "Philippine Peso",
     "currencyPlural": "Philippine pesos",
     "currencySymbol": "₱",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1417,6 +1558,7 @@
     "currencyName": "Pakistani Rupee",
     "currencyPlural": "Pakistani rupees",
     "currencySymbol": "PKRs",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1427,6 +1569,7 @@
     "currencyName": "Polish Zloty",
     "currencyPlural": "Polish zlotys",
     "currencySymbol": "zł",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1437,6 +1580,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1447,6 +1591,7 @@
     "currencyName": "New Zealand Dollar",
     "currencyPlural": "New Zealand dollars",
     "currencySymbol": "NZ$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1457,6 +1602,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1467,6 +1613,7 @@
     "currencyName": "Israeli New Sheqel",
     "currencyPlural": "Israeli new sheqels",
     "currencySymbol": "₪",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1477,6 +1624,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1487,6 +1635,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1497,6 +1646,7 @@
     "currencyName": "Paraguayan Guarani",
     "currencyPlural": "Paraguayan guaranis",
     "currencySymbol": "₲",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1507,6 +1657,7 @@
     "currencyName": "Qatari Rial",
     "currencyPlural": "Qatari rials",
     "currencySymbol": "QR",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1517,6 +1668,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1527,6 +1679,7 @@
     "currencyName": "Romanian Leu",
     "currencyPlural": "Romanian lei",
     "currencySymbol": "RON",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1537,6 +1690,7 @@
     "currencyName": "Serbian Dinar",
     "currencyPlural": "Serbian dinars",
     "currencySymbol": "din.",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1547,6 +1701,7 @@
     "currencyName": "Russian Ruble",
     "currencyPlural": "Russian rubles",
     "currencySymbol": "RUB",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1557,6 +1712,7 @@
     "currencyName": "Rwandan Franc",
     "currencyPlural": "Rwandan francs",
     "currencySymbol": "RWF",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1567,6 +1723,7 @@
     "currencyName": "Saudi Riyal",
     "currencyPlural": "Saudi riyals",
     "currencySymbol": "SR",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1577,6 +1734,7 @@
     "currencyName": "Sudanese Pound",
     "currencyPlural": "Sudanese pounds",
     "currencySymbol": "SDG",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1587,6 +1745,7 @@
     "currencyName": "Swedish Krona",
     "currencyPlural": "Swedish kronor",
     "currencySymbol": "Skr",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1597,6 +1756,7 @@
     "currencyName": "Singapore Dollar",
     "currencyPlural": "Singapore dollars",
     "currencySymbol": "S$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1607,6 +1767,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1617,6 +1778,7 @@
     "currencyName": "Norwegian Krone",
     "currencyPlural": "Norwegian kroner",
     "currencySymbol": "Nkr",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1627,6 +1789,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1637,6 +1800,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1647,6 +1811,7 @@
     "currencyName": "CFA Franc BCEAO",
     "currencyPlural": "CFA francs BCEAO",
     "currencySymbol": "CFA",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1657,6 +1822,7 @@
     "currencyName": "Somali Shilling",
     "currencyPlural": "Somali shillings",
     "currencySymbol": "Ssh",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1667,6 +1833,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1677,6 +1844,7 @@
     "currencyName": "Syrian Pound",
     "currencyPlural": "Syrian pounds",
     "currencySymbol": "SY£",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1687,6 +1855,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1697,6 +1866,7 @@
     "currencyName": "CFA Franc BEAC",
     "currencyPlural": "CFA francs BEAC",
     "currencySymbol": "FCFA",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1707,6 +1877,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1717,6 +1888,7 @@
     "currencyName": "CFA Franc BCEAO",
     "currencyPlural": "CFA francs BCEAO",
     "currencySymbol": "CFA",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1727,6 +1899,7 @@
     "currencyName": "Thai Baht",
     "currencyPlural": "Thai baht",
     "currencySymbol": "฿",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1737,6 +1910,7 @@
     "currencyName": "New Zealand Dollar",
     "currencyPlural": "New Zealand dollars",
     "currencySymbol": "NZ$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1747,6 +1921,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1757,6 +1932,7 @@
     "currencyName": "Tunisian Dinar",
     "currencyPlural": "Tunisian dinars",
     "currencySymbol": "DT",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1767,6 +1943,7 @@
     "currencyName": "Tongan Paʻanga",
     "currencyPlural": "Tongan paʻanga",
     "currencySymbol": "T$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1777,6 +1954,7 @@
     "currencyName": "Turkish Lira",
     "currencyPlural": "Turkish Lira",
     "currencySymbol": "TL",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1787,6 +1965,7 @@
     "currencyName": "Trinidad and Tobago Dollar",
     "currencyPlural": "Trinidad and Tobago dollars",
     "currencySymbol": "TT$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1797,6 +1976,7 @@
     "currencyName": "Australian Dollar",
     "currencyPlural": "Australian dollars",
     "currencySymbol": "AU$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1807,6 +1987,7 @@
     "currencyName": "New Taiwan Dollar",
     "currencyPlural": "New Taiwan dollars",
     "currencySymbol": "NT$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1817,6 +1998,7 @@
     "currencyName": "Tanzanian Shilling",
     "currencyPlural": "Tanzanian shillings",
     "currencySymbol": "TSh",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1827,6 +2009,7 @@
     "currencyName": "Ukrainian Hryvnia",
     "currencyPlural": "Ukrainian hryvnias",
     "currencySymbol": "₴",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1837,6 +2020,7 @@
     "currencyName": "Ugandan Shilling",
     "currencyPlural": "Ugandan shillings",
     "currencySymbol": "USh",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1847,6 +2031,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1857,6 +2042,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1867,6 +2053,7 @@
     "currencyName": "Uruguayan Peso",
     "currencyPlural": "Uruguayan pesos",
     "currencySymbol": "$U",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1877,6 +2064,7 @@
     "currencyName": "Uzbekistan Som",
     "currencyPlural": "Uzbekistan som",
     "currencySymbol": "UZS",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1887,6 +2075,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1897,6 +2086,7 @@
     "currencyName": "Venezuelan Bolívar",
     "currencyPlural": "Venezuelan bolívars",
     "currencySymbol": "Bs.F.",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1907,6 +2097,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1917,6 +2108,7 @@
     "currencyName": "US Dollar",
     "currencyPlural": "US dollars",
     "currencySymbol": "$",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1927,6 +2119,7 @@
     "currencyName": "Vietnamese Dong",
     "currencyPlural": "Vietnamese dong",
     "currencySymbol": "₫",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1937,6 +2130,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1947,6 +2141,7 @@
     "currencyName": "Yemeni Rial",
     "currencyPlural": "Yemeni rials",
     "currencySymbol": "YR",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1957,6 +2152,7 @@
     "currencyName": "Euro",
     "currencyPlural": "euros",
     "currencySymbol": "€",
+    "currencyOrigin": false,
     "language": "en_US"
   },
   {
@@ -1967,6 +2163,7 @@
     "currencyName": "South African Rand",
     "currencyPlural": "South African rand",
     "currencySymbol": "R",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1977,6 +2174,7 @@
     "currencyName": "Zimbabwean Dollar",
     "currencyPlural": "Zimbabwean Dollar",
     "currencySymbol": "ZWL$",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1987,6 +2185,7 @@
     "currencyName": "Bitcoin",
     "currencyPlural": "bitcions",
     "currencySymbol": "BTC",
+    "currencyOrigin": true,
     "language": "en_US"
   },
   {
@@ -1997,6 +2196,7 @@
     "currencyName": "Ether",
     "currencyPlural": "ethers",
     "currencySymbol": "ETH",
+    "currencyOrigin": true,
     "language": "en_US"
   }
 ]

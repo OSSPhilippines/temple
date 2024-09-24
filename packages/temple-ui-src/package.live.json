@@ -10,7 +10,6 @@
   "main": "index.js",
   "dependencies": {
     "@ossph/temple": "0.1.6",
-    "@simonwep/pickr": "1.9.1",
     "codemirror": "5.65.17",
     "dayjs": "1.11.13",
     "dompurify": "3.1.6",

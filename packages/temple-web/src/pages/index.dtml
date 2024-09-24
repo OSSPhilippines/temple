@@ -1,18 +1,17 @@
 <link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
-<link rel="import" type="component" href="@ossph/temple-ui/form/button.tml" name="tui-button" />
+<link rel="import" type="component" href="@ossph/temple-ui/layout/panel.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/form/button.tml" name="element-button" />
 <link rel="import" type="component" href="@/components/ide/app.tml" name="ide-app" />
 <link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
 <link rel="import" type="component" href="@/components/ide/preview.tml" name="ide-preview" />
 <link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
 <link rel="import" type="component" href="@/components/tweet-box.tml" />
 <style>
-  @tui theme;
-  @tui reset;
-  @tui fouc-opacity;
-  @tui default-block;
-  @tui utilities;
+  @temple theme;
+  @temple reset;
+  @temple fouc-opacity;
+  @temple utilities;
 </style>
 <script>
   import { env } from '@ossph/temple';
@@ -34,20 +33,20 @@
           <i18n-translate p trim class="tx-30 py-30 tx-lh-36">
             The reactive web component template engine.
           </i18n-translate>
-          <tui-button 
+          <element-button 
             primary xl rounded 
             class="mr-10" 
             href="/temple/docs/getting-started.html"
           >
             {_('Get Started')}
-          </tui-button>
-          <tui-button 
+          </element-button>
+          <element-button 
             secondary xl rounded 
             class="inline-block"
             href="/temple/docs/index.html"
           >
             {_('Read the Docs')}
-          </tui-button>
+          </element-button>
         </section>
         <section class="m-auto mw-960 px-20">
           <i18n-translate p trim class="p-20 tx-center tx-lh-36 tx-18">
@@ -294,21 +293,21 @@
           <h3 class="tx-26 mb-20">
             {_('What are you waiting for?')}
           </h3>
-          <tui-button 
+          <element-button 
             primary xl rounded 
             class="inline-block"
             style="margin-right:10px;" 
             href="/temple/docs/getting-started.html"
           >
             {_('Get Started')}
-          </tui-button>
-          <tui-button 
+          </element-button>
+          <element-button 
             secondary xl rounded 
             class="inline-block"
             href="/temple/docs/index.html"
           >
             {_('Read the Docs')}
-          </tui-button>
+          </element-button>
         </section>
       </main>
     </panel-layout>

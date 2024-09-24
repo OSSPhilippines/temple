@@ -1,9 +1,10 @@
 <link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
 <link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
-<link rel="import" type="component" href="@ossph/temple-ui/alert.tml" name="tui-alert" />
-<link rel="import" type="component" href="@ossph/temple-ui/tab.tml" name="tui-tab" />
+<link rel="import" type="component" href="@ossph/temple-ui/layout/panel.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/alert.tml" name="element-alert" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/icon.tml" name="element-icon" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/tab.tml" name="element-tab" />
 <link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
 <link rel="import" type="component" href="@/components/api/ui.tml" name="api-ui" />
 <link rel="import" type="component" href="@/components/ide/app/head.tml" name="app-head" />
@@ -13,11 +14,10 @@
 <link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
 <link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
 <style>
-  @tui theme;
-  @tui reset;
-  @tui fouc-opacity;
-  @tui default-block;
-  @tui utilities;
+  @temple theme;
+  @temple reset;
+  @temple fouc-opacity;
+  @temple utilities;
 </style>
 <script>
   import { env } from '@ossph/temple';
@@ -75,15 +75,15 @@
               npm init -y && npm install --save @ossph/temple && npm install --save-dev ts-node typescript @types/node
             </ide-code>
           </ide-app>
-          <tui-alert solid curved info class="my-20 tx-lh-24">
-            <i class="fas fa-info-circle"></i>
+          <element-alert solid curved info class="my-20 tx-lh-24">
+            <element-icon name="info-circle" />
             <strong>Recommended:</strong>
             Download the Temple editor plugin at the <a 
               target="_blank" 
               class="tx-white tx-underline"
               href="https://marketplace.visualstudio.com/items?itemName=ossph.temple-language"
             >Visual Studio Marketplace</a>.
-          </tui-alert>
+          </element-alert>
           <i18n-translate p trim class="tx-lh-36 py-20">
             Create a server file called
             <ide-code inline>src/index.ts</ide-code> 
@@ -154,16 +154,16 @@
             file with the following code. 
           </i18n-translate>
 
-          <tui-alert solid curved info class="my-20 tx-lh-24">
-            <i class="fas fa-info-circle"></i>
+          <element-alert solid curved info class="my-20 tx-lh-24">
+            <element-icon name="info-circle" />
             <strong>Optional:</strong> You can also check your other 
             files to make sure you are following along.
-          </tui-alert>
+          </element-alert>
 
           <ide-app height={410} title="With NodeJS HTTP">
             <app-head>
               <div class="flex scroll-x-auto pt-5 pl-5">
-                <tui-tab 
+                <element-tab 
                   on
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
@@ -172,8 +172,8 @@
                   selector="#http-index-ts"
                 >
                   src/index.ts
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -181,8 +181,8 @@
                   selector="#http-page-dtml"
                 >
                   src/page.dtml
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -190,15 +190,15 @@
                   selector="#http-package-json"
                 >
                   package.json
-                </tui-tab>
+                </element-tab>
               </div>
             </app-head>
             <app-left>
               <h5 class="p-5">
-                <i class="fas fa-fw fa-chevron-down"></i>
+                <element-icon name="chevron-down" />
                 <span>src</span>
               </h5>
-              <tui-tab 
+              <element-tab 
                 on
                 class="pl-15 pt-10 block" 
                 active="tx-white"
@@ -206,29 +206,29 @@
                 group="http" 
                 selector="#http-index-ts"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 index.ts
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pl-15 pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="http" 
                 selector="#http-page-dtml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 page.dtml
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="http" 
                 selector="#http-package-json"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 package.json
-              </tui-tab>
+              </element-tab>
             </app-left>
             <app-main>
               <ide-code id="http-index-ts" lang="js" numbers trim detab={16}>{`
@@ -418,7 +418,7 @@
           <ide-app height={410} title="With Developer Tools" class="py-20">
             <app-head>
               <div class="flex scroll-x-auto pt-5 pl-5">
-                <tui-tab 
+                <element-tab 
                   on
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
@@ -427,8 +427,8 @@
                   selector="#develop-index-ts"
                 >
                   src/index.ts
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -436,8 +436,8 @@
                   selector="#develop-page-dtml"
                 >
                   src/page.dtml
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -445,15 +445,15 @@
                   selector="#develop-package-json"
                 >
                   package.json
-                </tui-tab>
+                </element-tab>
               </div>
             </app-head>
             <app-left>
               <h5 class="p-5">
-                <i class="fas fa-fw fa-chevron-down"></i>
+                <element-icon name="chevron-down" />
                 <span>src</span>
               </h5>
-              <tui-tab 
+              <element-tab 
                 on
                 class="pl-15 pt-10 block" 
                 active="tx-white"
@@ -461,29 +461,29 @@
                 group="develop" 
                 selector="#develop-index-ts"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 index.ts
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pl-15 pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="develop" 
                 selector="#develop-page-dtml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 page.dtml
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="develop" 
                 selector="#develop-package-json"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 package.json
-              </tui-tab>
+              </element-tab>
             </app-left>
             <app-main>
               <ide-code id="develop-index-ts" lang="js" numbers trim detab={16}>{`
@@ -790,13 +790,13 @@
             you are using Tailwind.
           </i18n-translate>
 
-          <tui-alert solid curved warning class="my-20 tx-lh-24">
-            <i class="fas fa-exclamation-triangle"></i>
+          <element-alert solid curved warning class="my-20 tx-lh-24">
+            <element-icon name="exclamation-triangle" />
             <strong>Warning:</strong>
             The caveat for using TailwindCSS, means that web components 
             using it will not be shippable to other projects that do not
             use Tailwind. It all comes down to preference in the end.
-          </tui-alert>
+          </element-alert>
 
           <i18n-translate p trim class="tx-lh-36 py-20">
             Temple has a separate package called
@@ -880,7 +880,7 @@
           <ide-app height={410} title="With TailwindCSS" class="py-20">
             <app-head>
               <div class="flex scroll-x-auto pt-5 pl-5">
-                <tui-tab 
+                <element-tab 
                   on
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
@@ -889,8 +889,8 @@
                   selector="#tailwind-index-ts"
                 >
                   src/index.ts
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -898,8 +898,8 @@
                   selector="#tailwind-page-dtml"
                 >
                   src/page.dtml
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -907,15 +907,15 @@
                   selector="#tailwind-package-json"
                 >
                   package.json
-                </tui-tab>
+                </element-tab>
               </div>
             </app-head>
             <app-left>
               <h5 class="p-5">
-                <i class="fas fa-fw fa-chevron-down"></i>
+                <element-icon name="chevron-down" />
                 <span>src</span>
               </h5>
-              <tui-tab 
+              <element-tab 
                 on
                 class="pl-15 pt-10 block" 
                 active="tx-white"
@@ -923,29 +923,29 @@
                 group="tailwind" 
                 selector="#tailwind-index-ts"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 index.ts
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pl-15 pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="tailwind" 
                 selector="#tailwind-page-dtml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 page.dtml
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="tailwind" 
                 selector="#tailwind-package-json"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 package.json
-              </tui-tab>
+              </element-tab>
             </app-left>
             <app-main>
               <ide-code id="tailwind-index-ts" lang="js" numbers trim detab={16}>{`
@@ -1158,7 +1158,7 @@
           <ide-app height={410} title="With ExpressJS" class="py-20">
             <app-head>
               <div class="flex scroll-x-auto pt-5 pl-5">
-                <tui-tab 
+                <element-tab 
                   on
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
@@ -1167,8 +1167,8 @@
                   selector="#express-index-ts"
                 >
                   src/index.ts
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -1176,8 +1176,8 @@
                   selector="#express-page-dtml"
                 >
                   src/page.dtml
-                </tui-tab>
-                <tui-tab 
+                </element-tab>
+                <element-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -1185,15 +1185,15 @@
                   selector="#express-package-json"
                 >
                   package.json
-                </tui-tab>
+                </element-tab>
               </div>
             </app-head>
             <app-left>
               <h5 class="p-5">
-                <i class="fas fa-fw fa-chevron-down"></i>
+                <element-icon name="chevron-down" />
                 <span>src</span>
               </h5>
-              <tui-tab 
+              <element-tab 
                 on
                 class="pl-15 pt-10 block" 
                 active="tx-white"
@@ -1201,29 +1201,29 @@
                 group="express" 
                 selector="#express-index-ts"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 index.ts
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pl-15 pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="express" 
                 selector="#express-page-dtml"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 page.dtml
-              </tui-tab>
-              <tui-tab 
+              </element-tab>
+              <element-tab 
                 class="pt-10 block" 
                 active="tx-white"
                 inactive="tx-muted" 
                 group="express" 
                 selector="#express-package-json"
               >
-                <i class="fas fa-fw fa-file"></i>
+                <element-icon name="file" />
                 package.json
-              </tui-tab>
+              </element-tab>
             </app-left>
             <app-main>
               <ide-code id="express-index-ts" lang="js" numbers trim detab={16}>{`
@@ -1430,12 +1430,12 @@
           
           <nav class="flex">
             <a class="tx-primary py-40" href="/temple/docs/index.html">
-              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              <element-icon name="chevron-left" theme="tx-1" />
               {_('Documentation')}
             </a>
             <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/markup-syntax.html">
               {_('Markup Syntax')}
-              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
+              <element-icon name="chevron-right" theme="tx-1" />
             </a>
           </nav>
           <footer class="foot"></footer>

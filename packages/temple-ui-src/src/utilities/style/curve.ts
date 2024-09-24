@@ -16,6 +16,7 @@ export default function curve(
     : initial;
   if (style) {
     styles.add(selector, 'border-radius', style);
+    styles.add(selector, 'overflow', 'hidden');
   }
   return curve ? 'curve'
     : curved ? 'curved'

@@ -1,18 +1,18 @@
 <link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
 <link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
-<link rel="import" type="component" href="@ossph/temple-ui/alert.tml" name="tui-alert" />
+<link rel="import" type="component" href="@ossph/temple-ui/layout/panel.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/alert.tml" name="element-alert" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/icon.tml" name="element-icon" />
 <link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
 <link rel="import" type="component" href="@/components/api/ui.tml" name="api-ui" />
 <link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
 <link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
 <style>
-  @tui theme;
-  @tui reset;
-  @tui fouc-opacity;
-  @tui default-block;
-  @tui utilities;
+  @temple theme;
+  @temple reset;
+  @temple fouc-opacity;
+  @temple utilities;
 </style>
 <script>
   import { env } from '@ossph/temple';
@@ -44,22 +44,22 @@
             the document on the client-side. 
           </i18n-translate>
 
-          <tui-alert curved secondary class="tx-lh-24">
-            <i class="fas fa-exclamation-triangle"></i>
+          <element-alert curved secondary class="tx-lh-24">
+            <element-icon name="exclamation-triangle" />
             <strong>Warning:</strong> Using the client API in the wrong 
             way could possibly break your client application.
-          </tui-alert>
+          </element-alert>
 
           <api-ui start="TempleAPI" />
 
           <nav class="flex">
             <a class="tx-primary py-40" href="/temple/docs/compiler-api.html">
-              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              <element-icon name="chevron-left" theme="tx-1" />
               {_('Compiler API')}
             </a>
             <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/template-engine.html">
               {_('Template Engine')}
-              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
+              <element-icon name="chevron-right" theme="tx-1" />
             </a>
           </nav>
           <footer class="foot"></footer>

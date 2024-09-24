@@ -1,0 +1,58 @@
+<link rel="import" type="component" href="./input.tml" name="field-input" />
+<style>
+</style>
+<script observe="autocomplete,disabled,name,readonly,required,value">
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  import setDisplay from '../utilities/style/display';
+  //get props
+  const { 
+    //dont need these...
+    style, 'class': _,
+    //input attributes
+    ...attributes
+  } = this.props;
+  //override default styles
+  const styles = new StyleSet();
+  const css = this.styles();
+  this.styles = () => css + styles.toString();
+  //determine display
+  setDisplay(this.props, styles, 'inline-block', ':host');
+  styles.add('div', 'display', 'flex');
+  styles.add('div', 'align-items', 'stretch');
+  styles.add('input', 'height', '100%');
+  //handlers
+  const handlers = {
+    change: e => {
+      const box = e.target;
+      const input = this.querySelector('*');
+      if (!input) return;
+      input.setAttribute('value', box.value);
+    },
+    attribute: e => {
+      //accepts: error,accept,autocomplete,checked,disabled,max,min,
+      //         multiple,name,pattern,readonly,required,step,value
+      const { action, name, prev, value, target } = e.detail;
+      const input = this.querySelector('*');
+      if (!input) return;
+      switch (action) {
+        case 'add':
+        case 'update':
+          input.setAttribute(name, value);
+          break;
+        case 'remove':
+          input.removeAttribute(name);
+          break;
+      }
+    }
+  };
+  this.on('attributechange', handlers.attribute);
+</script>
+<template type="light">
+  <field-input {...attributes} />
+</template>
+<template type="shadow">
+  <div>
+    <span><input type="color" change={handlers.change} /></span>
+    <slot></slot>
+  </div>
+</template>

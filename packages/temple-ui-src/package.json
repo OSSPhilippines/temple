@@ -3,17 +3,19 @@
   "version": "0.1.6",
   "private": true,
   "scripts": {
-    "build": "yarn build:tsc && yarn build:styles && yarn build:ui && yarn build:intl && yarn build:files && yarn build:package",
+    "build": "yarn build:tsc && yarn build:element && yarn build:field && yarn build:form && yarn build:format && yarn build:layout && yarn build:intl && yarn build:files && yarn build:package",
     "build:files": "cp README.md LICENSE ../temple-ui",
     "build:package": "cp ./package.live.json ../temple-ui/package.json",
     "build:intl": "cp ./src/utilities/intl.json ../temple-ui/utilities/intl.json",
-    "build:styles": "cp -rf ./src/styles ../temple-ui",
-    "build:ui": "cp -rf ./src/components/ ../temple-ui/",
+    "build:element": "cp -rf ./src/element ../temple-ui",
+    "build:field": "cp -rf ./src/field ../temple-ui",
+    "build:form": "cp -rf ./src/form ../temple-ui",
+    "build:format": "cp -rf ./src/format ../temple-ui",
+    "build:layout": "cp -rf ./src/layout ../temple-ui",
     "build:tsc": "tsc"
   },
   "devDependencies": {
     "@ossph/temple": "0.1.6",
-    "@simonwep/pickr": "1.9.1",
     "@types/dompurify": "3.0.5",
     "@types/inputmask": "5.0.7",
     "@types/node": "22.1.0",

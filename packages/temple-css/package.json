@@ -1,0 +1,21 @@
+{
+  "name": "@ossph/temple-css",
+  "version": "0.1.6",
+  "description": "Temple atomic css framework",
+  "license": "Apache-2.0",
+  "author": "Chris <chris@incept.asia>",
+  "homepage": "https://github.com/OSSPhilippines/temple",
+  "bugs": "https://github.com/OSSPhilippines/temple/issues",
+  "repository": "OSSPhilippines/temple",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+     "@ossph/temple": "0.1.6"
+  },
+  "devDependencies": {
+    "@types/node": "22.1.0",
+    "typescript": "5.5.4"
+  }
+}

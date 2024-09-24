@@ -1,18 +1,18 @@
 <link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
 <link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
-<link rel="import" type="component" href="@ossph/temple-ui/alert.tml" name="tui-alert" />
+<link rel="import" type="component" href="@ossph/temple-ui/layout/panel.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/alert.tml" name="element-alert" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/icon.tml" name="element-icon" />
 <link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
 <link rel="import" type="component" href="@/components/ide/app.tml" name="ide-app" />
 <link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
 <link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
 <style>
-  @tui theme;
-  @tui reset;
-  @tui fouc-opacity;
-  @tui default-block;
-  @tui utilities;
+  @temple theme;
+  @temple reset;
+  @temple fouc-opacity;
+  @temple utilities;
 </style>
 <script>
   import { env } from '@ossph/temple';
@@ -350,11 +350,11 @@
             </i18n-translate>
           </ul>
 
-          <tui-alert solid curved secondary class="my-20 tx-lh-24">
-            <i class="fas fa-exclamation-triangle"></i>
+          <element-alert solid curved secondary class="my-20 tx-lh-24">
+            <element-icon name="exclamation-triangle" />
             <strong>Warning:</strong> Any markup auto corrected by browser will cause data syncing 
             issues with Temple.
-          </tui-alert>
+          </element-alert>
 
           <i18n-translate p trim class="tx-lh-36 py-20">
             Temple components can loosely be self closing
@@ -601,12 +601,12 @@
 
           <nav class="flex">
             <a class="tx-primary py-40" href="/temple/docs/getting-started.html">
-              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              <element-icon name="chevron-left" theme="tx-1" />
               {_('Getting Started')}
             </a>
             <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/state-management.html">
               {_('State Management')}
-              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
+              <element-icon name="chevron-right" theme="tx-1" />
             </a>
           </nav>
           <footer class="foot"></footer>

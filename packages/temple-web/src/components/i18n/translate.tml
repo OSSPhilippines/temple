@@ -1,9 +1,8 @@
 <script>
   import { translate } from './index';
-  import { props, children } from '@ossph/temple';
 
-  const { trim = false, p = false, li = false, div = false } = props();
-  const childlist = children();
+  const { trim = false, p = false, li = false, div = false } = this.props;
+  const childlist = this.originalChildren;
   const phrase: string = [];
   const variables: Node = [];
   for (const child of childlist) {

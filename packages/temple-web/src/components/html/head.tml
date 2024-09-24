@@ -15,7 +15,17 @@
   <meta name="twitter:image" content="https://ossphilippines.github.io/temple/temple-logo.png" />
   <link rel="favicon" href="/temple/favicon.ico" />
   <link rel="shortcut icon" type="image/png" href="/temple/favicon.png" />
-  <link rel="stylesheet" type="text/css" href="/temple/styles/fontawesome/all.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  <link
+    rel="stylesheet"
+    media="(prefers-color-scheme:light)"
+    href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/themes/light.css"
+  />
+  <link
+    rel="stylesheet"
+    media="(prefers-color-scheme:dark)"
+    href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/themes/dark.css"
+  />
   <link rel="stylesheet" type="text/css" href="/temple/styles/global.css" />
   <link rel="stylesheet" type="text/css" href={`/temple/build/client/${env('BUILD_ID')}.css`} />
   

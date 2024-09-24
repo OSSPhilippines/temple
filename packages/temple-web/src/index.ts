@@ -5,7 +5,7 @@ import path from 'path';
 import express from 'express';
 import temple, { cache } from '@ossph/temple/compiler';
 import { view, dev } from '@ossph/temple-express';
-import { tui } from '@ossph/temple-ui/compiler';
+import { plugin as css } from '@ossph/temple-css';
 
 type Next = () => void;
 
@@ -17,8 +17,8 @@ const compiler = temple({
   cwd: __dirname, 
   minify: process.env.NODE_ENV !== 'development' 
 });
-//use temple ui
-compiler.use(tui());
+//use temple css
+compiler.use(css());
 //use build cache
 compiler.use(cache({ 
   environment: process.env.NODE_ENV,
@@ -113,6 +113,7 @@ app.get('/temple/**', (req, res) => {
 //error handling
 app.use((error: Error, req: Request, res: Response, next: Next) => {
   if (error) {
+    console.log(error);
     res.status(500);
     res.render('500', { error: error.message });
     return;

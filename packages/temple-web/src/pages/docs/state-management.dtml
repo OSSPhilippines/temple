@@ -1,19 +1,19 @@
 <link rel="import" type="template" href="@/components/html/head.tml" name="html-head" />
 <link rel="import" type="template" href="@/components/html/header.tml" name="html-header" />
 <link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
-<link rel="import" type="component" href="@ossph/temple-ui/alert.tml" name="tui-alert" />
+<link rel="import" type="component" href="@ossph/temple-ui/layout/panel.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/alert.tml" name="element-alert" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/icon.tml" name="element-icon" />
 <link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
 <link rel="import" type="component" href="@/components/api/ui.tml" name="api-ui" />
 <link rel="import" type="component" href="@/components/ide/app.tml" name="ide-app" />
 <link rel="import" type="component" href="@/components/ide/code.tml" name="ide-code" />
 <link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
 <style>
-  @tui theme;
-  @tui reset;
-  @tui fouc-opacity;
-  @tui default-block;
-  @tui utilities;
+  @temple theme;
+  @temple reset;
+  @temple fouc-opacity;
+  @temple utilities;
   .col-2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -345,8 +345,8 @@
 
           <api-ui start="TempleComponent" />
 
-          <tui-alert curved info class="py-20 tx-lh-24">
-            <i class="fas fa-fw fa-info-circle"></i>
+          <element-alert curved info class="py-20 tx-lh-24">
+            <element-icon name="info-circle" />
             <strong>Info:</strong> You can discover more methods and properties
             of the <code>HTMLElement</code> class on the
             <a 
@@ -356,16 +356,16 @@
             >
               MDN Web Docs
             </a>.
-          </tui-alert>
+          </element-alert>
 
           <nav class="flex">
             <a class="tx-primary py-40" href="/temple/docs/markup-syntax.html">
-              <i class="fas fa-fw fa-chevron-left tx-t-1"></i>
+              <element-icon name="chevron-left" theme="tx-1" />
               {_('Markup Syntax')}
             </a>
             <a class="flex-grow tx-right tx-primary py-40" href="/temple/docs/component-strategy.html">
               {_('Component Strategy')}
-              <i class="fas fa-fw fa-chevron-right tx-t-1"></i>
+              <element-icon name="chevron-right" theme="tx-1" />
             </a>
           </nav>
           <footer class="foot"></footer>

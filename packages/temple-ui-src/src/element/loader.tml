@@ -1,0 +1,55 @@
+<script>
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  import setColor from '../utilities/style/color';
+  import setDisplay from '../utilities/style/display';
+  //extract props
+  const { 
+    //shape
+    size = 20,    slice = 0,
+    speed = 1000, thickness = 2,
+    //styles
+    solid, dotted, dashed
+  } = this.props;
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => keyframe + styles.toString();
+  //determine display
+  setDisplay(this.props, styles, 'inline-block', ':host');
+  styles.add(':host', 'margin-right', '5px');
+  //default icon styles
+  styles.add('i', 'display', 'inline-block');
+  styles.add('i', 'border-radius', '50%');
+  styles.add('i', 'animation', 'spin 1s linear infinite');
+  styles.add('i', 'width', `${size}px`);
+  styles.add('i', 'height', `${size}px`);
+  styles.add('i', 'animation-duration', `${speed}ms`);
+  styles.add('i', 'border-width', `${thickness}px`);
+  //determine border style
+  const style = solid ? 'solid' 
+    : dotted ? 'dotted' 
+    : dashed ? 'dashed' 
+    : 'solid';
+  styles.add('i', 'border-style', style);
+  //determine icon color
+  setColor(this.props, styles, 'var(--black)', 'i', 'border-bottom-color');
+  setColor(this.props, styles, 'var(--black)', 'i', 'border-left-color');
+  setColor(this.props, styles, 'var(--black)', 'i', 'border-right-color');
+  setColor(this.props, styles, 'var(--black)', 'i', 'border-top-color');
+  //determine slices
+  if (slice > 0) {
+    styles.add('i', 'border-right-color', 'transparent');
+  } 
+  if (slice > 1) {
+    styles.add('i', 'border-bottom-color', 'transparent');
+  } 
+  if (slice > 2) {
+    styles.add('i', 'border-left-color', 'transparent');
+  }
+  //add keyframe
+  const keyframe = `@keyframes spin{${
+    `0%{transform:rotate(0deg)}`
+  }${
+    `100%{transform:rotate(360deg)}`
+  }}`;
+</script>
+<i></i>

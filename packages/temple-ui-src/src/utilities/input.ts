@@ -1,76 +1,71 @@
 import type { ChangeEvent, AttributeChangeEvent } from '@ossph/temple/dist/types';
-import type TempleComponent from '@ossph/temple/dist/client/TempleComponent';
+import type TempleField from '@ossph/temple/dist/client/TempleField';
+import StyleSet from '@ossph/temple/dist/style/StyleSet';
+import setAlign from './style/align';
+import setColor from './style/color';
+import setDisplay from './style/display';
+import setPadding from './style/padding';
+import setSize from './style/size';
 
-export function getProps(host: TempleComponent) {
+export function getProps(host: TempleField) {
   //get props
   const { 
-    error, change, update,
+    change, update, 
+    //display
+    flex, none, inline, block, 
+    'inline-block': iblock, 
+    'inline-flex': iflex,
+    //spacing
+    padding, 
+    'padding-x': paddingX, 
+    'padding-y': paddingY,
+    //font color
+    color, white,   black, 
+    info,  warning, success, 
+    error, muted,   primary, 
+    secondary, theme,
+    //font size
+    size, xs,  sm,  md,  lg, 
+    xl,   xl2, xl3, xl4, xl5,
+    //others
+    align, 
     //dont need these...
     style, 'class': _,
     //input attributes
     ...attributes
   } = host.props;
-  return { error, change, update, attributes };
-};
-
-export function setHostClass(host: TempleComponent, error: boolean|string) {
-  //get the host classes
-  const classes = host.className.split(' ');
-  //determine display
-  if (!classes.find(
-    classname => classname.includes('block')
-      || classname.includes('flex')
-      || classname.includes('none')
-      || classname.includes('inline')
-      || classname.includes('inline-block')
-  )) {
-    host.classList.add('inline-block');
-  }
-  //determine padding
-  if (!classes.find(
-    classname => classname.includes('p-')
-      || classname.includes('px-')
-      || classname.includes('py-')
-      || classname.includes('pt-')
-      || classname.includes('pr-')
-      || classname.includes('pb-')
-      || classname.includes('pl-')
-  )) {
-    host.classList.add('p-7');
-  }
-  //determine border
-  if (!classes.find(
-    classname => classname.includes('b-')
-      || classname.includes('ba-')
-      || classname.includes('bx-')
-      || classname.includes('by-')
-      || classname.includes('bt-')
-      || classname.includes('br-')
-      || classname.includes('bb-')
-      || classname.includes('bl-')
-  )) {
-    host.classList.add('b-solid', 'b-1');
-    if (error) {
-      host.classList.add('b-error');
-    } else {
-      host.classList.add('b-black');
-    }
-  }
-  if (error) {
-    host.classList.add('tx-error');
-  }
-  //determine bg
-  if (!classes.find(classname => classname.includes('bg-'))) {
-    host.classList.add('bg-white');
-  }
-
-  return host.className.split(' ');
+  const { background, border } = host.propsTree;
+  return { 
+    change, update, 
+    //display
+    flex, none, inline, block, 
+    'inline-block': iblock, 
+    'inline-flex': iflex,
+    //spacing
+    padding, 
+    'padding-x': paddingX, 
+    'padding-y': paddingY,
+    //font color
+    color, white,   black, 
+    info,  warning, success, 
+    error, muted,   primary, 
+    secondary, theme,
+    //font size
+    size, xs,  sm,  md,  lg, 
+    xl,   xl2, xl3, xl4, xl5,
+    //sub props
+    background, border,
+    //others
+    align, 
+    //for input
+    attributes 
+  };
 };
 
 export function getHandlers(
-  host: TempleComponent, 
-  change: Function, 
-  update: Function
+  host: TempleField, 
+  change?: Function, 
+  update?: Function
 ) {
   //handlers
   const handlers = {
@@ -83,15 +78,6 @@ export function getHandlers(
       //         multiple,name,pattern,readonly,required,step,value
       const { action, name, value, target } = e.detail;
       const input = target.querySelector('input');
-      //set new class
-      if (name === 'error') {
-        if (action === 'remove') {
-          host.classList.remove('b-error', 'tx-error');
-        } else {
-          host.classList.add('b-error', 'tx-error');
-        }
-        return;
-      }
       switch (action) {
         case 'add':
         case 'update':
@@ -105,4 +91,47 @@ export function getHandlers(
   };
   host.on('attributechange', handlers.attribute);
   return handlers;
+};
+
+export function setDefaultStyles(props: Record<string, any>, styles: StyleSet) {
+  const { background, border, error } = props;
+  //determine display
+  setDisplay(props, styles, 'inline-block', ':host');
+  //determine background colors
+  if (background) {
+    setColor(background, styles, 'var(--white)', ':host', 'background-color');
+  } else {
+    styles.add(':host', 'background-color', 'var(--white)');
+  }
+  //determine border colors
+  styles.add(':host', 'border-width', '1px');
+  styles.add(':host', 'border-style', 'solid');
+  if (error) {
+    styles.add(':host', 'border-color', 'var(--error)');
+  } else if (border) {
+    setColor(border, styles, 'var(--black)', ':host', 'border-color');
+  } else {
+    styles.add(':host', 'border-color', 'var(--black)');
+  }
+  //default input styles
+  styles.add('::slotted(*)', 'background', 'transparent');
+  styles.add('::slotted(*)', 'border', '0');
+  styles.add('::slotted(*)', 'box-sizing', 'border-box');
+  styles.add('::slotted(*)', 'display', 'block');
+  styles.add('::slotted(*)', 'height', '100%');
+  styles.add('::slotted(*:focus)', 'outline', 'none');
+  styles.add('::slotted(*)', 'width', '100%');
+  styles.add('::host([error]) ::slotted(*)', 'color', 'var(--error)');
+  styles.add('::host([error]) ::slotted(*)', 'border-color', 'var(--error)');
+  //determine align
+  setAlign(props, styles, 'left', '::slotted(*)');
+  //determine font size
+  setSize(props, styles, '13px', '::slotted(*)', 'font-size');
+  //determine font color
+  setColor(props, styles, 'var(--black)', '::slotted(*)', 'color');
+  //determine padding
+  const padding = setPadding(props, styles, '::slotted(*)');
+  if (!padding) {
+    styles.add('::slotted(*)', 'padding', '7px');
+  }
 };

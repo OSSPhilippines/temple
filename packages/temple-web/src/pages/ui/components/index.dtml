@@ -3,32 +3,31 @@
 <link rel="import" type="template" href="@/components/html/aside.tml" name="html-aside" />
 <link rel="import" type="component" href="@/components/api/docs.tml" name="api-docs" />
 <link rel="import" type="component" href="@/components/i18n/translate.tml" name="i18n-translate" />
-<link rel="import" type="component" href="@ossph/temple-ui/panel.tml" name="panel-layout" />
-<link rel="import" type="component" href="@ossph/temple-ui/table.tml" name="tui-tbl" />
-<link rel="import" type="component" href="@ossph/temple-ui/table/head.tml" name="tbl-head" />
-<link rel="import" type="component" href="@ossph/temple-ui/table/foot.tml" name="tbl-foot" />
-<link rel="import" type="component" href="@ossph/temple-ui/table/row.tml" name="tbl-row" />
-<link rel="import" type="component" href="@ossph/temple-ui/table/col.tml" name="tbl-col" />
-<link rel="import" type="component" href="@ossph/temple-ui/form/button.tml" name="tui-button" />
-<link rel="import" type="component" href="@ossph/temple-ui/form/control.tml" name="tui-control" />
-<link rel="import" type="component" href="@ossph/temple-ui/field/input.tml" name="tui-input" />
-<link rel="import" type="component" href="@ossph/temple-ui/field/textarea.tml" name="tui-textarea" />
-<link rel="import" type="component" href="@ossph/temple-ui/alert.tml" name="tui-alert" />
-<link rel="import" type="component" href="@ossph/temple-ui/tab.tml" name="tui-tab" />
-<link rel="import" type="component" href="@ossph/temple-ui/icon.tml" name="tui-icon" />
-<link rel="import" type="component" href="@ossph/temple-ui/badge.tml" name="tui-badge" />
-<link rel="import" type="component" href="@ossph/temple-ui/loader.tml" name="tui-loader" />
-<link rel="import" type="component" href="@ossph/temple-ui/tooltip.tml" name="tui-tip" />
-<link rel="import" type="component" href="@ossph/temple-ui/pager.tml" name="tui-pager" />
-<link rel="import" type="component" href="@ossph/temple-ui/crumbs.tml" name="tui-crumbs" />
-<link rel="import" type="component" href="@ossph/temple-ui/progress.tml" name="tui-progress" />
-<link rel="import" type="component" href="@ossph/temple-ui/notify.tml" name="tui-notify" />
+<link rel="import" type="component" href="@ossph/temple-ui/layout/panel.tml" name="panel-layout" />
+<link rel="import" type="component" href="@ossph/temple-ui/layout/table.tml" name="interface-table" />
+<link rel="import" type="component" href="@ossph/temple-ui/layout/table/head.tml" name="table-head" />
+<link rel="import" type="component" href="@ossph/temple-ui/layout/table/foot.tml" name="table-foot" />
+<link rel="import" type="component" href="@ossph/temple-ui/layout/table/row.tml" name="table-row" />
+<link rel="import" type="component" href="@ossph/temple-ui/layout/table/col.tml" name="table-col" />
+<link rel="import" type="component" href="@ossph/temple-ui/form/button.tml" name="interface-button" />
+<link rel="import" type="component" href="@ossph/temple-ui/form/control.tml" name="interface-control" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/input.tml" name="interface-input" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/textarea.tml" name="interface-textarea" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/alert.tml" name="interface-alert" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/tab.tml" name="interface-tab" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/icon.tml" name="interface-icon" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/badge.tml" name="interface-badge" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/loader.tml" name="interface-loader" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/tooltip.tml" name="interface-tip" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/pager.tml" name="interface-pager" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/crumbs.tml" name="interface-crumbs" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/progress.tml" name="interface-progress" />
+<link rel="import" type="component" href="@ossph/temple-ui/element/notify.tml" name="interface-notify" />
 <style>
-  @tui theme;
-  @tui reset;
-  @tui fouc-opacity;
-  @tui default-block;
-  @tui utilities;
+  @temple theme;
+  @temple reset;
+  @temple fouc-opacity;
+  @temple utilities;
 </style>
 <script>
   import { env } from '@ossph/temple';
@@ -60,10 +59,10 @@
           <section class="flex flex-wrap gap-10">
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <tui-alert success>
-                  <tui-icon name="check-circle" />
+                <interface-alert success>
+                  <interface-icon name="check-circle" />
                   Good News!
-                </tui-alert>
+                </interface-alert>
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -74,7 +73,7 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <tui-badge warning curved class="mb-10">999</tui-badge>
+                <interface-badge warning curved class="mb-10">999</interface-badge>
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -85,12 +84,15 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <tui-crumbs 
-                  class="inline-block"
+                <interface-crumbs 
                   crumbs={crumbs} 
-                  crumb="tx-warning" 
-                  selected="tx-t-0" 
-                  separator="tx-muted" 
+                  block 
+                  bold 
+                  white 
+                  underline
+                  icon-muted
+                  link-primary
+                  spacing={2}
                 />
               </div>
               <a 
@@ -102,10 +104,10 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <tui-icon name="info-circle" class="tx-info" />
-                <tui-icon name="exclamation-triangle" class="tx-warning" />
-                <tui-icon name="times-circle" class="tx-error" />
-                <tui-icon name="check-circle" class="tx-success" />
+                <interface-icon name="info-circle" class="tx-info" />
+                <interface-icon name="exclamation-triangle" class="tx-warning" />
+                <interface-icon name="times-circle" class="tx-error" />
+                <interface-icon name="check-circle" class="tx-success" />
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -116,10 +118,10 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <tui-loader success size={5} thickness={5} dotted />
-                <tui-loader info slice={2} />
-                <tui-loader warning dashed />
-                <tui-loader error dashed thickness={10} size={10} speed={1500} />
+                <interface-loader success size={5} thickness={5} dotted />
+                <interface-loader info slice={2} />
+                <interface-loader warning dashed />
+                <interface-loader error dashed thickness={10} size={10} speed={1500} />
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -130,10 +132,10 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <tui-alert error>
-                  <tui-icon name="times-circle" />
+                <interface-alert error>
+                  <interface-icon name="times-circle" />
                   Errors on Submit
-                </tui-alert>
+                </interface-alert>
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -144,7 +146,7 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <tui-pager 
+                <interface-pager 
                   total={500} 
                   range={100} 
                   start={90} 
@@ -153,8 +155,12 @@
                   prev
                   rewind
                   forward
-                  page="inline-block b-t-2 b-1 b-solid cursor-pointer p-10 tx-info"
-                  selected="inline-block b-t-2 b-1 b-solid tx-bold p-10 tx-primary"
+                  white
+                  bold
+                  underline
+                  bg-info
+                  border-theme="bd-2"
+                  square={40}
                   select={console.log}
                 />
               </div>
@@ -183,7 +189,7 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <tui-progress width={50} info class="bg-muted rounded tx-13 h-20 tx-lh-20 w-full-20" />
+                <interface-progress width={50} info class="bg-muted rounded tx-13 h-20 tx-lh-20 w-full-20" />
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -194,7 +200,7 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <tui-tab 
+                <interface-tab 
                   on
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
@@ -203,8 +209,8 @@
                   selector="#http-index-ts"
                 >
                   Tab 1
-                </tui-tab>
-                <tui-tab 
+                </interface-tab>
+                <interface-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -212,8 +218,8 @@
                   selector="#http-page-dtml"
                 >
                   Tab 2
-                </tui-tab>
-                <tui-tab 
+                </interface-tab>
+                <interface-tab 
                   class="relative ml-2 p-10 ct-sm b-solid b-t-1 bx-1 bt-1 bb-0"
                   active="bg-black tx-white"
                   inactive="bg-t-1 tx-muted"  
@@ -221,7 +227,7 @@
                   selector="#http-package-json"
                 >
                   Tab 3
-                </tui-tab>
+                </interface-tab>
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -231,26 +237,31 @@
               </a>
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
-              <div class="bg-t-3 h-120 relative scroll-hidden">
-                <div class="absolute top-0 left-0 right-0 bottom-0">
-                  <tui-tbl class="h-300" left>
-                    <tbl-row col="b-t-3 bg-t-3">
-                      <tbl-col nowrap>John Doe</tbl-col>
-                      <tbl-col>21</tbl-col>
-                      <tbl-col wrap-5>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing 
-                        elit. Duis laoreet lectus eget enim rhoncus, vel 
-                        volutpat eros tincidunt. In molestie nunc ut pulvinar 
-                        sollicitudin.
-                      </tbl-col>
-                      <tbl-col nowrap>
-                        <tui-icon name="eye" class="mr-5 tx-info" />
-                        <tui-icon name="edit" class="mr-5 tx-warning" />
-                        <tui-icon name="trash" class="tx-error" />
-                      </tbl-col>
-                    </tbl-row>
-                  </tui-tbl>
-                </div>
+              <div class="bg-t-3 h-120 flex flex-center">
+                <interface-table 
+                  class="h-90 w-250"
+                  top left
+                  head="py-16 px-12 bg-t-1 b-solid b-black bt-1 bb-0 bx-0" 
+                  body="py-16 px-12 b-solid b-black bt-1 bb-0 bx-0" 
+                  odd="bg-t-1"
+                  even="bg-t-0"
+                >
+                  <table-row col="b-t-3 bg-t-3">
+                    <table-col nowrap>John Doe</table-col>
+                    <table-col>21</table-col>
+                    <table-col wrap-5>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing 
+                      elit. Duis laoreet lectus eget enim rhoncus, vel 
+                      volutpat eros tincidunt. In molestie nunc ut pulvinar 
+                      sollicitudin.
+                    </table-col>
+                    <table-col nowrap>
+                      <interface-icon name="eye" class="mr-5 tx-info" />
+                      <interface-icon name="edit" class="mr-5 tx-warning" />
+                      <interface-icon name="trash" class="tx-error" />
+                    </table-col>
+                  </table-row>
+                </interface-table>
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
@@ -261,7 +272,13 @@
             </div>
             <div class="basis-third-10 lg-basis-half-10 md-basis-full">
               <div class="bg-t-3 h-120 flex flex-center">
-                <tui-tip info curved top left tip="p-5">This is the first and last name</tui-tip>
+                <interface-tip 
+                  background-info 
+                  curved 
+                  top="-15"
+                  left="50" 
+                  padding="5"
+                >This is the first and last name</interface-tip>
               </div>
               <a 
                 class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 

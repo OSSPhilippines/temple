@@ -1,0 +1,105 @@
+<script>
+  import type { MouseEvent } from '@ossph/temple/dist/types';
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  import setColor from '../utilities/style/color';
+  import setCurve from '../utilities/style/curve';
+  import setDisplay from '../utilities/style/display';
+  import setPadding from '../utilities/style/padding';
+  //extract props
+  const { 
+    //display
+    flex, none, inline, block,
+    'inline-block': iblock, 
+    'inline-flex': iflex,
+    //spacing
+    padding, 
+    'padding-x': paddingX, 
+    'padding-y': paddingY,
+    //font color
+    color, white,   black, 
+    info,  warning, success, 
+    error, muted,   primary, 
+    secondary, theme,
+    //font size
+    size, xs,  sm,  md,  lg, 
+    xl,   xl2, xl3, xl4, xl5,
+    //curve
+    curve, curved, rounded, pill,
+    //layouts
+    outline, solid, transparent, 
+    //others
+    full, href,
+    //dont need these
+    style, 'class': _,
+    //for the button
+    ...attributes
+  } = this.props;
+  //override default styles
+  const styles = new StyleSet();
+  this.styles = () => styles.toString();
+  //determine slotted selector
+  const slotted = '::slotted(button), ::slotted(a)';
+  //default input styles
+  styles.add(slotted, 'cursor', 'pointer');
+  styles.add(slotted, 'text-align', 'center');
+  styles.add(slotted, 'background', 'transparent');
+  styles.add(slotted, 'border', '0');
+  styles.add(slotted, 'box-sizing', 'border-box');
+  styles.add(slotted, 'color', 'inherit');
+  styles.add(slotted, 'cursor', 'pointer');
+  styles.add(slotted, 'display', 'block');
+  styles.add(slotted, 'font-family', 'inherit');
+  styles.add(slotted, 'font-size', 'inherit');
+  styles.add(slotted, 'height', '100%');
+  styles.add(slotted, 'text-align', 'inherit');
+  styles.add(slotted, 'text-decoration', 'none');
+  styles.add(slotted, 'width', '100%');
+  //determine display
+  setDisplay(this.props, styles, 'inline-block', ':host');
+  //determine padding
+  const pad = setPadding(this.props, styles, slotted);
+  if (!pad) {
+    //determine padding by size
+    xs ? styles.add(slotted, 'padding', '2px 4px')
+      : sm ? styles.add(slotted, 'padding', '5px 10px')
+      : md ? styles.add(slotted, 'padding', '8px 16px')
+      : lg ? styles.add(slotted, 'padding', '12px 24px')
+      : xl ? styles.add(slotted, 'padding', '15px 30px')
+      : xl2 ? styles.add(slotted, 'padding', '18px 36px')
+      : xl3 ? styles.add(slotted, 'padding', '22px 44px')
+      : xl4 ? styles.add(slotted, 'padding', '26px 52px')
+      : xl5 ? styles.add(slotted, 'padding', '30px 60px')
+      : null;
+  }
+  //determine curve
+  setCurve(this.props, styles, false, ':host');
+  //determine width
+  if (full) {
+    styles.add(':host', 'width', '100%');
+  }
+  //if outline or transparent
+  if (outline || transparent) {
+    setColor(this.props, styles, 'var(--muted)', ':host', 'color');
+    setColor(this.props, styles, 'var(--muted)', ':host', 'border-color');
+    styles.add(':host', 'border-style', 'solid');
+    styles.add(':host', 'border-width', '1px');
+    if (outline) {
+      styles.add(':host', 'background-color', 'var(--white)');
+    }
+  //it's solid
+  } else {
+    styles.add(':host', 'color', 'var(--white)');
+    setColor(this.props, styles, 'var(--muted)', ':host', 'background-color');
+  }
+  const children = this.getChildren(false);
+</script>
+<template type="light">
+  <if true={href}>
+    <a {...attributes} {href}>{children}</a>
+  <else />
+    <button {...attributes}>{children}</button>
+  </if>
+</template>
+<template type="shadow">
+  <slot></slot>
+</template>
