@@ -39,16 +39,16 @@ export default class FileLoader {
     if (pathname.startsWith('@/')) {
       pathname = path.resolve(this._cwd, pathname.substring(2));
     //if the pathname starts with ./ or ../
-    } else if (/^\.{1,2}\//.test(pathname)) {
+    } else if (/^\.{1,2}(\/|\\)/.test(pathname)) {
       //get the absolute path
       pathname = path.resolve(pwd, pathname);
     }
     //if the pathname does not start with /, 
     //the path should start with modules
-    if (!pathname.startsWith('/')) {
+    if (!pathname.startsWith('/') || !pathname.startsWith('\\')) {
       const modules = this.modules(this._cwd);
       const resolved = require.resolve(pathname, { paths: [ modules ] });
-      if (resolved.startsWith('/')) {
+      if (resolved.startsWith('/') || resolved.startsWith('\\')) {
         return resolved;
       }
       pathname = path.resolve(modules, pathname);
@@ -64,7 +64,7 @@ export default class FileLoader {
     if (cwd === '/') {
       throw new Error('Could not find node_modules');
     }
-    if (this._fs.existsSync(path.resolve(cwd, 'node_modules/@ossph/temple'))) {
+    if (this._fs.existsSync(path.resolve(cwd, 'node_modules', '@ossph', 'temple'))) {
       return path.resolve(cwd, 'node_modules');
     }
     return this.modules(path.dirname(cwd));

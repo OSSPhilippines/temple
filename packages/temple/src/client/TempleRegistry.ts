@@ -57,8 +57,12 @@ export default class TempleRegistry {
     const component = document.createElement(registered);
     //uhh, wait for this to be registered in customElements?
     customElements.upgrade(component);
-    //it is not registered, so register it
+    //a registered component will self register itself in the constructor
+    //but we need to update the attributes and children
+    //try to register it
     const element = TempleRegistry.register(component, attributes);
+    //set the attributes again to include non-string values
+    element.setAttributes(attributes, true);
     //set attributes natively so it shows 
     //up in the markup when it's rendered
     //NOTE: We cannot assume this is a TempleComponent...
