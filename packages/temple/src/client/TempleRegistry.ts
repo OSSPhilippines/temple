@@ -83,7 +83,7 @@ export default class TempleRegistry {
   public static createElement(
     name: string, 
     attributes: Record<string, any>, 
-    children: Element[] = []
+    children: Node[] = []
   ) {
     //create html element
     const element = document.createElement(name);

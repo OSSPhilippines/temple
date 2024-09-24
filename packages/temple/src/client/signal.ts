@@ -25,6 +25,7 @@ export class SignalRegistry {
       raw: value,
       change(callback: (value: T) => void) {
         listeners.add(callback);
+        return property;
       },
       getter(callback: () => T) {
         methods.getter = callback;
@@ -41,7 +42,7 @@ export class SignalRegistry {
         return methods.getter();
       },
       set(value: any) {
-        const formatted = methods.setter(value);
+        const formatted = methods.setter(value) as T;
         const rerender = SignalRegistry.serialize(formatted) 
           !== SignalRegistry.serialize(property.raw);
         property.raw = formatted;
@@ -68,7 +69,7 @@ export class SignalRegistry {
       observer.values.push(property);
     }
 
-    return property;
+    return property as SignalProps;
   }
 
   /**
