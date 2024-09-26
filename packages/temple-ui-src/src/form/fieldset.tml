@@ -1,0 +1,54 @@
+<style>
+  a {
+    color: var(--error);
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0 7px;
+  }
+  legend {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  button {
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    font-family: inherit;
+    font-size: inherit;
+    margin-top: 7px;
+    text-align: center;
+  }
+</style>
+<script>
+  import type { MouseEvent } from '@ossph/temple/dist/types';
+  import StyleSet from '@ossph/temple/dist/style/StyleSet';
+  import setDisplay from '../utilities/style/display';
+  import { buttonStyles, getHandlers } from '../utilities/fieldset';
+  //extract props
+  const { add = 'Add', value = [] } = this.props;
+  //override default styles
+  const styles = new StyleSet();
+  const css = this.styles();
+  this.styles = () => css + styles.toString();
+  //determine display
+  setDisplay(this.props, styles, 'block', ':host');
+  //determine button styles
+  buttonStyles(this.props, styles);
+  //get the row template
+  const template = this.originalChildren;
+  //set handlers
+  const handlers = getHandlers(this, template);
+  //make initial rows
+  const rows = value.map(
+    (valueset, index) => handlers.create(index, valueset)
+  );
+</script>
+<template type="light">
+  {rows.map(row => row.slot)}
+</template>
+<template type="shadow">
+  {rows.map(row => row.fieldset)}
+  <button type="button" click={handlers.add}>{add}</button>
+</template>

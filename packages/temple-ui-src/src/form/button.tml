@@ -1,3 +1,21 @@
+<style>
+  ::slotted(button), ::slotted(a) {
+    cursor: pointer;
+    text-align: center;
+    background: transparent;
+    border: 0;
+    box-sizing: border-box;
+    color: inherit;
+    cursor: pointer;
+    display: block;
+    font-family: inherit;
+    font-size: inherit;
+    height: 100%;
+    text-align: inherit;
+    text-decoration: none;
+    width: 100%;
+  }
+</style>
 <script>
   import type { MouseEvent } from '@ossph/temple/dist/types';
   import StyleSet from '@ossph/temple/dist/style/StyleSet';
@@ -36,24 +54,10 @@
   } = this.props;
   //override default styles
   const styles = new StyleSet();
-  this.styles = () => styles.toString();
+  const css = this.styles();
+  this.styles = () => css + styles.toString();
   //determine slotted selector
   const slotted = '::slotted(button), ::slotted(a)';
-  //default input styles
-  styles.add(slotted, 'cursor', 'pointer');
-  styles.add(slotted, 'text-align', 'center');
-  styles.add(slotted, 'background', 'transparent');
-  styles.add(slotted, 'border', '0');
-  styles.add(slotted, 'box-sizing', 'border-box');
-  styles.add(slotted, 'color', 'inherit');
-  styles.add(slotted, 'cursor', 'pointer');
-  styles.add(slotted, 'display', 'block');
-  styles.add(slotted, 'font-family', 'inherit');
-  styles.add(slotted, 'font-size', 'inherit');
-  styles.add(slotted, 'height', '100%');
-  styles.add(slotted, 'text-align', 'inherit');
-  styles.add(slotted, 'text-decoration', 'none');
-  styles.add(slotted, 'width', '100%');
   //determine display
   setDisplay(this.props, styles, 'inline-block', ':host');
   //determine padding

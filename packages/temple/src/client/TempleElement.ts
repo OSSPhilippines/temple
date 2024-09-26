@@ -68,6 +68,15 @@ export default class TempleElement {
   }
 
   /**
+   * Clones the element
+   */
+  public clone(andChildren = false) {
+    const element = this._element.cloneNode(andChildren) as Element;
+    const attributes = { ...this._attributes };
+    return new TempleElement(element, attributes);
+  }
+
+  /**
    * Returns the attribute value
    */
   public getAttribute<T = any>(key: string) {

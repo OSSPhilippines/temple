@@ -1,4 +1,4 @@
-export type { Node } from './types';
+export type { ServerNode } from './types';
 
 import TempleException from './Exception';
 import TempleCollection from './server/TempleCollection';

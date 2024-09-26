@@ -67,7 +67,7 @@
   //determine align
   setAlign(props, styles, 'left', 'input');
   //determine font size
-  setSize(props, styles, '13px', 'input', 'font-size');
+  setSize(props, styles, 'inherit', 'input', 'font-size');
   //determine font color
   setColor(props, styles, 'var(--black)', 'input', 'color');
   //determine padding

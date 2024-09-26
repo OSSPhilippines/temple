@@ -1,4 +1,4 @@
-import type { Node } from '../types';
+import type { ServerNode } from '../types';
 import TempleCollection from './TempleCollection';
 
 const selfClosingTags = [
@@ -51,7 +51,7 @@ export default class TempleElement {
     name: string, 
     attributes: Record<string, any> = {},
     props = '',
-    children: Node[] = []
+    children: ServerNode[] = []
   ) {
     this._name = name;
     this._attributes = attributes;

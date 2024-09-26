@@ -13,6 +13,7 @@ import type ServerText from './server/TempleText';
 import type ServerElement from './server/TempleElement';
 import type ClientDocument from './client/TempleRegistry';
 import type ClientComponent from './client/TempleComponent';
+import type ClientElement from './client/TempleElement';
 
 //--------------------------------------------------------------------//
 // Generic Types
@@ -235,10 +236,12 @@ export type BuildResults = {
 //--------------------------------------------------------------------//
 // Server Types
 
-export type Node = ServerElement|ServerText;
+export type ServerNode = ServerElement|ServerText;
 
 //--------------------------------------------------------------------//
 // Client Types
+
+export type AnyChild = ClientElement|Node|string|undefined;
 
 export type TempleComponentClass = Constructor<ClientComponent> &{
   component: [ string, string ],

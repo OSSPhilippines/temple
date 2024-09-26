@@ -9,13 +9,19 @@
   "repository": "OSSPhilippines/temple",
   "main": "index.js",
   "dependencies": {
+    "@editorjs/editorjs": "2.30.6",
+    "@editorjs/header": "2.8.7",
+    "@editorjs/image": "2.9.3",
+    "@editorjs/list": "1.10.0",
+    "@editorjs/paragraph": "2.11.6",
     "@ossph/temple": "0.1.6",
     "codemirror": "5.65.17",
     "dayjs": "1.11.13",
     "dompurify": "3.1.6",
     "inputmask": "5.0.9",
     "marked": "14.1.2",
-    "prismjs": "1.29.0"
+    "prismjs": "1.29.0",
+    "suneditor": "2.47.0"
   },
   "devDependencies": {
     "@types/dompurify": "3.0.5",

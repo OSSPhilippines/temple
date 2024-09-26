@@ -1,7 +1,7 @@
-import type { Node } from '../types';
+import type { ServerNode } from '../types';
 export default class TempleCollection {
   //elements in the collection
-  protected _elements = new Set<Node>();
+  protected _elements = new Set<ServerNode>();
 
   /**
    * Returns the length of the collection
@@ -13,14 +13,14 @@ export default class TempleCollection {
   /**
    * Creates a new TempleCollection instance
    */
-  public constructor(elements: Node[] = []) {
+  public constructor(elements: ServerNode[] = []) {
     elements.forEach(element => this._elements.add(element));
   }
 
   /**
    * Adds a new element to the collection
    */
-  public add(element: Node) {
+  public add(element: ServerNode) {
     this._elements.add(element);
   }
 

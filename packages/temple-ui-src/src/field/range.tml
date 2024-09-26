@@ -2,22 +2,14 @@
   :host {
     background-color: var(--white);
     border: 1px solid var(--border);
+    padding: 6px 6px 6px 0;
   }
   div {
-    align-items: stretch;
+    align-items: center;
     display: flex;
   }
   div span:last-child {
     flex: 1;
-    padding: 7px 7px 8px 0;
-  }
-  input {
-    background-color: transparent;
-    border: 0;
-    box-sizing: border-box;
-    font-size: inherit;
-    font-family: inherit;
-    height: 100%;
   }
   ::slotted(input) {
     background-color: transparent;
@@ -25,6 +17,7 @@
     box-sizing: border-box;
     font-size: inherit;
     font-family: inherit;
+    text-align: center;
     width: 100%;
   }
   ::slotted(input:focus) {
@@ -36,6 +29,9 @@
   import setDisplay from '../utilities/style/display';
   //get props
   const { 
+    min = 0,  max = 100, 
+    step = 1, width = 60,
+    value,
     //dont need these...
     style, 'class': _,
     //input attributes
@@ -47,13 +43,15 @@
   this.styles = () => css + styles.toString();
   //determine display
   setDisplay(this.props, styles, 'inline-block', ':host');
+  if (width) {
+    styles.add('span:first-child', 'width', `${width}px`);
+  }
   //handlers
   const handlers = {
     change: e => {
       const box = e.target;
       const input1 = this.querySelector('input');
       const input2 = this.shadowRoot?.querySelector('input');
-      console.log('change', box.value, input1, input2);
       if (!input1 || !input2) return;
       input1.value = box.value;
       input1.setAttribute('value', box.value);
@@ -83,11 +81,28 @@
   this.on('attributechange', handlers.attribute);
 </script>
 <template type="light">
-  <input {...attributes} change={handlers.change} />
+  <input 
+    {...attributes} 
+    type="number" 
+    min={String(min)} 
+    max={String(max)} 
+    step={String(step)}
+    {value} 
+    change={handlers.change} 
+  />
 </template>
 <template type="shadow">
   <div>
-    <span><input type="color" change={handlers.change} /></span>
     <span><slot></slot></span>
+    <span>
+      <input 
+        type="range" 
+        min={String(min)} 
+        max={String(max)} 
+        step={String(step)} 
+        {value}
+        change={handlers.change} 
+      />
+    </span>
   </div>
 </template>

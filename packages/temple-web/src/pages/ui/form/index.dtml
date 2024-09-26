@@ -6,6 +6,7 @@
 <link rel="import" type="component" href="@ossph/temple-ui/layout/panel.tml" name="panel-layout" />
 <link rel="import" type="component" href="@ossph/temple-ui/form/button.tml" name="form-button" />
 <link rel="import" type="component" href="@ossph/temple-ui/form/control.tml" name="form-control" />
+<link rel="import" type="component" href="@ossph/temple-ui/form/fieldset.tml" name="form-fieldset" />
 <link rel="import" type="component" href="@ossph/temple-ui/field/color.tml" name="field-color" />
 <link rel="import" type="component" href="@ossph/temple-ui/field/checkbox.tml" name="field-checkbox" />
 <link rel="import" type="component" href="@ossph/temple-ui/field/country.tml" name="field-country" />
@@ -18,16 +19,20 @@
 <link rel="import" type="component" href="@ossph/temple-ui/field/input.tml" name="field-input" />
 <link rel="import" type="component" href="@ossph/temple-ui/field/markdown.tml" name="field-markdown" />
 <link rel="import" type="component" href="@ossph/temple-ui/field/mask.tml" name="field-mask" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/metadata.tml" name="field-metadata" />
 <link rel="import" type="component" href="@ossph/temple-ui/field/number.tml" name="field-number" />
 <link rel="import" type="component" href="@ossph/temple-ui/field/password.tml" name="field-password" />
 <link rel="import" type="component" href="@ossph/temple-ui/field/radio.tml" name="field-radio" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/range.tml" name="field-range" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/rating.tml" name="field-rating" />
 <link rel="import" type="component" href="@ossph/temple-ui/field/select.tml" name="field-select" />
 <link rel="import" type="component" href="@ossph/temple-ui/field/slug.tml" name="field-slug" />
 <link rel="import" type="component" href="@ossph/temple-ui/field/switch.tml" name="field-switch" />
 <link rel="import" type="component" href="@ossph/temple-ui/field/textarea.tml" name="field-textarea" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/taglist.tml" name="field-taglist" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/textlist.tml" name="field-textlist" />
 <link rel="import" type="component" href="@ossph/temple-ui/field/time.tml" name="field-time" />
-<link rel="import" type="component" href="@ossph/temple-ui/format/country.tml" name="format-country" />
-<link rel="import" type="component" href="@ossph/temple-ui/format/currency.tml" name="format-currency" />
+<link rel="import" type="component" href="@ossph/temple-ui/field/wysiwyg.tml" name="field-wysiwyg" />
 <style>
   @temple theme;
   @temple reset;
@@ -57,6 +62,10 @@
       next(files.map((file, i) => 'https://images.wsj.net/im-580612/8SR'))
     }, 1000)
   };
+  const metadata = { first: 'Jane', last: 'Doe' };
+  const fieldset = [
+    { first1: 'John', last1: 'Doe', fieldset2: [{ first2: 'Jane', last2: 'Doe' }] }
+  ];
 </script>
 <html>
   <html-head />
@@ -101,7 +110,11 @@
                 </a>
               </div>
               <div class="basis-third-10 lg-basis-half-10 md-basis-full">
-                <div class="bg-t-3 h-120 flex flex-center"></div>
+                <div class="bg-t-3 h-120 flex flex-center">
+                  <form-fieldset legend="Fieldset %s" name="fieldset1" value={fieldset}>
+                    <field-input name="first1" placeholder="Enter your first name" />
+                  </form-fieldset>
+                </div>
                 <a 
                   class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
                   href="/temple/ui/form/fieldset.html"
@@ -329,7 +342,15 @@
                 </a>
               </div>
               <div class="basis-third-10 lg-basis-half-10 md-basis-full">
-                <div class="bg-t-3 h-120 flex flex-center"></div>
+                <div class="bg-t-3 h-120 flex flex-center">
+                  <field-metadata 
+                    class="w-250"
+                    name="metadata" 
+                    placeholder="Enter text" 
+                    value={metadata} 
+                    update={console.log}
+                  />
+                </div>
                 <a 
                   class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
                   href="/temple/ui/form/metadata.html"
@@ -397,7 +418,9 @@
                 </a>
               </div>
               <div class="basis-third-10 lg-basis-half-10 md-basis-full">
-                <div class="bg-t-3 h-120 flex flex-center"></div>
+                <div class="bg-t-3 h-120 flex flex-center">
+                  <field-range name="range" min="0" max="100" step="10" value="0" />
+                </div>
                 <a 
                   class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
                   href="/temple/ui/form/range.html"
@@ -406,7 +429,14 @@
                 </a>
               </div>
               <div class="basis-third-10 lg-basis-half-10 md-basis-full">
-                <div class="bg-t-3 h-120 flex flex-center"></div>
+                <div class="bg-t-3 h-120 flex flex-center">
+                  <field-rating 
+                    name="rating" 
+                    value="0" 
+                    primary xl2
+                    update={console.log}
+                  />
+                </div>
                 <a 
                   class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
                   href="/temple/ui/form/rating.html"
@@ -482,7 +512,7 @@
               </div>
               <div class="basis-third-10 lg-basis-half-10 md-basis-full">
                 <div class="bg-t-3 h-120 flex flex-center">
-                  <field-taglist class="w-250"
+                  <field-taglist name="taglist" class="w-250"
                     placeholder="Enter Value" 
                     value={['foo', 'bar']} 
                   />
@@ -510,7 +540,14 @@
                 </a>
               </div>
               <div class="basis-third-10 lg-basis-half-10 md-basis-full">
-                <div class="bg-t-3 h-120 flex flex-center"></div>
+                <div class="bg-t-3 h-120 flex flex-center">
+                  <field-textlist 
+                    name="textlist[]" 
+                    placeholder="Enter text" 
+                    value={['foo', 'bar']} 
+                    update={console.log}
+                  />
+                </div>
                 <a 
                   class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
                   href="/temple/ui/form/textlist.html"
@@ -535,7 +572,16 @@
                 </a>
               </div>
               <div class="basis-third-10 lg-basis-half-10 md-basis-full">
-                <div class="bg-t-3 h-120 flex flex-center"></div>
+                <div class="bg-t-3 h-120 flex flex-center scroll-hidden">
+                  <field-wysiwyg 
+                    class="w-200 h-100"
+                    name="wysiwyg" 
+                    value="I am ironman." 
+                    size 
+                    color     
+                    update={console.log}
+                  />
+                </div>
                 <a 
                   class="block tx-center tx-white p-10 b-solid b-t-3 b-1" 
                   href="/temple/ui/form/wysiwyg.html"

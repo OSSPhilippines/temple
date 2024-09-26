@@ -26,6 +26,7 @@
     "inputmask": "5.0.9",
     "marked": "14.1.2",
     "prismjs": "1.29.0",
+    "suneditor": "2.47.0",
     "typescript": "5.5.4"
   }
 }

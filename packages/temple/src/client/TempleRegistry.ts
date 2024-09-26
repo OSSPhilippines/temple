@@ -1,6 +1,5 @@
-import type { TempleComponentClass, RegistryIterator } from '../types';
+import type { AnyChild, TempleComponentClass, RegistryIterator } from '../types';
 import TempleComponent from './TempleComponent';
-
 import TempleElement from './TempleElement';
 
 //this is used to convert HTML entities to their respective characters
@@ -31,8 +30,8 @@ export default class TempleRegistry {
   public static createComponent(
     tagname: string,
     definition: TempleComponentClass, 
-    attributes: Record<string, any>, 
-    children: Element[] = []
+    attributes: Record<string, any> = {}, 
+    children: AnyChild[] = []
   ) {
     const { registered } = definition;
     //if the component being created is not a
@@ -74,9 +73,9 @@ export default class TempleRegistry {
       }
     }
     //append children (the original children)
-    children
-      .filter(child => typeof child !== 'undefined')
-      .forEach(child => component.appendChild(child));
+    this._cleanChildren(children).forEach(
+      child => component.appendChild(child)
+    );
     //return the element
     return element;
   }
@@ -86,8 +85,8 @@ export default class TempleRegistry {
    */
   public static createElement(
     name: string, 
-    attributes: Record<string, any>, 
-    children: Node[] = []
+    attributes: Record<string, any> = {}, 
+    children: AnyChild[] = []
   ) {
     //create html element
     const element = document.createElement(name);
@@ -100,9 +99,9 @@ export default class TempleRegistry {
       }
     }
     //append children (the original children)
-    children
-      .filter(child => typeof child !== 'undefined')
-      .forEach(child => element.appendChild(child));
+    this._cleanChildren(children).forEach(
+      child => element.appendChild(child)
+    );
     //last manually register the element
     return this.register(element, attributes);
   }
@@ -126,8 +125,8 @@ export default class TempleRegistry {
   public static createVirtualComponent(
     tagname: string,
     definition: TempleComponentClass, 
-    attributes: Record<string, any>, 
-    children: Element[] = []
+    attributes: Record<string, any> = {}, 
+    children: AnyChild[] = []
   ) {
     //We cant just instantiate the component and return it because
     //an error `Illegal constructor` will be thrown if the component 
@@ -153,6 +152,25 @@ export default class TempleRegistry {
     component.register(attributes, children);
     //return the element
     return component.element;
+  }
+
+  /**
+   * Clones an element, adds to registry and returns it
+   */
+  public static cloneElement(node: Element, andChildren = false) {
+    const element = this.register(node);
+    const clone = element.clone();
+    if (andChildren) {
+      element.element.childNodes.forEach(child => {
+        if (child instanceof Text) {
+          clone.element.appendChild(child.cloneNode());
+          return;
+        }
+        const cloneChild = this.cloneElement(child as Element, true);
+        clone.element.appendChild(cloneChild.element);
+      });
+    }
+    return clone;
   }
 
   /**
@@ -196,12 +214,46 @@ export default class TempleRegistry {
   /**
    * Registers a new TempleElement instance
    */
-  public static register(element: Element, attributes?: Record<string, any>) {
+  public static register(
+    element: Element, 
+    attributes?: Record<string, any>, 
+    andChildren = false
+  ) {
     if (this.has(element)) {
       return this.get(element) as TempleElement;
     }
+    if (!attributes) {
+      Array.from(element.attributes).forEach(attribute => {
+        attributes = attributes || {};
+        attributes[attribute.name] = attribute.value !== '' 
+          ? attribute.value
+          : true;
+      });
+    }
     const node = new TempleElement(element, attributes || {});
     this._elements.set(element, node);
+    if (andChildren) {
+      Array.from(element.children).forEach(child => {
+        if (child instanceof Element) {
+          this.register(child, undefined, true);
+        }
+      });
+    }
     return node;
+  }
+
+  /**
+   * Removes undefined children and converts strings to text nodes
+   */
+  protected static _cleanChildren(children: AnyChild[]) {
+    return Array
+      .from(children)
+      .filter(child => typeof child !== 'undefined')
+      .map(child => typeof child === 'string' 
+        ? this.createText(child) 
+        : child instanceof TempleElement
+        ? child.element
+        : child
+      );
   }
 }

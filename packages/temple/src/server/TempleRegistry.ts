@@ -1,4 +1,4 @@
-import type { Node, Hash } from '../types';
+import type { ServerNode, Hash } from '../types';
 import TempleText from './TempleText';
 import TempleElement from './TempleElement';
 
@@ -6,7 +6,7 @@ export default class TempleRegistry {
   /**
    * Converts the markup to HTML
    */
-  public static render(markup: Node[]) {
+  public static render(markup: ServerNode[]) {
     return markup
       .filter(Boolean)
       .map(child => child.toString())
@@ -17,7 +17,7 @@ export default class TempleRegistry {
    * Returns an ordered registry of all elements in the markup
    */
   public static registry(
-    markup: Node[], 
+    markup: ServerNode[], 
     registry = new Set<TempleElement>()
   ) {
     markup.forEach(node => {
@@ -40,7 +40,7 @@ export default class TempleRegistry {
     name: string, 
     attributes: Hash, 
     props: string,
-    children: Node[] = []
+    children: ServerNode[] = []
   ) {
     return new TempleElement(name, attributes, props, children);
   }

@@ -1,11 +1,12 @@
 import type { 
   Hash, 
+  AnyChild,
   CustomEventListener, 
   TempleComponentClass 
 } from '../types';
-import type TempleElement from './TempleElement';
 
 import TempleException from '../Exception';
+import TempleElement from './TempleElement';
 import TempleRegistry from './TempleRegistry';
 import emitter from './TempleEmitter';
 import __APP_DATA__ from './data';
@@ -168,7 +169,7 @@ export default abstract class TempleComponent extends HTMLElement {
   public set originalChildren(children: Node[]) {
     //if children are not set
     if (typeof this._children === 'undefined') {
-      this._children = Array.from(children || []);
+      this._children = this._cleanChildren(children || []);
     }
   }
 
@@ -243,6 +244,20 @@ export default abstract class TempleComponent extends HTMLElement {
   }
 
   /**
+   * Clones the component and registers it
+   */
+  public clone(andChildren = false) {
+    return this.cloneElement(this, andChildren);
+  }
+
+  /**
+   * Helper to clones an element and registers it
+   */
+  public cloneElement(element: Element, andChildren = false) {
+    return TempleRegistry.cloneElement(element, andChildren);
+  }
+
+  /**
    * Called when the element is inserted into a document,
    */
   public connectedCallback() {
@@ -259,8 +274,8 @@ export default abstract class TempleComponent extends HTMLElement {
   public createComponent(
     tagname: string,
     definition: TempleComponentClass, 
-    attributes: Record<string, any>, 
-    children: Element[] = []
+    attributes: Record<string, any> = {}, 
+    children: AnyChild[] = []
   ) {
     return TempleRegistry.createComponent(
       tagname, 
@@ -276,8 +291,8 @@ export default abstract class TempleComponent extends HTMLElement {
    */
   public createElement(
     name: string, 
-    attributes: Record<string, any>, 
-    children: Element[] = []
+    attributes: Record<string, any> = {}, 
+    children: AnyChild[] = []
   ) {
     return TempleRegistry.createElement(
       name, 
@@ -395,7 +410,7 @@ export default abstract class TempleComponent extends HTMLElement {
    * used components that are used by other components,
    * but not registered in custom elements.
    */
-  public register(attributes: Hash = {}, children: Element[] = []) {
+  public register(attributes: Hash = {}, children: AnyChild[] = []) {
     //check to see if the registry already has this component
     if (TempleRegistry.has(this)) {
       //NOTE: this technically should not be possible...
@@ -415,11 +430,11 @@ export default abstract class TempleComponent extends HTMLElement {
       }
     }
     //set the original children
-    this._children = children;
+    this._children = this._cleanChildren(children);
     //NOTE: we need to append the children for shadow mode
     //since at this point, we dont know if shadow mode is 
     //enabled we need to append the children jic
-    children.forEach(child => this.appendChild(child));
+    this._children.forEach(child => this.appendChild(child));
     //this is a virtual component
     //virtual components suffer from :not(:defined) selectors
     //because they are not registered in custom elements
@@ -615,6 +630,21 @@ export default abstract class TempleComponent extends HTMLElement {
   }
 
   /**
+   * Removes undefined children and converts strings to text nodes
+   */
+  protected _cleanChildren(children: AnyChild[]) {
+    return Array
+      .from(children)
+      .filter(child => typeof child !== 'undefined')
+      .map(child => typeof child === 'string' 
+        ? TempleRegistry.createText(child) 
+        : child instanceof TempleElement
+        ? child.element
+        : child
+      );
+  }
+
+  /**
    * For render(), this is used to split the 
    * children into light and shadow children
    */
@@ -685,7 +715,9 @@ export default abstract class TempleComponent extends HTMLElement {
   protected _update() { 
     //if children are not set
     if (typeof this._children === 'undefined') {
-      this._children = Array.from(this.childNodes || []);
+      this._children = this._cleanChildren(
+        Array.from(this.childNodes || [])
+      );
     }
     //only render if not initiated
     if (!this._initiated) {

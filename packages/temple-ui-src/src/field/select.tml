@@ -1,5 +1,3 @@
-<link rel="import" type="component" href="./input.tml" name="field-input" />
-<link rel="import" type="component" href="../element/icon.tml" name="element-icon" />
 <style>
   .select {
     color: var(--black);
@@ -57,6 +55,9 @@
     border: 0;
     background-color: transparent;
   }
+  .input:focus {
+    outline: none;
+  }
   .search {
     color: var(--muted);
   }
@@ -65,6 +66,7 @@
     cursor: pointer;
   }
   ::slotted(.select-default-option) {
+    font-size: 14px;
     padding: 7px;
   }
   ::slotted(.select-default-option:hover) {
@@ -77,37 +79,12 @@
     background-color: transparent;
   }
 </style>
-<script>
-  import { getHandlers } from '../utilities/select';
+<script observe="name,value">
+  import { getHandlers, makeOptions } from '../utilities/select';
   //extract props
   const { placeholder, custom, search, name } = this.props;
   //format initial options from the original children
-  const options = this.originalChildren
-    .filter(option => option instanceof Element)
-    .filter(option => option.nodeName !== 'INPUT' 
-      || !option.hasAttribute('type')
-      || option.getAttribute('type') !== 'hidden'
-    )
-    .filter(option => !option.hasAttribute('slot') 
-      || option.getAttribute('slot') === 'filtered'
-    )
-    .map(option => {
-      if (option.nodeName !== 'OPTION') {
-        return option;
-      }
-      const attributes = this.getElement(option)?.attributes || {};
-      attributes.value = attributes.value ? attributes.value 
-        : option.hasAttribute('value') ? option.getAttribute('value')
-        : option.innerText.trim();
-      attributes.keyword = attributes.keyword ? attributes.keyword
-        : option.hasAttribute('keyword') ? option.getAttribute('keyword')
-        : undefined;
-      attributes['class'] = attributes['class'] ? attributes['class']
-        : option.hasAttribute('class') ? option.getAttribute('class')
-        : 'select-default-option';
-      const children = Array.from(option.childNodes);
-      return this.createElement('div', attributes, children).element;
-    });
+  const options = makeOptions(this.getChildren(false));
   //get handlers
   const { state, clear, toggle, filter, add } = getHandlers(this, options);
 </script>
@@ -121,6 +98,7 @@
   {state.value.filtered}
 </template>
 <template type="shadow">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
   <div class="select">
     <div class="display">
       <div class="selected" click={toggle}>
@@ -136,13 +114,13 @@
         <em class="count">({state.value.selected.length})</em>
       </if>
       <if true={state.value.selected.length > 0}>
-        <element-icon class="clear" name="times" click={clear} />
+        <i class="clear fas fa-fw fa-times" click={clear}></i>
       </if>
       <if true={state.value.filtered.length > 0 || state.value.query.length > 0}>
         <if true={state.value.show}>
-          <element-icon class="toggle" name="caret-up" click={toggle} />
+          <i class="toggle fas fa-fw fa-caret-up" click={toggle}></i>
         <else />
-          <element-icon class="toggle" name="caret-down" click={toggle} />
+          <i class="toggle fas fa-fw fa-caret-down" click={toggle}></i>
         </if>
       </if>
     </div>
@@ -151,23 +129,14 @@
         <if true={search || custom}>
           <div class="form">
             <if true={search}>
-              <field-input 
-                class="input" 
-                padding="0"
-                value={state.value.query} 
-                keyup={filter} 
-              />
+              <input class="input" value={state.value.query} keyup={filter} />
             <else />
-              <field-input 
-                class="input"  
-                padding="0"
-                value={state.value.query} 
-              />
+              <input class="input" value={state.value.query} />
             </if>
             <if true={custom}>
-              <element-icon class="add" name="plus" click={add} />
+              <i class="add fas fa-fw fa-plus" click={add}></i>
             <else />
-              <element-icon class="search" name="search" />
+              <i class="search fas fa-fe fa-search"></i>
             </if>
           </div>
         </if>
