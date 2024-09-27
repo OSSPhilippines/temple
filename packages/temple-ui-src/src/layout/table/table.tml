@@ -5,5 +5,6 @@
   this.styles = () => styles.toString();
   //default host styles
   styles.add(':host', 'display', 'table');
+  styles.add(':host', 'width', '100%');
 </script>
 <slot></slot>

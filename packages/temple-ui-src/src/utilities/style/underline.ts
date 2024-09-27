@@ -9,6 +9,8 @@ export default function underline(
   
   if (underline) {
     styles.add(selector, 'text-decoration', 'underline');
+  } else {
+    styles.add(selector, 'text-decoration', 'none');
   }
 
   return underline;
