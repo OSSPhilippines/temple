@@ -1,6 +1,6 @@
 {
   "name": "@ossph/temple-esbuild",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "ESBuild support for the Temple markup language.",
   "license": "Apache-2.0",
   "author": "Chris <chris@incept.asia>",
@@ -20,7 +20,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@ossph/temple": "0.1.6"
+    "@ossph/temple": "0.1.7"
   },
   "devDependencies": {
     "@types/node": "22.0.0",

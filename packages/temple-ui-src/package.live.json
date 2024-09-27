@@ -1,6 +1,6 @@
 {
   "name": "@ossph/temple-ui",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Temple user interfaces",
   "license": "Apache-2.0",
   "author": "Chris <chris@incept.asia>",
@@ -14,7 +14,7 @@
     "@editorjs/image": "2.9.3",
     "@editorjs/list": "1.10.0",
     "@editorjs/paragraph": "2.11.6",
-    "@ossph/temple": "0.1.6",
+    "@ossph/temple": "0.1.7",
     "codemirror": "5.65.17",
     "dayjs": "1.11.13",
     "dompurify": "3.1.6",

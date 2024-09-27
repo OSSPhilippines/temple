@@ -1,6 +1,6 @@
 {
   "name": "@ossph/temple-css",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Temple atomic css framework",
   "license": "Apache-2.0",
   "author": "Chris <chris@incept.asia>",
@@ -12,7 +12,7 @@
     "build": "tsc"
   },
   "dependencies": {
-     "@ossph/temple": "0.1.6"
+     "@ossph/temple": "0.1.7"
   },
   "devDependencies": {
     "@types/node": "22.1.0",

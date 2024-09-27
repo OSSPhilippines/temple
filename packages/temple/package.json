@@ -1,6 +1,6 @@
 {
   "name": "@ossph/temple",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "The reactive web component template engine.",
   "license": "Apache-2.0",
   "author": "Chris <chris@incept.asia>",

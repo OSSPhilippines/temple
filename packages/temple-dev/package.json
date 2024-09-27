@@ -1,6 +1,6 @@
 {
   "name": "@ossph/temple-dev",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Temple developer mode with hot page reload",
   "license": "Apache-2.0",
   "author": "Chris <chris@incept.asia>",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@blanquera/types": "1.0.2",
-    "@ossph/temple": "0.1.6",
+    "@ossph/temple": "0.1.7",
     "chokidar": "3.6.0",
     "ws": "8.17.0"
   },

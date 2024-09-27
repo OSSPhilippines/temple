@@ -1,6 +1,6 @@
 {
   "name": "@ossph/temple-ui-src",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": true,
   "scripts": {
     "build": "yarn build:tsc && yarn build:element && yarn build:field && yarn build:form && yarn build:format && yarn build:layout && yarn build:intl && yarn build:files && yarn build:package",
@@ -15,7 +15,7 @@
     "build:tsc": "tsc"
   },
   "devDependencies": {
-    "@ossph/temple": "0.1.6",
+    "@ossph/temple": "0.1.7",
     "@types/dompurify": "3.0.5",
     "@types/inputmask": "5.0.7",
     "@types/node": "22.1.0",
