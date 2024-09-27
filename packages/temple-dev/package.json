@@ -18,7 +18,7 @@
     "tsconfig.json"
   ],
   "scripts": {
-    "build": "tsc && npx esbuild ./src/client.ts --global-name=temple_dev --format=iife --bundle --outfile=client.js"
+    "build": "tsc && npx ../../node_modules/esbuild/bin/esbuild ./src/client.ts --global-name=temple_dev --format=iife --bundle --outfile=client.js"
   },
   "dependencies": {
     "@blanquera/types": "1.0.2",
