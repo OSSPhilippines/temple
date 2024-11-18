@@ -1,4 +1,3 @@
-
 import type { FSWatcher } from 'chokidar';
 import type { Request, Response } from '@ossph/temple/compiler';
 import type { ServerOptions, OptionIgnore } from './types';
@@ -89,7 +88,7 @@ export default class RefreshServer {
   }
 
   /**
-   * Tell all the browsers to reload their page
+   * Tell all the browsers to reload their page or hot update components
    */
   public async refresh(filePath: string) {
     const extname = path.extname(filePath);
@@ -99,133 +98,92 @@ export default class RefreshServer {
 
     const updates: Record<string, string[]> = {};
     const params = { filePath, updates };
-    //pre emit file change
     await this._emitter.waitFor('dev-file-change', params);
 
-    //Lots of things to figure out for hot refresh...
-    // - What file changed? (filePath)
-    // - What document imports this component?
-    // - What components import this file?
     const absolute = path.resolve(this._cwd, filePath);
     
     //loop through the registry of loaded documents
     for (const builder of this._registry.values()) {
       const document = builder.document;
-      // - What document imports this component?
-      //if the document is the same as the changed file
+      
+      // If the document itself changed
       if (document.absolute === absolute) {
         const params = { filePath, document, updates };
-        //pre emit document update
         await this._emitter.waitFor('dev-update-document', params);
-        //just reload
-        updates[document.id] = [ 'window.location.reload();' ];
-        //post emit document updated
+        
+        // Try to hot update the document if possible
+        try {
+          const script = await update(document, {
+            extname: this._extname,
+            tsconfig: this._tsconfig
+          });
+          updates[document.id] = [script];
+        } catch(error) {
+          // Fallback to full reload if hot update fails
+          updates[document.id] = ['window.location.reload();'];
+        }
+
         await this._emitter.waitFor('dev-updated-document', params);
         continue;
       }
-      // - What components import this file?
-      //get any dependencies that import this file
+
+      // Handle component dependencies
       let dependants: { component: Component, type: string }[] = [];
-      try { //to get dependants
+      try {
         dependants = dependantsOf(absolute, document);
       } catch(error) {
-        //an error could be caused if the filepath of a dependant
-        //does not exist, so we just add an error message to the 
-        //updates this will be sent to the client browser to notify
-        //the developer of the error
-        updates[document.id] = [ errorMessage(error as Error) ];
-      }
-      
-      //if there are no dependants, skip
-      if (dependants.length === 0) {
+        updates[document.id] = [errorMessage(error as Error)];
         continue;
       }
+      
+      if (dependants.length === 0) continue;
 
       updates[document.id] = [];
       for (const dependant of dependants) {
-        //if the filePath was imported as a component
-        if (dependant.type === 'component') {
-          //update the imported component
-          const component = new Component(absolute, { 
-            brand: document.brand,
-            cwd: document.cwd,
-            fs: document.fs
-          });
-          let script: string;
-          try { //to generate a script to update the component
-            script = await update(component, {
-              extname: this._extname,
-              tsconfig: this._tsconfig
-            });
-          } catch(error) {
-            //notify the developer via client browser of the error
-            script = errorMessage(error as Error);
-          }
-          //event params
-          const params = { filePath, document, component, updates };
-          //pre emit component update
+        const targetComponent = dependant.type === 'component' 
+          ? new Component(absolute, {
+              brand: document.brand,
+              cwd: document.cwd,
+              fs: document.fs
+            })
+          : dependant.component.type === 'component' 
+            ? dependant.component 
+            : null;
+
+        if (targetComponent) {
+          const params = { filePath, document, component: targetComponent, updates };
           await this._emitter.waitFor('dev-update-component', params);
-          //add a script to the updates
-          updates[document.id].push(script);
-          //post emit component updated
-          await this._emitter.waitFor('dev-updated-component', params);
-          continue;
-        //if the parent component is a component
-        } else if (dependant.component.type === 'component') {
-          const { component } = dependant;
-          let script: string;
-          try { //to generate a script to update the component
-            //the filePath was imported as a template 
-            // or file, update the parent component
-            script = await update(component, {
+          
+          try {
+            const script = await update(targetComponent, {
               extname: this._extname,
               tsconfig: this._tsconfig
             });
+            updates[document.id].push(script);
           } catch(error) {
-            //notify the developer via client browser of the error
-            script = errorMessage(error as Error);
+            updates[document.id].push(errorMessage(error as Error));
           }
 
-          //event params
-          const params = { filePath, document, component, updates };
-          //pre emit component update
-          await this._emitter.waitFor('dev-update-component', params);
-          //add a script to the updates
-          updates[document.id].push(script);
-          //post emit component updated
           await this._emitter.waitFor('dev-updated-component', params);
-          continue;
         }
       }
-      //if there are no updates for the document
+
+      // Only reload if no hot updates were possible
       if (updates[document.id].length === 0) {
-        //event params
         const params = { filePath, document, updates };
-        //pre emit document update
         await this._emitter.waitFor('dev-update-document', params);
-        //just reload
         updates[document.id].push('window.location.reload();');
-        //post emit document updated
         await this._emitter.waitFor('dev-updated-document', params);
       }
-    };
+    }
 
-    //send out the updates to all the clients
+    // Send updates to clients
     this._clients.forEach(res => {
       res.write("event: refresh\n");
       res.write(`data: ${JSON.stringify(updates)}\n\n`);
-      //if this works, then the browser will reload
-      //causing the req.close event to be triggered
-      //and the client will be removed from the list
-      //implemented in wait()
-
-      //this is also a provision for a better 
-      //implementation of browser refresh
     });
 
-    //post emit file changed
     await this._emitter.waitFor('dev-file-changed', params);
-
     return this;
   }
 
